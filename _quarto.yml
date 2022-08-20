@@ -3,12 +3,22 @@ project:
   output-dir: docs
 
 website:
-  title: "pstat197a"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+  title: "PSTAT197A: DS Capstone Preparation"
+  # reader-mode: true
+  sidebar:
+    style: "docked"
+    search: true
+    tools: 
+      - icon: github
+        href: https://github.com/pstat197
+      - icon: slack
+        href: https://ucsbdscapstone.slack.com
+    contents:
+      - section: "About"
+        contents:
+          - about.qmd
+      - section: "Materials"
+        
 
 format:
   html:

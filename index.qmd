@@ -1,5 +1,5 @@
 ---
-title: "pstat197a"
+title: "Welcome to PSTAT197A"
 ---
 
 This is a Quarto website.
