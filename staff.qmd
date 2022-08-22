@@ -1,0 +1,18 @@
+---
+title: "Course staff"
+editor: visual
+---
+
+### Instructor
+
+*Dr. Trevor Ruiz.* Visiting assistant professor at UCSB.
+
+### Teaching assistants
+
+*Erika McPhillips.* MS student at UCSB and project mentor for 2021-2022 capstone projects.
+
+*Joshua Bang.* MS student at UCSB and project mentor for 2021-2022 capstone projects.
+
+### Undergraduate learning assistants
+
+*Yan Lashchev.* 2021-2022 Data Science Fellow at UCSB.

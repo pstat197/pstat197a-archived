@@ -17,6 +17,8 @@ website:
       - section: "About"
         contents:
           - about.qmd
+          - staff.qmd
+          - technology.qmd
       - section: "Materials"
         
 
