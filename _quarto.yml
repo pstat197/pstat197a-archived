@@ -5,9 +5,12 @@ project:
 website:
   title: "PSTAT197A: DS Capstone Preparation"
   # reader-mode: true
+  repo-url: "https://github.com/pstat197/pstat197a"
   sidebar:
+    title: "PSTAT197A: DS Capstone Preparation"
     style: "docked"
     search: true
+    logo: "img/ucsbds_hex.png"
     tools: 
       - icon: github
         href: https://github.com/pstat197
@@ -16,9 +19,10 @@ website:
     contents:
       - section: "About"
         contents:
-          - about.qmd
-          - staff.qmd
+          - syllabus.qmd
+          - philosophy.qmd
           - technology.qmd
+          - links.qmd
       - section: "Materials"
         
 

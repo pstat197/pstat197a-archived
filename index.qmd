@@ -1,5 +1,6 @@
 ---
 title: "Welcome to PSTAT197A/CMPSC190DD"
+subtitle: "Preparation for data science capstones"
 ---
 
 PSTAT197A/CMPSC190DD is the first course in UCSB's yearlong data science capstone sequence. The course aims to provide preparation and training to undergraduate students of any discipline with a basic background in data science for an independent research or project experience.
