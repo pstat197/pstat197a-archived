@@ -3,11 +3,11 @@ project:
   output-dir: docs
 
 website:
-  title: "PSTAT197A: DS Capstone Preparation"
+  # title: "PSTAT197A: Capstone Preparation"
   # reader-mode: true
   repo-url: "https://github.com/pstat197/pstat197a"
   sidebar:
-    title: "PSTAT197A: DS Capstone Preparation"
+    title: "Data Science Capstone Preparation"
     style: "docked"
     search: true
     logo: "img/ucsbds_hex.png"
@@ -19,11 +19,14 @@ website:
     contents:
       - section: "About"
         contents:
-          - syllabus.qmd
-          - philosophy.qmd
-          - technology.qmd
-          - links.qmd
+          - about-pages/syllabus.qmd
+          - about-pages/schedule.qmd
+          - about-pages/philosophy.qmd
+          - about-pages/technology.qmd
       - section: "Materials"
+        contents:
+          - material-pages/github.qmd
+          - material-pages/links.qmd
         
 
 format:

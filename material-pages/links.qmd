@@ -1,5 +1,5 @@
 ---
-title: "Forms and resources"
+title: "Forms and links"
 ---
 
 ## Class forms
@@ -8,7 +8,7 @@ title: "Forms and resources"
 
 -   [Capstone project intake form](https://forms.gle/zQT8jc85Y71BKYV48); fill out by September 23.
 
-## Other resources
+## Resources
 
 ***Textbooks:***
 
@@ -20,7 +20,7 @@ title: "Forms and resources"
 
 -   [R for Data Science](https://r4ds.had.co.nz/) by Wickham and Grolemund.
 
-***Links:***
+***Documentation:***
 
 -   [Tidyverse](https://www.tidyverse.org/) and [tidymodels](https://www.tidymodels.org/) packages
 
