@@ -1,5 +1,5 @@
 ---
-title: "Forms and links"
+title: "Links"
 ---
 
 ## Class forms

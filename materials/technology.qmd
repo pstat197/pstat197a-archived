@@ -1,0 +1,34 @@
+---
+title: "Technology"
+editor: visual
+---
+
+## Software
+
+Computing in PSTAT197A will be shown in R, and codes and other materials will be shared via GitHub. The following software will be required to access course materials:
+
+-   [R](https://www.r-project.org/) version 4.2.0+
+
+-   [RStudio](https://www.rstudio.com/products/rstudio/download/) version 2022.07.1+
+
+-   [Git](https://git-scm.com/downloads) version 2.36.1+
+
+-   A visual GitHub client such as [GitKracken](https://www.gitkraken.com/) or [GitHub Desktop](https://desktop.github.com/)
+
+Installations and basic functionality will be covered in the first lab session.
+
+While PSTAT197A is not strictly language-agnostic, it is also not a course especially emphasizing programming techniques in R. Students are therefore free to use other software at their discretion, provided it does not interfere with their participation in the class.
+
+## GitHub
+
+We have a class [GitHub organization](https://github.com/pstat197) for the data science capstone. Enrolled students should request an email invitation from course staff if they have not received one.
+
+Students have write access to all repositories within the organization and the ability to create their own public or private repositories.
+
+Although the organization is invite-only, it is not private:
+
+-   repositories for course modules are public, and anyone on the web can access them;
+
+-   private repositories remain visible to course staff.
+
+Students are asked to submit work by contributing to repositories for course modules. Any such contributions would remain publicly visible. Students can elect to keep their work on a private fork if they prefer.

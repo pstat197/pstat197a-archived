@@ -1,108 +1,10 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Welcome",
-    "section": "",
-    "text": "Most students take this course to prepare for their work on sponsored team projects during the remainder of the capstone sequence (PSTAT197B-C/CMPSC190DE-DF). However, some may elect to take the course for other reasons, such as an upcoming faculty-supervised research project or internship.\nThis site hosts course information and resources for currently enrolled students."
-  },
-  {
-    "objectID": "technology.html",
-    "href": "technology.html",
-    "title": "Technology",
-    "section": "",
-    "text": "R version 4.2.0+\nRStudio version 2022.07.1+554\nGit version 2.36.1+\nA visual GitHub client such as GitKracken.\n\nInstallations and basic functionality will be covered in the first lab session.\nWhile PSTAT197A is not strictly language-agnostic, it is also not a course especially emphasizing programming techniques in R. Students are therefore free to use other software at their discretion, provided it does not interfere with their participation in the class."
-  },
-  {
-    "objectID": "staff.html",
-    "href": "staff.html",
-    "title": "Course staff",
-    "section": "",
-    "text": "Teaching assistants\nErika McPhillips. MS student at UCSB and project mentor for 2021-2022 capstone projects.\nJoshua Bang. MS student at UCSB and project mentor for 2021-2022 capstone projects.\n\n\nUndergraduate learning assistants\nYan Lashchev. 2021-2022 Data Science Fellow at UCSB."
-  },
-  {
-    "objectID": "syllabus.html",
-    "href": "syllabus.html",
-    "title": "Syllabus",
-    "section": "",
-    "text": "Catalog description: Introduction to research skills. Discussion of current research trends, writing literature reviews, etc. Students will be required to present materials reflecting their interests, which will be critically appraised for both content and presentation. Emphasis will be placed on aiding students to acquire a high-level of professionalism. Prerequisite: PSTAT126."
-  },
-  {
-    "objectID": "syllabus.html#meetings",
-    "href": "syllabus.html#meetings",
-    "title": "Syllabus",
-    "section": "Meetings",
-    "text": "Meetings\nClass meetings are held 2pm – 3:15pm Tuesdays and Thursdays in Ellison 2617.\nSection meetings are held Wednesdays:\n\n2pm – 2:50pm in Girvetz 2115;\n3pm – 3:50pm in Girvetz 2116;\n4pm – 4:50pm in North Hall 1109."
-  },
-  {
-    "objectID": "syllabus.html#course-staff",
-    "href": "syllabus.html#course-staff",
-    "title": "Syllabus",
-    "section": "Course staff",
-    "text": "Course staff\nInstructor:\n\nTrevor Ruiz. Visiting assistant professor and co-instructor for 2021-2022 capstone projects.\n\nTeaching assistants:\n\nErika McPhillips. MS student and capstone project mentor in 2021-2022.\nJoshua Bang. MS student and capstone project mentor in 2021-2022.\nMeghan Elcheikhali. PhD student and capstone project mentor in 2021-2022.\n\nUndergraduate learning assistant:\n\nYan Lashchev. BS student and Data Science Fellow at UCSB in 2021-2022."
-  },
-  {
-    "objectID": "syllabus.html#schedule",
-    "href": "syllabus.html#schedule",
-    "title": "Syllabus",
-    "section": "Schedule",
-    "text": "Schedule\nThis schedule is tentative and may be adjusted at the discretion of the instructor.\n\n\n\n\n\n\n\n\n\n\nWeek\nTheme\nTuesday meeting\nThursday meeting\nSection meeting\n\n\n\n\n0\nIntroductions\nNO CLASS\nLecture: on research projects in(volving) data science\nNO LAB\n\n\n1\nIntroductions\nModule 0\nLecture: on data science as a discipline\n0.1 Discussion: class data\nSoftware and technology overview\n\n\n2\nModule 0\n0.2 Lecture: on descriptive analysis\n0.3 Discussion: results\ntidyverse basics\n\n\n3\nModule 1\n1.1 Discussion\n1.2 Lecture: on regression\nlm()\n\n\n4\nModule 1\n1.3 Lecture: on prediction\n1.4 Discussion\nmodelr and tidymodels\n\n\n5\nModule 2\n2.1 Discussion: biomarker data\n2.2 Lecture: on classification\nglm()\n\n\n6\nModule 2\n2.3 Lecture: on variable selection and variable importance\n2.4 Discussion: results\nglmnet and randomForest\n\n\n7\nModule 3\n3.1 Discussion: soil temperature data\n3.2 Lecture: on time\ncurve fitting; ts forecasting\n\n\n8\nModule 3\n3.3 Lecture: on space\n3.4 Discussion: results\ninverse distance weighting; kriging\n\n\n9\nModule 4\n4.1\nNO CLASS\nNO LAB\n\n\n10\nModule 4\n4.2\n4.3 Discussion: in closing\nInterviews"
-  },
-  {
-    "objectID": "syllabus.html#assessment",
-    "href": "syllabus.html#assessment",
-    "title": "Syllabus",
-    "section": "Assessment",
-    "text": "Assessment"
-  },
-  {
-    "objectID": "syllabus.html#policies",
-    "href": "syllabus.html#policies",
-    "title": "Syllabus",
-    "section": "Policies",
-    "text": "Policies\nEmail. Course staff will make their best effort to reply to email within 48 weekday hours. However, due to high volume, staff cannot guarantee that all messages will receive replies.\nAccommodations. Reasonable accommodations will be made for any student with a qualifying disability. Such requests should be made through the Disabled Students Program (DSP). More information, instructions on how to access accommodations, and information on related resources can be found on the DSP website. Note: in this class there are no timed assessments.\nLetter grades. Letter grades are assigned based only on the assessments identified above and according to university guidelines, with the relative weighting of assessments determined at the discretion of the instructor. While grade calculations will not be disclosed, students are entitled to an explanation of the criteria used to determine their grades if desired. Grades will not be changed except in the case of clerical errors. If students feel their grade has been unfairly assigned, they are entitled to contest it following UCSB procedure for contesting grades.\nConduct. All course participants are expected to maintain respectful and honorable conduct consistent with UCSB ethical standards. Students uncomfortable with the behavior of another course participant for any reason should notify the instructor, course staff, or, if the complaint relates to course staff conduct, an administrative or departmental officer. Evidence of academic dishonesty will be reported to the Office of Student Conduct (OSC); evidence of problematic behavior will be addressed on a case-by-case basis in accord with university policies."
-  },
-  {
-    "objectID": "classroom-philosophy.html",
-    "href": "classroom-philosophy.html",
-    "title": "About",
-    "section": "",
-    "text": "1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "syllabus.html#expectations-and-assessments",
-    "href": "syllabus.html#expectations-and-assessments",
-    "title": "Syllabus",
-    "section": "Expectations and assessments",
-    "text": "Expectations and assessments\nMuch of the course is designed around group activity and discussion. Students are therefore expected to:\n\nprepare for class meetings by completing any assigned reading or activity;\nattend class meetings and actively participate;\nprovide meaningful and concrete contributions to group activities;\nsubmit assignments in a timely fashion.\n\nStudents having any difficulty in meeting these expectations should raise the issue(s) promptly with the instructor.\nQualitative feedback is emphasized over numerical scores. Students are assessed on:\n\nattendance, preparation, and participation;\nquality of submitted work;\nindividual contributions to group assignments;\noral interview."
-  },
-  {
-    "objectID": "links.html",
-    "href": "links.html",
-    "title": "Forms and resources",
-    "section": "",
-    "text": "Attendance reporting form; fill out once per class meeting.\nCapstone project intake form; fill out by September 23."
-  },
-  {
-    "objectID": "links.html#other-resources",
-    "href": "links.html#other-resources",
-    "title": "Forms and resources",
-    "section": "Other resources",
-    "text": "Other resources\nTextbooks:\n\nModern Data Science with R by Baumer, Kaplan, and Horton.\nIntroduction to Statistical Learning with Applications in R by James et al.\nFundamentals of Data Visualization by Claus Wilke.\nR for Data Science by Wickham and Grolemund.\n\nLinks:\n\nTidyverse and tidymodels packages\nGitHub Docs"
-  },
-  {
-    "objectID": "philosophy.html",
-    "href": "philosophy.html",
+    "objectID": "about-pages/philosophy.html",
+    "href": "about-pages/philosophy.html",
     "title": "Classroom philosophy",
     "section": "",
-    "text": "No particular ability or skill defines success in data science. Data science involves a combination of computing, statistics and probability, and domain expertise. It also involves the use of technology and the practice of narrative communication and storytelling. You can probably think of one or two other aspects of the discipline to add to the list. Emerging curricula in data science seek to balance core competencies across these or similar areas. (Perhaps this is the present hallmark of the discipline.) Yet, no one person can expect to be an expert in all of these areas, and even core competencies across component areas can look a bit different from person to person among perfectly qualified data scientists. We should all accept that we have strengths and weaknesses and resist the temptation to idealize: that is, to associate a particular constellation – whether that’s our own, the opposite of our own, or another idea idea we have – of abilities with ‘better’ data science. If we can know our own balance of skills (and interests), be open to healthy challenges, and focus on what we can do well and how we can improve, that is enough."
+    "text": "No particular ability or skill defines success in data science. Data science involves a combination of computing, statistics and probability, and domain expertise. It also involves the use of technology and the practice of narrative communication and storytelling. You can probably think of one or two other aspects of the discipline to add to the list. Emerging curricula in data science seek to balance core competencies across these or similar areas. (Perhaps this is the present hallmark of the discipline.) Yet, no one person can expect to be an expert in all of these areas, and even core competencies across component areas can look a bit different from person to person among perfectly qualified data scientists. We should all accept that we have strengths and weaknesses and resist the temptation to idealize: that is, to associate a particular constellation of abilities – whether that’s our own, the opposite of our own, or someone else’s – with ‘better’ data science. If we can know our own balance of skills (and interests), be open to healthy challenges, and focus on what we can do well and how we can improve, that is enough."
   },
   {
     "objectID": "about-pages/schedule.html",
@@ -110,20 +12,6 @@
     "title": "Schedule",
     "section": "",
     "text": "Week\nTheme\nTuesday meeting\nThursday meeting\nSection meeting\n\n\n\n\n0\nIntroductions\nNO CLASS\nLecture: on research projects in(volving) data science\nNO LAB\n\n\n1\nIntroductions\nModule 0\nLecture: on data science as a discipline\n0.1 Discussion: class data\nSoftware and technology overview\n\n\n2\nModule 0\n0.2 Lecture: on descriptive analysis\n0.3 Discussion: results\ntidyverse basics\n\n\n3\nModule 1\n1.1 Discussion\n1.2 Lecture: on regression\nlm()\n\n\n4\nModule 1\n1.3 Lecture: on prediction\n1.4 Discussion\nmodelr and tidymodels\n\n\n5\nModule 2\n2.1 Discussion: biomarker data\n2.2 Lecture: on classification\nglm()\n\n\n6\nModule 2\n2.3 Lecture: on variable selection and variable importance\n2.4 Discussion: results\nglmnet and randomForest\n\n\n7\nModule 3\n3.1 Discussion: soil temperature data\n3.2 Lecture: on time\ncurve fitting; ts forecasting\n\n\n8\nModule 3\n3.3 Lecture: on space\n3.4 Discussion: results\ninverse distance weighting; kriging\n\n\n9\nModule 4\n4.1\nNO CLASS\nNO LAB\n\n\n10\nModule 4\n4.2\n4.3 Discussion: in closing\nInterviews"
-  },
-  {
-    "objectID": "about-pages/technology.html",
-    "href": "about-pages/technology.html",
-    "title": "Technology",
-    "section": "",
-    "text": "R version 4.2.0+\nRStudio version 2022.07.1+554\nGit version 2.36.1+\nA visual GitHub client such as GitKracken.\n\nInstallations and basic functionality will be covered in the first lab session.\nWhile PSTAT197A is not strictly language-agnostic, it is also not a course especially emphasizing programming techniques in R. Students are therefore free to use other software at their discretion, provided it does not interfere with their participation in the class."
-  },
-  {
-    "objectID": "about-pages/philosophy.html",
-    "href": "about-pages/philosophy.html",
-    "title": "Classroom philosophy",
-    "section": "",
-    "text": "No particular ability or skill defines success in data science. Data science involves a combination of computing, statistics and probability, and domain expertise. It also involves the use of technology and the practice of narrative communication and storytelling. You can probably think of one or two other aspects of the discipline to add to the list. Emerging curricula in data science seek to balance core competencies across these or similar areas. (Perhaps this is the present hallmark of the discipline.) Yet, no one person can expect to be an expert in all of these areas, and even core competencies across component areas can look a bit different from person to person among perfectly qualified data scientists. We should all accept that we have strengths and weaknesses and resist the temptation to idealize: that is, to associate a particular constellation of abilities – whether that’s our own, the opposite of our own, or someone else’s – with ‘better’ data science. If we can know our own balance of skills (and interests), be open to healthy challenges, and focus on what we can do well and how we can improve, that is enough."
   },
   {
     "objectID": "about-pages/syllabus.html",
@@ -140,11 +28,11 @@
     "text": "Meetings\nClass meetings are held 2pm – 3:15pm Tuesdays and Thursdays in Ellison 2617.\nSection meetings are held Wednesdays:\n\n2pm – 2:50pm in Girvetz 2115;\n3pm – 3:50pm in Girvetz 2116;\n4pm – 4:50pm in North Hall 1109."
   },
   {
-    "objectID": "about-pages/syllabus.html#course-staff",
-    "href": "about-pages/syllabus.html#course-staff",
-    "title": "Syllabus",
-    "section": "Course staff",
-    "text": "Course staff\nInstructor:\n\nTrevor Ruiz. Visiting assistant professor and co-instructor for 2021-2022 capstone projects.\n\nTeaching assistants:\n\nErika McPhillips. MS student and capstone project mentor in 2021-2022.\nJoshua Bang. MS student and capstone project mentor in 2021-2022.\nMeghan Elcheikhali. PhD student and capstone project mentor in 2021-2022.\n\nUndergraduate learning assistant:\n\nYan Lashchev. BS student and Data Science Fellow at UCSB in 2021-2022."
+    "objectID": "about-pages/syllabus.html#staff",
+    "href": "about-pages/syllabus.html#staff",
+    "title": "Course syllabus",
+    "section": "Staff",
+    "text": "Staff\nInstructor:\n\nTrevor Ruiz. Visiting assistant professor and co-instructor for 2021-2022 capstone projects.\n\nTeaching assistants:\n\nErika McPhillips. MS student and capstone project mentor in 2021-2022.\nJoshua Bang. MS student and capstone project mentor in 2021-2022.\nMeghan Elcheikhali. PhD student and capstone project mentor in 2021-2022.\n\nUndergraduate learning assistant:\n\nYan Lashchev. BS student and Data Science Fellow at UCSB in 2021-2022."
   },
   {
     "objectID": "about-pages/syllabus.html#expectations-and-assessments",
@@ -161,32 +49,81 @@
     "text": "Policies\nEmail. Course staff will make their best effort to reply to email within 48 weekday hours. However, due to high volume, staff cannot guarantee that all messages will receive replies.\nAccommodations. Reasonable accommodations will be made for any student with a qualifying disability. Such requests should be made through the Disabled Students Program (DSP). More information, instructions on how to access accommodations, and information on related resources can be found on the DSP website. Note: in this class there are no timed assessments.\nLetter grades. Letter grades are assigned based only on the assessments identified above and according to university guidelines, with the relative weighting of assessments determined at the discretion of the instructor. While grade calculations will not be disclosed, students are entitled to an explanation of the criteria used to determine their grades if desired. Grades will not be changed except in the case of clerical errors. If students feel their grade has been unfairly assigned, they are entitled to contest it following UCSB procedure for contesting grades.\nConduct. All course participants are expected to maintain respectful and honorable conduct consistent with UCSB ethical standards. Students uncomfortable with the behavior of another course participant for any reason should notify the instructor, course staff, or, if the complaint relates to course staff conduct, an administrative or departmental officer. Evidence of academic dishonesty will be reported to the Office of Student Conduct (OSC); evidence of problematic behavior will be addressed on a case-by-case basis in accord with university policies."
   },
   {
-    "objectID": "about-pages/syllabus.html#staff",
-    "href": "about-pages/syllabus.html#staff",
-    "title": "Course syllabus",
-    "section": "Staff",
-    "text": "Staff\nInstructor:\n\nTrevor Ruiz. Visiting assistant professor and co-instructor for 2021-2022 capstone projects.\n\nTeaching assistants:\n\nErika McPhillips. MS student and capstone project mentor in 2021-2022.\nJoshua Bang. MS student and capstone project mentor in 2021-2022.\nMeghan Elcheikhali. PhD student and capstone project mentor in 2021-2022.\n\nUndergraduate learning assistant:\n\nYan Lashchev. BS student and Data Science Fellow at UCSB in 2021-2022."
-  },
-  {
-    "objectID": "about-pages/links.html",
-    "href": "about-pages/links.html",
-    "title": "Forms and resources",
+    "objectID": "about-pages/technology.html",
+    "href": "about-pages/technology.html",
+    "title": "Technology",
     "section": "",
-    "text": "Attendance reporting form; fill out once per class meeting.\nCapstone project intake form; fill out by September 23."
+    "text": "R version 4.2.0+\nRStudio version 2022.07.1+\nGit version 2.36.1+\nA visual GitHub client such as GitKracken or GitHub Desktop\n\nInstallations and basic functionality will be covered in the first lab session.\nWhile PSTAT197A is not strictly language-agnostic, it is also not a course especially emphasizing programming techniques in R. Students are therefore free to use other software at their discretion, provided it does not interfere with their participation in the class."
   },
   {
-    "objectID": "about-pages/links.html#other-resources",
-    "href": "about-pages/links.html#other-resources",
-    "title": "Forms and resources",
-    "section": "Other resources",
-    "text": "Other resources\nTextbooks:\n\nModern Data Science with R by Baumer, Kaplan, and Horton.\nIntroduction to Statistical Learning with Applications in R by James et al.\nFundamentals of Data Visualization by Claus Wilke.\nR for Data Science by Wickham and Grolemund.\n\nLinks:\n\nTidyverse and tidymodels packages\nGitHub Docs"
-  },
-  {
-    "objectID": "about-pages/github.html",
-    "href": "about-pages/github.html",
-    "title": "GitHub",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome",
     "section": "",
-    "text": "Students have write access to all repositories within the organization and the ability to create their own public or private repositories.\nAlthough the organization is invite-only, it is not private:\n\nrepositories for course modules are public, and anyone on the web can access them;\nprivate repositories remain visible to course staff.\n\nStudents are asked to submit work by contributing to repositories for course modules. Any such contributions would remain publicly visible. Students can elect to keep their work on a private fork if they prefer."
+    "text": "Most students take this course to prepare for their work on sponsored team projects during the remainder of the capstone sequence (PSTAT197B-C/CMPSC190DE-DF). However, some may elect to take the course for other reasons, such as an upcoming faculty-supervised research project or internship.\nThis site hosts course information and resources for currently enrolled students."
+  },
+  {
+    "objectID": "labs/lab1-github.html",
+    "href": "labs/lab1-github.html",
+    "title": "Github basics",
+    "section": "",
+    "text": "This lab activity introduces GitHub repositories and basic git actions; students will be expected to use these skills to complete assignments."
+  },
+  {
+    "objectID": "labs/lab1-github.html#prerequisites",
+    "href": "labs/lab1-github.html#prerequisites",
+    "title": "Github basics",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nTo complete this activity you’ll need to:\n\nhave all of the software listed on the course technology page installed;\nhave (or create) your GitHub account credentials.\n\nTo begin, log in to your GitHub account and open your GitHub client. Consider creating a course folder somewhere in your local directory."
+  },
+  {
+    "objectID": "labs/lab1-github.html#whats-github",
+    "href": "labs/lab1-github.html#whats-github",
+    "title": "Github basics",
+    "section": "What’s GitHub?",
+    "text": "What’s GitHub?\n\nGit and GitHub\nAt some point in time – possibly just a moment ago – you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.\nGit is version control software that enables you to systematically track and control file changes within a repository – a collection of files possibly with some directory structure. (A repository is simply a storage place.)\nGitHub is an online platform for hosting repositories remotely. Anyone with access to a repository can make file changes, and this enables multiple people to collaborate on code.\n\n\nLocal and remote\nUsually remote repositories are not updated directly, because typically we’ll want to execute codes and the remote server that hosts the repository is not equipped to do this. So instead, making changes to a repository typically involves communicating information between local and remote locations. If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:\n\ncreate/update a local copy of repository files, say, on my laptop;\nmake the desired change(s) locally;\nsend the changes back to the remote repository;\nupdate the remote repository.\n\n\n\nWhy are we using GitHub repositories?\nMaintaining communication between local and remote copies of a set of files might seem overly complicated, but version control has many benefits. Arguably Git/GitHub is a must for data scientists. In this class you’ll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework."
+  },
+  {
+    "objectID": "labs/lab1-github.html#cloning",
+    "href": "labs/lab1-github.html#cloning",
+    "title": "Github basics",
+    "section": "Cloning",
+    "text": "Cloning\nIn Git parlance, a clone is a local copy of a remote repository. A clone retains a link with the remote so that changes can be sent to or retrieved from the remote repository. To clone a repository, all one needs is:\n\nthe remote location URL;\nthe local destination where the clone will be created;\npermission from the repository owner, if private.\n\nI’ve created a ‘sandbox’ repository (for playing in) at https://github.com/pstat197/sandbox. It’s a public repository, so no special permissions are needed. Follow the link to see the repository contents in your browser.\nNow in your client, look for a ‘Clone Repo’ menu item or similar and simply input the URL and the place you’d like to clone it; proceed through any prompts and then check your file navigator to confirm that the repository files were copied.\nAnother possibility is to use the terminal, navigate to the desired destination, and:\ngit clone https://github.com/pstat197/sandbox"
+  },
+  {
+    "objectID": "labs/lab1-github.html#committing-and-pushing-changes",
+    "href": "labs/lab1-github.html#committing-and-pushing-changes",
+    "title": "Github basics",
+    "section": "Committing and pushing changes",
+    "text": "Committing and pushing changes"
+  },
+  {
+    "objectID": "labs/lab1-github.html#branching",
+    "href": "labs/lab1-github.html#branching",
+    "title": "Github basics",
+    "section": "Branching",
+    "text": "Branching"
+  },
+  {
+    "objectID": "labs/lab1-github.html#pull-requests",
+    "href": "labs/lab1-github.html#pull-requests",
+    "title": "Github basics",
+    "section": "Pull requests",
+    "text": "Pull requests"
+  },
+  {
+    "objectID": "labs/lab1-github.html#workflow",
+    "href": "labs/lab1-github.html#workflow",
+    "title": "Github basics",
+    "section": "Workflow",
+    "text": "Workflow"
+  },
+  {
+    "objectID": "labs/lab1-github.html#forks",
+    "href": "labs/lab1-github.html#forks",
+    "title": "Github basics",
+    "section": "Forks",
+    "text": "Forks"
   },
   {
     "objectID": "material-pages/github.html",
@@ -194,6 +131,13 @@
     "title": "Repositories",
     "section": "",
     "text": "Students have write access to all repositories within the organization and the ability to create their own public or private repositories.\nAlthough the organization is invite-only, it is not private:\n\nrepositories for course modules are public, and anyone on the web can access them;\nprivate repositories remain visible to course staff.\n\nStudents are asked to submit work by contributing to repositories for course modules. Any such contributions would remain publicly visible. Students can elect to keep their work on a private fork if they prefer."
+  },
+  {
+    "objectID": "material-pages/labs.html",
+    "href": "material-pages/labs.html",
+    "title": "Lab activities",
+    "section": "",
+    "text": "Lab 1 on GitHub basics"
   },
   {
     "objectID": "material-pages/links.html",
@@ -208,5 +152,180 @@
     "title": "Forms and links",
     "section": "Resources",
     "text": "Resources\nTextbooks:\n\nModern Data Science with R by Baumer, Kaplan, and Horton.\nIntroduction to Statistical Learning with Applications in R by James et al.\nFundamentals of Data Visualization by Claus Wilke.\nR for Data Science by Wickham and Grolemund.\n\nDocumentation:\n\nTidyverse and tidymodels packages\nGitHub Docs"
+  },
+  {
+    "objectID": "material-pages/labs/lab1-github.html",
+    "href": "material-pages/labs/lab1-github.html",
+    "title": "Github basics",
+    "section": "",
+    "text": "This lab activity introduces GitHub repositories and basic git actions; students will be expected to use these skills to complete assignments."
+  },
+  {
+    "objectID": "material-pages/labs/lab1-github.html#prerequisites",
+    "href": "material-pages/labs/lab1-github.html#prerequisites",
+    "title": "Github basics",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nTo complete this activity you’ll need to:\n\nhave all of the software listed on the course technology page installed;\nhave (or create) your GitHub account credentials.\n\nTo begin, log in to your GitHub account and open your GitHub client. Consider creating a course folder somewhere in your local directory."
+  },
+  {
+    "objectID": "material-pages/labs/lab1-github.html#whats-github",
+    "href": "material-pages/labs/lab1-github.html#whats-github",
+    "title": "Github basics",
+    "section": "What’s GitHub?",
+    "text": "What’s GitHub?\n\nGit and GitHub\nAt some point in time – possibly just a moment ago – you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.\nGit is version control software that enables you to systematically track and control file changes within a repository – a collection of files possibly with some directory structure. (A repository is simply a storage place.)\nGitHub is an online platform for hosting repositories remotely. Anyone with access to a repository can make file changes, and this enables multiple people to collaborate on code.\n\n\nLocal and remote\nUsually remote repositories are not updated directly, because typically we’ll want to execute codes and the remote server that hosts the repository is not equipped to do this. So instead, making changes to a repository typically involves communicating information between local and remote locations. If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:\n\ncreate/update a local copy of repository files, say, on my laptop;\nmake the desired change(s) locally;\nsend the changes back to the remote repository;\nupdate the remote repository.\n\n\n\nWhy are we using GitHub repositories?\nMaintaining communication between local and remote copies of a set of files might seem overly complicated, but version control has many benefits. Arguably Git/GitHub is a must for data scientists. In this class you’ll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework."
+  },
+  {
+    "objectID": "material-pages/labs/lab1-github.html#cloning",
+    "href": "material-pages/labs/lab1-github.html#cloning",
+    "title": "Github basics",
+    "section": "Cloning",
+    "text": "Cloning\nIn Git parlance, a clone is a local copy of a remote repository. A clone retains a link with the remote so that changes can be sent to or retrieved from the remote repository. To clone a repository, all one needs is:\n\nthe remote location URL;\nthe local destination where the clone will be created;\npermission from the repository owner, if private.\n\nI’ve created a ‘sandbox’ repository (for playing in) at https://github.com/pstat197/sandbox. It’s a public repository, so no special permissions are needed. Follow the link to see the repository contents in your browser.\nNow in your client, look for a ‘Clone Repo’ menu item or similar and simply input the URL and the place you’d like to clone it; proceed through any prompts and then check your file navigator to confirm that the repository files were copied.\nAnother possibility is to use the terminal, navigate to the desired destination, and:\ngit clone https://github.com/pstat197/sandbox"
+  },
+  {
+    "objectID": "material-pages/labs/lab1-github.html#committing-and-pushing-changes",
+    "href": "material-pages/labs/lab1-github.html#committing-and-pushing-changes",
+    "title": "Github basics",
+    "section": "Committing and pushing changes",
+    "text": "Committing and pushing changes"
+  },
+  {
+    "objectID": "material-pages/labs/lab1-github.html#branching",
+    "href": "material-pages/labs/lab1-github.html#branching",
+    "title": "Github basics",
+    "section": "Branching",
+    "text": "Branching"
+  },
+  {
+    "objectID": "material-pages/labs/lab1-github.html#pull-requests",
+    "href": "material-pages/labs/lab1-github.html#pull-requests",
+    "title": "Github basics",
+    "section": "Pull requests",
+    "text": "Pull requests"
+  },
+  {
+    "objectID": "material-pages/labs/lab1-github.html#workflow",
+    "href": "material-pages/labs/lab1-github.html#workflow",
+    "title": "Github basics",
+    "section": "Workflow",
+    "text": "Workflow"
+  },
+  {
+    "objectID": "material-pages/labs/lab1-github.html#forks",
+    "href": "material-pages/labs/lab1-github.html#forks",
+    "title": "Github basics",
+    "section": "Forks",
+    "text": "Forks"
+  },
+  {
+    "objectID": "materials/labs.html",
+    "href": "materials/labs.html",
+    "title": "Lab activities",
+    "section": "",
+    "text": "Lab 1 on GitHub basics"
+  },
+  {
+    "objectID": "materials/labs/lab1-github.html",
+    "href": "materials/labs/lab1-github.html",
+    "title": "Github basics",
+    "section": "",
+    "text": "This lab activity introduces GitHub repositories and basic git actions; students will be expected to use these skills to complete assignments."
+  },
+  {
+    "objectID": "materials/labs/lab1-github.html#prerequisites",
+    "href": "materials/labs/lab1-github.html#prerequisites",
+    "title": "Github basics",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nTo complete this activity you’ll need to:\n\nhave all of the software listed on the course technology page installed;\nhave (or create) your GitHub account credentials.\n\nTo begin, log in to your GitHub account and open your GitHub client. Consider creating a course folder somewhere in your local directory."
+  },
+  {
+    "objectID": "materials/labs/lab1-github.html#whats-github",
+    "href": "materials/labs/lab1-github.html#whats-github",
+    "title": "Github basics",
+    "section": "What’s GitHub?",
+    "text": "What’s GitHub?\n\nGit and GitHub\nAt some point in time – possibly just a moment ago – you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.\nGit is version control software that enables you to systematically track and control file changes within a repository – a collection of files possibly with some directory structure. (A repository is simply a storage place.)\nGitHub is an online platform for hosting repositories remotely. Anyone with access to a repository can make file changes, and this enables multiple people to collaborate on code.\n\n\nLocal and remote\nUsually remote repositories are not updated directly, because typically we’ll want to execute codes and the remote server that hosts the repository is not equipped to do this. So instead, making changes to a repository typically involves communicating information between local and remote locations. If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:\n\ncreate/update a local copy of repository files, say, on my laptop;\nmake the desired change(s) locally;\nsend the changes back to the remote repository;\nupdate the remote repository.\n\n\n\nWhy are we using GitHub repositories?\nMaintaining communication between local and remote copies of a set of files might seem overly complicated, but version control has many benefits. Arguably Git/GitHub is a must for data scientists. In this class you’ll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework."
+  },
+  {
+    "objectID": "materials/labs/lab1-github.html#cloning",
+    "href": "materials/labs/lab1-github.html#cloning",
+    "title": "Github basics",
+    "section": "Cloning",
+    "text": "Cloning\nIn Git parlance, a clone is a local copy of a remote repository. A clone retains a link with the remote so that changes can be sent to or retrieved from the remote repository. To clone a repository, all one needs is:\n\nthe remote location URL;\nthe local destination where the clone will be created;\npermission from the repository owner, if private.\n\nI’ve created a ‘sandbox’ repository (for playing in) at https://github.com/pstat197/sandbox. It’s a public repository, so no special permissions are needed. Follow the link to see the repository contents in your browser.\nNow in your client, look for a ‘Clone Repo’ menu item or similar and simply input the URL and the place you’d like to clone it; proceed through any prompts and then check your file navigator to confirm that the repository files were copied.\nAnother possibility is to use the terminal, navigate to the desired destination, and:\ngit clone https://github.com/pstat197/sandbox"
+  },
+  {
+    "objectID": "materials/labs/lab1-github.html#committing-and-pushing-changes",
+    "href": "materials/labs/lab1-github.html#committing-and-pushing-changes",
+    "title": "Github basics",
+    "section": "Committing and pushing changes",
+    "text": "Committing and pushing changes"
+  },
+  {
+    "objectID": "materials/labs/lab1-github.html#branching",
+    "href": "materials/labs/lab1-github.html#branching",
+    "title": "Github basics",
+    "section": "Branching",
+    "text": "Branching"
+  },
+  {
+    "objectID": "materials/labs/lab1-github.html#pull-requests",
+    "href": "materials/labs/lab1-github.html#pull-requests",
+    "title": "Github basics",
+    "section": "Pull requests",
+    "text": "Pull requests"
+  },
+  {
+    "objectID": "materials/labs/lab1-github.html#workflow",
+    "href": "materials/labs/lab1-github.html#workflow",
+    "title": "Github basics",
+    "section": "Workflow",
+    "text": "Workflow"
+  },
+  {
+    "objectID": "materials/labs/lab1-github.html#forks",
+    "href": "materials/labs/lab1-github.html#forks",
+    "title": "Github basics",
+    "section": "Forks",
+    "text": "Forks"
+  },
+  {
+    "objectID": "materials/github.html",
+    "href": "materials/github.html",
+    "title": "Repositories",
+    "section": "",
+    "text": "Students have write access to all repositories within the organization and the ability to create their own public or private repositories.\nAlthough the organization is invite-only, it is not private:\n\nrepositories for course modules are public, and anyone on the web can access them;\nprivate repositories remain visible to course staff.\n\nStudents are asked to submit work by contributing to repositories for course modules. Any such contributions would remain publicly visible. Students can elect to keep their work on a private fork if they prefer."
+  },
+  {
+    "objectID": "about/technology.html",
+    "href": "about/technology.html",
+    "title": "Technology",
+    "section": "",
+    "text": "R version 4.2.0+\nRStudio version 2022.07.1+\nGit version 2.36.1+\nA visual GitHub client such as GitKracken or GitHub Desktop\n\nInstallations and basic functionality will be covered in the first lab session.\nWhile PSTAT197A is not strictly language-agnostic, it is also not a course especially emphasizing programming techniques in R. Students are therefore free to use other software at their discretion, provided it does not interfere with their participation in the class."
+  },
+  {
+    "objectID": "materials/links.html",
+    "href": "materials/links.html",
+    "title": "Links",
+    "section": "",
+    "text": "Attendance reporting form; fill out once per class meeting.\nCapstone project intake form; fill out by September 23."
+  },
+  {
+    "objectID": "materials/links.html#resources",
+    "href": "materials/links.html#resources",
+    "title": "Links",
+    "section": "Resources",
+    "text": "Resources\nTextbooks:\n\nModern Data Science with R by Baumer, Kaplan, and Horton.\nIntroduction to Statistical Learning with Applications in R by James et al.\nFundamentals of Data Visualization by Claus Wilke.\nR for Data Science by Wickham and Grolemund.\n\nDocumentation:\n\nTidyverse and tidymodels packages\nGitHub Docs"
+  },
+  {
+    "objectID": "materials/technology.html",
+    "href": "materials/technology.html",
+    "title": "Technology",
+    "section": "",
+    "text": "Computing in PSTAT197A will be shown in R, and codes and other materials will be shared via GitHub. The following software will be required to access course materials:\n\nR version 4.2.0+\nRStudio version 2022.07.1+\nGit version 2.36.1+\nA visual GitHub client such as GitKracken or GitHub Desktop\n\nInstallations and basic functionality will be covered in the first lab session.\nWhile PSTAT197A is not strictly language-agnostic, it is also not a course especially emphasizing programming techniques in R. Students are therefore free to use other software at their discretion, provided it does not interfere with their participation in the class."
+  },
+  {
+    "objectID": "materials/technology.html#github",
+    "href": "materials/technology.html#github",
+    "title": "Technology",
+    "section": "GitHub",
+    "text": "GitHub\nWe have a class GitHub organization for the data science capstone. Enrolled students should request an email invitation from course staff if they have not received one.\nStudents have write access to all repositories within the organization and the ability to create their own public or private repositories.\nAlthough the organization is invite-only, it is not private:\n\nrepositories for course modules are public, and anyone on the web can access them;\nprivate repositories remain visible to course staff.\n\nStudents are asked to submit work by contributing to repositories for course modules. Any such contributions would remain publicly visible. Students can elect to keep their work on a private fork if they prefer."
   }
 ]

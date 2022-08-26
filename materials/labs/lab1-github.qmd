@@ -1,0 +1,87 @@
+---
+title: "Github basics"
+editor: visual
+code-copy: true
+---
+
+This lab activity introduces GitHub repositories and basic git actions; students will be expected to use these skills to complete assignments.
+
+## Prerequisites
+
+To complete this activity you'll need to:
+
+-   have all of the software listed on the course technology page installed;
+
+-   have (or create) your [GitHub](https://github.com/) account credentials.
+
+To begin, log in to your GitHub account and open your GitHub client. Consider creating a course folder somewhere in your local directory.
+
+## What's GitHub?
+
+### Git and GitHub
+
+At some point in time -- possibly just a moment ago -- you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.
+
+**Git is version control software** that enables you to systematically track and control file changes within a *repository* -- a collection of files possibly with some directory structure. (A repository is simply a storage place.)
+
+**GitHub is an online platform** for hosting repositories *remotely*. Anyone with access to a repository can make file changes, and this enables multiple people to collaborate on code.
+
+### Local and remote
+
+Usually remote repositories are not updated directly, because typically we'll want to execute codes and the remote server that hosts the repository is not equipped to do this. So instead, making changes to a repository typically involves communicating information between *local* and *remote* locations. If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:
+
+-   create/update a local copy of repository files, say, on my laptop;
+
+-   make the desired change(s) locally;
+
+-   send the changes back to the remote repository;
+
+-   update the remote repository.
+
+### Why are we using GitHub repositories?
+
+Maintaining communication between local and remote copies of a set of files might seem overly complicated, but version control has many benefits. Arguably Git/GitHub is a must for data scientists. In this class you'll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework.
+
+## Cloning
+
+In Git parlance, a *clone* is a local copy of a remote repository. A clone retains a link with the remote so that changes can be sent to or retrieved from the remote repository. To clone a repository, all one needs is:
+
+-   the remote location URL;
+
+-   the local destination where the clone will be created;
+
+-   permission from the repository owner, if private.
+
+I've created a 'sandbox' repository (for playing in) at <https://github.com/pstat197/sandbox>. It's a public repository, so no special permissions are needed. Follow the link to see the repository contents in your browser.
+
+Now in your client, look for a 'Clone Repo' menu item or similar and simply input the URL and the place you'd like to clone it; proceed through any prompts and then check your file navigator to confirm that the repository files were copied.
+
+Another possibility is to use the terminal, navigate to the desired destination, and:
+
+```{.bash}
+git clone https://github.com/pstat197/sandbox
+```
+
+## Committing and pushing changes
+
+### Gonna make a change
+
+### Commit
+
+### Push
+
+## Branching
+
+### When and why to branch
+
+### Create a branch
+
+### Commit and push a change
+
+### Access your neighbor's branch
+
+## Pull requests
+
+## Workflow
+
+## Forks

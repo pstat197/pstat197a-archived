@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>GitHub</title>
+<title>Github basics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">GitHub</h1>
+      <h1 class="quarto-secondary-nav-title">Github basics</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -122,34 +122,64 @@ ul.task-list{list-style: none;}
   <a href="../about-pages/technology.html" class="sidebar-item-text sidebar-link">Technology</a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../about-pages/github.html" class="sidebar-item-text sidebar-link active">GitHub</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../about-pages/links.html" class="sidebar-item-text sidebar-link">Forms and resources</a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Materials</span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Materials</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../material-pages/github.html" class="sidebar-item-text sidebar-link">Repositories</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../material-pages/links.html" class="sidebar-item-text sidebar-link">Forms and links</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../material-pages/labs.html" class="sidebar-item-text sidebar-link">Lab activities</a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#whats-github" id="toc-whats-github" class="nav-link" data-scroll-target="#whats-github">What’s GitHub?</a>
+  <ul class="collapse">
+  <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github">Git and GitHub</a></li>
+  <li><a href="#local-and-remote" id="toc-local-and-remote" class="nav-link" data-scroll-target="#local-and-remote">Local and remote</a></li>
+  <li><a href="#why-are-we-using-github-repositories" id="toc-why-are-we-using-github-repositories" class="nav-link" data-scroll-target="#why-are-we-using-github-repositories">Why are we using GitHub repositories?</a></li>
+  </ul></li>
+  <li><a href="#cloning" id="toc-cloning" class="nav-link" data-scroll-target="#cloning">Cloning</a></li>
+  <li><a href="#committing-and-pushing-changes" id="toc-committing-and-pushing-changes" class="nav-link" data-scroll-target="#committing-and-pushing-changes">Committing and pushing changes</a></li>
+  <li><a href="#branching" id="toc-branching" class="nav-link" data-scroll-target="#branching">Branching</a></li>
+  <li><a href="#pull-requests" id="toc-pull-requests" class="nav-link" data-scroll-target="#pull-requests">Pull requests</a></li>
+  <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow">Workflow</a></li>
+  <li><a href="#forks" id="toc-forks" class="nav-link" data-scroll-target="#forks">Forks</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">GitHub</h1>
+<h1 class="title d-none d-lg-block">Github basics</h1>
 </div>
 
 
@@ -163,16 +193,69 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<p>We have a class <a href="https://github.com/pstat197">GitHub organization</a> for the data science capstone. Enrolled students should request an email invitation from course staff if they have not received one.</p>
-<p>Students have write access to all repositories within the organization and the ability to create their own public or private repositories.</p>
-<p>Although the organization is invite-only, it is not private:</p>
+<p>This lab activity introduces GitHub repositories and basic git actions; students will be expected to use these skills to complete assignments.</p>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<p>To complete this activity you’ll need to:</p>
 <ul>
-<li><p>repositories for course modules are public, and anyone on the web can access them;</p></li>
-<li><p>private repositories remain visible to course staff.</p></li>
+<li><p>have all of the software listed on the <a href="about-pages/technology.qmd">course technology page</a> installed;</p></li>
+<li><p>have (or create) your <a href="https://github.com/">GitHub</a> account credentials.</p></li>
 </ul>
-<p>Students are asked to submit work by contributing to repositories for course modules. Any such contributions would remain publicly visible. Students can elect to keep their work on a private fork if they prefer.</p>
+<p>To begin, log in to your GitHub account and open your GitHub client. Consider creating a course folder somewhere in your local directory.</p>
+</section>
+<section id="whats-github" class="level2">
+<h2 class="anchored" data-anchor-id="whats-github">What’s GitHub?</h2>
+<section id="git-and-github" class="level3">
+<h3 class="anchored" data-anchor-id="git-and-github">Git and GitHub</h3>
+<p>At some point in time – possibly just a moment ago – you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.</p>
+<p><strong>Git is version control software</strong> that enables you to systematically track and control file changes within a <em>repository</em> – a collection of files possibly with some directory structure. (A repository is simply a storage place.)</p>
+<p><strong>GitHub is an online platform</strong> for hosting repositories <em>remotely</em>. Anyone with access to a repository can make file changes, and this enables multiple people to collaborate on code.</p>
+</section>
+<section id="local-and-remote" class="level3">
+<h3 class="anchored" data-anchor-id="local-and-remote">Local and remote</h3>
+<p>Usually remote repositories are not updated directly, because typically we’ll want to execute codes and the remote server that hosts the repository is not equipped to do this. So instead, making changes to a repository typically involves communicating information between <em>local</em> and <em>remote</em> locations. If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:</p>
+<ul>
+<li><p>create/update a local copy of repository files, say, on my laptop;</p></li>
+<li><p>make the desired change(s) locally;</p></li>
+<li><p>send the changes back to the remote repository;</p></li>
+<li><p>update the remote repository.</p></li>
+</ul>
+</section>
+<section id="why-are-we-using-github-repositories" class="level3">
+<h3 class="anchored" data-anchor-id="why-are-we-using-github-repositories">Why are we using GitHub repositories?</h3>
+<p>Maintaining communication between local and remote copies of a set of files might seem overly complicated, but version control has many benefits. Arguably Git/GitHub is a must for data scientists. In this class you’ll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework.</p>
+</section>
+</section>
+<section id="cloning" class="level2">
+<h2 class="anchored" data-anchor-id="cloning">Cloning</h2>
+<p>In Git parlance, a <em>clone</em> is a local copy of a remote repository. A clone retains a link with the remote so that changes can be sent to or retrieved from the remote repository. To clone a repository, all one needs is:</p>
+<ul>
+<li><p>the remote location URL;</p></li>
+<li><p>the local destination where the clone will be created;</p></li>
+<li><p>permission from the repository owner, if private.</p></li>
+</ul>
+<p>I’ve created a ‘sandbox’ repository (for playing in) at <a href="https://github.com/pstat197/sandbox" class="uri">https://github.com/pstat197/sandbox</a>. It’s a public repository, so no special permissions are needed. Follow the link to see the repository contents in your browser.</p>
+<p>Now in your client, look for a ‘Clone Repo’ menu item or similar and simply input the URL and the place you’d like to clone it; proceed through any prompts and then check your file navigator to confirm that the repository files were copied.</p>
+<p>Another possibility is to use the terminal, navigate to the desired destination, and:</p>
+<pre><code>git clone https://github.com/pstat197/sandbox</code></pre>
+</section>
+<section id="committing-and-pushing-changes" class="level2">
+<h2 class="anchored" data-anchor-id="committing-and-pushing-changes">Committing and pushing changes</h2>
+</section>
+<section id="branching" class="level2">
+<h2 class="anchored" data-anchor-id="branching">Branching</h2>
+</section>
+<section id="pull-requests" class="level2">
+<h2 class="anchored" data-anchor-id="pull-requests">Pull requests</h2>
+</section>
+<section id="workflow" class="level2">
+<h2 class="anchored" data-anchor-id="workflow">Workflow</h2>
+</section>
+<section id="forks" class="level2">
+<h2 class="anchored" data-anchor-id="forks">Forks</h2>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -19,14 +19,15 @@ website:
     contents:
       - section: "About"
         contents:
-          - about-pages/syllabus.qmd
-          - about-pages/schedule.qmd
-          - about-pages/philosophy.qmd
-          - about-pages/technology.qmd
-      - section: "Materials"
+          - about/syllabus.qmd
+          - about/schedule.qmd
+          - about/philosophy.qmd
+      - section: "Course materials"
         contents:
-          - material-pages/github.qmd
-          - material-pages/links.qmd
+          - materials/labs.qmd
+          - materials/technology.qmd
+          - materials/links.qmd
+          
         
 
 format:
