@@ -13,17 +13,19 @@ Computing in PSTAT197A will be shown in R, and codes and other materials will be
 
 -   [Git](https://git-scm.com/downloads) version 2.36.1+
 
--   A visual GitHub client such as [GitKracken](https://www.gitkraken.com/) or [GitHub Desktop](https://desktop.github.com/)
+-   [GitHub Desktop](https://desktop.github.com/) (or another visual GitHub client)
 
-Installations and basic functionality will be covered in the first lab session.
+Installations and basic functionality will be covered in the first section meeting.
 
-While PSTAT197A is not strictly language-agnostic, it is also not a course especially emphasizing programming techniques in R. Students are therefore free to use other software at their discretion, provided it does not interfere with their participation in the class.
+While PSTAT197A is not language-agnostic and some instruction in R is provided, it is also not a course especially emphasizing programming technique in R. Students are free to use or experiment with other software at their discretion provided it does not interfere with their participation in the class, but are expected to submit work and collaborate using RStudio-supported files.
 
 ## GitHub
 
+Students will learn and practice basic functionality of Git and GitHub for version control and collaboration by accessing course materials via GitHub repositories and submitting work via repository contributions.
+
 We have a class [GitHub organization](https://github.com/pstat197) for the data science capstone. Enrolled students should request an email invitation from course staff if they have not received one.
 
-Students have write access to all repositories within the organization and the ability to create their own public or private repositories.
+Students have write access to all repositories within the organization and the ability to create their own public or private repositories. Course staff have administrator privileges.
 
 Although the organization is invite-only, it is not private:
 

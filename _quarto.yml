@@ -24,7 +24,7 @@ website:
           - about/philosophy.qmd
       - section: "Course materials"
         contents:
-          - materials/labs.qmd
+          - materials/lab-activities.qmd
           - materials/technology.qmd
           - materials/links.qmd
           

@@ -180,16 +180,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="../../about/philosophy.html" class="sidebar-item-text sidebar-link">Classroom philosophy</a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../about/technology.html" class="sidebar-item-text sidebar-link">Technology</a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Materials</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Course materials</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -197,17 +192,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../materials/github.html" class="sidebar-item-text sidebar-link">Repositories</a>
+  <a href="../../materials/lab-activities.html" class="sidebar-item-text sidebar-link">Lab activities</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../materials/links.html" class="sidebar-item-text sidebar-link">Forms and links</a>
+  <a href="../../materials/technology.html" class="sidebar-item-text sidebar-link">Technology</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../materials/labs.html" class="sidebar-item-text sidebar-link">Lab activities</a>
+  <a href="../../materials/links.html" class="sidebar-item-text sidebar-link">Links</a>
   </div>
 </li>
       </ul>
@@ -221,19 +216,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#pre-lab-activity" id="toc-pre-lab-activity" class="nav-link active" data-scroll-target="#pre-lab-activity">Pre-lab activity</a>
+  <ul class="collapse">
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
   <li><a href="#whats-github" id="toc-whats-github" class="nav-link" data-scroll-target="#whats-github">What’s GitHub?</a>
   <ul class="collapse">
   <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github">Git and GitHub</a></li>
-  <li><a href="#local-and-remote" id="toc-local-and-remote" class="nav-link" data-scroll-target="#local-and-remote">Local and remote</a></li>
+  <li><a href="#local-remote" id="toc-local-remote" class="nav-link" data-scroll-target="#local-remote">local &lt;&gt; remote</a></li>
   <li><a href="#why-are-we-using-github-repositories" id="toc-why-are-we-using-github-repositories" class="nav-link" data-scroll-target="#why-are-we-using-github-repositories">Why are we using GitHub repositories?</a></li>
   </ul></li>
-  <li><a href="#cloning" id="toc-cloning" class="nav-link" data-scroll-target="#cloning">Cloning</a></li>
-  <li><a href="#committing-and-pushing-changes" id="toc-committing-and-pushing-changes" class="nav-link" data-scroll-target="#committing-and-pushing-changes">Committing and pushing changes</a></li>
-  <li><a href="#branching" id="toc-branching" class="nav-link" data-scroll-target="#branching">Branching</a></li>
+  <li><a href="#creating-a-clone" id="toc-creating-a-clone" class="nav-link" data-scroll-target="#creating-a-clone">Creating a clone</a></li>
+  <li><a href="#pre-lab-checklist" id="toc-pre-lab-checklist" class="nav-link" data-scroll-target="#pre-lab-checklist">Pre-lab checklist</a></li>
+  </ul></li>
+  <li><a href="#lab-activity" id="toc-lab-activity" class="nav-link" data-scroll-target="#lab-activity">Lab activity</a>
+  <ul class="collapse">
+  <li><a href="#basic-git-actions" id="toc-basic-git-actions" class="nav-link" data-scroll-target="#basic-git-actions">Basic Git actions</a>
+  <ul class="collapse">
+  <li><a href="#pull" id="toc-pull" class="nav-link" data-scroll-target="#pull">Pull</a></li>
+  <li><a href="#make-changes" id="toc-make-changes" class="nav-link" data-scroll-target="#make-changes">Make changes</a></li>
+  <li><a href="#stage" id="toc-stage" class="nav-link" data-scroll-target="#stage">Stage</a></li>
+  <li><a href="#commit" id="toc-commit" class="nav-link" data-scroll-target="#commit">Commit</a></li>
+  <li><a href="#push" id="toc-push" class="nav-link" data-scroll-target="#push">Push</a></li>
+  </ul></li>
+  <li><a href="#branching" id="toc-branching" class="nav-link" data-scroll-target="#branching">Branching</a>
+  <ul class="collapse">
+  <li><a href="#when-and-why-to-branch" id="toc-when-and-why-to-branch" class="nav-link" data-scroll-target="#when-and-why-to-branch">When and why to branch</a></li>
+  <li><a href="#create-a-branch" id="toc-create-a-branch" class="nav-link" data-scroll-target="#create-a-branch">Create a branch</a></li>
+  <li><a href="#commit-and-push-a-change" id="toc-commit-and-push-a-change" class="nav-link" data-scroll-target="#commit-and-push-a-change">Commit and push a change</a></li>
+  <li><a href="#access-your-neighbors-branch" id="toc-access-your-neighbors-branch" class="nav-link" data-scroll-target="#access-your-neighbors-branch">Access your neighbor’s branch</a></li>
+  </ul></li>
   <li><a href="#pull-requests" id="toc-pull-requests" class="nav-link" data-scroll-target="#pull-requests">Pull requests</a></li>
   <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow">Workflow</a></li>
   <li><a href="#forks" id="toc-forks" class="nav-link" data-scroll-target="#forks">Forks</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -256,15 +271,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>This lab activity introduces GitHub repositories and basic git actions; students will be expected to use these skills to complete assignments.</p>
+<p>This lab activity introduces GitHub repositories and basic Git actions; students will be expected to use these skills to access materials and complete assignments.</p>
+<section id="pre-lab-activity" class="level1">
+<h1>Pre-lab activity</h1>
+<p>Read this section and complete all instructions in the ‘action’ boxes before arriving at your lab section.</p>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<p>To complete this activity you’ll need to:</p>
+<p>To complete the lab activity you’ll need to:</p>
 <ul>
 <li><p>have all of the software listed on the course technology page installed;</p></li>
-<li><p>have (or create) your <a href="https://github.com/">GitHub</a> account credentials.</p></li>
+<li><p>find (or create) your <a href="https://github.com/">GitHub</a> account credentials.</p></li>
 </ul>
-<p>To begin, log in to your GitHub account and open your GitHub client. Consider creating a course folder somewhere in your local directory.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Preparations:</strong></p>
+<ol type="1">
+<li>Log in to your GitHub account.</li>
+<li>Accept the invitation to join the PSTAT197 GitHub organization. Check your UCSB email for the invitation. If you have not received one, request it from a TA or ULA.</li>
+<li>Open your GitHub client.</li>
+</ol>
+</div>
+</div>
 </section>
 <section id="whats-github" class="level2">
 <h2 class="anchored" data-anchor-id="whats-github">What’s GitHub?</h2>
@@ -272,41 +307,151 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="git-and-github">Git and GitHub</h3>
 <p>At some point in time – possibly just a moment ago – you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.</p>
 <p><strong>Git is version control software</strong> that enables you to systematically track and control file changes within a <em>repository</em> – a collection of files possibly with some directory structure. (A repository is simply a storage place.)</p>
-<p><strong>GitHub is an online platform</strong> for hosting repositories <em>remotely</em>. Anyone with access to a repository can make file changes, and this enables multiple people to collaborate on code.</p>
+<p><strong>GitHub is an online platform</strong> for hosting repositories remotely. Anyone with access to a repository can make changes to files in the repository, and this enables multiple people to collaborate on code.</p>
 </section>
-<section id="local-and-remote" class="level3">
-<h3 class="anchored" data-anchor-id="local-and-remote">Local and remote</h3>
-<p>Usually remote repositories are not updated directly, because typically we’ll want to execute codes and the remote server that hosts the repository is not equipped to do this. So instead, making changes to a repository typically involves communicating information between <em>local</em> and <em>remote</em> locations. If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:</p>
+<section id="local-remote" class="level3">
+<h3 class="anchored" data-anchor-id="local-remote">local &lt;&gt; remote</h3>
+<p>Usually remote repositories are not updated directly because contributors need to execute codes to test their changes and the remote server that hosts the repository is not equipped to do this.</p>
+<p>So, making changes to a repository typically involves communicating information between <em>local</em> and <em>remote</em> locations. If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:</p>
 <ul>
-<li><p>create/update a local copy of repository files, say, on my laptop;</p></li>
+<li><p>create/update local copies of repository files, say, on my laptop;</p></li>
 <li><p>make the desired change(s) locally;</p></li>
 <li><p>send the changes back to the remote repository;</p></li>
-<li><p>update the remote repository.</p></li>
+<li><p>update the remote repository by accepting changes.</p></li>
 </ul>
+<p>These steps correspond to a sequence of <strong>Git actions</strong>: actions that modify the repository files and/or metadata. The most basic sequence is:</p>
+<ul>
+<li><p><code>git pull</code> update the local repository (technically, fetch changes + merge changes from the remote repository);</p></li>
+<li><p><code>git add</code> stage file changes to be committed to the local repository;</p></li>
+<li><p><code>git commit</code> commit staged changes to the local repository;</p></li>
+<li><p><code>git push</code> send committed changes back to the remote repository.</p></li>
+</ul>
+<p>Sometimes contributors take different or additional actions; the complexity of the Git actions required to make a change depends largely on repository settings, permissions, and agreements among collaborators about how workflow should be structured.</p>
 </section>
 <section id="why-are-we-using-github-repositories" class="level3">
 <h3 class="anchored" data-anchor-id="why-are-we-using-github-repositories">Why are we using GitHub repositories?</h3>
-<p>Maintaining communication between local and remote copies of a set of files might seem overly complicated, but version control has many benefits. Arguably Git/GitHub is a must for data scientists. In this class you’ll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework.</p>
+<p>Maintaining communication between local and remote copies of a set of files might seem overly complicated, but version control has many benefits, including the ability to track changes and contributions precisely, work in parallel with other contributors, revert to prior versions of files, keep track of issues, quickly share and disseminate work, and solicit user contributions from the coding public. Arguably, for all of these reasons and because of its widespread use, Git/GitHub is a must for data scientists.</p>
+<p>In this class you’ll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework. This should equip you to utilize a repository for efficient collaboration with your peers on your capstone project.</p>
 </section>
 </section>
-<section id="cloning" class="level2">
-<h2 class="anchored" data-anchor-id="cloning">Cloning</h2>
-<p>In Git parlance, a <em>clone</em> is a local copy of a remote repository. A clone retains a link with the remote so that changes can be sent to or retrieved from the remote repository. To clone a repository, all one needs is:</p>
+<section id="creating-a-clone" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-clone">Creating a clone</h2>
+<p>In Git lingo, a <em>clone</em> is a local copy of a remote repository. Creating a clone copies files and establishes the link between local and remote repositories so that changes can be sent to and received from the remote repository. <strong><em>You only need to create a clone once.</em></strong></p>
+<p>To clone a repository, all one needs is:</p>
 <ul>
 <li><p>the remote location URL;</p></li>
 <li><p>the local destination where the clone will be created;</p></li>
 <li><p>permission from the repository owner, if private.</p></li>
 </ul>
 <p>I’ve created a ‘sandbox’ repository (for playing in) at <a href="https://github.com/pstat197/sandbox" class="uri">https://github.com/pstat197/sandbox</a>. It’s a public repository, so no special permissions are needed. Follow the link to see the repository contents in your browser.</p>
-<p>Now in your client, look for a ‘Clone Repo’ menu item or similar and simply input the URL and the place you’d like to clone it; proceed through any prompts and then check your file navigator to confirm that the repository files were copied.</p>
-<p>Another possibility is to use the terminal, navigate to the desired destination, and:</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Clone the sandbox repository:</strong></p>
+<ol type="1">
+<li>Open your GitHub client (GitKracken or GitHub Desktop or similar) and ensure you are logged in to your GitHub account.</li>
+<li>Look for a ‘Clone Repo’ menu item or similar and simply input the URL and the place you’d like to clone it; proceed through any prompts.</li>
+<li>Check your file navigator to confirm that the repository files were copied.</li>
+</ol>
+</div>
+</div>
+<p>An alternative possibility is to create the clone using a terminal command. In the terminal, navigate to the desired destination, and input:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/pstat197/sandbox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Remarks
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>On terminal commands:</strong></p>
+<ul>
+<li><p>It’s recommended to manage Git actions through a visual client, as it’s much easier to see and understand what’s happening.</p></li>
+<li><p>However, if you know exactly what you’re doing, executing simple actions via Git bash in the terminal can be more efficient at times.</p></li>
+<li><p>For example, you can keep a terminal open in RStudio and manage your repository workflow from there, without having to toggle between environments.</p></li>
+<li><p>Try experimenting with terminal commands from RStudio after you have a little experience with basic Git actions.</p></li>
+</ul>
+</div>
+</div>
 </section>
-<section id="committing-and-pushing-changes" class="level2">
-<h2 class="anchored" data-anchor-id="committing-and-pushing-changes">Committing and pushing changes</h2>
+<section id="pre-lab-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="pre-lab-checklist">Pre-lab checklist</h2>
+<p>Have you completed all of the pre-lab activity action items?</p>
+<ol type="1">
+<li>Install software: R, RStudio, Git, and a GitHub client</li>
+<li>Create a GitHub account and join the <a href="https://github.com/pstat197/">course GitHub org</a></li>
+<li>Clone the sandbox repo <a href="https://github.com/pstat197/sandbox" class="uri">https://github.com/pstat197/sandbox</a></li>
+</ol>
+</section>
+</section>
+<section id="lab-activity" class="level1">
+<h1>Lab activity</h1>
+<p>Open your GitHub client and RStudio.</p>
+<!--# TA ACTION: create a markdown file just a few minutes before the lab will begin named after your lab section in a lab-specific directory e.g. '2pm-lab/about-us.md' with some small remark; try to come up with something fun/topical. push the file to the main branch -->
+<section id="basic-git-actions" class="level2">
+<h2 class="anchored" data-anchor-id="basic-git-actions">Basic Git actions</h2>
+<p>Here you’ll make a local change and then push that change to the remote repository.</p>
+<section id="pull" class="level3">
+<h3 class="anchored" data-anchor-id="pull">Pull</h3>
+<p>As discussed in the pre-lab activity, the first step to making a change is beginning with the most up-to-date version of the repository files. Your TA will have made a small change to the repository since you first cloned it, so we’ll start with retrieving that change.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Pull changes from the remote repository:</strong></p>
+<ul>
+<li><p>In your GitHub client, open the sandbox repository and then look for a ‘Pull’ menu item.</p></li>
+<li><p>In the terminal: navigate to the root directory of the repository and <code>git pull</code></p></li>
+</ul>
+<p>Technically, <code>git pull</code> is <code>git fetch</code> + <code>git merge</code>. If you ever wish to examine changes without modifying local files, you can <code>git fetch</code>.</p>
+</div>
+</div>
+<p>Examine the updated local repository files; notice that there is now a folder named after your lab section.</p>
+</section>
+<section id="make-changes" class="level3">
+<h3 class="anchored" data-anchor-id="make-changes">Make changes</h3>
+<p>Now that you have the most up-to-date version of all files, create a new markdown file in your lab section folder with a fun fact about you (or anything else if you’d rather) that you’ll upload to the repository.</p>
+</section>
+<section id="stage" class="level3">
+<h3 class="anchored" data-anchor-id="stage">Stage</h3>
+</section>
+<section id="commit" class="level3">
+<h3 class="anchored" data-anchor-id="commit">Commit</h3>
+</section>
+<section id="push" class="level3">
+<h3 class="anchored" data-anchor-id="push">Push</h3>
+</section>
 </section>
 <section id="branching" class="level2">
 <h2 class="anchored" data-anchor-id="branching">Branching</h2>
+<section id="when-and-why-to-branch" class="level3">
+<h3 class="anchored" data-anchor-id="when-and-why-to-branch">When and why to branch</h3>
+</section>
+<section id="create-a-branch" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-branch">Create a branch</h3>
+</section>
+<section id="commit-and-push-a-change" class="level3">
+<h3 class="anchored" data-anchor-id="commit-and-push-a-change">Commit and push a change</h3>
+</section>
+<section id="access-your-neighbors-branch" class="level3">
+<h3 class="anchored" data-anchor-id="access-your-neighbors-branch">Access your neighbor’s branch</h3>
+</section>
 </section>
 <section id="pull-requests" class="level2">
 <h2 class="anchored" data-anchor-id="pull-requests">Pull requests</h2>
@@ -318,6 +463,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="forks">Forks</h2>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
