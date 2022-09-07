@@ -21,7 +21,7 @@ website:
         contents:
           - about/syllabus.qmd
           - about/schedule.qmd
-          - about/philosophy.qmd
+          - about/outcomes.qmd
       - section: "Course materials"
         contents:
           - materials/lab-activities.qmd

@@ -17,7 +17,7 @@ editor: visual
 
 Class meetings are held 2pm -- 3:15pm Tuesdays and Thursdays in Ellison 2617.
 
-Section meetings are held Wednesdays:
+Section meetings are held on Wednesdays:
 
 -   2pm -- 2:50pm in Girvetz 2115;
 
@@ -70,6 +70,8 @@ Qualitative feedback is emphasized over numerical scores. Students are assessed 
 ## Policies
 
 ***Email.*** Course staff will make their best effort to reply to email within 48 weekday hours. However, due to high volume, staff cannot guarantee that all messages will receive replies.
+
+***Illness.*** Students who are ill are required to stay home. Students ill with COVID-19 must comply with university policy regarding reporting and quarantine. Accommodations will be made to ensure that students absent due to illness do not fall behind.
 
 ***Accommodations.*** Reasonable accommodations will be made for any student with a qualifying disability. Such requests should be made through the Disabled Students Program (DSP). More information, instructions on how to access accommodations, and information on related resources can be found on the [DSP website](https://dsp.sa.ucsb.edu/). *Note: in this class there are no timed assessments.*
 
