@@ -28,7 +28,7 @@ To complete the activity you'll need to:
 5.  Create a class folder for PSTAT197 somewhere on your machine, *e.g.,* `~/documents/pstat197`.
 :::
 
-## Create a local project
+## RStudio Setup
 
 Have a look at RStudio. Your TA will briefly review the (default) layout of the RStudio IDE. You should be able to identify/find the following:
 
@@ -41,6 +41,27 @@ Have a look at RStudio. Your TA will briefly review the (default) layout of the 
 -   environment
 
 -   history
+
+We'll use several R packages throughout the quarter. Some of these we will install on the go, but we can install several that we'll rely on now.
+
+::: callout-important
+## Action
+
+**Install packages**
+
+Navigate to the console and copy-paste the following commands. You only need to do this once.
+:::
+
+```{r, eval=F}
+# package install list 
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/scripts/package-installs.R'
+source(url)
+
+# clear environment
+rm(list = ls())
+```
+
+## Create a local project
 
 *Projects* are a means of keeping your work organized. When you create a project in a directory on your local machine, RStudio keeps track of project metadata, history, and the working environment so that every time you open the project you see whatever you had open when you last closed it.
 
@@ -65,17 +86,28 @@ Take a moment to observe the file navigator. It should consist of a single `exam
 
 **Populate your project**
 
--   Download the [air pollution data](pollution.csv)
+-   Open a new script: *File \> New File \> R Script*
 
--   Place
+-   Copy and paste the code chunk below into your script.
+
+-   Execute once, then save as `~/scripts/data-retrieval.R`
 :::
 
-```{r}
+```{r, eval = F}
 library(tidyverse)
 
+# retrieve pollution data
 url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/data/pollution.csv'
 pollution <- read_csv(url)
+
+# write as csv to file
+write_csv(pollution, file = 'data/pollution.csv')
+
+# clear environment
+rm(list = ls())
 ```
+
+Next,
 
 ## What's GitHub?
 
