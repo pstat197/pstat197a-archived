@@ -177,7 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../about/philosophy.html" class="sidebar-item-text sidebar-link">Classroom philosophy</a>
+  <a href="../../about/outcomes.html" class="sidebar-item-text sidebar-link">Learning outcomes</a>
   </div>
 </li>
       </ul>
@@ -190,11 +190,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../materials/lab-activities.html" class="sidebar-item-text sidebar-link">Lab activities</a>
-  </div>
-</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../materials/technology.html" class="sidebar-item-text sidebar-link">Technology</a>
@@ -219,6 +214,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#pre-lab-activity" id="toc-pre-lab-activity" class="nav-link active" data-scroll-target="#pre-lab-activity">Pre-lab activity</a>
   <ul class="collapse">
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#create-a-local-project" id="toc-create-a-local-project" class="nav-link" data-scroll-target="#create-a-local-project">Create a local project</a></li>
   <li><a href="#whats-github" id="toc-whats-github" class="nav-link" data-scroll-target="#whats-github">What’s GitHub?</a>
   <ul class="collapse">
   <li><a href="#git-and-github" id="toc-git-and-github" class="nav-link" data-scroll-target="#git-and-github">Git and GitHub</a></li>
@@ -234,20 +230,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#pull" id="toc-pull" class="nav-link" data-scroll-target="#pull">Pull</a></li>
   <li><a href="#make-changes" id="toc-make-changes" class="nav-link" data-scroll-target="#make-changes">Make changes</a></li>
-  <li><a href="#stage" id="toc-stage" class="nav-link" data-scroll-target="#stage">Stage</a></li>
-  <li><a href="#commit" id="toc-commit" class="nav-link" data-scroll-target="#commit">Commit</a></li>
+  <li><a href="#stage-and-commit-changes" id="toc-stage-and-commit-changes" class="nav-link" data-scroll-target="#stage-and-commit-changes">Stage and commit changes</a></li>
   <li><a href="#push" id="toc-push" class="nav-link" data-scroll-target="#push">Push</a></li>
   </ul></li>
   <li><a href="#branching" id="toc-branching" class="nav-link" data-scroll-target="#branching">Branching</a>
   <ul class="collapse">
-  <li><a href="#when-and-why-to-branch" id="toc-when-and-why-to-branch" class="nav-link" data-scroll-target="#when-and-why-to-branch">When and why to branch</a></li>
   <li><a href="#create-a-branch" id="toc-create-a-branch" class="nav-link" data-scroll-target="#create-a-branch">Create a branch</a></li>
-  <li><a href="#commit-and-push-a-change" id="toc-commit-and-push-a-change" class="nav-link" data-scroll-target="#commit-and-push-a-change">Commit and push a change</a></li>
   <li><a href="#access-your-neighbors-branch" id="toc-access-your-neighbors-branch" class="nav-link" data-scroll-target="#access-your-neighbors-branch">Access your neighbor’s branch</a></li>
   </ul></li>
   <li><a href="#pull-requests" id="toc-pull-requests" class="nav-link" data-scroll-target="#pull-requests">Pull requests</a></li>
-  <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow">Workflow</a></li>
-  <li><a href="#forks" id="toc-forks" class="nav-link" data-scroll-target="#forks">Forks</a></li>
+  <li><a href="#checklist" id="toc-checklist" class="nav-link" data-scroll-target="#checklist">Checklist</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -271,13 +263,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>This lab activity introduces GitHub repositories and basic Git actions; students will be expected to use these skills to access materials and complete assignments.</p>
+<p>This activity introduces GitHub repositories and basic Git actions; students will be expected to use these skills to access materials and complete assignments.</p>
 <section id="pre-lab-activity" class="level1">
 <h1>Pre-lab activity</h1>
-<p>Read this section and complete all instructions in the ‘action’ boxes before arriving at your lab section.</p>
+<p>Read this section and complete all instructions in the ‘action’ boxes during your lab section. Your TA will walk you through the pre-lab activity and help to troubleshoot issues and answer any questions.</p>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<p>To complete the lab activity you’ll need to:</p>
+<!--# TA ACTION: review the software tools with students; give time for students to complete installs if needed, encourage talking to neighbors, and ensure everyone has working installs, a github account, and access to the org before going ahead. You may need to send github org invites to students; prepare a list of email addresses for this purpose in advance, just in case. -->
+<p>To complete the pre-lab activity you’ll need to:</p>
 <ul>
 <li><p>have all of the software listed on the course technology page installed;</p></li>
 <li><p>find (or create) your <a href="https://github.com/">GitHub</a> account credentials.</p></li>
@@ -297,9 +290,14 @@ Action
 <li>Log in to your GitHub account.</li>
 <li>Accept the invitation to join the PSTAT197 GitHub organization. Check your UCSB email for the invitation. If you have not received one, request it from a TA or ULA.</li>
 <li>Open your GitHub client.</li>
+<li>Open RStudio.</li>
 </ol>
 </div>
 </div>
+</section>
+<section id="create-a-local-project" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-local-project">Create a local project</h2>
+<p>First open RStudio.</p>
 </section>
 <section id="whats-github" class="level2">
 <h2 class="anchored" data-anchor-id="whats-github">What’s GitHub?</h2>
@@ -396,8 +394,8 @@ Remarks
 </section>
 <section id="lab-activity" class="level1">
 <h1>Lab activity</h1>
-<p>Open your GitHub client and RStudio.</p>
-<!--# TA ACTION: create a markdown file just a few minutes before the lab will begin named after your lab section in a lab-specific directory e.g. '2pm-lab/about-us.md' with some small remark; try to come up with something fun/topical. push the file to the main branch -->
+<p>Open your GitHub client and RStudio. In RStudio, open the project associated with your clone of the sandbox repo.</p>
+<!--# INSTRUCTOR ACTION: create a markdown file just a few minutes before the lab will begin named after your lab section in a lab-specific directory e.g. '2pm-lab/about-us.md' with some small remark; try to come up with something fun/topical. push the file to the main branch -->
 <section id="basic-git-actions" class="level2">
 <h2 class="anchored" data-anchor-id="basic-git-actions">Basic Git actions</h2>
 <p>Here you’ll make a local change and then push that change to the remote repository.</p>
@@ -419,48 +417,162 @@ Action
 <li><p>In your GitHub client, open the sandbox repository and then look for a ‘Pull’ menu item.</p></li>
 <li><p>In the terminal: navigate to the root directory of the repository and <code>git pull</code></p></li>
 </ul>
-<p>Technically, <code>git pull</code> is <code>git fetch</code> + <code>git merge</code>. If you ever wish to examine changes without modifying local files, you can <code>git fetch</code>.</p>
+<p>Technically, <code>git pull</code> = <code>git fetch</code> + <code>git merge</code>. If you ever wish to examine changes without modifying local files, you can <code>git fetch</code>.</p>
 </div>
 </div>
-<p>Examine the updated local repository files; notice that there is now a folder named after your lab section.</p>
+<p>Examine the updated local repository files; notice that there is now a folder named after your lab section containing a markdown file. Open it up and have a look.</p>
 </section>
 <section id="make-changes" class="level3">
 <h3 class="anchored" data-anchor-id="make-changes">Make changes</h3>
 <p>Now that you have the most up-to-date version of all files, create a new markdown file in your lab section folder with a fun fact about you (or anything else if you’d rather) that you’ll upload to the repository.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Create a markdown file:</strong></p>
+<ol type="1">
+<li>In RStudio, select File &gt; New File &gt; Markdown File</li>
+<li>Add an ‘About Me’ or similar header (use one or more hashes <code>#</code> before the header text)</li>
+<li>Write a fun fact about yourself</li>
+<li>Save the file in your lab folder as <code>YOURGITHUBUSERNAME-about.md</code></li>
+</ol>
+</div>
+</div>
 </section>
-<section id="stage" class="level3">
-<h3 class="anchored" data-anchor-id="stage">Stage</h3>
-</section>
-<section id="commit" class="level3">
-<h3 class="anchored" data-anchor-id="commit">Commit</h3>
+<section id="stage-and-commit-changes" class="level3">
+<h3 class="anchored" data-anchor-id="stage-and-commit-changes">Stage and commit changes</h3>
+<p>Now that your new file is ready to go you can stage the changes to be committed to the repository and create a commit.</p>
+<p>A <em>commit</em> is a bundle of changes that will be submitted to the repository along with a message briefly explaining the changes made. Your GitHub client will often fill in a default message such as ‘update FILENAME.EXT’.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Stage and commit:</strong></p>
+<ul>
+<li><p>In your client, look for a menu item to add or stage changes. By default any changes made to any file will be included.</p>
+<ul>
+<li>Or in the terminal: <code>git add FILENAME</code></li>
+</ul></li>
+<li><p>Once you have staged changes, look for a menu item to commit changes. Add a message and commit the changes.</p>
+<ul>
+<li>Or in the terminal: <code>git add -m "your message here"</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<p>Often these actions are performed together. However, in some workflows it may make sense to stage changes incrementally and create commits that bundle several changes at once. For example, if you need to make an update that requires modifying files A, B, and C, it may make sense to edit and stage changes to A first, followed by B, followed by C, and create the commit only once the full update has been implemented.</p>
 </section>
 <section id="push" class="level3">
 <h3 class="anchored" data-anchor-id="push">Push</h3>
+<p>The last step is to push your commit to the remote repository. However, as you will see in a moment, too many people trying to push changes at once can create some problems.</p>
+<p>Your TA will instruct someone in your class to push their changes. The very first person to do this will have no problems, since their local repository is up to date with the remote.</p>
+<p>Your TA will then instruct someone else to try. But since the first person modified the remote repository, the next person to push changes will no longer be up to date. Git will detect this and the push won’t go through. The person must update their local repository first, preferably by <code>git pull</code>.</p>
+<p>Under the hood, the update action will merge the first person’s commit with the second person’s local repository. Git is fairly good at doing this in such a way that changes don’t get lost or overwritten, but there are some conflicts that it can’t resolve automatically. That will happen if multiple changes are made to the same line of the same file.</p>
+<p>In this activity everyone is working on independent files and there’s no overlap between changes, so although it would be a bit messy to have everyone pull/push sequentially, in principle it could be done. However, there is a more efficient way to work in parallel: by creating <em>branches</em>.</p>
 </section>
 </section>
 <section id="branching" class="level2">
 <h2 class="anchored" data-anchor-id="branching">Branching</h2>
-<section id="when-and-why-to-branch" class="level3">
-<h3 class="anchored" data-anchor-id="when-and-why-to-branch">When and why to branch</h3>
-</section>
+<p>Inspect your GitHub client closely, and note that you are currently on the ‘main’ branch of the repository. Think of this as the primary version of the repository. Branches allow contributors to create parallel versions of the repository that they can modify for development purposes while leaving the primary version unaffected.</p>
 <section id="create-a-branch" class="level3">
 <h3 class="anchored" data-anchor-id="create-a-branch">Create a branch</h3>
-</section>
-<section id="commit-and-push-a-change" class="level3">
-<h3 class="anchored" data-anchor-id="commit-and-push-a-change">Commit and push a change</h3>
+<p>Here you’ll use branches to avoid stepping on each others’ toes while pushing your commits. The strategy will be to create a personal branch, push your commit to that branch, and then merge the branch back into the main branch of the repository.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Create a branch and push your previous commit:</strong></p>
+<ol type="1">
+<li>In your GitHub client, look for a menu item to create and switch to a new branch.</li>
+<li>Name your branch your GitHub username.</li>
+<li>Check to see that you are currently on your personal branch.</li>
+<li>Push your previous commit. You shouldn’t have to repeat any of the previous steps, but you can if need be.</li>
+</ol>
+</div>
+</div>
 </section>
 <section id="access-your-neighbors-branch" class="level3">
 <h3 class="anchored" data-anchor-id="access-your-neighbors-branch">Access your neighbor’s branch</h3>
+<p>While often the main purpose of branching is to create a version of the repository that only you will modify, contributors can inspect any branch of the repository. This can be useful for sharing ideas or getting input or help.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Make a commit to your neighbor’s branch</strong></p>
+<ol type="1">
+<li>Find out your neighbor’s username and switch to their branch in your GitHub client.</li>
+<li>In RStudio, verify that you are on their branch by executing <code>git status</code> in the terminal.</li>
+<li>Open their markdown file, ask them a simple question about themselves (nothing too personal, please), and add the information to their markdown file.</li>
+<li>Stage, commit, and push the change.</li>
+<li>When your neighbor has done the same with you, switch back to your own branch in your GitHub client and pull changes.</li>
+</ol>
+</div>
+</div>
 </section>
 </section>
 <section id="pull-requests" class="level2">
 <h2 class="anchored" data-anchor-id="pull-requests">Pull requests</h2>
+<p>Once you are ready to integrate changes you’ve developed on a branch you can open a <em>pull request</em> to merge the development branch with the main branch. (Technically, pull requests can be opened between any two branches.)</p>
+<p>‘Pull request’ is a bit of an odd term; think of it as you making a <em>request</em> that your collaborators <em>pull</em> your changes for review.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Open a pull request:</strong></p>
+<ul>
+<li><p>In your GitHub client, find a menu item for opening a pull request.</p></li>
+<li><p>Specify the pull request from your branch to the main branch and submit.</p></li>
+</ul>
+</div>
+</div>
+<p>Once a pull request is opened, usually a collaborator with maintain privileges must be the one to merge changes and close the request. However, the rules for this depend on repository settings. For this repository, all contributors can merge and close pull requests.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Open the repository <a href="https://github.com/pstat197/sandbox" class="uri">https://github.com/pstat197/sandbox</a> in the browser. Navigate to pull requests.</p>
+<p>Find your neighbor’s pull request; merge their changes and close the request. Then delete the branch.</p>
+</div>
+</div>
 </section>
-<section id="workflow" class="level2">
-<h2 class="anchored" data-anchor-id="workflow">Workflow</h2>
-</section>
-<section id="forks" class="level2">
-<h2 class="anchored" data-anchor-id="forks">Forks</h2>
+<section id="checklist" class="level2">
+<h2 class="anchored" data-anchor-id="checklist">Checklist</h2>
 
 
 </section>
@@ -565,6 +677,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">PSTAT197A Fall 2022</div>
+  </div>
+</footer>
 
 
 

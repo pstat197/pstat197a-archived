@@ -3,7 +3,7 @@ title: "Technology"
 editor: visual
 ---
 
-## Software
+## Software {#sec-software}
 
 Computing in PSTAT197A will be shown in R, and codes and other materials will be shared via GitHub. The following software will be required to access course materials:
 
@@ -19,11 +19,13 @@ Installations and basic functionality will be covered in the first section meeti
 
 While PSTAT197A is not language-agnostic and some instruction in R is provided, it is also not a course especially emphasizing programming technique in R. Students are free to use or experiment with other software at their discretion provided it does not interfere with their participation in the class, but are expected to submit work and collaborate using RStudio-supported files.
 
-## GitHub
+## GitHub {#sec-github}
 
 Students will learn and practice basic functionality of Git and GitHub for version control and collaboration by accessing course materials via GitHub repositories and submitting work via repository contributions.
 
-We have a class [GitHub organization](https://github.com/pstat197) for the data science capstone. Enrolled students should request an email invitation from course staff if they have not received one.
+We have a class [GitHub organization](https://github.com/pstat197) for the data science capstone. Email invitations will be sent to the university email addresses of all enrolled students. Enrolled students should request an email invitation from course staff if they have not received one.
+
+To join the organization students will need to create a GitHub account if they do not already have one. Here is some [advice on choosing a username](https://happygitwithr.com/github-acct.html#username-advice).
 
 Students have write access to all repositories within the organization and the ability to create their own public or private repositories. Course staff have administrator privileges.
 

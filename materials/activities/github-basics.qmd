@@ -1,132 +1,16 @@
 ---
-title: "Github basics"
+title: "GitHub basics"
 editor: visual
 code-copy: true
 ---
 
-This lab activity introduces GitHub repositories and basic Git actions; students will be expected to use these skills to access materials and complete assignments.
-
-# Pre-lab activity
-
-Read this section and complete all instructions in the 'action' boxes before arriving at your lab section.
-
-## Prerequisites
-
-To complete the lab activity you'll need to:
-
--   have all of the software listed on the course technology page installed;
-
--   find (or create) your [GitHub](https://github.com/) account credentials.
-
-::: callout-important
-## Action
-
-**Preparations:**
-
-1.  Log in to your GitHub account.
-2.  Accept the invitation to join the PSTAT197 GitHub organization. Check your UCSB email for the invitation. If you have not received one, request it from a TA or ULA.
-3.  Open your GitHub client.
-:::
-
-## What's GitHub?
-
-### Git and GitHub
-
-At some point in time -- possibly just a moment ago -- you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.
-
-**Git is version control software** that enables you to systematically track and control file changes within a *repository* -- a collection of files possibly with some directory structure. (A repository is simply a storage place.)
-
-**GitHub is an online platform** for hosting repositories remotely. Anyone with access to a repository can make changes to files in the repository, and this enables multiple people to collaborate on code.
-
-### local \<\> remote
-
-Usually remote repositories are not updated directly because contributors need to execute codes to test their changes and the remote server that hosts the repository is not equipped to do this.
-
-So, making changes to a repository typically involves communicating information between *local* and *remote* locations. If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:
-
--   create/update local copies of repository files, say, on my laptop;
-
--   make the desired change(s) locally;
-
--   send the changes back to the remote repository;
-
--   update the remote repository by accepting changes.
-
-These steps correspond to a sequence of **Git actions**: actions that modify the repository files and/or metadata. The most basic sequence is:
-
--   `git pull` update the local repository (technically, fetch changes + merge changes from the remote repository);
-
--   `git add` stage file changes to be committed to the local repository;
-
--   `git commit` commit staged changes to the local repository;
-
--   `git push` send committed changes back to the remote repository.
-
-Sometimes contributors take different or additional actions; the complexity of the Git actions required to make a change depends largely on repository settings, permissions, and agreements among collaborators about how workflow should be structured.
-
-### Why are we using GitHub repositories?
-
-Maintaining communication between local and remote copies of a set of files might seem overly complicated, but version control has many benefits, including the ability to track changes and contributions precisely, work in parallel with other contributors, revert to prior versions of files, keep track of issues, quickly share and disseminate work, and solicit user contributions from the coding public. Arguably, for all of these reasons and because of its widespread use, Git/GitHub is a must for data scientists.
-
-In this class you'll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework. This should equip you to utilize a repository for efficient collaboration with your peers on your capstone project.
-
-## Creating a clone
-
-In Git lingo, a *clone* is a local copy of a remote repository. Creating a clone copies files and establishes the link between local and remote repositories so that changes can be sent to and received from the remote repository. ***You only need to create a clone once.***
-
-To clone a repository, all one needs is:
-
--   the remote location URL;
-
--   the local destination where the clone will be created;
-
--   permission from the repository owner, if private.
-
-I've created a 'sandbox' repository (for playing in) at <https://github.com/pstat197/sandbox>. It's a public repository, so no special permissions are needed. Follow the link to see the repository contents in your browser.
-
-::: callout-important
-## Action
-
-**Clone the sandbox repository:**
-
-1.  Open your GitHub client (GitKracken or GitHub Desktop or similar) and ensure you are logged in to your GitHub account.
-2.  Look for a 'Clone Repo' menu item or similar and simply input the URL and the place you'd like to clone it; proceed through any prompts.
-3.  Check your file navigator to confirm that the repository files were copied.
-:::
-
-An alternative possibility is to create the clone using a terminal command. In the terminal, navigate to the desired destination, and input:
-
-``` bash
-git clone https://github.com/pstat197/sandbox
-```
-
-::: callout-note
-## Remarks
-
-**On terminal commands:**
-
--   It's recommended to manage Git actions through a visual client, as it's much easier to see and understand what's happening.
-
--   However, if you know exactly what you're doing, executing simple actions via Git bash in the terminal can be more efficient at times.
-
--   For example, you can keep a terminal open in RStudio and manage your repository workflow from there, without having to toggle between environments.
-
--   Try experimenting with terminal commands from RStudio after you have a little experience with basic Git actions.
-:::
-
-## Pre-lab checklist
-
-Have you completed all of the pre-lab activity action items?
-
-1.  Install software: R, RStudio, Git, and a GitHub client
-2.  Create a GitHub account and join the [course GitHub org](https://github.com/pstat197/)
-3.  Clone the sandbox repo <https://github.com/pstat197/sandbox>
+This activity introduces GitHub repositories and basic Git actions; students will be expected to use these skills to access materials and complete assignments.
 
 # Lab activity
 
 Open your GitHub client and RStudio. In RStudio, open the project associated with your clone of the sandbox repo.
 
-<!--# TA ACTION: create a markdown file just a few minutes before the lab will begin named after your lab section in a lab-specific directory e.g. '2pm-lab/about-us.md' with some small remark; try to come up with something fun/topical. push the file to the main branch -->
+<!--# INSTRUCTOR ACTION: create a markdown file just a few minutes before the lab will begin named after your lab section in a lab-specific directory e.g. '2pm-lab/about-us.md' with some small remark; try to come up with something fun/topical. push the file to the main branch -->
 
 ## Basic Git actions
 

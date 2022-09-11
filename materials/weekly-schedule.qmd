@@ -1,0 +1,88 @@
+---
+title: "Weekly schedule"
+editor: visual
+---
+
+## Course schedule
+
+This schedule is tentative and may be adjusted at the discretion of the instructor. Check back for updates.
+
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| Week       | Theme                      | Tuesday meeting                                | Thursday meeting                                  | Section meeting                                |
++============+============================+================================================+===================================================+================================================+
+| 0          | Introductions              | NO CLASS                                       | Lecture:                                          | NO SECTIONS                                    |
+|            |                            |                                                |                                                   |                                                |
+|            |                            |                                                | -   on research projects in(volving) data science |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| 1          | Introductions              | Lecture:                                       | Activity:                                         | Software and technology overview               |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   on data science as a discipline            | -   collaboration using GitHub                    |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| 2          | Module 0: Class data       | 0.1 Lecture/discussion:                        | 0.2 Activity:                                     | tidyverse basics                               |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   introducing class survey data              | -   exploratory and descriptive analysis          |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| 3          | Module 1: biomarkers       | 1.1 Discussion/lecture:                        | 1.2 Lecture:                                      | modelr and tidymodels                          |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   sharing results of survey data analysis;   | -   on prediction                                 |                                                |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   introducing biomarker data                 |                                                   |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| 4          | Module 1: biomarkers       | 1.3 Lecture:                                   | 1.4 Lecture/discussion:                           | classification using glm, glmnet, randomForest |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   on classification                          | -   on variable selection;                        |                                                |
+|            |                            |                                                |                                                   |                                                |
+|            |                            |                                                | -   review published analysis of biomarker data   |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| 5          | Module 2: soil temperature | 2.1 Discussion/lecture:                        | 2.2 Lecture:                                      | curve fitting                                  |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   sharing results of biomarker analysis;     | -   on time                                       |                                                |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   introducing soil temperature data          |                                                   |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| 6          | Module 2: soil temperature | 2.3 Lecture:                                   | 2.4 Discussion: results                           | forecasting; interpolation                     |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   on space                                   |                                                   |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| 7          | Module 3: web fraud        | 3.1 Lecture/discussion:                        | 3.2 Lecture:                                      | strings; text processing                       |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   sharing analysis of soil temperature data; | -   on text as data                               |                                                |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   introducing web fraud data                 |                                                   |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| 8          | Module 3: web fraud        | 3.3 Lecture:                                   | 3.4 Activity:                                     | keras                                          |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   on multiclass classification               | -   measuring classification accuracy             |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| 9          | Module 4: vignettes        | 4.1 Activity:                                  | NO CLASS                                          | NO LAB                                         |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   workshopping vignettes                     |                                                   |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+| 10         | Module 4: vignettes        | 4.2 Activity:                                  | 4.3 Activity/discussion:                          | NO LAB                                         |
+|            |                            |                                                |                                                   |                                                |
+|            |                            | -   teaching exchange                          | -   teaching exchange;                            |                                                |
+|            |                            |                                                |                                                   |                                                |
+|            |                            |                                                | -   closing                                       |                                                |
++------------+----------------------------+------------------------------------------------+---------------------------------------------------+------------------------------------------------+
+
+### Week 0
+
+-   ***Thursday meeting:*** Course orientation \[slides\] \[html\]
+
+-   ***Assignment*** due by next class meeting:
+
+    -   install [course software](technology.qmd#sec-software);
+
+    -   join [github org](technology.qmd#sec-github);
+
+    -   fill out [intake form](links.qmd#sec-class-forms);
+
+    -   read [MDSR section 1.1](https://mdsr-book.github.io/mdsr2e/ch-prologue.html#what-is-data-science) (it's short!)
+
+### Week 1 {#sec-week-1}
+
+-   ***Tuesday meeting:*** On research projects in(volving) data science \[slides\] \[html\] \[source\]
+
+-   ***Section meeting:*** software and technology overview \[activity\]
+
+-   ***Thursday meeting:*** basic GitHub actions \[activity\]

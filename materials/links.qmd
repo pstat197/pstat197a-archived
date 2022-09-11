@@ -2,7 +2,7 @@
 title: "Links"
 ---
 
-## Class forms
+## Class forms {#sec-class-forms}
 
 -   [Attendance reporting form](https://forms.gle/ceJsFyuw6i58j6tBA); fill out once per class meeting.
 
