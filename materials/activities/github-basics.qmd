@@ -1,0 +1,147 @@
+---
+title: "GitHub basics"
+editor: visual
+code-copy: true
+---
+
+This activity introduces GitHub repositories and basic Git actions; students will be expected to use these skills to access materials and complete assignments.
+
+# Lab activity
+
+Open your GitHub client and RStudio. In RStudio, open the project associated with your clone of the sandbox repo.
+
+<!--# INSTRUCTOR ACTION: create a markdown file just a few minutes before the lab will begin named after your lab section in a lab-specific directory e.g. '2pm-lab/about-us.md' with some small remark; try to come up with something fun/topical. push the file to the main branch -->
+
+## Basic Git actions
+
+Here you'll make a local change and then push that change to the remote repository.
+
+### Pull
+
+As discussed in the pre-lab activity, the first step to making a change is beginning with the most up-to-date version of the repository files. Your TA will have made a small change to the repository since you first cloned it, so we'll start with retrieving that change.
+
+::: callout-important
+## Action
+
+**Pull changes from the remote repository:**
+
+-   In your GitHub client, open the sandbox repository and then look for a 'Pull' menu item.
+
+-   In the terminal: navigate to the root directory of the repository and `git pull`
+
+Technically, `git pull` = `git fetch` + `git merge`. If you ever wish to examine changes without modifying local files, you can `git fetch`.
+:::
+
+Examine the updated local repository files; notice that there is now a folder named after your lab section containing a markdown file. Open it up and have a look.
+
+### Make changes
+
+Now that you have the most up-to-date version of all files, create a new markdown file in your lab section folder with a fun fact about you (or anything else if you'd rather) that you'll upload to the repository.
+
+::: callout-important
+## Action
+
+**Create a markdown file:**
+
+1.  In RStudio, select File \> New File \> Markdown File
+2.  Add an 'About Me' or similar header (use one or more hashes `#` before the header text)
+3.  Write a fun fact about yourself
+4.  Save the file in your lab folder as `YOURGITHUBUSERNAME-about.md`
+:::
+
+### Stage and commit changes
+
+Now that your new file is ready to go you can stage the changes to be committed to the repository and create a commit.
+
+A *commit* is a bundle of changes that will be submitted to the repository along with a message briefly explaining the changes made. Your GitHub client will often fill in a default message such as 'update FILENAME.EXT'.
+
+::: callout-important
+## Action
+
+**Stage and commit:**
+
+-   In your client, look for a menu item to add or stage changes. By default any changes made to any file will be included.
+
+    -   Or in the terminal: `git add FILENAME`
+
+-   Once you have staged changes, look for a menu item to commit changes. Add a message and commit the changes.
+
+    -   Or in the terminal: `git add -m "your message here"`
+:::
+
+Often these actions are performed together. However, in some workflows it may make sense to stage changes incrementally and create commits that bundle several changes at once. For example, if you need to make an update that requires modifying files A, B, and C, it may make sense to edit and stage changes to A first, followed by B, followed by C, and create the commit only once the full update has been implemented.
+
+### Push
+
+The last step is to push your commit to the remote repository. However, as you will see in a moment, too many people trying to push changes at once can create some problems.
+
+Your TA will instruct someone in your class to push their changes. The very first person to do this will have no problems, since their local repository is up to date with the remote.
+
+Your TA will then instruct someone else to try. But since the first person modified the remote repository, the next person to push changes will no longer be up to date. Git will detect this and the push won't go through. The person must update their local repository first, preferably by `git pull`.
+
+Under the hood, the update action will merge the first person's commit with the second person's local repository. Git is fairly good at doing this in such a way that changes don't get lost or overwritten, but there are some conflicts that it can't resolve automatically. That will happen if multiple changes are made to the same line of the same file.
+
+In this activity everyone is working on independent files and there's no overlap between changes, so although it would be a bit messy to have everyone pull/push sequentially, in principle it could be done. However, there is a more efficient way to work in parallel: by creating *branches*.
+
+## Branching
+
+Inspect your GitHub client closely, and note that you are currently on the 'main' branch of the repository. Think of this as the primary version of the repository. Branches allow contributors to create parallel versions of the repository that they can modify for development purposes while leaving the primary version unaffected.
+
+### Create a branch
+
+Here you'll use branches to avoid stepping on each others' toes while pushing your commits. The strategy will be to create a personal branch, push your commit to that branch, and then merge the branch back into the main branch of the repository.
+
+::: callout-important
+## Action
+
+**Create a branch and push your previous commit:**
+
+1.  In your GitHub client, look for a menu item to create and switch to a new branch.
+2.  Name your branch your GitHub username.
+3.  Check to see that you are currently on your personal branch.
+4.  Push your previous commit. You shouldn't have to repeat any of the previous steps, but you can if need be.
+:::
+
+### Access your neighbor's branch
+
+While often the main purpose of branching is to create a version of the repository that only you will modify, contributors can inspect any branch of the repository. This can be useful for sharing ideas or getting input or help.
+
+::: callout-important
+## Action
+
+**Make a commit to your neighbor's branch**
+
+1.  Find out your neighbor's username and switch to their branch in your GitHub client.
+2.  In RStudio, verify that you are on their branch by executing `git status` in the terminal.
+3.  Open their markdown file, ask them a simple question about themselves (nothing too personal, please), and add the information to their markdown file.
+4.  Stage, commit, and push the change.
+5.  When your neighbor has done the same with you, switch back to your own branch in your GitHub client and pull changes.
+:::
+
+## Pull requests
+
+Once you are ready to integrate changes you've developed on a branch you can open a *pull request* to merge the development branch with the main branch. (Technically, pull requests can be opened between any two branches.)
+
+'Pull request' is a bit of an odd term; think of it as you making a *request* that your collaborators *pull* your changes for review.
+
+::: callout-important
+## Action
+
+**Open a pull request:**
+
+-   In your GitHub client, find a menu item for opening a pull request.
+
+-   Specify the pull request from your branch to the main branch and submit.
+:::
+
+Once a pull request is opened, usually a collaborator with maintain privileges must be the one to merge changes and close the request. However, the rules for this depend on repository settings. For this repository, all contributors can merge and close pull requests.
+
+::: callout-important
+## Action
+
+Open the repository <https://github.com/pstat197/sandbox> in the browser. Navigate to pull requests.
+
+Find your neighbor's pull request; merge their changes and close the request. Then delete the branch.
+:::
+
+## Checklist

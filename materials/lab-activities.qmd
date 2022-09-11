@@ -1,0 +1,7 @@
+---
+title: "Lab activities"
+editor: visual
+execute-dir: project
+---
+
+-   [Lab 1](labs/lab1-github.qmd) on GitHub basics

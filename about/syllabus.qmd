@@ -1,0 +1,78 @@
+---
+title: "Course syllabus"
+subtitle: "Data science capstone preparation"
+author: "PSTAT197A/CMPSC190DD"
+author-title: "Course listing"
+date: "09/01/2022"
+date-format: "MMMM YYYY"
+published-title: "Updated"
+editor: visual
+---
+
+***Concurrent course listing:*** PSTAT197A and CMPSC190DD are held concurrently; enrollment is by instructor consent and admitted students may enroll under either listing. The course content, expectations, assessments, and course policies are identical for students enrolled in either course.
+
+***Catalog description:*** Introduction to research skills. Discussion of current research trends, writing literature reviews, etc. Students will be required to present materials reflecting their interests, which will be critically appraised for both content and presentation. Emphasis will be placed on aiding students to acquire a high-level of professionalism. *Prerequisite: PSTAT126.*
+
+## Meetings
+
+Class meetings are held 2pm -- 3:15pm Tuesdays and Thursdays in Ellison 2617.
+
+Section meetings are held on Wednesdays:
+
+-   2pm -- 2:50pm in Girvetz 2115;
+
+-   3pm -- 3:50pm in Girvetz 2116;
+
+-   4pm -- 4:50pm in North Hall 1109.
+
+## Staff
+
+***Instructor**:*
+
+-   *Trevor Ruiz.* Visiting assistant professor and co-instructor for 2021-2022 capstone projects.
+
+***Teaching assistants:***
+
+-   *Erika McPhillips.* MS student and capstone project mentor in 2021-2022.
+
+-   *Joshua Bang.* MS student and capstone project mentor in 2021-2022.
+
+-   *Meghan Elcheikhali.* PhD student and capstone project mentor in 2021-2022.
+
+***Undergraduate learning assistant:***
+
+-   *Yan Lashchev.* BS student and Data Science Fellow at UCSB in 2021-2022.
+
+## Expectations and assessments
+
+Much of the course is designed around group activity and discussion. Students are therefore expected to:
+
+-   prepare for class meetings in advance by completing any assigned reading or activity;
+
+-   attend and actively participate in class meetings and section meetings;
+
+-   provide meaningful, timely, and concrete contributions to group activities.
+
+Students having any difficulty in meeting these expectations should raise the issue(s) promptly with the instructor.
+
+Qualitative feedback is emphasized over numerical scores. Students are assessed on:
+
+-   attendance, preparation, and participation;
+
+-   quality of submitted work;
+
+-   individual contributions to group assignments;
+
+-   oral interview.
+
+## Policies
+
+***Email.*** Course staff will make their best effort to reply to email within 48 weekday hours. However, due to high volume, staff cannot guarantee that all messages will receive replies.
+
+***Illness.*** Students who are ill are required to stay home. Students ill with COVID-19 must comply with university policy regarding reporting and quarantine. Accommodations will be made to ensure that students absent due to illness do not fall behind.
+
+***Accommodations.*** Reasonable accommodations will be made for any student with a qualifying disability. Such requests should be made through the Disabled Students Program (DSP). More information, instructions on how to access accommodations, and information on related resources can be found on the [DSP website](https://dsp.sa.ucsb.edu/). *Note: in this class there are no timed assessments.*
+
+***Letter grades.*** Letter grades are assigned based only on the assessments identified above and according to [university guidelines](https://my.sa.ucsb.edu/catalog/Current/AcademicPoliciesProcedures/GradingSystem.aspx), with the relative weighting of assessments determined at the discretion of the instructor. While grade calculations will not be disclosed, students are entitled to an explanation of the criteria used to determine their grades if desired. Grades will not be changed except in the case of clerical errors. If students feel their grade has been unfairly assigned, they are entitled to contest it following [UCSB procedure for contesting grades](https://my.sa.ucsb.edu/catalog/Current/AcademicPoliciesProcedures/ContestedGrades.aspx).
+
+***Conduct.*** All course participants are expected to maintain respectful and honorable conduct consistent with [UCSB ethical standards](https://www.compliance.ucsb.edu/ethics). Students uncomfortable with the behavior of another course participant for any reason should notify the instructor, course staff, or, if the complaint relates to course staff conduct, an administrative or departmental officer. Evidence of [academic dishonesty](https://studentconduct.sa.ucsb.edu/academic-integrity) will be reported to the Office of Student Conduct (OSC); evidence of problematic behavior will be addressed on a case-by-case basis in accord with university policies.

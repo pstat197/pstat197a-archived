@@ -3,12 +3,31 @@ project:
   output-dir: docs
 
 website:
-  title: "pstat197a"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+  page-footer: "Created for PSTAT197A Fall 2022 by Trevor Ruiz using Quarto; hex logo by Priscilla Siow."
+  # reader-mode: true
+  repo-url: "https://github.com/pstat197/pstat197a"
+  sidebar:
+    title: "Data Science Capstone Preparation"
+    style: "docked"
+    search: true
+    logo: "img/ucsbds_hex.png"
+    tools: 
+      - icon: github
+        href: https://github.com/pstat197
+      - icon: slack
+        href: https://ucsbdscapstone.slack.com
+    contents:
+      - section: "About"
+        contents:
+          - about/syllabus.qmd
+          - about/outcomes.qmd
+      - section: "Course materials"
+        contents:
+          # - materials/weekly-schedule.qmd
+          - materials/technology.qmd
+          - materials/links.qmd
+          
+        
 
 format:
   html:
