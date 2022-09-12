@@ -23,7 +23,7 @@ website:
           - about/outcomes.qmd
       - section: "Course materials"
         contents:
-          # - materials/weekly-schedule.qmd
+          - materials/weekly-schedule.qmd
           - materials/technology.qmd
           - materials/links.qmd
           
