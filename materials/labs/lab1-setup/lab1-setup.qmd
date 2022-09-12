@@ -137,7 +137,7 @@ Next, we'll do a simple regression analysis.
 -   Save in the `scripts` folder as `slr-analysis.R`
 :::
 
-```{r, message = F}
+```{r, message = F, warning = F}
 library(tidyverse)
 
 # load data
@@ -151,11 +151,17 @@ ggplot(pollution,
 
 # compute SLR fit
 fit <- lm(Mort ~ log(SO2), data = pollution)
+broom::tidy(fit)
 
 # interpret
 fit_ci <- confint(fit, parm = 'log(SO2)')*log(1.2)
 
-paste('With 95% confidence, every 20% increase in sulfur dioxide pollution is associated with an increase in two-year mortality rate between', round(fit_ci[1], 2), 'and', round(fit_ci[2], 2), 'per 100k', sep = ' ') %>% print()
+paste('With 95% confidence, every 20% increase in sulfur dioxide pollution is associated with an increase in two-year mortality rate between', 
+      round(fit_ci[1], 2), 
+      'and', 
+      round(fit_ci[2], 2), 
+      'per 100k', sep = ' ') %>% 
+  print()
 ```
 
 <!--# TA COMMENT: show everyone what their directories should look like at completion. mention that the project treats the project directory as the working directory, so scripts stored anywhere in the project still parse directory paths relative to the project directory, NOT the file location. -->
