@@ -6,6 +6,36 @@ code-copy: true
 
 This activity introduces GitHub repositories and basic Git actions; students will be expected to use these skills to access materials and complete assignments.
 
+### Why are we using Git and GitHub?
+
+Version control has many benefits, including the ability to track changes and contributions precisely, work in parallel with other contributors, revert to prior versions of files, keep track of issues, quickly share and disseminate work, and solicit user contributions from the coding public. Arguably, for all of these reasons and because of its widespread use, Git/GitHub is a must for data scientists.
+
+In this class you'll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework. This should equip you to utilize a repository for efficient collaboration with your peers on your capstone project.
+
+If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:
+
+-   create/update local copies of repository files, say, on my laptop;
+
+-   make the desired change(s) locally;
+
+-   send the changes back to the remote repository;
+
+-   update the remote repository by accepting changes.
+
+These steps correspond to a sequence of **Git actions**: actions that modify the repository files and/or metadata. The most basic sequence is:
+
+-   `git pull` update the local repository (technically, fetch changes + merge changes from the remote repository);
+
+-   `git add` stage file changes to be committed to the local repository;
+
+-   `git commit` commit staged changes to the local repository;
+
+-   `git push` send committed changes back to the remote repository.
+
+Sometimes contributors take different or additional actions; the complexity of the Git actions required to make a change depends largely on repository settings, permissions, and agreements among collaborators about how workflow should be structured.
+
+### 
+
 # Lab activity
 
 Open your GitHub client and RStudio. In RStudio, open the project associated with your clone of the sandbox repo.

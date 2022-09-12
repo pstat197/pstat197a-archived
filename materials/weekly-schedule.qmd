@@ -83,6 +83,6 @@ This schedule is tentative and may be adjusted at the discretion of the instruct
 
 -   ***Tuesday meeting:*** On research projects in(volving) data science \[slides\] \[html\] \[source\]
 
--   ***Section meeting:*** software and technology overview [\[activity](labs/lab1-setup.qmd)\]
+-   ***Section meeting:*** software and technology overview [\[activity](labs/lab1-setup/lab1-setup.qmd)\]
 
 -   ***Thursday meeting:*** basic GitHub actions \[activity\]

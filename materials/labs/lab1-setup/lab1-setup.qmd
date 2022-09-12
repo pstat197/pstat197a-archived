@@ -8,7 +8,7 @@ Read this and complete all instructions in the 'action' boxes during your lab se
 
 ## Prerequisites
 
-<!--# TA ACTION: review the software tools with students; give time for students to complete installs if needed, encourage talking to neighbors, and ensure everyone has working installs, a github account, and access to the org before going ahead. You may need to send github org invites to students; prepare a list of email addresses for this purpose in advance, just in case. -->
+<!--# TA ACTION: ensure everyone has working installs, a github account, and access to the org before going ahead. You may need to send github org invites to students; prepare a list of email addresses for this purpose in advance, just in case. There may be time to allow a few minutes for anyone who needs the time to complete installs, but if need be you can pair students. -->
 
 To complete the activity you'll need to:
 
@@ -24,13 +24,19 @@ To complete the activity you'll need to:
 1.  Log in to your GitHub account.
 2.  Accept the invitation to join the PSTAT197 GitHub organization. Check your UCSB email for the invitation. If you have not received one, request it from a TA or ULA.
 3.  Open your GitHub client.
-4.  Open RStudio.
+4.  Open a new session in RStudio.
 5.  Create a class folder for PSTAT197 somewhere on your machine, *e.g.,* `~/documents/pstat197`.
 :::
 
-## RStudio Setup
+## RStudio projects
 
-Have a look at RStudio. Your TA will briefly review the (default) layout of the RStudio IDE. You should be able to identify/find the following:
+First we'll get acquainted with the basic functionality of the RStudio IDE and the use of projects as a means of organizing files. If you've already used RStudio, great -- this will still serve to introduce you to how we'll use RStudio projects in this class.
+
+### RStudio Setup
+
+<!--# TA ACTION: take a minute or two to review the IDE layout in RStudio. point out the bulletted items and say a word or two about each one. -->
+
+Your TA will briefly review the (default) layout of the RStudio IDE. You should be able to identify/find the following:
 
 -   console
 
@@ -49,7 +55,7 @@ We'll use several R packages throughout the quarter. Some of these we will insta
 
 **Install packages**
 
-Navigate to the console and copy-paste the following commands. You only need to do this once.
+Navigate to the console and copy-paste the following commands. You only need to do this once. This will take a minute or two to complete.
 :::
 
 ```{r, eval=F}
@@ -61,7 +67,7 @@ source(url)
 rm(list = ls())
 ```
 
-## Create a local project
+### Create a local project
 
 *Projects* are a means of keeping your work organized. When you create a project in a directory on your local machine, RStudio keeps track of project metadata, history, and the working environment so that every time you open the project you see whatever you had open when you last closed it.
 
@@ -79,25 +85,31 @@ rm(list = ls())
 *Comment:* when naming files it's good practice to avoid spaces, special characters, and the like. A naming convention we try to follow: choose a descriptive name comprising 1-3 words or common abbreviations separated by hyphens.
 :::
 
-Take a moment to observe the file navigator. It should consist of a single `example-project.Rproj` file. We may as well populate the project with a few files -- so let's add a dataset and write a short script, as if we're just starting a data analysis.
+Take a moment to observe the file navigator. It should consist of a single `example-project.Rproj` file.
+
+### Add content
+
+We may as well populate the project with a few files -- so let's add a dataset and write a short script, as if we're just starting a data analysis.
 
 ::: callout-important
 ## Action
 
-**Populate your project**
+**Retrieve data and store a local copy**
 
 -   Open a new script: *File \> New File \> R Script*
 
+-   In the navigator, create a folder called `data` and a folder called `scripts`
+
 -   Copy and paste the code chunk below into your script.
 
--   Execute once, then save as `~/scripts/data-retrieval.R`
+-   Execute once, then save in the `scripts` folder as `data-retrieval.R` and close
 :::
 
 ```{r, eval = F}
 library(tidyverse)
 
 # retrieve pollution data
-url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/data/pollution.csv'
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab1-setup/data/pollution.csv'
 pollution <- read_csv(url)
 
 # write as csv to file
@@ -107,15 +119,60 @@ write_csv(pollution, file = 'data/pollution.csv')
 rm(list = ls())
 ```
 
-Next,
+<!--# TA COMMENT: you might pause here and mention a few things. first, we've used a script (not an rmarkdown file) because we only have R codes and no text content (many students acquire the bad habit of working in rmarkdown when writing codes). second, storing a script like this might seem silly but it does establish a record of the data source -->
 
-## What's GitHub?
+Next, we'll do a simple regression analysis.
+
+::: callout-important
+## Action
+
+**Create a script**
+
+-   Create a new script as before
+
+-   Copy-paste the code chunk below into your script
+
+-   Execute once and examine the results
+
+-   Save in the `scripts` folder as `slr-analysis.R`
+:::
+
+```{r, message = F}
+library(tidyverse)
+
+# load data
+pollution <- read_csv('data/pollution.csv')
+
+# examine scatterplot with SLR fit
+ggplot(pollution,
+       aes(x = log(SO2), y = Mort)) +
+  geom_point() +
+  geom_smooth(method = 'lm')
+
+# compute SLR fit
+fit <- lm(Mort ~ log(SO2), data = pollution)
+
+# interpret
+fit_ci <- confint(fit, parm = 'log(SO2)')*log(1.2)
+
+paste('With 95% confidence, every 20% increase in sulfur dioxide pollution is associated with an increase in two-year mortality rate between', round(fit_ci[1], 2), 'and', round(fit_ci[2], 2), 'per 100k', sep = ' ') %>% print()
+```
+
+<!--# TA COMMENT: show everyone what their directories should look like at completion. mention that the project treats the project directory as the working directory, so scripts stored anywhere in the project still parse directory paths relative to the project directory, NOT the file location. -->
+
+Congrats on your first project! You can close the RStudio session now.
+
+We'll be using projects structured much like what you just set up, but with one catch: we'll link up our RStudio projects with shared *repositories* so that we can all collaborate on the same set of project files.
+
+## GitHub repositories
+
+<!--# TA COMMENT: you could either talk through this section or have students read it and clone the repo themselves. either way, show the use of the client, the local copy, and the remote location (on github.com). the goal here is for students to understand the distinction between local and remote and that the client provides a means of communication -->
 
 ### Git and GitHub
 
-At some point in time -- possibly just a moment ago -- you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.
+At some point in time -- possibly quite recently -- you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.
 
-**Git is version control software** that enables you to systematically track and control file changes within a *repository* -- a collection of files possibly with some directory structure. (A repository is simply a storage place.)
+**Git is version control software** that enables you to systematically track and control file changes within a *repository* -- a collection of files possibly with some directory structure. (The definition of 'repository' is simply 'storage place'.)
 
 **GitHub is an online platform** for hosting repositories remotely. Anyone with access to a repository can make changes to files in the repository, and this enables multiple people to collaborate on code.
 
@@ -123,35 +180,11 @@ At some point in time -- possibly just a moment ago -- you had to install Git on
 
 Usually remote repositories are not updated directly because contributors need to execute codes to test their changes and the remote server that hosts the repository is not equipped to do this.
 
-So, making changes to a repository typically involves communicating information between *local* and *remote* locations. If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:
+Instead, contributors will prepare changes on their own machine where they can test them, and then update the remote repository once their changes are complete.
 
--   create/update local copies of repository files, say, on my laptop;
+This process of implementing file changes in a repository involves communicating information between *local* and *remote* locations. For this purpose a local copy of the remote repository is needed.
 
--   make the desired change(s) locally;
-
--   send the changes back to the remote repository;
-
--   update the remote repository by accepting changes.
-
-These steps correspond to a sequence of **Git actions**: actions that modify the repository files and/or metadata. The most basic sequence is:
-
--   `git pull` update the local repository (technically, fetch changes + merge changes from the remote repository);
-
--   `git add` stage file changes to be committed to the local repository;
-
--   `git commit` commit staged changes to the local repository;
-
--   `git push` send committed changes back to the remote repository.
-
-Sometimes contributors take different or additional actions; the complexity of the Git actions required to make a change depends largely on repository settings, permissions, and agreements among collaborators about how workflow should be structured.
-
-### Why are we using GitHub repositories?
-
-Maintaining communication between local and remote copies of a set of files might seem overly complicated, but version control has many benefits, including the ability to track changes and contributions precisely, work in parallel with other contributors, revert to prior versions of files, keep track of issues, quickly share and disseminate work, and solicit user contributions from the coding public. Arguably, for all of these reasons and because of its widespread use, Git/GitHub is a must for data scientists.
-
-In this class you'll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework. This should equip you to utilize a repository for efficient collaboration with your peers on your capstone project.
-
-## Creating a clone
+### Cloning a repository
 
 In Git lingo, a *clone* is a local copy of a remote repository. Creating a clone copies files and establishes the link between local and remote repositories so that changes can be sent to and received from the remote repository. ***You only need to create a clone once.***
 
@@ -175,6 +208,8 @@ I've created a 'sandbox' repository (for playing in) at <https://github.com/psta
 3.  Check your file navigator to confirm that the repository files were copied.
 :::
 
+<!--# TA COMMENT: remind students we'll use this repository next class meeting, so DON'T delete the clone -->
+
 An alternative possibility is to create the clone using a terminal command. In the terminal, navigate to the desired destination, and input:
 
 ``` bash
@@ -197,10 +232,12 @@ git clone https://github.com/pstat197/sandbox
 
 ## Checklist
 
-Have you completed all of the pre-lab activity action items?
+Have you completed all of the activity action items?
 
 1.  Install software: R, RStudio, Git, and a GitHub client
 2.  Create a GitHub account and join the [course GitHub org](https://github.com/pstat197/)
-3.  Clone the sandbox repo <https://github.com/pstat197/sandbox>
+3.  Install R packages that will be used frequently
+4.  Create a local project in RStudio
+5.  Clone the sandbox repo <https://github.com/pstat197/sandbox>
 
 # 
