@@ -1,0 +1,24 @@
+---
+title: 'Course materials'
+editor: visual
+---
+
+### Week 0
+
+-   ***Thursday meeting:*** Course orientation [\[slides](slides/week0-intro.qmd)\]
+
+-   ***Assignment*** due by next class meeting:
+
+    -   install course software and join github org;
+
+    -   fill out intake form;
+
+    -   read [MDSR section 1.1](https://mdsr-book.github.io/mdsr2e/ch-prologue.html#what-is-data-science) (it's short!)
+
+### Week 1 {#sec-week-1}
+
+-   ***Tuesday meeting:*** On research projects in(volving) data science \[slides\]
+
+-   ***Section meeting:*** software and technology overview [\[activity](labs/lab1-setup/lab1-setup.qmd)\]
+
+-   ***Thursday meeting:*** basic GitHub actions \[activity\]
