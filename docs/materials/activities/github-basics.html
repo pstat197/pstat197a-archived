@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>GitHub basics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">GitHub basics</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../" class="sidebar-logo-link">
+      <img src="../../img/ucsbds_hex.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Data Science Capstone Preparation</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/pstat197" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://ucsbdscapstone.slack.com" title="" class="sidebar-tool px-1"><i class="bi bi-slack"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">About</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about/syllabus.html" class="sidebar-item-text sidebar-link">Course syllabus</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about/outcomes.html" class="sidebar-item-text sidebar-link">Learning outcomes</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Course materials</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/weekly-schedule.html" class="sidebar-item-text sidebar-link">Weekly schedule</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/technology.html" class="sidebar-item-text sidebar-link">Technology</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/links.html" class="sidebar-item-text sidebar-link">Links</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-are-we-using-git-and-github" id="toc-why-are-we-using-git-and-github" class="nav-link active" data-scroll-target="#why-are-we-using-git-and-github">Why are we using Git and GitHub?</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#lab-activity" id="toc-lab-activity" class="nav-link" data-scroll-target="#lab-activity">Lab activity</a>
+  <ul class="collapse">
+  <li><a href="#basic-git-actions" id="toc-basic-git-actions" class="nav-link" data-scroll-target="#basic-git-actions">Basic Git actions</a>
+  <ul class="collapse">
+  <li><a href="#pull" id="toc-pull" class="nav-link" data-scroll-target="#pull">Pull</a></li>
+  <li><a href="#make-changes" id="toc-make-changes" class="nav-link" data-scroll-target="#make-changes">Make changes</a></li>
+  <li><a href="#stage-and-commit-changes" id="toc-stage-and-commit-changes" class="nav-link" data-scroll-target="#stage-and-commit-changes">Stage and commit changes</a></li>
+  <li><a href="#push" id="toc-push" class="nav-link" data-scroll-target="#push">Push</a></li>
+  </ul></li>
+  <li><a href="#branching" id="toc-branching" class="nav-link" data-scroll-target="#branching">Branching</a>
+  <ul class="collapse">
+  <li><a href="#create-a-branch" id="toc-create-a-branch" class="nav-link" data-scroll-target="#create-a-branch">Create a branch</a></li>
+  <li><a href="#access-your-neighbors-branch" id="toc-access-your-neighbors-branch" class="nav-link" data-scroll-target="#access-your-neighbors-branch">Access your neighbor’s branch</a></li>
+  </ul></li>
+  <li><a href="#pull-requests" id="toc-pull-requests" class="nav-link" data-scroll-target="#pull-requests">Pull requests</a></li>
+  <li><a href="#checklist" id="toc-checklist" class="nav-link" data-scroll-target="#checklist">Checklist</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">GitHub basics</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>This activity introduces GitHub repositories and basic Git actions; students will be expected to use these skills to access materials and complete assignments.</p>
+<section id="why-are-we-using-git-and-github" class="level3">
+<h3 class="anchored" data-anchor-id="why-are-we-using-git-and-github">Why are we using Git and GitHub?</h3>
+<p>Version control has many benefits, including the ability to track changes and contributions precisely, work in parallel with other contributors, revert to prior versions of files, keep track of issues, quickly share and disseminate work, and solicit user contributions from the coding public. Arguably, for all of these reasons and because of its widespread use, Git/GitHub is a must for data scientists.</p>
+<p>In this class you’ll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework. This should equip you to utilize a repository for efficient collaboration with your peers on your capstone project.</p>
+<p>If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:</p>
+<ul>
+<li><p>create/update local copies of repository files, say, on my laptop;</p></li>
+<li><p>make the desired change(s) locally;</p></li>
+<li><p>send the changes back to the remote repository;</p></li>
+<li><p>update the remote repository by accepting changes.</p></li>
+</ul>
+<p>These steps correspond to a sequence of <strong>Git actions</strong>: actions that modify the repository files and/or metadata. The most basic sequence is:</p>
+<ul>
+<li><p><code>git pull</code> update the local repository (technically, fetch changes + merge changes from the remote repository);</p></li>
+<li><p><code>git add</code> stage file changes to be committed to the local repository;</p></li>
+<li><p><code>git commit</code> commit staged changes to the local repository;</p></li>
+<li><p><code>git push</code> send committed changes back to the remote repository.</p></li>
+</ul>
+<p>Sometimes contributors take different or additional actions; the complexity of the Git actions required to make a change depends largely on repository settings, permissions, and agreements among collaborators about how workflow should be structured.</p>
+</section>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
+</section>
+<section id="lab-activity" class="level1">
+<h1>Lab activity</h1>
+<p>Open your GitHub client and RStudio. In RStudio, open the project associated with your clone of the sandbox repo.</p>
+<!--# INSTRUCTOR ACTION: create a markdown file just a few minutes before the lab will begin named after your lab section in a lab-specific directory e.g. '2pm-lab/about-us.md' with some small remark; try to come up with something fun/topical. push the file to the main branch -->
+<section id="basic-git-actions" class="level2">
+<h2 class="anchored" data-anchor-id="basic-git-actions">Basic Git actions</h2>
+<p>Here you’ll make a local change and then push that change to the remote repository.</p>
+<section id="pull" class="level3">
+<h3 class="anchored" data-anchor-id="pull">Pull</h3>
+<p>As discussed in the pre-lab activity, the first step to making a change is beginning with the most up-to-date version of the repository files. Your TA will have made a small change to the repository since you first cloned it, so we’ll start with retrieving that change.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Pull changes from the remote repository:</strong></p>
+<ul>
+<li><p>In your GitHub client, open the sandbox repository and then look for a ‘Pull’ menu item.</p></li>
+<li><p>In the terminal: navigate to the root directory of the repository and <code>git pull</code></p></li>
+</ul>
+<p>Technically, <code>git pull</code> = <code>git fetch</code> + <code>git merge</code>. If you ever wish to examine changes without modifying local files, you can <code>git fetch</code>.</p>
+</div>
+</div>
+<p>Examine the updated local repository files; notice that there is now a folder named after your lab section containing a markdown file. Open it up and have a look.</p>
+</section>
+<section id="make-changes" class="level3">
+<h3 class="anchored" data-anchor-id="make-changes">Make changes</h3>
+<p>Now that you have the most up-to-date version of all files, create a new markdown file in your lab section folder with a fun fact about you (or anything else if you’d rather) that you’ll upload to the repository.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Create a markdown file:</strong></p>
+<ol type="1">
+<li>In RStudio, select File &gt; New File &gt; Markdown File</li>
+<li>Add an ‘About Me’ or similar header (use one or more hashes <code>#</code> before the header text)</li>
+<li>Write a fun fact about yourself</li>
+<li>Save the file in your lab folder as <code>YOURGITHUBUSERNAME-about.md</code></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="stage-and-commit-changes" class="level3">
+<h3 class="anchored" data-anchor-id="stage-and-commit-changes">Stage and commit changes</h3>
+<p>Now that your new file is ready to go you can stage the changes to be committed to the repository and create a commit.</p>
+<p>A <em>commit</em> is a bundle of changes that will be submitted to the repository along with a message briefly explaining the changes made. Your GitHub client will often fill in a default message such as ‘update FILENAME.EXT’.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Stage and commit:</strong></p>
+<ul>
+<li><p>In your client, look for a menu item to add or stage changes. By default any changes made to any file will be included.</p>
+<ul>
+<li>Or in the terminal: <code>git add FILENAME</code></li>
+</ul></li>
+<li><p>Once you have staged changes, look for a menu item to commit changes. Add a message and commit the changes.</p>
+<ul>
+<li>Or in the terminal: <code>git add -m "your message here"</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<p>Often these actions are performed together. However, in some workflows it may make sense to stage changes incrementally and create commits that bundle several changes at once. For example, if you need to make an update that requires modifying files A, B, and C, it may make sense to edit and stage changes to A first, followed by B, followed by C, and create the commit only once the full update has been implemented.</p>
+</section>
+<section id="push" class="level3">
+<h3 class="anchored" data-anchor-id="push">Push</h3>
+<p>The last step is to push your commit to the remote repository. However, as you will see in a moment, too many people trying to push changes at once can create some problems.</p>
+<p>Your TA will instruct someone in your class to push their changes. The very first person to do this will have no problems, since their local repository is up to date with the remote.</p>
+<p>Your TA will then instruct someone else to try. But since the first person modified the remote repository, the next person to push changes will no longer be up to date. Git will detect this and the push won’t go through. The person must update their local repository first, preferably by <code>git pull</code>.</p>
+<p>Under the hood, the update action will merge the first person’s commit with the second person’s local repository. Git is fairly good at doing this in such a way that changes don’t get lost or overwritten, but there are some conflicts that it can’t resolve automatically. That will happen if multiple changes are made to the same line of the same file.</p>
+<p>In this activity everyone is working on independent files and there’s no overlap between changes, so although it would be a bit messy to have everyone pull/push sequentially, in principle it could be done. However, there is a more efficient way to work in parallel: by creating <em>branches</em>.</p>
+</section>
+</section>
+<section id="branching" class="level2">
+<h2 class="anchored" data-anchor-id="branching">Branching</h2>
+<p>Inspect your GitHub client closely, and note that you are currently on the ‘main’ branch of the repository. Think of this as the primary version of the repository. Branches allow contributors to create parallel versions of the repository that they can modify for development purposes while leaving the primary version unaffected.</p>
+<section id="create-a-branch" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-branch">Create a branch</h3>
+<p>Here you’ll use branches to avoid stepping on each others’ toes while pushing your commits. The strategy will be to create a personal branch, push your commit to that branch, and then merge the branch back into the main branch of the repository.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Create a branch and push your previous commit:</strong></p>
+<ol type="1">
+<li>In your GitHub client, look for a menu item to create and switch to a new branch.</li>
+<li>Name your branch your GitHub username.</li>
+<li>Check to see that you are currently on your personal branch.</li>
+<li>Push your previous commit. You shouldn’t have to repeat any of the previous steps, but you can if need be.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="access-your-neighbors-branch" class="level3">
+<h3 class="anchored" data-anchor-id="access-your-neighbors-branch">Access your neighbor’s branch</h3>
+<p>While often the main purpose of branching is to create a version of the repository that only you will modify, contributors can inspect any branch of the repository. This can be useful for sharing ideas or getting input or help.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Make a commit to your neighbor’s branch</strong></p>
+<ol type="1">
+<li>Find out your neighbor’s username and switch to their branch in your GitHub client.</li>
+<li>In RStudio, verify that you are on their branch by executing <code>git status</code> in the terminal.</li>
+<li>Open their markdown file, ask them a simple question about themselves (nothing too personal, please), and add the information to their markdown file.</li>
+<li>Stage, commit, and push the change.</li>
+<li>When your neighbor has done the same with you, switch back to your own branch in your GitHub client and pull changes.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="pull-requests" class="level2">
+<h2 class="anchored" data-anchor-id="pull-requests">Pull requests</h2>
+<p>Once you are ready to integrate changes you’ve developed on a branch you can open a <em>pull request</em> to merge the development branch with the main branch. (Technically, pull requests can be opened between any two branches.)</p>
+<p>‘Pull request’ is a bit of an odd term; think of it as you making a <em>request</em> that your collaborators <em>pull</em> your changes for review.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Open a pull request:</strong></p>
+<ul>
+<li><p>In your GitHub client, find a menu item for opening a pull request.</p></li>
+<li><p>Specify the pull request from your branch to the main branch and submit.</p></li>
+</ul>
+</div>
+</div>
+<p>Once a pull request is opened, usually a collaborator with maintain privileges must be the one to merge changes and close the request. However, the rules for this depend on repository settings. For this repository, all contributors can merge and close pull requests.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Open the repository <a href="https://github.com/pstat197/sandbox" class="uri">https://github.com/pstat197/sandbox</a> in the browser. Navigate to pull requests.</p>
+<p>Find your neighbor’s pull request; merge their changes and close the request. Then delete the branch.</p>
+</div>
+</div>
+</section>
+<section id="checklist" class="level2">
+<h2 class="anchored" data-anchor-id="checklist">Checklist</h2>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Created for PSTAT197A Fall 2022 by Trevor Ruiz using Quarto; hex logo by Priscilla Siow.</div>
+  </div>
+</footer>
+
+
+
+</body></html>
