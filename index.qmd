@@ -1,5 +1,5 @@
 ---
-title: "Welcome"
+title: "Data science capstone preparation"
 subtitle: "Class website for PSTAT197A/CMPSC190DD"
 ---
 
