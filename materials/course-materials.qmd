@@ -1,0 +1,24 @@
+---
+title: 'Course materials'
+editor: visual
+---
+
+### Week 0
+
+-   ***Thursday meeting:*** Course orientation [\[slides](slides/week0-intro.qmd)\]
+
+-   ***Assignments*** due by next class meeting:
+
+    -   install course software and join github org;
+
+    -   fill out intake form;
+
+    -   read [Peng, R. D., & Parker, H. S. (2022). Perspective on data science. *Annual Review of Statistics and Its Application*, *9*, 1-20.](https://doi.org/10.1146/annurev-statistics-040220-013917) (access online via UCSB library)
+
+### Week 1 {#sec-week-1}
+
+-   ***Tuesday meeting:*** On research projects in(volving) data science \[slides\]
+
+-   ***Section meeting:*** software and technology overview [\[activity](labs/lab1-setup/lab1-setup.qmd)\]
+
+-   ***Thursday meeting:*** basic GitHub actions \[activity\]

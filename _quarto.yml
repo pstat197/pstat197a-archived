@@ -21,11 +21,10 @@ website:
         contents:
           - about/syllabus.qmd
           - about/outcomes.qmd
-      - section: "Course materials"
-        contents:
-          # - materials/weekly-schedule.qmd
-          - materials/technology.qmd
-          - materials/links.qmd
+          - about/schedule.qmd
+          - about/technology.qmd
+          - about/links.qmd
+      # - materials/course-materials.qmd  
           
         
 

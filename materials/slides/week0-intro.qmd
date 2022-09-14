@@ -1,0 +1,163 @@
+---
+title: "Course orientation"
+subtitle: "Data Science Capstone Preparation"
+author: "Trevor Ruiz"
+format: 
+  revealjs:
+    incremental: true
+    footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    logo: 'img/ucsbds_hex.png'
+---
+
+## Before we begin...
+
+1.  Confer with your table and choose a word of the day. Agree on spelling.
+
+2.  Please sign in using the attendance reporting form found here:
+
+    [https://pstat197.github.io/pstat197a/materials/links.html](https://pstat197.github.io/pstat197a/materials/links.html#sec-class-forms)
+
+# General orientation
+
+## Welcome
+
+PSTAT197A/CMPSC190DD is the first course in UCSB's year-long data science capstone sequence.
+
+-   ***Audience:*** undergraduate students of any discipline with a basic background in data science and an interest in research
+
+-   ***Aim:*** prepare for an independent research or project experience
+
+## Capstone projects
+
+Most students are preparing for capstone projects in winter and spring. Course foci were chosen with this in mind.
+
+-   Projects are varied ➜ emphasize problem patterns over methodology
+-   Projects are collaborative ➜ emphasize teamwork and discussion
+-   Projects are specialized ➜ practice independent learning based on use cases
+
+## Outcomes
+
+I hope to support all of you in:
+
+-   using modern software with version control for collaboration;
+-   recognizing problem patterns based on data semantics and research questions;
+-   identifying and accessing resources for independent learning given a problem of interest;
+-   communicating data analysis and/or research findings.
+
+## Classroom environment
+
+We are in an interactive classroom for a reason: to interact!
+
+Let's acknowledge:
+
+-   Preparations and areas of expertise vary widely among the class
+
+-   It's okay not to know things
+
+-   If you have a question, probably someone else does too
+
+## Resources
+
+All course content is hosted on our website
+
+<https://pstat197.github.io/pstat197a/>
+
+# Course content and structure
+
+## Modules
+
+The course is configured in modules defined by a dataset and questions (much like a project).
+
+A module typically comprises:
+
+-   One session on data introduction (lecture/discussion)
+
+-   Two sessions on problem patterns and related methodology (lecture)
+
+-   Two labs with related examples (section meeting)
+
+-   One session on sharing data analysis results (discussion)
+
+## Module content
+
+The module datasets are currently as follows:
+
+-   Class intake survey data (exploratory/descriptive analysis)
+
+-   Biomarkers of autism (classification and variable selection)
+
+-   Web fraud (text processing and predictive modeling)
+
+-   Soil temperatures (spatial and temporal data)
+
+## Group assignments
+
+Each module you will be assigned a working group.
+
+Your group's objective is to produce an analysis of the dataset:
+
+-   **Reproduce** analysis presented/discussed in class meeting
+
+-   **Extend** the analysis **by**
+
+    -   applying an ***alternative method*** that addresses the same question(s)
+
+    -   **or** addressing a ***corollary question***
+
+## Vignettes
+
+At the end of the class in place of a fifth module you will create a *vignette* (short demonstration) on a topic of interest.
+
+-   present a use case
+
+-   explain methodology
+
+-   demonstrate implementation with example code
+
+## Expectations and assessments
+
+::: columns
+::: {.column width="50%"}
+Students are expected to:
+
+-   prepare for class meetings as directed;
+
+-   attend and actively participate in class and section meetings;
+
+-   contribute meaningfully to group activities.
+:::
+
+::: {.column width="50%"}
+Students are assessed on:
+
+-   attendance, preparation, and participation;
+
+-   quality of submitted work;
+
+-   individual contributions to group assignments;
+
+-   oral interview/presentation.
+:::
+:::
+
+# Next time...
+
+## Topic
+
+We'll discuss:
+
+-   data science as a discipline;
+
+-   the research landscape;
+
+-   and the sorts of projects you are likely to encounter at this stage in your training.
+
+## Checklist
+
+Complete all of the following [***before***]{.underline} our next meeting.
+
+1.  Review all content in the about section of the course webpage.
+2.  Install [course software](https://pstat197.github.io/pstat197a/about/links.html).
+3.  Join GitHub organization and slack workspace (accept email invitations).
+4.  Fill out [capstone project intake form](https://forms.gle/zQT8jc85Y71BKYV48).
+5.  Read [MDSR section 1.1](https://mdsr-book.github.io/mdsr2e/ch-prologue.html#what-is-data-science) and reflect: how would you describe data science to a family member or friend?
