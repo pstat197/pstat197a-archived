@@ -14,7 +14,7 @@ This schedule is tentative and may be adjusted at the discretion of the instruct
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   on research projects in(volving) data science | -   collaboration using GitHub                  |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
-| 2          | Module 0: Class data       | 0.1 Lecture/discussion:                           | 0.2 Activity:                                   | tidyverse basics                 |
+| 2          | Module 0: Class data       | 0.1 Lecture/discussion:                           | 0.2 Activity:                                   | tidyverse                        |
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   introducing class survey data                 | -   exploratory and descriptive analysis        |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+

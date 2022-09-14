@@ -7,13 +7,13 @@ editor: visual
 
 -   ***Thursday meeting:*** Course orientation [\[slides](slides/week0-intro.qmd)\]
 
--   ***Assignment*** due by next class meeting:
+-   ***Assignments*** due by next class meeting:
 
     -   install course software and join github org;
 
     -   fill out intake form;
 
-    -   read [MDSR section 1.1](https://mdsr-book.github.io/mdsr2e/ch-prologue.html#what-is-data-science) (it's short!)
+    -   read [Peng, R. D., & Parker, H. S. (2022). Perspective on data science. *Annual Review of Statistics and Its Application*, *9*, 1-20.](https://doi.org/10.1146/annurev-statistics-040220-013917) (access online via UCSB library)
 
 ### Week 1 {#sec-week-1}
 
