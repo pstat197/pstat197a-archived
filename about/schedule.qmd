@@ -8,13 +8,13 @@ This schedule is tentative and may be adjusted at the discretion of the instruct
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
 | Week       | Theme                      | Tuesday meeting                                   | Thursday meeting                                | Section meeting                  |
 +============+============================+===================================================+=================================================+==================================+
-| 0          | Introductions              | NO CLASS                                          | Course orientation                              | NO SECTIONS                      |
+| 0          | Module 0: Introductions    | NO CLASS                                          | Course orientation                              | NO LAB                           |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
-| 1          | Introductions              | Lecture:                                          | Activity:                                       | Software and technology overview |
+| 1          | Module 0: Introductions    | 0.1 Lecture:                                      | 0.2 Activity:                                   | Software and technology overview |
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   on research projects in(volving) data science | -   collaboration using GitHub                  |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
-| 2          | Module 0: Class data       | 0.1 Lecture/discussion:                           | 0.2 Activity:                                   | tidyverse                        |
+| 2          | Module 0: Introductions    | 0.3 Lecture/discussion:                           | 0.4 Activity:                                   | tidyverse                        |
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   introducing class survey data                 | -   exploratory and descriptive analysis        |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+

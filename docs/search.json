@@ -250,5 +250,33 @@
     "title": "Course orientation",
     "section": "Checklist",
     "text": "Checklist\nComplete all of the following before our next meeting.\n\nReview all content in the about section of the course webpage.\nInstall course software.\nJoin GitHub organization and slack workspace (accept email invitations).\nFill out capstone project intake form.\nRead MDSR section 1.1 and reflect: how would you describe data science to a family member or friend?\n\n\n\n\nPSTAT197A/CMPSC190DD Fall 2022"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#google-trends",
+    "href": "materials/slides/week1-perspectives.html#google-trends",
+    "title": "On projects in(volving) data science",
+    "section": "Google trends",
+    "text": "Google trends\n\nGoogle searches for ‘data science’ 2004-2022\nData science emerged as a term of art in the last decade\nInterest exploded in the last five years\n\n\nWhy?"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#origins",
+    "href": "materials/slides/week1-perspectives.html#origins",
+    "title": "On projects in(volving) data science",
+    "section": "Origins",
+    "text": "Origins"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#origins-data-analysis",
+    "href": "materials/slides/week1-perspectives.html#origins-data-analysis",
+    "title": "On projects in(volving) data science",
+    "section": "Origins: ‘data analysis’",
+    "text": "Origins: ‘data analysis’\nTukey advocated for ‘data analysis’ as a separate field from statistics (Tukey 1962).\n\nclassical statistics is confirmatory\ndata analysis can also be exploratory\n\n\n\n\n\nflowchart LR\n  exp(experiment) --> mdl(statistical  model)\n  exp --> dat(data)\n  mdl --> dec[decision]\n  dat --> dec\n\n\n\n\n\n\n\n\nTukey’s ideas are regarded as the origin of modern data science (Donoho 2017)."
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#google-trends-data-science",
+    "href": "materials/slides/week1-perspectives.html#google-trends-data-science",
+    "title": "On projects in(volving) data science",
+    "section": "Google trends: data science",
+    "text": "Google trends: data science\n\nGoogle searches for ‘data science’, 2004-2022.\nData science emerged as a term of art in the last decade\nInterest exploded in the last five years\n\n\nWhy?"
   }
 ]

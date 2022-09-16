@@ -1,0 +1,70 @@
+---
+title: "On projects in(volving) data science"
+subtitle: "Data Science Capstone Preparation"
+author: "Trevor Ruiz"
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 4
+    fig-height: 2
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---
+
+# On data science
+
+## Google trends: data science
+
+```{r, fig.align = 'left'}
+#| fig-cap: "Google searches for 'data science', 2004-2022."
+
+library(tidyverse)
+read_csv('data/ds-googletrends.csv', 
+         skip = 2, 
+         col_types = cols(
+           col_datetime(format = '%Y-%m'), 
+           col_double()),
+         col_names = c('date', 'interest')
+         ) %>%
+  ggplot(aes(x = date, y = interest)) +
+  geom_line()
+```
+
+-   Data science emerged as a term of art in the last decade
+
+-   Interest exploded in the last five years
+
+. . .
+
+Why?
+
+## Origins: 'data analysis'
+
+Tukey advocated for 'data analysis' as a separate field from statistics [@tukey1962future].
+
+-   classical statistics is *confirmatory*: affirm or refute theory
+-   data analysis is *exploratory*: search for the unexpected
+
+. . .
+
+This distinction is regarded as the origin of modern data science [@donoho201750].
+
+. . .
+
+A linguistic theory: data analysis ➜ data analytics ➜ data science??
+
+## Advances in statistical methodology
+
+## Modern computation
+
+## Big data
+
+# On research
+
+# Systems and design thinking
