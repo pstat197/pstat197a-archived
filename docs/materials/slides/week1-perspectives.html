@@ -332,9 +332,6 @@
       margin-right: 0; 
     }
   </style>
-  <script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
-  <script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
-  <link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -342,8 +339,9 @@
 
 <section id="title-slide" class="center">
   <h1 class="title">On projects in(volving) data science</h1>
-  <p class="subtitle">Data Science Capstone Preparation</p>
+  <p class="subtitle">PSTAT197A/CMPSC190DD Fall 2022</p>
   <p class="author">Trevor Ruiz</p>
+  <p class="institute">UCSB</p>
 </section>
 
 <section>
@@ -354,60 +352,399 @@
 <section id="google-trends-data-science" class="slide level2">
 <h2>Google trends: data science</h2>
 
-<img data-src="week1-perspectives_files/figure-revealjs/unnamed-chunk-1-1.png" width="384" class="r-stretch quarto-figure-left"><p class="caption">Google searches for ‘data science’, 2004-2022.</p><ul>
+<img data-src="week1-perspectives_files/figure-revealjs/unnamed-chunk-1-1.png" width="384" class="r-stretch quarto-figure-left"><ul>
 <li class="fragment"><p>Data science emerged as a term of art in the last decade</p></li>
 <li class="fragment"><p>Interest exploded in the last five years</p></li>
 </ul>
-<div class="fragment">
-<p>Why?</p>
-</div>
 </section>
 <section id="origins-data-analysis" class="slide level2">
 <h2>Origins: ‘data analysis’</h2>
-<p>Tukey advocated for ‘data analysis’ as a separate field from statistics <span class="citation" data-cites="tukey1962future">(<a href="#/ref-tukey1962future" role="doc-biblioref" onclick="return false;">Tukey 1962</a>)</span>.</p>
+<p>Tukey advocated for ‘data analysis’ as a broader field than statistics <span class="citation" data-cites="tukey1962future">(<a href="#/ref-tukey1962future" role="doc-biblioref" onclick="return false;">Tukey 1962</a>)</span>, including:</p>
 <ul>
-<li class="fragment">classical statistics is <em>confirmatory</em></li>
-<li class="fragment">data analysis can also be <em>exploratory</em></li>
+<li class="fragment"><p>statistical theory and methodology;</p></li>
+<li class="fragment"><p>visualization and data display techniques;</p></li>
+<li class="fragment"><p>computation and scalability;</p></li>
+<li class="fragment"><p>breadth of application.</p></li>
 </ul>
-<div class="cell" data-reveal="true" data-fig-width="6">
+<div class="fragment">
+<p>Look famililar? Tukey’s ‘data analysis’ is proto-modern data science.</p>
+</div>
+</section>
+<section id="a-bit-of-history" class="slide level2">
+<h2>A bit of history</h2>
+<p>It’s worth noting that in the first half of the 20th century, much of statistics focused on methodology and theory for the analysis of small <em>iid</em> samples, and in particular:</p>
+<ul>
+<li class="fragment"><p>inference on means and inference on tables;</p></li>
+<li class="fragment"><p>analysis of variance;</p></li>
+<li class="fragment"><p>tests of distribution.</p></li>
+</ul>
+<div class="fragment">
+<p>The inferential framework brought to bear on these ‘simpler’ problems largely carried over when the field began to specialize.</p>
+</div>
+</section>
+<section id="contrasting-approaches" class="slide level2">
+<h2>Contrasting approaches</h2>
+<p>From 1960-2010, adopters of the ‘data analysis as a field’ view were largely industry practitioners and applied statisticians who advocated for training and practice that included empirical methods and computation in addition to statistical inference <span class="citation" data-cites="donoho201750">(<a href="#/ref-donoho201750" role="doc-biblioref" onclick="return false;">Donoho 2017</a>)</span>.</p>
+<div class="fragment">
+<p>Their ideas evolved into an alternative approach to working with data:</p>
+<ul>
+<li class="fragment"><p>data-driven rather than theory-driven;</p></li>
+<li class="fragment"><p>iterative rather than conclusive.</p></li>
+</ul>
+</div>
+</section>
+<section id="confirmatory-approach" class="slide level2">
+<h2>Confirmatory approach</h2>
+<p>The “confirmatory” approach of the classical inferential framework.</p>
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <p>
-</p><pre class="mermaid" data-tooltip-selector="#mermaid-tooltip-1">flowchart LR
-  exp(experiment) --&gt; mdl(statistical <br> model)
-  exp --&gt; dat(data)
-  mdl --&gt; dec[decision]
-  dat --&gt; dec
-</pre>
-<div id="mermaid-tooltip-1" class="mermaidTooltip">
-
+<svg width="779" height="249" viewbox="0.00 0.00 778.80 249.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 245)">
+<title>
+confirm
+</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-245 774.8,-245 774.8,4 -4,4"></polygon> <g id="clust1" class="cluster">
+<title>
+cluster_1
+</title>
+<polygon fill="none" stroke="white" points="174.73,-68 174.73,-172 437.57,-172 437.57,-68 174.73,-68"></polygon> <text text-anchor="middle" x="306.15" y="-150" font-family="sans-serif" font-size="20.00">data generation</text> </g> <g id="clust2" class="cluster">
+<title>
+cluster_2
+</title>
+<polygon fill="none" stroke="white" points="457.57,-46 457.57,-204 576.11,-204 576.11,-46 457.57,-46"></polygon> <text text-anchor="middle" x="516.84" y="-182" font-family="sans-serif" font-size="20.00">data analysis</text> </g> <g id="clust3" class="cluster">
+<title>
+cluster_3
+</title>
+<polygon fill="none" stroke="white" points="596.11,-8 596.11,-233 762.8,-233 762.8,-8 596.11,-8"></polygon> <text text-anchor="middle" x="679.45" y="-211" font-family="sans-serif" font-size="20.00">decision</text> </g> <!-- sci --> <g id="node1" class="node">
+<title>
+sci
+</title>
+<ellipse fill="none" stroke="black" cx="73.37" cy="-104" rx="73.23" ry="39.7"></ellipse> <text text-anchor="start" x="29.49" y="-110" font-family="sans-serif" font-size="20.00">domain </text> <text text-anchor="middle" x="73.37" y="-86" font-family="sans-serif" font-size="20.00">knowledge</text> </g> <!-- hyp --> <g id="node2" class="node">
+<title>
+hyp
+</title>
+<polygon fill="none" stroke="black" points="287.55,-122 182.79,-122 182.79,-86 287.55,-86 287.55,-122"></polygon> <text text-anchor="middle" x="235.17" y="-98" font-family="sans-serif" font-size="20.00">hypotheses</text> </g> <!-- sci&#45;&gt;hyp --> <g id="edge1" class="edge">
+<title>
+sci-&gt;hyp
+</title>
+<path fill="none" stroke="black" d="M146.79,-104C155.36,-104 164.05,-104 172.45,-104"></path> <polygon fill="black" stroke="black" points="172.53,-107.5 182.53,-104 172.53,-100.5 172.53,-107.5"></polygon> </g> <!-- exp --> <g id="node3" class="node">
+<title>
+exp
+</title>
+<polygon fill="none" stroke="black" points="429.55,-132 323.63,-132 323.63,-76 429.55,-76 429.55,-132"></polygon> <text text-anchor="start" x="331.61" y="-110" font-family="sans-serif" font-size="20.00">designed </text> <text text-anchor="middle" x="376.59" y="-86" font-family="sans-serif" font-size="20.00">experiment</text> </g> <!-- hyp&#45;&gt;exp --> <g id="edge2" class="edge">
+<title>
+hyp-&gt;exp
+</title>
+<path fill="none" stroke="black" d="M287.69,-104C295.96,-104 304.6,-104 313.09,-104"></path> <polygon fill="black" stroke="black" points="313.35,-107.5 323.35,-104 313.35,-100.5 313.35,-107.5"></polygon> </g> <!-- mdl --> <g id="node4" class="node">
+<title>
+mdl
+</title>
+<polygon fill="none" stroke="black" points="564.87,-164 468.8,-164 468.8,-108 564.87,-108 564.87,-164"></polygon> <text text-anchor="start" x="476.57" y="-142" font-family="sans-serif" font-size="20.00">statistical </text> <text text-anchor="middle" x="516.84" y="-118" font-family="sans-serif" font-size="20.00">model</text> </g> <!-- exp&#45;&gt;mdl --> <g id="edge4" class="edge">
+<title>
+exp-&gt;mdl
+</title>
+<path fill="none" stroke="black" d="M429.85,-116.1C439.27,-118.28 449.14,-120.56 458.69,-122.77"></path> <polygon fill="black" stroke="black" points="457.97,-126.2 468.5,-125.04 459.54,-119.38 457.97,-126.2"></polygon> </g> <!-- dat --> <g id="node5" class="node">
+<title>
+dat
+</title>
+<polygon fill="none" stroke="black" points="543.84,-90 489.84,-90 489.84,-54 543.84,-54 543.84,-90"></polygon> <text text-anchor="middle" x="516.84" y="-66" font-family="sans-serif" font-size="20.00">data</text> </g> <!-- exp&#45;&gt;dat --> <g id="edge3" class="edge">
+<title>
+exp-&gt;dat
+</title>
+<path fill="none" stroke="black" d="M429.85,-91.9C446.5,-88.05 464.54,-83.87 479.78,-80.35"></path> <polygon fill="black" stroke="black" points="480.87,-83.69 489.83,-78.02 479.3,-76.87 480.87,-83.69"></polygon> </g> <!-- yay --> <g id="node6" class="node">
+<title>
+yay
+</title>
+<ellipse fill="none" stroke="black" cx="679.45" cy="-153" rx="75.19" ry="39.7"></ellipse> <text text-anchor="start" x="634.17" y="-159" font-family="sans-serif" font-size="20.00">supporting </text> <text text-anchor="middle" x="679.45" y="-135" font-family="sans-serif" font-size="20.00">evidence</text> </g> <!-- mdl&#45;&gt;yay --> <g id="edge7" class="edge">
+<title>
+mdl-&gt;yay
+</title>
+<path fill="none" stroke="black" d="M565.16,-141.01C574.6,-142.01 584.77,-143.08 595.01,-144.17"></path> <polygon fill="black" stroke="black" points="594.94,-147.68 605.25,-145.25 595.68,-140.72 594.94,-147.68"></polygon> </g> <!-- nay --> <g id="node7" class="node">
+<title>
+nay
+</title>
+<ellipse fill="none" stroke="black" cx="679.45" cy="-56" rx="66.92" ry="39.7"></ellipse> <text text-anchor="start" x="640.28" y="-62" font-family="sans-serif" font-size="20.00">opposing </text> <text text-anchor="middle" x="679.45" y="-38" font-family="sans-serif" font-size="20.00">evidence</text> </g> <!-- mdl&#45;&gt;nay --> <g id="edge8" class="edge">
+<title>
+mdl-&gt;nay
+</title>
+<path fill="none" stroke="black" d="M565.16,-112.43C581.94,-104.07 601.05,-94.55 618.74,-85.74"></path> <polygon fill="black" stroke="black" points="620.44,-88.8 627.83,-81.21 617.32,-82.54 620.44,-88.8"></polygon> </g> <!-- dat&#45;&gt;yay --> <g id="edge5" class="edge">
+<title>
+dat-&gt;yay
+</title>
+<path fill="none" stroke="black" d="M544.08,-83.81C554.15,-88.43 565.71,-93.86 576.11,-99 589.49,-105.63 603.73,-112.96 617.21,-120.03"></path> <polygon fill="black" stroke="black" points="615.91,-123.3 626.39,-124.87 619.17,-117.11 615.91,-123.3"></polygon> </g> <!-- dat&#45;&gt;nay --> <g id="edge6" class="edge">
+<title>
+dat-&gt;nay
+</title>
+<path fill="none" stroke="black" d="M544,-69.39C560.27,-67.77 582.09,-65.6 603.41,-63.48"></path> <polygon fill="black" stroke="black" points="603.87,-66.95 613.47,-62.47 603.18,-59.98 603.87,-66.95"></polygon> </g> </g>
+</svg>
+</p>
 </div>
-<p></p>
+</div>
+</div>
+<ul>
+<li class="fragment"><p>output is a decision</p></li>
+<li class="fragment"><p>statistical model determined by experimental design</p></li>
+<li class="fragment"><p>analysis based on statistical theory</p></li>
+</ul>
+</section>
+<section id="exploratory-approach" class="slide level2">
+<h2>Exploratory approach</h2>
+<p>The “exploratory” approach of the iterative modern data analysis.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="701" height="244" viewbox="0.00 0.00 701.24 244.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 240)">
+<title>
+explore
+</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-240 697.24,-240 697.24,4 -4,4"></polygon> <g id="clust1" class="cluster">
+<title>
+cluster_1
+</title>
+<polygon fill="none" stroke="white" points="174.73,-95 174.73,-199 523.69,-199 523.69,-95 174.73,-95"></polygon> <text text-anchor="middle" x="349.21" y="-177" font-family="sans-serif" font-size="20.00">data analysis</text> </g> <g id="clust2" class="cluster">
+<title>
+cluster_2
+</title>
+<polygon fill="none" stroke="white" points="543.69,-8 543.69,-228 685.24,-228 685.24,-8 543.69,-8"></polygon> <text text-anchor="middle" x="614.46" y="-206" font-family="sans-serif" font-size="20.00">findings</text> </g> <!-- sci --> <g id="node1" class="node">
+<title>
+sci
+</title>
+<ellipse fill="none" stroke="black" cx="73.37" cy="-131" rx="73.23" ry="39.7"></ellipse> <text text-anchor="start" x="29.49" y="-137" font-family="sans-serif" font-size="20.00">domain </text> <text text-anchor="middle" x="73.37" y="-113" font-family="sans-serif" font-size="20.00">knowledge</text> </g> <!-- q --> <g id="node2" class="node">
+<title>
+q
+</title>
+<polygon fill="none" stroke="black" points="293.37,-159 182.52,-159 182.52,-103 293.37,-103 293.37,-159"></polygon> <text text-anchor="start" x="190.73" y="-137" font-family="sans-serif" font-size="20.00">question </text> <text text-anchor="middle" x="237.94" y="-113" font-family="sans-serif" font-size="20.00">formulation</text> </g> <!-- sci&#45;&gt;q --> <g id="edge4" class="edge">
+<title>
+sci-&gt;q
+</title>
+<path fill="none" stroke="black" d="M147.09,-131C155.42,-131 163.86,-131 172.07,-131"></path> <polygon fill="black" stroke="black" points="172.32,-134.5 182.32,-131 172.32,-127.5 172.32,-134.5"></polygon> </g> <!-- dat --> <g id="node3" class="node">
+<title>
+dat
+</title>
+<polygon fill="none" stroke="black" points="383.15,-139 329.15,-139 329.15,-103 383.15,-103 383.15,-139"></polygon> <text text-anchor="middle" x="356.15" y="-115" font-family="sans-serif" font-size="20.00">data</text> </g> <!-- q&#45;&gt;dat --> <g id="edge1" class="edge">
+<title>
+q-&gt;dat
+</title>
+<path fill="none" stroke="black" d="M293.31,-126.32C301.93,-125.58 310.67,-124.83 318.75,-124.13"></path> <polygon fill="black" stroke="black" points="319.27,-127.6 328.93,-123.26 318.67,-120.63 319.27,-127.6"></polygon> </g> <!-- mdl --> <g id="node4" class="node">
+<title>
+mdl
+</title>
+<polygon fill="none" stroke="black" points="515.46,-159 419.38,-159 419.38,-103 515.46,-103 515.46,-159"></polygon> <text text-anchor="start" x="427.15" y="-137" font-family="sans-serif" font-size="20.00">statistical </text> <text text-anchor="middle" x="467.42" y="-113" font-family="sans-serif" font-size="20.00">model</text> </g> <!-- dat&#45;&gt;mdl --> <g id="edge2" class="edge">
+<title>
+dat-&gt;mdl
+</title>
+<path fill="none" stroke="black" d="M383.33,-123.4C391.12,-124.11 400,-124.92 408.97,-125.74"></path> <polygon fill="black" stroke="black" points="408.82,-129.24 419.09,-126.67 409.45,-122.27 408.82,-129.24"></polygon> </g> <!-- mdl&#45;&gt;q --> <g id="edge3" class="edge">
+<title>
+mdl-&gt;q
+</title>
+<path fill="none" stroke="black" d="M419.12,-142.37C407.43,-144.71 394.9,-146.81 383.15,-148 359.28,-150.41 353.05,-150.23 329.15,-148 320.83,-147.22 312.13,-146.05 303.55,-144.68"></path> <polygon fill="black" stroke="black" points="304.02,-141.21 293.57,-142.98 302.85,-148.11 304.02,-141.21"></polygon> </g> <!-- f1 --> <g id="node5" class="node">
+<title>
+f1
+</title>
+<ellipse fill="none" stroke="black" cx="614.46" cy="-165" rx="62.55" ry="22.76"></ellipse> <text text-anchor="middle" x="614.46" y="-159" font-family="sans-serif" font-size="20.00">finding 1</text> </g> <!-- mdl&#45;&gt;f1 --> <g id="edge5" class="edge">
+<title>
+mdl-&gt;f1
+</title>
+<path fill="none" stroke="black" d="M515.51,-142.04C526.95,-144.72 539.36,-147.63 551.37,-150.44"></path> <polygon fill="black" stroke="black" points="550.81,-153.91 561.34,-152.78 552.4,-147.09 550.81,-153.91"></polygon> </g> <!-- f2 --> <g id="node6" class="node">
+<title>
+f2
+</title>
+<ellipse fill="none" stroke="black" cx="614.46" cy="-102" rx="62.55" ry="22.76"></ellipse> <text text-anchor="middle" x="614.46" y="-96" font-family="sans-serif" font-size="20.00">finding 2</text> </g> <!-- mdl&#45;&gt;f2 --> <g id="edge6" class="edge">
+<title>
+mdl-&gt;f2
+</title>
+<path fill="none" stroke="black" d="M515.51,-121.58C526.33,-119.42 538,-117.09 549.39,-114.81"></path> <polygon fill="black" stroke="black" points="550.19,-118.22 559.3,-112.83 548.81,-111.36 550.19,-118.22"></polygon> </g> <!-- dots --> <g id="node7" class="node">
+<title>
+dots
+</title>
+<ellipse fill="none" stroke="white" cx="614.46" cy="-39" rx="27" ry="22.76"></ellipse> <text text-anchor="middle" x="614.46" y="-33" font-family="sans-serif" font-size="20.00">⋮</text> </g> </g>
+</svg>
+</p>
 </div>
 </div>
 </div>
-<p>Tukey’s ideas are regarded as the origin of modern data science <span class="citation" data-cites="donoho201750">(<a href="#/ref-donoho201750" role="doc-biblioref" onclick="return false;">Donoho 2017</a>)</span>.</p>
+<ul>
+<li class="fragment"><p>outputs are findings</p></li>
+<li class="fragment"><p>statistical model determined by data</p></li>
+<li class="fragment"><p>analysis techniques include empirical methods</p></li>
+</ul>
+</section>
+<section id="drivers-of-change" class="slide level2">
+<h2>Drivers of change</h2>
+<p>In the 2000s and especially after 2010, the iterative approach enjoys broader applicability than it used to:</p>
+<ul>
+<li class="fragment"><p>due to automated and/or scalable data collection</p>
+<ul>
+<li class="fragment"><p>observational data is widely available across domains</p></li>
+<li class="fragment"><p>and includes large numbers of variables</p></li>
+</ul></li>
+<li class="fragment"><p>highly specialized data problems evade methodology with theoretical support</p></li>
+<li class="fragment"><p>more accessible to analysts without advanced statistical training</p></li>
+</ul>
+</section>
+<section id="machine-learning" class="slide level2">
+<h2>Machine learning</h2>
+<p>Machine learning was largely advanced by computer scientists through 2010 and later, most notably:</p>
+<ul>
+<li class="fragment"><p>neural networks and deep learning</p></li>
+<li class="fragment"><p>optimization</p></li>
+<li class="fragment"><p>algorithmic analysis</p></li>
+</ul>
+<div class="fragment">
+<p>This was, of course, hugely important in setting the stage for modern predictive modeling, and engaging with these tools required going beyond statistics.</p>
+</div>
+</section>
+<section id="in-sum" class="slide level2">
+<h2>In sum</h2>
+<ul>
+<li class="fragment"><p>Around mid-century, it was proposed that specialists should be trained in computational as well as statistical methods</p></li>
+<li class="fragment"><p>Over time practitioners developed an iterative process for data-driven problem solving that was more flexible than the classical inferential framework</p></li>
+<li class="fragment"><p>Computer scientists advanced the field of machine learning substantially</p></li>
+<li class="fragment"><p>Iterative problem solving together with applied machine learning was well-suited to meet the demands of modern data, but the area was largely non-academic</p></li>
+<li class="fragment"><p>Hence, ‘data science’</p></li>
+</ul>
 </section></section>
+<section>
 <section id="on-research" class="title-slide slide level1 center">
 <h1>On research</h1>
 
 </section>
+<section id="what-is-research" class="slide level2">
+<h2>What is research?</h2>
+<p>Research is <em>systematic investigation</em> undertaken in order to establish or discover facts.</p>
+<div class="fragment">
+<p>What are facts in data science?</p>
+<ul>
+<li class="fragment"><p>method <em>M</em> outperforms method <em>M’</em> at task <em>T</em></p></li>
+<li class="fragment"><p>we analyzed data <em>D</em> and reached the conclusion that…</p></li>
+</ul>
+</div>
+</section>
+<section id="the-research-landscape" class="slide level2">
+<h2>The research landscape</h2>
+<p>Formal communities – <em>i.e.,</em> journals, departments, conferences – have not coalesced around data science research to date.</p>
+<div class="fragment">
+<p>Relevant research largely occurs in statistics, computer science, and application domains, and can be divided broadly into:</p>
+<ul>
+<li class="fragment"><p>methodology – creating new techniques to analyze data</p></li>
+<li class="fragment"><p>applications – applying existing methods to generate new findings</p></li>
+</ul>
+</div>
+</section>
+<section id="methodological-research" class="slide level2">
+<h2>Methodological research</h2>
+<p>Methodological research might involve:</p>
+<ul>
+<li class="fragment"><p>designing a faster algorithm for solving a particular problem</p></li>
+<li class="fragment"><p>proposing a new technique for analyzing a particular type of data</p></li>
+<li class="fragment"><p>generalizing a technique to a broader range of problems</p></li>
+</ul>
+</section>
+<section id="applied-research" class="slide level2">
+<h2>Applied research</h2>
+<p>Applied research might involve:</p>
+<ul>
+<li class="fragment"><p>analyzing a specific dataset or producing a novel analysis of existing data</p></li>
+<li class="fragment"><p>creating ad-hoc methods for a domain-specific problem</p></li>
+<li class="fragment"><p>importing methodology from another area to bear on a domain-specific problem</p></li>
+</ul>
+</section>
+<section id="data-science-capstones" class="slide level2">
+<h2>Data science capstones</h2>
+<p>Most of the time, our data science capstones fall pretty squarely in the applied domain:</p>
+<ul>
+<li class="fragment"><p>sponsor provides data and high-level goals</p></li>
+<li class="fragment"><p>student team works on producing an analysis or analyses</p></li>
+<li class="fragment"><p>mentor advises on methodology</p></li>
+</ul>
+</section>
+<section id="relevant-skills" class="slide level2">
+<h2>Relevant skills</h2>
+<p>There are a few avenues to prepare for this sort of work.</p>
+<div class="fragment">
+<p>We’ll focus on:</p>
+<ul>
+<li class="fragment"><p>recognizing problem patterns</p></li>
+<li class="fragment"><p>developing a functional view of methodology</p></li>
+<li class="fragment"><p>collaborating efficiently</p></li>
+<li class="fragment"><p>independent learning strategies</p></li>
+<li class="fragment"><p>engaging with literature constructively</p></li>
+</ul>
+</div>
+<div class="fragment">
+<p>It won’t provide you with exhaustive methodological preparation, but should support you in learning ‘on the job’.</p>
+</div>
+</section></section>
+<section>
+<section id="design-thinking" class="title-slide slide level1 center">
+<h1>Design thinking</h1>
 
-<section id="systems-and-design-thinking" class="title-slide slide level1 smaller scrollable">
-<h1>Systems and design thinking</h1>
+</section>
+<section id="reading-responses" class="slide level2">
+<h2>Reading responses</h2>
+<p>Questions to review:</p>
+<ol type="1">
+<li class="fragment">What is meant by a ‘systems approach’ to data science?</li>
+<li class="fragment">What is meant by ‘design thinking’ in data science?</li>
+<li class="fragment">(Why) Are these useful concepts?</li>
+</ol>
+</section>
+<section id="prescriptive-and-descriptive" class="slide level2">
+<h2>Prescriptive <em>and</em> descriptive</h2>
+<p>The Perspective on Data Science paper <span class="citation" data-cites="peng2022perspective">(<a href="#/ref-peng2022perspective" role="doc-biblioref" onclick="return false;">Peng and Parker 2022</a>)</span> is not just descriptive, but also prescriptive: it provides a useful framework for engaging in (applied) research.</p>
+<ul>
+<li class="fragment"><p>data scientists trade in data analyses</p></li>
+<li class="fragment"><p>a data analysis is a designed product</p></li>
+<li class="fragment"><p>thinking about design principles can help make a better product</p></li>
+</ul>
+<div class="fragment">
+<p>Let’s look at some design principles from <span class="citation" data-cites="mcgowan2021design">(<a href="#/ref-mcgowan2021design" role="doc-biblioref" onclick="return false;">McGowan, Peng, and Hicks 2021</a>)</span>.</p>
+</div>
+</section>
+<section id="design-principles-matchedness" class="slide level2">
+<h2>Design principles: matchedness</h2>
+
+<img data-src="img/mcgowan-sfig1-matching.PNG" class="r-stretch"></section>
+<section id="design-principles-exhuastiveness" class="slide level2">
+<h2>Design principles: exhuastiveness</h2>
+
+<img data-src="img/mcgowan-sfig2-exhaustive.PNG" class="r-stretch"></section>
+<section id="design-principles-transparency" class="slide level2">
+<h2>Design principles: transparency</h2>
+
+<img data-src="img/mcgowan-sfig5-transparency.PNG" class="r-stretch"></section>
+<section id="design-principles-reproducibility" class="slide level2">
+<h2>Design principles: reproducibility</h2>
+
+<img data-src="img/mcgowan-sfig6-reproducible.PNG" class="r-stretch"></section>
+<section id="next-time" class="slide level2">
+<h2>Next time</h2>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
 
 <div class="footer footer-default">
-<p>PSTAT197A/CMPSC190DD Fall 2022</p>
+
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-donoho201750" class="csl-entry" role="doc-biblioentry">
 Donoho, David. 2017. <span>“50 Years of Data Science.”</span> <em>Journal of Computational and Graphical Statistics</em> 26 (4): 745–66.
 </div>
+<div id="ref-mcgowan2021design" class="csl-entry" role="doc-biblioentry">
+McGowan, Lucy D’Agostino, Roger D Peng, and Stephanie C Hicks. 2021. <span>“Design Principles for Data Analysis.”</span> <em>arXiv Preprint arXiv:2103.05689</em>.
+</div>
+<div id="ref-peng2022perspective" class="csl-entry" role="doc-biblioentry">
+Peng, Roger D, and Hilary S Parker. 2022. <span>“Perspective on Data Science.”</span> <em>Annual Review of Statistics and Its Application</em> 9: 1–20.
+</div>
 <div id="ref-tukey1962future" class="csl-entry" role="doc-biblioentry">
 Tukey, John W. 1962. <span>“The Future of Data Analysis.”</span> <em>The Annals of Mathematical Statistics</em> 33 (1): 1–67.
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -460,7 +797,7 @@ Tukey, John W. 1962. <span>“The Future of Data Analysis.”</span> <em>The Ann
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',

@@ -23,7 +23,7 @@ editor: visual
 
 ### Week 1 {#sec-week-1}
 
--   ***Tuesday meeting:*** On projects in(volving) data science \[slides\]
+-   ***Tuesday meeting:*** On projects in(volving) data science [\[slides](slides/week1-perspectives.qmd)\]
 
 -   ***Section meeting:*** software and technology overview [\[activity](labs/lab1-setup/lab1-setup.qmd)\]
 
