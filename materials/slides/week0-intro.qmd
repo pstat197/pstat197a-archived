@@ -94,11 +94,11 @@ The module datasets are currently as follows:
 
 -   Class intake survey data (exploratory/descriptive analysis)
 
--   Biomarkers of autism (classification and variable selection)
+-   Biomarkers of autism (predictive modeling and variable selection)
 
--   Web fraud (text processing and predictive modeling)
+-   Web fraud (text processing and deep learning)
 
--   Soil temperatures (spatial and temporal data)
+-   Soil temperatures (correlated data)
 
 ## Group assignments
 
