@@ -46,7 +46,7 @@ This schedule is tentative and may be adjusted at the discretion of the instruct
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   introducing soil temperature data             |                                                 |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
-| 8          | Module 2: soil temperature | 3.3 Lecture:                                      | 3.4 Discussion: results                         | spatial analysis                 |
+| 8          | Module 3: soil temperature | 3.3 Lecture:                                      | 3.4 Discussion: results                         | spatial analysis                 |
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   on space                                      |                                                 |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
