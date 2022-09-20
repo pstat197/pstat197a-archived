@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Software overview</title>
+<title>Course technology overview</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -127,7 +127,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Software overview</h1>
+      <h1 class="quarto-secondary-nav-title">Course technology overview</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -192,6 +192,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../materials/course-materials.html" class="sidebar-item-text sidebar-link">Course materials</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -215,7 +220,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#cloning-a-repository" id="toc-cloning-a-repository" class="nav-link" data-scroll-target="#cloning-a-repository">Cloning a repository</a></li>
   </ul></li>
   <li><a href="#checklist" id="toc-checklist" class="nav-link" data-scroll-target="#checklist">Checklist</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul>
 </nav>
     </div>
@@ -224,7 +228,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Software overview</h1>
+<h1 class="title d-none d-lg-block">Course technology overview</h1>
 </div>
 
 
@@ -241,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Read this and complete all instructions in the ‘action’ boxes during your lab section. Your TA will walk you through the activity and help to troubleshoot issues and answer any questions along the way.</p>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<!--# TA ACTION: ensure everyone has working installs, a github account, and access to the org before going ahead. You may need to send github org invites to students; prepare a list of email addresses for this purpose in advance, just in case. There may be time to allow a few minutes for anyone who needs the time to complete installs, but if need be you can pair students. -->
+<!--# TA ACTION: ensure everyone has working installs and a github account before going ahead. there may be time to allow a few minutes for anyone who needs the time to complete installs, but if need be you can pair students with technical difficulties with students with working setups and troubleshoot after class. -->
 <p>To complete the activity you’ll need to:</p>
 <ul>
 <li><p>have all of the software listed on the course technology page installed;</p></li>
@@ -297,7 +301,7 @@ Action
 <p>Navigate to the console and copy-paste the following commands. You only need to do this once. This will take a minute or two to complete.</p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="lab1-setup_cache/html/unnamed-chunk-1_9e6621ae76cd276fb196b362756f7ac8">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># package install list </span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/scripts/package-installs.R'</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(url)</span>
@@ -352,7 +356,7 @@ Action
 </ul>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="lab1-setup_cache/html/unnamed-chunk-2_ef6815bcfa0369fd9ef57771e99251ee">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve pollution data</span></span>
@@ -386,7 +390,7 @@ Action
 </ul>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="lab1-setup_cache/html/unnamed-chunk-3_95c947da2ffb40cad0f56991b7579b05">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
@@ -431,6 +435,27 @@ Action
 <section id="github-repositories" class="level2">
 <h2 class="anchored" data-anchor-id="github-repositories">GitHub repositories</h2>
 <!--# TA COMMENT: you could either talk through this section or have students read it and clone the repo themselves. either way, show the use of the client, the local copy, and the remote location (on github.com). the goal here is for students to understand the distinction between local and remote and that the client provides a means of communication -->
+<p>We will be distributing course assignments as <em>repositories</em> via GitHub Classroom. A repository is simply a storage space.</p>
+<p>Here we’ll walk you through how to access and copy the files in a repository just as you will for course assignments. The first step is to accept an assignment through a link we’ve given to you – this will create a repository for you with the files we intend for you to have.</p>
+<p>For now, we’ll make a ‘group sandbox’ that you can play in during our next class meeting.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Accept an assignment in GitHub Classroom</strong></p>
+<ol type="1">
+<li>Follow the link to accept the <a href="https://classroom.github.com/a/kC0QIWFR">group-sandbox assignment</a>. Since it’s a group assignment, you will be prompted to join a team.</li>
+<li>Join the team for the table you sat at during last class meeting. If you don’t remember, check your attendance form receipt.</li>
+</ol>
+<p>You should be directed to a team repository on github.com. You may need to refresh your browser. Keep this window open; you will need the URL.</p>
+</div>
+</div>
 <section id="git-and-github" class="level3">
 <h3 class="anchored" data-anchor-id="git-and-github">Git and GitHub</h3>
 <p>At some point in time – possibly quite recently – you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.</p>
@@ -452,7 +477,8 @@ Action
 <li><p>the local destination where the clone will be created;</p></li>
 <li><p>permission from the repository owner, if private.</p></li>
 </ul>
-<p>I’ve created a ‘sandbox’ repository (for playing in) at <a href="https://github.com/pstat197/sandbox" class="uri">https://github.com/pstat197/sandbox</a>. It’s a public repository, so no special permissions are needed. Follow the link to see the repository contents in your browser.</p>
+<p>Here you’ll clone the group sandbox repository you just created/joined. You will need the URL; if you happened to close the page when you accepted the assignment earlier, you should be able to find the repository from your home page on github.com.</p>
+<!--# TA COMMENT: you may need to show students how they can navigate to the repository if they happened to close it; it should be visible among their github repositories -->
 <div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -473,7 +499,7 @@ Action
 </div>
 <!--# TA COMMENT: remind students we'll use this repository next class meeting, so DON'T delete the clone -->
 <p>An alternative possibility is to create the clone using a terminal command. In the terminal, navigate to the desired destination, and input:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/pstat197/sandbox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/USERNAME/REPONAME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -500,14 +526,12 @@ Remarks
 <p>Have you completed all of the activity action items?</p>
 <ol type="1">
 <li>Install software: R, RStudio, Git, and a GitHub client</li>
-<li>Create a GitHub account and join the <a href="https://github.com/pstat197/">course GitHub org</a></li>
+<li>Create a GitHub account</li>
 <li>Install R packages that will be used frequently</li>
 <li>Create a local project in RStudio</li>
-<li>Clone the sandbox repo <a href="https://github.com/pstat197/sandbox" class="uri">https://github.com/pstat197/sandbox</a></li>
+<li>Accept the group sandbox assignment on GitHub Classroom</li>
+<li>Clone the group sandbox repo</li>
 </ol>
-</section>
-<section id="section" class="level1">
-<h1></h1>
 
 
 </section>

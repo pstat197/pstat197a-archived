@@ -23,16 +23,6 @@ While PSTAT197A is not language-agnostic and some instruction in R is provided, 
 
 Students will learn and practice basic functionality of Git and GitHub for version control and collaboration by accessing course materials via GitHub repositories and submitting work via repository contributions.
 
-We have a class [GitHub organization](https://github.com/pstat197) for the data science capstone. Email invitations will be sent to the university email addresses of all enrolled students. Enrolled students should request an email invitation from course staff if they have not received one.
+We have a [GitHub classroom](https://classroom.github.com/classrooms/111659514-pstat197-classroom-f22) for the data science capstone. Materials will be deployed via direct links. Students will be asked to submit work by contributing to team repositories; any such contributions will remain visible to course staff and team contributors, and so are not strictly private.
 
-To join the organization students will need to create a GitHub account if they do not already have one. Here is some [advice on choosing a username](https://happygitwithr.com/github-acct.html#username-advice).
-
-Students have write access to all repositories within the organization and the ability to create their own public or private repositories. Course staff have administrator privileges.
-
-Although the organization is invite-only, it is not private:
-
--   repositories for course modules are public, and anyone on the web can access them;
-
--   private repositories remain visible to course staff.
-
-Students are asked to submit work by contributing to repositories for course modules. Any such contributions would remain publicly visible. Students can elect to keep their work on a private fork if they prefer.
+To access GitHub Classroom materials students will need to create a GitHub account if they do not already have one. Here is some [advice on choosing a username](https://happygitwithr.com/github-acct.html#username-advice).

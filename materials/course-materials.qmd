@@ -3,22 +3,36 @@ title: 'Course materials'
 editor: visual
 ---
 
+## Introductory module
+
+*Objectives: set expectations; explore data science raison d'etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.*
+
 ### Week 0
 
--   ***Thursday meeting:*** Course orientation [\[slides](slides/week0-intro.qmd)\]
+-   ***Thursday meeting:*** Course orientation \[slides\]
 
 -   ***Assignments*** due by next class meeting:
 
-    -   install course software and join github org;
+    -   install course software and create github account;
 
     -   fill out intake form;
 
-    -   read [Peng, R. D., & Parker, H. S. (2022). Perspective on data science. *Annual Review of Statistics and Its Application*, *9*, 1-20.](https://doi.org/10.1146/annurev-statistics-040220-013917) (access online via UCSB library)
+    -   read [Peng, R. D., & Parker, H. S. (2022). Perspective on data science. *Annual Review of Statistics and Its Application*, *9*, 1-20.](https://doi.org/10.1146/annurev-statistics-040220-013917) (access online via UCSB library);
 
-### Week 1 {#sec-week-1}
+    -   prepare a [reading response](https://forms.gle/PdRWx7h4PmeGQUBL8)
 
--   ***Tuesday meeting:*** On research projects in(volving) data science \[slides\]
+<!-- ### Week 1 {#sec-week-1} -->
 
--   ***Section meeting:*** software and technology overview [\[activity](labs/lab1-setup/lab1-setup.qmd)\]
+<!-- -   ***Tuesday meeting:*** On projects in(volving) data science \[slides\] -->
 
--   ***Thursday meeting:*** basic GitHub actions \[activity\]
+<!-- -   ***Section meeting:*** software and technology overview \[activity\] -->
+
+<!-- -   ***Thursday meeting:*** basic GitHub actions \[activity\] -->
+
+<!-- ### Week 2 -->
+
+<!-- -   ***Tuesday meeting:*** Introducing class intake survey data \[slides\] -->
+
+<!-- -   ***Section meeting:*** tidyverse basics \[activity\] -->
+
+<!-- -   ***Thursday meeting:*** Exploratory/descriptive analysis of class survey data \[activity\] -->

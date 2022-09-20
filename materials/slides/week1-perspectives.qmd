@@ -1,0 +1,376 @@
+---
+title: "On projects in(volving) data science"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 4
+    fig-height: 2
+    slide-number: true
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---
+
+# On data science
+
+## Google trends: data science
+
+```{r}
+#| fig-align: left
+
+library(tidyverse)
+read_csv('data/ds-googletrends.csv', 
+         skip = 2, 
+         col_types = cols(
+           col_datetime(format = '%Y-%m'), 
+           col_double()),
+         col_names = c('date', 'interest')
+         ) %>%
+  ggplot(aes(x = date, y = interest)) +
+  geom_line()
+```
+
+-   Data science emerged as a term of art in the last decade
+
+-   Interest exploded in the last five years
+
+## Origins: 'data analysis'
+
+Tukey advocated for 'data analysis' as a broader field than statistics [@tukey1962future], including:
+
+-   statistical theory and methodology;
+
+-   visualization and data display techniques;
+
+-   computation and scalability;
+
+-   breadth of application.
+
+. . .
+
+Look famililar? Tukey's 'data analysis' is proto-modern data science.
+
+## A bit of history
+
+It's worth noting that in the first half of the 20th century, much of statistics focused on methodology and theory for the analysis of small *iid* samples, and in particular:
+
+-   inference on means and inference on tables;
+
+-   analysis of variance;
+
+-   tests of distribution.
+
+. . .
+
+The inferential framework brought to bear on these 'simpler' problems largely carried over when the field began to specialize.
+
+## Contrasting approaches
+
+From 1960-2010, adopters of the 'data analysis as a field' view were largely industry practitioners and applied statisticians who advocated for training and practice that included empirical methods and computation in addition to statistical inference [@donoho201750].
+
+. . .
+
+Their ideas evolved into an alternative approach to working with data:
+
+-   data-driven rather than theory-driven;
+
+-   iterative rather than conclusive.
+
+## Confirmatory approach
+
+The "confirmatory" approach of the classical inferential framework.
+
+```{dot}
+digraph confirm {
+  
+  layout = dot
+  rankdir = LR
+  fontname = "sans-serif"
+  fontsize = "20pt"
+  
+  node [
+      shape = rectangle,
+      fontsize = "20pt",
+      fontname = "sans-serif"
+      ]
+
+  sci [
+    label = "domain \lknowledge", 
+    shape = ellipse
+    ]
+  
+  subgraph cluster_1{
+    color = white
+    
+    hyp [label = "hypotheses"]
+    exp [label = "designed \lexperiment"]
+    
+    label = "data generation"
+  }
+  
+  subgraph cluster_2 {
+    color = white
+    
+    mdl [label = "statistical \lmodel"]
+    dat [label = "data"]
+    
+    label = "data analysis"
+  }
+  
+  subgraph cluster_3 {
+    color = white
+    node [shape = ellipse]
+    
+    yay [label = "supporting \levidence"]
+    nay [label = "opposing \levidence"]
+    
+    label = "decision"
+  }
+  sci -> hyp
+  hyp -> exp
+  exp -> dat
+  exp -> mdl
+  dat -> yay
+  dat -> nay
+  mdl -> yay
+  mdl -> nay
+
+}
+```
+
+-   output is a decision
+
+-   statistical model determined by experimental design
+
+-   analysis based on statistical theory
+
+## Exploratory approach
+
+The "exploratory" approach of the iterative modern data analysis.
+
+```{dot}
+digraph explore {
+  layout = dot
+  rankdir = LR
+  fontname = "sans-serif"
+  fontsize = "20pt"
+  
+  node [
+      shape = rectangle,
+      fontsize = "20pt",
+      fontname = "sans-serif"
+      ]
+      
+  sci [
+    label = "domain \lknowledge",
+    shape = ellipse
+    ]
+  
+  subgraph cluster_1 {
+    color = white
+    label = "data analysis"
+    
+    q [label = "question \lformulation"]
+    dat [label = "data"]
+    mdl [label = "statistical \lmodel"]
+    
+    q -> dat
+    dat -> mdl
+    mdl -> q
+    
+  }
+  
+  subgraph cluster_2 {
+    label = "findings"
+    color = white
+    
+    node [shape = ellipse]
+    edge [style = invis]
+    
+    f1 [label = "finding 1"]
+    f2 [label = "finding 2"]
+    dots [label = "&#8942;", color = white]
+    
+  }
+    
+    sci -> q
+    mdl -> {f1 f2}
+}
+
+```
+
+-   outputs are findings
+
+-   statistical model determined by data
+
+-   analysis techniques include empirical methods
+
+## Drivers of change
+
+In the 2000s and especially after 2010, the iterative approach enjoys broader applicability than it used to:
+
+-   due to automated and/or scalable data collection
+
+    -   observational data is widely available across domains
+
+    -   and includes large numbers of variables
+
+-   highly specialized data problems evade methodology with theoretical support
+
+-   more accessible to analysts without advanced statistical training
+
+## Machine learning
+
+Machine learning was largely advanced by computer scientists through 2010 and later, most notably:
+
+-   neural networks and deep learning
+
+-   optimization
+
+-   algorithmic analysis
+
+. . .
+
+This was, of course, hugely important in setting the stage for modern predictive modeling, and engaging with these tools required going beyond statistics.
+
+## In sum
+
+-   Around mid-century, it was proposed that specialists should be trained in computational as well as statistical methods
+
+-   Over time practitioners developed an iterative process for data-driven problem solving that was more flexible than the classical inferential framework
+
+-   Computer scientists advanced the field of machine learning substantially
+
+-   Iterative problem solving together with applied machine learning was well-suited to meet the demands of modern data, but the area was largely non-academic
+
+-   Hence, 'data science'
+
+# On research
+
+## What is research?
+
+Research is *systematic investigation* undertaken in order to establish or discover facts.
+
+. . .
+
+What are facts in data science?
+
+-   method *M* outperforms method *M'* at task *T*
+
+-   we analyzed data *D* and reached the conclusion that...
+
+## The research landscape
+
+Formal communities -- *i.e.,* journals, departments, conferences -- have not coalesced around data science research to date.
+
+. . .
+
+Relevant research largely occurs in statistics, computer science, and application domains, and can be divided broadly into:
+
+-   methodology -- creating new techniques to analyze data
+
+-   applications -- applying existing methods to generate new findings
+
+## Methodological research
+
+Methodological research might involve:
+
+-   designing a faster algorithm for solving a particular problem
+
+-   proposing a new technique for analyzing a particular type of data
+
+-   generalizing a technique to a broader range of problems
+
+## Applied research
+
+Applied research might involve:
+
+-   analyzing a specific dataset or producing a novel analysis of existing data
+
+-   creating ad-hoc methods for a domain-specific problem
+
+-   importing methodology from another area to bear on a domain-specific problem
+
+## Data science capstones
+
+Most of the time, our data science capstones fall pretty squarely in the applied domain:
+
+-   sponsor provides data and high-level goals
+
+-   student team works on producing an analysis or analyses
+
+-   mentor advises on methodology
+
+## Relevant skills
+
+There are a few avenues to prepare for this sort of work.
+
+. . .
+
+We'll focus on:
+
+-   recognizing problem patterns
+
+-   developing a functional view of methodology
+
+-   collaborating efficiently
+
+-   independent learning strategies
+
+-   engaging with literature constructively
+
+. . .
+
+It won't provide you with exhaustive methodological preparation, but should support you in learning 'on the job'.
+
+# Design thinking
+
+## Reading responses
+
+Questions to review:
+
+1.  What is meant by a 'systems approach' to data science?
+2.  What is meant by 'design thinking' in data science?
+3.  (Why) Are these useful concepts?
+
+## Prescriptive *and* descriptive
+
+The Perspective on Data Science paper [@peng2022perspective] is not just descriptive, but also prescriptive: it provides a useful framework for engaging in (applied) research.
+
+-   data scientists trade in data analyses
+
+-   a data analysis is a designed product
+
+-   thinking about design principles can help make a better product
+
+. . .
+
+Let's look at some design principles from [@mcgowan2021design].
+
+## Design principles: matchedness
+
+![](img/mcgowan-sfig1-matching.PNG)
+
+## Design principles: exhuastiveness
+
+![](img/mcgowan-sfig2-exhaustive.PNG)
+
+## Design principles: transparency
+
+![](img/mcgowan-sfig5-transparency.PNG)
+
+## Design principles: reproducibility
+
+![](img/mcgowan-sfig6-reproducible.PNG)
+
+## Next time
+
+## References

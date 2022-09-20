@@ -33,9 +33,9 @@ Section meetings are held on Wednesdays:
 
 ***Teaching assistants:***
 
--   *Erika McPhillips.* MS student and capstone project mentor in 2021-2022.
+-   *Erika McPhillips.* MS/PhD student and capstone project mentor in 2021-2022.
 
--   *Joshua Bang.* MS student and capstone project mentor in 2021-2022.
+-   *Joshua Bang.* MS/PhD student and capstone project mentor in 2021-2022.
 
 -   *Meghan Elcheikhali.* PhD student and capstone project mentor in 2021-2022.
 
@@ -66,6 +66,10 @@ Qualitative feedback is emphasized over numerical scores. Students are assessed 
 -   oral interview.
 
 ## Policies
+
+***Attendance.*** Regular attendance is expected. Each student can miss two sessions without notice; further absences may impact course grades. Students are responsible for material discussed in their absence and should review posted session notes and consult a classmate.
+
+***Deadlines.*** Students are expected to meet assignment deadlines in a timely manner. All deadlines have a 24-hour grace period. Late or amended work may not be accepted.
 
 ***Email.*** Course staff will make their best effort to reply to email within 48 weekday hours. However, due to high volume, staff cannot guarantee that all messages will receive replies.
 

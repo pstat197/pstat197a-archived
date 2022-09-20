@@ -24,7 +24,7 @@ website:
           - about/schedule.qmd
           - about/technology.qmd
           - about/links.qmd
-      # - materials/course-materials.qmd  
+      - materials/course-materials.qmd
           
         
 

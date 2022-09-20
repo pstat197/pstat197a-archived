@@ -25,7 +25,7 @@
     "href": "about/schedule.html",
     "title": "Course schedule",
     "section": "",
-    "text": "Week\nTheme\nTuesday meeting\nThursday meeting\nSection meeting\n\n\n\n\n0\nIntroductions\nNO CLASS\nCourse orientation\nNO SECTIONS\n\n\n1\nIntroductions\nLecture:\n\non research projects in(volving) data science\n\nActivity:\n\ncollaboration using GitHub\n\nSoftware and technology overview\n\n\n2\nModule 0: Class data\n0.1 Lecture/discussion:\n\nintroducing class survey data\n\n0.2 Activity:\n\nexploratory and descriptive analysis\n\ntidyverse\n\n\n3\nModule 1: biomarkers\n1.1 Discussion/lecture:\n\nsharing results of survey data analysis;\nintroducing biomarker data\n\n1.2 Lecture:\n\non prediction\n\ntidymodels\n\n\n4\nModule 1: biomarkers\n1.3 Lecture:\n\non classification\n\n1.4 Lecture/discussion:\n\non variable selection;\nreview published analysis of biomarker data\n\nclassification\n\n\n5\nModule 2: soil temperature\n2.1 Discussion/lecture:\n\nsharing results of biomarker analysis;\nintroducing soil temperature data\n\n2.2 Lecture:\n\non time\n\ntime series analysis\n\n\n6\nModule 2: soil temperature\n2.3 Lecture:\n\non space\n\n2.4 Discussion: results\nspatial analysis\n\n\n7\nModule 3: web fraud\n3.1 Lecture/discussion:\n\nsharing analysis of soil temperature data;\nintroducing web fraud data\n\n3.2 Lecture:\n\non text as data\n\ntext processing\n\n\n8\nModule 3: web fraud\n3.3 Lecture:\n\non multiclass classification\n\n3.4 Activity:\n\nmeasuring classification accuracy\n\nkeras\n\n\n9\nModule 4: vignettes\n4.1 Activity:\n\nworkshopping vignettes\n\nNO CLASS\nNO LAB\n\n\n10\nModule 4: vignettes\n4.2 Activity:\n\nteaching exchange\n\n4.3 Activity/discussion:\n\nteaching exchange;\nclosing\n\nNO LAB"
+    "text": "Week\nTheme\nTuesday meeting\nThursday meeting\nSection meeting\n\n\n\n\n0\nModule 0: Introductions\nNO CLASS\nCourse orientation\nNO LAB\n\n\n1\nModule 0: Introductions\n0.1 Lecture:\n\non research projects in(volving) data science\n\n0.2 Activity:\n\ncollaboration using GitHub\n\nSoftware and technology overview\n\n\n2\nModule 0: Introductions\n0.3 Lecture/discussion:\n\nintroducing class survey data\n\n0.4 Activity:\n\nexploratory and descriptive analysis\n\ntidyverse\n\n\n3\nModule 1: biomarkers\n1.1 Discussion/lecture:\n\nsharing results of survey data analysis;\nintroducing biomarker data\n\n1.2 Lecture:\n\non prediction\n\ntidymodels\n\n\n4\nModule 1: biomarkers\n1.3 Lecture:\n\non classification\n\n1.4 Lecture/discussion:\n\non variable selection;\nreview published analysis of biomarker data\n\nclassification\n\n\n5\nModule 2: web fraud\n2.1 Lecture/discussion:\n\nsharing analysis of soil temperature data;\nintroducing web fraud data\n\n2.2 Lecture:\n\non text as data\n\ntext processing\n\n\n6\nModule 2: web fraud\n2.3 Lecture:\n\non multiclass classification\n\n2.4 Activity:\n\nmeasuring classification accuracy\n\nkeras\n\n\n7\nModule 3: soil temperature\n3.1 Discussion/lecture:\n\nsharing results of biomarker analysis;\nintroducing soil temperature data\n\n3.2 Lecture:\n\non time\n\ntime series analysis\n\n\n8\nModule 2: soil temperature\n3.3 Lecture:\n\non space\n\n3.4 Discussion: results\nspatial analysis\n\n\n9\nModule 4: vignettes\n4.1 Activity:\n\nworkshopping vignettes\n\nNO CLASS\nNO LAB\n\n\n10\nModule 4: vignettes\n4.2 Activity:\n\nteaching exchange\n\n4.3 Activity/discussion:\n\nteaching exchange;\nclosing\n\nNO LAB"
   },
   {
     "objectID": "about/syllabus.html",
@@ -46,7 +46,7 @@
     "href": "about/syllabus.html#staff",
     "title": "Course syllabus",
     "section": "Staff",
-    "text": "Staff\nInstructor:\n\nTrevor Ruiz. Visiting assistant professor and co-instructor for 2021-2022 capstone projects.\n\nTeaching assistants:\n\nErika McPhillips. MS student and capstone project mentor in 2021-2022.\nJoshua Bang. MS student and capstone project mentor in 2021-2022.\nMeghan Elcheikhali. PhD student and capstone project mentor in 2021-2022.\n\nUndergraduate learning assistant:\n\nYan Lashchev. BS student and Data Science Fellow at UCSB in 2021-2022."
+    "text": "Staff\nInstructor:\n\nTrevor Ruiz. Visiting assistant professor and co-instructor for 2021-2022 capstone projects.\n\nTeaching assistants:\n\nErika McPhillips. MS/PhD student and capstone project mentor in 2021-2022.\nJoshua Bang. MS/PhD student and capstone project mentor in 2021-2022.\nMeghan Elcheikhali. PhD student and capstone project mentor in 2021-2022.\n\nUndergraduate learning assistant:\n\nYan Lashchev. BS student and Data Science Fellow at UCSB in 2021-2022."
   },
   {
     "objectID": "about/syllabus.html#expectations-and-assessments",
@@ -60,7 +60,7 @@
     "href": "about/syllabus.html#policies",
     "title": "Course syllabus",
     "section": "Policies",
-    "text": "Policies\nEmail. Course staff will make their best effort to reply to email within 48 weekday hours. However, due to high volume, staff cannot guarantee that all messages will receive replies.\nIllness. Students who are ill are required to stay home. Students ill with COVID-19 must comply with university policy regarding reporting and quarantine. Accommodations will be made to ensure that students absent due to illness do not fall behind.\nAccommodations. Reasonable accommodations will be made for any student with a qualifying disability. Such requests should be made through the Disabled Students Program (DSP). More information, instructions on how to access accommodations, and information on related resources can be found on the DSP website. Note: in this class there are no timed assessments.\nLetter grades. Letter grades are assigned based only on the assessments identified above and according to university guidelines, with the relative weighting of assessments determined at the discretion of the instructor. While grade calculations will not be disclosed, students are entitled to an explanation of the criteria used to determine their grades if desired. Grades will not be changed except in the case of clerical errors. If students feel their grade has been unfairly assigned, they are entitled to contest it following UCSB procedure for contesting grades.\nConduct. All course participants are expected to maintain respectful and honorable conduct consistent with UCSB ethical standards. Students uncomfortable with the behavior of another course participant for any reason should notify the instructor, course staff, or, if the complaint relates to course staff conduct, an administrative or departmental officer. Evidence of academic dishonesty will be reported to the Office of Student Conduct (OSC); evidence of problematic behavior will be addressed on a case-by-case basis in accord with university policies."
+    "text": "Policies\nAttendance. Regular attendance is expected. Each student can miss two sessions without notice; further absences may impact course grades. Students are responsible for material discussed in their absence and should review posted session notes and consult a classmate.\nDeadlines. Students are expected to meet assignment deadlines in a timely manner. All deadlines have a 24-hour grace period. Late or amended work may not be accepted.\nEmail. Course staff will make their best effort to reply to email within 48 weekday hours. However, due to high volume, staff cannot guarantee that all messages will receive replies.\nIllness. Students who are ill are required to stay home. Students ill with COVID-19 must comply with university policy regarding reporting and quarantine. Accommodations will be made to ensure that students absent due to illness do not fall behind.\nAccommodations. Reasonable accommodations will be made for any student with a qualifying disability. Such requests should be made through the Disabled Students Program (DSP). More information, instructions on how to access accommodations, and information on related resources can be found on the DSP website. Note: in this class there are no timed assessments.\nLetter grades. Letter grades are assigned based only on the assessments identified above and according to university guidelines, with the relative weighting of assessments determined at the discretion of the instructor. While grade calculations will not be disclosed, students are entitled to an explanation of the criteria used to determine their grades if desired. Grades will not be changed except in the case of clerical errors. If students feel their grade has been unfairly assigned, they are entitled to contest it following UCSB procedure for contesting grades.\nConduct. All course participants are expected to maintain respectful and honorable conduct consistent with UCSB ethical standards. Students uncomfortable with the behavior of another course participant for any reason should notify the instructor, course staff, or, if the complaint relates to course staff conduct, an administrative or departmental officer. Evidence of academic dishonesty will be reported to the Office of Student Conduct (OSC); evidence of problematic behavior will be addressed on a case-by-case basis in accord with university policies."
   },
   {
     "objectID": "about/technology.html",
@@ -74,7 +74,7 @@
     "href": "about/technology.html#sec-github",
     "title": "Technology",
     "section": "GitHub",
-    "text": "GitHub\nStudents will learn and practice basic functionality of Git and GitHub for version control and collaboration by accessing course materials via GitHub repositories and submitting work via repository contributions.\nWe have a class GitHub organization for the data science capstone. Email invitations will be sent to the university email addresses of all enrolled students. Enrolled students should request an email invitation from course staff if they have not received one.\nTo join the organization students will need to create a GitHub account if they do not already have one. Here is some advice on choosing a username.\nStudents have write access to all repositories within the organization and the ability to create their own public or private repositories. Course staff have administrator privileges.\nAlthough the organization is invite-only, it is not private:\n\nrepositories for course modules are public, and anyone on the web can access them;\nprivate repositories remain visible to course staff.\n\nStudents are asked to submit work by contributing to repositories for course modules. Any such contributions would remain publicly visible. Students can elect to keep their work on a private fork if they prefer."
+    "text": "GitHub\nStudents will learn and practice basic functionality of Git and GitHub for version control and collaboration by accessing course materials via GitHub repositories and submitting work via repository contributions.\nWe have a GitHub classroom for the data science capstone. Materials will be deployed via direct links. Students will be asked to submit work by contributing to team repositories; any such contributions will remain visible to course staff and team contributors, and so are not strictly private.\nTo access GitHub Classroom materials students will need to create a GitHub account if they do not already have one. Here is some advice on choosing a username."
   },
   {
     "objectID": "index.html",
@@ -123,42 +123,42 @@
     "href": "materials/course-materials.html",
     "title": "Course materials",
     "section": "",
-    "text": "Week 1\n\nTuesday meeting: On research projects in(volving) data science [slides]\nSection meeting: software and technology overview [activity]\nThursday meeting: basic GitHub actions [activity]"
+    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form;\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response"
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html",
     "href": "materials/labs/lab1-setup/lab1-setup.html",
-    "title": "Software overview",
+    "title": "Course technology overview",
     "section": "",
     "text": "Read this and complete all instructions in the ‘action’ boxes during your lab section. Your TA will walk you through the activity and help to troubleshoot issues and answer any questions along the way."
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html#prerequisites",
     "href": "materials/labs/lab1-setup/lab1-setup.html#prerequisites",
-    "title": "Software overview",
+    "title": "Course technology overview",
     "section": "Prerequisites",
     "text": "Prerequisites\n\nTo complete the activity you’ll need to:\n\nhave all of the software listed on the course technology page installed;\nfind (or create) your GitHub account credentials (if you are creating an account for the first time, see advice on choosing a username).\n\n\n\n\n\n\n\nAction\n\n\n\nPreparations:\n\nLog in to your GitHub account.\nAccept the invitation to join the PSTAT197 GitHub organization. Check your UCSB email for the invitation. If you have not received one, request it from a TA or ULA.\nOpen your GitHub client.\nOpen a new session in RStudio.\nCreate a class folder for PSTAT197 somewhere on your machine, e.g., ~/documents/pstat197."
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html#rstudio-projects",
     "href": "materials/labs/lab1-setup/lab1-setup.html#rstudio-projects",
-    "title": "Software overview",
+    "title": "Course technology overview",
     "section": "RStudio projects",
     "text": "RStudio projects\nFirst we’ll get acquainted with the basic functionality of the RStudio IDE and the use of projects as a means of organizing files. If you’ve already used RStudio, great – this will still serve to introduce you to how we’ll use RStudio projects in this class.\n\nRStudio Setup\n\nYour TA will briefly review the (default) layout of the RStudio IDE. You should be able to identify/find the following:\n\nconsole\nterminal\nfile navigator\nenvironment\nhistory\n\nWe’ll use several R packages throughout the quarter. Some of these we will install on the go, but we can install several that we’ll rely on now.\n\n\n\n\n\n\nAction\n\n\n\nInstall packages\nNavigate to the console and copy-paste the following commands. You only need to do this once. This will take a minute or two to complete.\n\n\n\n# package install list \nurl <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/scripts/package-installs.R'\nsource(url)\n\n# clear environment\nrm(list = ls())\n\n\n\nCreate a local project\nProjects are a means of keeping your work organized. When you create a project in a directory on your local machine, RStudio keeps track of project metadata, history, and the working environment so that every time you open the project you see whatever you had open when you last closed it.\n\n\n\n\n\n\nAction\n\n\n\nCreate a new project:\n\nSelect File > New project\nCreate the project in a new directory as a subdirectory of your class folder\nName it something like example-project\n\nComment: when naming files it’s good practice to avoid spaces, special characters, and the like. A naming convention we try to follow: choose a descriptive name comprising 1-3 words or common abbreviations separated by hyphens.\n\n\nTake a moment to observe the file navigator. It should consist of a single example-project.Rproj file.\n\n\nAdd content\nWe may as well populate the project with a few files – so let’s add a dataset and write a short script, as if we’re just starting a data analysis.\n\n\n\n\n\n\nAction\n\n\n\nRetrieve data and store a local copy\n\nOpen a new script: File > New File > R Script\nIn the navigator, create a folder called data and a folder called scripts\nCopy and paste the code chunk below into your script.\nExecute once, then save in the scripts folder as data-retrieval.R and close\n\n\n\n\nlibrary(tidyverse)\n\n# retrieve pollution data\nurl <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab1-setup/data/pollution.csv'\npollution <- read_csv(url)\n\n# write as csv to file\nwrite_csv(pollution, file = 'data/pollution.csv')\n\n# clear environment\nrm(list = ls())\n\n\nNext, we’ll do a simple regression analysis.\n\n\n\n\n\n\nAction\n\n\n\nCreate a script\n\nCreate a new script as before\nCopy-paste the code chunk below into your script\nExecute once and examine the results\nSave in the scripts folder as slr-analysis.R\n\n\n\n\nlibrary(tidyverse)\n\n# load data\npollution <- read_csv('data/pollution.csv')\n\n# examine scatterplot with SLR fit\nggplot(pollution,\n       aes(x = log(SO2), y = Mort)) +\n  geom_point() +\n  geom_smooth(method = 'lm')\n\n\n\n# compute SLR fit\nfit <- lm(Mort ~ log(SO2), data = pollution)\nbroom::tidy(fit)\n\n# A tibble: 2 × 5\n  term        estimate std.error statistic  p.value\n  <chr>          <dbl>     <dbl>     <dbl>    <dbl>\n1 (Intercept)    887.      17.6      50.4  1.37e-49\n2 log(SO2)        16.7      4.99      3.35 1.40e- 3\n\n# interpret\nfit_ci <- confint(fit, parm = 'log(SO2)')*log(1.2)\n\npaste('With 95% confidence, every 20% increase in sulfur dioxide pollution is associated with an increase in two-year mortality rate between', \n      round(fit_ci[1], 2), \n      'and', \n      round(fit_ci[2], 2), \n      'per 100k', sep = ' ') %>% \n  print()\n\n[1] \"With 95% confidence, every 20% increase in sulfur dioxide pollution is associated with an increase in two-year mortality rate between 1.23 and 4.87 per 100k\"\n\n\n\nCongrats on your first project! You can close the RStudio session now.\nWe’ll be using projects structured much like what you just set up, but with one catch: we’ll link up our RStudio projects with shared repositories so that we can all collaborate on the same set of project files."
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html#github-repositories",
     "href": "materials/labs/lab1-setup/lab1-setup.html#github-repositories",
-    "title": "Software overview",
+    "title": "Course technology overview",
     "section": "GitHub repositories",
-    "text": "GitHub repositories\n\n\nGit and GitHub\nAt some point in time – possibly quite recently – you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.\nGit is version control software that enables you to systematically track and control file changes within a repository – a collection of files possibly with some directory structure. (The definition of ‘repository’ is simply ‘storage place’.)\nGitHub is an online platform for hosting repositories remotely. Anyone with access to a repository can make changes to files in the repository, and this enables multiple people to collaborate on code.\n\n\nlocal <> remote\nUsually remote repositories are not updated directly because contributors need to execute codes to test their changes and the remote server that hosts the repository is not equipped to do this.\nInstead, contributors will prepare changes on their own machine where they can test them, and then update the remote repository once their changes are complete.\nThis process of implementing file changes in a repository involves communicating information between local and remote locations. For this purpose a local copy of the remote repository is needed.\n\n\nCloning a repository\nIn Git lingo, a clone is a local copy of a remote repository. Creating a clone copies files and establishes the link between local and remote repositories so that changes can be sent to and received from the remote repository. You only need to create a clone once.\nTo clone a repository, all one needs is:\n\nthe remote location URL;\nthe local destination where the clone will be created;\npermission from the repository owner, if private.\n\nI’ve created a ‘sandbox’ repository (for playing in) at https://github.com/pstat197/sandbox. It’s a public repository, so no special permissions are needed. Follow the link to see the repository contents in your browser.\n\n\n\n\n\n\nAction\n\n\n\nClone the sandbox repository:\n\nOpen your GitHub client (GitKracken or GitHub Desktop or similar) and ensure you are logged in to your GitHub account.\nLook for a ‘Clone Repo’ menu item or similar and simply input the URL and the place you’d like to clone it; proceed through any prompts.\nCheck your file navigator to confirm that the repository files were copied.\n\n\n\n\nAn alternative possibility is to create the clone using a terminal command. In the terminal, navigate to the desired destination, and input:\ngit clone https://github.com/pstat197/sandbox\n\n\n\n\n\n\nRemarks\n\n\n\nOn terminal commands:\n\nIt’s recommended to manage Git actions through a visual client, as it’s much easier to see and understand what’s happening.\nHowever, if you know exactly what you’re doing, executing simple actions via Git bash in the terminal can be more efficient at times.\nFor example, you can keep a terminal open in RStudio and manage your repository workflow from there, without having to toggle between environments.\nTry experimenting with terminal commands from RStudio after you have a little experience with basic Git actions."
+    "text": "GitHub repositories\n\nWe will be distributing course assignments as repositories via GitHub Classroom. A repository is simply a storage space.\nHere we’ll walk you through how to access and copy the files in a repository just as you will for course assignments. The first step is to accept an assignment through a link we’ve given to you – this will create a repository for you with the files we intend for you to have.\nFor now, we’ll make a ‘group sandbox’ that you can play in during our next class meeting.\n\n\n\n\n\n\nAction\n\n\n\nAccept an assignment in GitHub Classroom\n\nFollow the link to accept the group-sandbox assignment. Since it’s a group assignment, you will be prompted to join a team.\nJoin the team for the table you sat at during last class meeting. If you don’t remember, check your attendance form receipt.\n\nYou should be directed to a team repository on github.com. You may need to refresh your browser. Keep this window open; you will need the URL.\n\n\n\nGit and GitHub\nAt some point in time – possibly quite recently – you had to install Git on your local machine, as well as create a GitHub account. So, Git and GitHub are two different things.\nGit is version control software that enables you to systematically track and control file changes within a repository – a collection of files possibly with some directory structure. (The definition of ‘repository’ is simply ‘storage place’.)\nGitHub is an online platform for hosting repositories remotely. Anyone with access to a repository can make changes to files in the repository, and this enables multiple people to collaborate on code.\n\n\nlocal <> remote\nUsually remote repositories are not updated directly because contributors need to execute codes to test their changes and the remote server that hosts the repository is not equipped to do this.\nInstead, contributors will prepare changes on their own machine where they can test them, and then update the remote repository once their changes are complete.\nThis process of implementing file changes in a repository involves communicating information between local and remote locations. For this purpose a local copy of the remote repository is needed.\n\n\nCloning a repository\nIn Git lingo, a clone is a local copy of a remote repository. Creating a clone copies files and establishes the link between local and remote repositories so that changes can be sent to and received from the remote repository. You only need to create a clone once.\nTo clone a repository, all one needs is:\n\nthe remote location URL;\nthe local destination where the clone will be created;\npermission from the repository owner, if private.\n\nHere you’ll clone the group sandbox repository you just created/joined. You will need the URL; if you happened to close the page when you accepted the assignment earlier, you should be able to find the repository from your home page on github.com.\n\n\n\n\n\n\n\nAction\n\n\n\nClone the sandbox repository:\n\nOpen your GitHub client (GitKracken or GitHub Desktop or similar) and ensure you are logged in to your GitHub account.\nLook for a ‘Clone Repo’ menu item or similar and simply input the URL and the place you’d like to clone it; proceed through any prompts.\nCheck your file navigator to confirm that the repository files were copied.\n\n\n\n\nAn alternative possibility is to create the clone using a terminal command. In the terminal, navigate to the desired destination, and input:\ngit clone https://github.com/USERNAME/REPONAME\n\n\n\n\n\n\nRemarks\n\n\n\nOn terminal commands:\n\nIt’s recommended to manage Git actions through a visual client, as it’s much easier to see and understand what’s happening.\nHowever, if you know exactly what you’re doing, executing simple actions via Git bash in the terminal can be more efficient at times.\nFor example, you can keep a terminal open in RStudio and manage your repository workflow from there, without having to toggle between environments.\nTry experimenting with terminal commands from RStudio after you have a little experience with basic Git actions."
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html#checklist",
     "href": "materials/labs/lab1-setup/lab1-setup.html#checklist",
-    "title": "Software overview",
+    "title": "Course technology overview",
     "section": "Checklist",
-    "text": "Checklist\nHave you completed all of the activity action items?\n\nInstall software: R, RStudio, Git, and a GitHub client\nCreate a GitHub account and join the course GitHub org\nInstall R packages that will be used frequently\nCreate a local project in RStudio\nClone the sandbox repo https://github.com/pstat197/sandbox"
+    "text": "Checklist\nHave you completed all of the activity action items?\n\nInstall software: R, RStudio, Git, and a GitHub client\nCreate a GitHub account\nInstall R packages that will be used frequently\nCreate a local project in RStudio\nAccept the group sandbox assignment on GitHub Classroom\nClone the group sandbox repo"
   },
   {
     "objectID": "materials/slides/week0-intro.html#before-we-begin",
@@ -179,7 +179,14 @@
     "href": "materials/slides/week0-intro.html#capstone-projects",
     "title": "Course orientation",
     "section": "Capstone projects",
-    "text": "Capstone projects\nMost students are preparing for capstone projects in winter and spring. Course foci were chosen with this in mind.\n\nProjects are varied ➜ emphasize problem patterns over methodology\nProjects are collaborative ➜ emphasize teamwork and discussion\nProjects are specialized ➜ practice independent learning based on use cases"
+    "text": "Capstone projects\nMost students are preparing for capstone projects in winter and spring. Course foci were chosen with this in mind.\n\nProjects are varied ➜ emphasize problem patterns over methodology\nProjects are collaborative ➜ emphasize teamwork and discussion\nProjects are specialized ➜ practice independent learning based on use cases\n\nRead about past projects at https://centralcoastdatascience.org/projects"
+  },
+  {
+    "objectID": "materials/slides/week0-intro.html#continuing-in-capstones",
+    "href": "materials/slides/week0-intro.html#continuing-in-capstones",
+    "title": "Course orientation",
+    "section": "Continuing in capstones",
+    "text": "Continuing in capstones\nContinuation in PSTAT197B-C/CMPSC190DE-DF during winter and spring:\n\nstudents admitted to this course in spring have a seat;\nstudents admitted from the waitlist are on the waitlist."
   },
   {
     "objectID": "materials/slides/week0-intro.html#outcomes",
@@ -214,7 +221,7 @@
     "href": "materials/slides/week0-intro.html#module-content",
     "title": "Course orientation",
     "section": "Module content",
-    "text": "Module content\nThe module datasets are currently as follows:\n\nClass intake survey data (exploratory/descriptive analysis)\nBiomarkers of autism (classification and variable selection)\nWeb fraud (text processing and predictive modeling)\nSoil temperatures (spatial and temporal data)"
+    "text": "Module content\nThe module datasets are currently as follows:\n\nClass intake survey data (exploratory/descriptive analysis)\nBiomarkers of autism (predictive modeling and variable selection)\nWeb fraud (text processing and deep learning)\nSoil temperatures (correlated data)"
   },
   {
     "objectID": "materials/slides/week0-intro.html#group-assignments",
@@ -235,7 +242,7 @@
     "href": "materials/slides/week0-intro.html#expectations-and-assessments",
     "title": "Course orientation",
     "section": "Expectations and assessments",
-    "text": "Expectations and assessments\n\n\nStudents are expected to:\n\nprepare for class meetings as directed;\nattend and actively participate in class and section meetings;\ncontribute meaningfully to group activities.\n\n\nStudents are assessed on:\n\nattendance, preparation, and participation;\nquality of submitted work;\nindividual contributions to group assignments;\noral interview/presentation."
+    "text": "Expectations and assessments\n\n\nStudents are expected to:\n\nprepare for class meetings as directed;\nattend and actively participate in class and section meetings;\ncontribute meaningfully to group activities and assignments.\n\n\nStudents are assessed on:\n\nattendance, preparation, and participation;\nquality of submitted work;\nindividual contributions to group assignments;\noral interview/presentation."
   },
   {
     "objectID": "materials/slides/week0-intro.html#topic",
@@ -249,6 +256,167 @@
     "href": "materials/slides/week0-intro.html#checklist",
     "title": "Course orientation",
     "section": "Checklist",
-    "text": "Checklist\nComplete all of the following before our next meeting.\n\nReview all content in the about section of the course webpage.\nInstall course software.\nJoin GitHub organization and slack workspace (accept email invitations).\nFill out capstone project intake form.\nRead MDSR section 1.1 and reflect: how would you describe data science to a family member or friend?\n\n\n\n\nPSTAT197A/CMPSC190DD Fall 2022"
+    "text": "Checklist\nComplete all of the following before our next meeting.\n\nReview all content in the about section of the course webpage.\nInstall course software and join GitHub and slack.\nFill out capstone project intake form.\nRead Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library).\nPrepare a reading response.\n\n\n\nPSTAT197A/CMPSC190DD Fall 2022"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#google-trends-data-science",
+    "href": "materials/slides/week1-perspectives.html#google-trends-data-science",
+    "title": "On projects in(volving) data science",
+    "section": "Google trends: data science",
+    "text": "Google trends: data science\n\n\nData science emerged as a term of art in the last decade\nInterest exploded in the last five years"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#origins-data-analysis",
+    "href": "materials/slides/week1-perspectives.html#origins-data-analysis",
+    "title": "On projects in(volving) data science",
+    "section": "Origins: ‘data analysis’",
+    "text": "Origins: ‘data analysis’\nTukey advocated for ‘data analysis’ as a broader field than statistics (Tukey 1962), including:\n\nstatistical theory and methodology;\nvisualization and data display techniques;\ncomputation and scalability;\nbreadth of application.\n\n\nLook famililar? Tukey’s ‘data analysis’ is proto-modern data science."
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#a-bit-of-history",
+    "href": "materials/slides/week1-perspectives.html#a-bit-of-history",
+    "title": "On projects in(volving) data science",
+    "section": "A bit of history",
+    "text": "A bit of history\nIt’s worth noting that in the first half of the 20th century, much of statistics focused on methodology and theory for the analysis of small iid samples, and in particular:\n\ninference on means and inference on tables;\nanalysis of variance;\ntests of distribution.\n\n\nThe inferential framework brought to bear on these ‘simpler’ problems largely carried over when the field began to specialize."
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#contrasting-approaches",
+    "href": "materials/slides/week1-perspectives.html#contrasting-approaches",
+    "title": "On projects in(volving) data science",
+    "section": "Contrasting approaches",
+    "text": "Contrasting approaches\nFrom 1960-2010, adopters of the ‘data analysis as a field’ view were largely industry practitioners and applied statisticians who advocated for training and practice that included empirical methods and computation in addition to statistical inference (Donoho 2017).\n\nTheir ideas evolved into an alternative approach to working with data:\n\ndata-driven rather than theory-driven;\niterative rather than conclusive."
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#confirmatory-approach",
+    "href": "materials/slides/week1-perspectives.html#confirmatory-approach",
+    "title": "On projects in(volving) data science",
+    "section": "Confirmatory approach",
+    "text": "Confirmatory approach\nThe “confirmatory” approach of the classical inferential framework.\n\n\n\n\n\n\n\nconfirm\n\n \n\ncluster_1\n\n data generation  \n\ncluster_2\n\n data analysis  \n\ncluster_3\n\n decision   \n\nsci\n\n domain  knowledge   \n\nhyp\n\n hypotheses   \n\nsci->hyp\n\n    \n\nexp\n\n designed  experiment   \n\nhyp->exp\n\n    \n\nmdl\n\n statistical  model   \n\nexp->mdl\n\n    \n\ndat\n\n data   \n\nexp->dat\n\n    \n\nyay\n\n supporting  evidence   \n\nmdl->yay\n\n    \n\nnay\n\n opposing  evidence   \n\nmdl->nay\n\n    \n\ndat->yay\n\n    \n\ndat->nay\n\n   \n\n\n\n\n\n\noutput is a decision\nstatistical model determined by experimental design\nanalysis based on statistical theory"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#exploratory-approach",
+    "href": "materials/slides/week1-perspectives.html#exploratory-approach",
+    "title": "On projects in(volving) data science",
+    "section": "Exploratory approach",
+    "text": "Exploratory approach\nThe “exploratory” approach of the iterative modern data analysis.\n\n\n\n\n\n\n\nexplore\n\n \n\ncluster_1\n\n data analysis  \n\ncluster_2\n\n findings   \n\nsci\n\n domain  knowledge   \n\nq\n\n question  formulation   \n\nsci->q\n\n    \n\ndat\n\n data   \n\nq->dat\n\n    \n\nmdl\n\n statistical  model   \n\ndat->mdl\n\n    \n\nmdl->q\n\n    \n\nf1\n\n finding 1   \n\nmdl->f1\n\n    \n\nf2\n\n finding 2   \n\nmdl->f2\n\n    \n\ndots\n\n ⋮  \n\n\n\n\n\n\noutputs are findings\nstatistical model determined by data\nanalysis techniques include empirical methods"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#drivers-of-change",
+    "href": "materials/slides/week1-perspectives.html#drivers-of-change",
+    "title": "On projects in(volving) data science",
+    "section": "Drivers of change",
+    "text": "Drivers of change\nIn the 2000s and especially after 2010, the iterative approach enjoys broader applicability than it used to:\n\ndue to automated and/or scalable data collection\n\nobservational data is widely available across domains\nand includes large numbers of variables\n\nhighly specialized data problems evade methodology with theoretical support\nmore accessible to analysts without advanced statistical training"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#machine-learning",
+    "href": "materials/slides/week1-perspectives.html#machine-learning",
+    "title": "On projects in(volving) data science",
+    "section": "Machine learning",
+    "text": "Machine learning\nMachine learning was largely advanced by computer scientists through 2010 and later, most notably:\n\nneural networks and deep learning\noptimization\nalgorithmic analysis\n\n\nThis was, of course, hugely important in setting the stage for modern predictive modeling, and engaging with these tools required going beyond statistics."
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#in-sum",
+    "href": "materials/slides/week1-perspectives.html#in-sum",
+    "title": "On projects in(volving) data science",
+    "section": "In sum",
+    "text": "In sum\n\nAround mid-century, it was proposed that specialists should be trained in computational as well as statistical methods\nOver time practitioners developed an iterative process for data-driven problem solving that was more flexible than the classical inferential framework\nComputer scientists advanced the field of machine learning substantially\nIterative problem solving together with applied machine learning was well-suited to meet the demands of modern data, but the area was largely non-academic\nHence, ‘data science’"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#what-is-research",
+    "href": "materials/slides/week1-perspectives.html#what-is-research",
+    "title": "On projects in(volving) data science",
+    "section": "What is research?",
+    "text": "What is research?\nResearch is systematic investigation undertaken in order to establish or discover facts.\n\nWhat are facts in data science?\n\nmethod M outperforms method M’ at task T\nwe analyzed data D and reached the conclusion that…"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#the-research-landscape",
+    "href": "materials/slides/week1-perspectives.html#the-research-landscape",
+    "title": "On projects in(volving) data science",
+    "section": "The research landscape",
+    "text": "The research landscape\nFormal communities – i.e., journals, departments, conferences – have not coalesced around data science research to date.\n\nRelevant research largely occurs in statistics, computer science, and application domains, and can be divided broadly into:\n\nmethodology – creating new techniques to analyze data\napplications – applying existing methods to generate new findings"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#methodological-research",
+    "href": "materials/slides/week1-perspectives.html#methodological-research",
+    "title": "On projects in(volving) data science",
+    "section": "Methodological research",
+    "text": "Methodological research\nMethodological research might involve:\n\ndesigning a faster algorithm for solving a particular problem\nproposing a new technique for analyzing a particular type of data\ngeneralizing a technique to a broader range of problems"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#applied-research",
+    "href": "materials/slides/week1-perspectives.html#applied-research",
+    "title": "On projects in(volving) data science",
+    "section": "Applied research",
+    "text": "Applied research\nApplied research might involve:\n\nanalyzing a specific dataset or producing a novel analysis of existing data\ncreating ad-hoc methods for a domain-specific problem\nimporting methodology from another area to bear on a domain-specific problem"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#data-science-capstones",
+    "href": "materials/slides/week1-perspectives.html#data-science-capstones",
+    "title": "On projects in(volving) data science",
+    "section": "Data science capstones",
+    "text": "Data science capstones\nMost of the time, our data science capstones fall pretty squarely in the applied domain:\n\nsponsor provides data and high-level goals\nstudent team works on producing an analysis or analyses\nmentor advises on methodology"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#relevant-skills",
+    "href": "materials/slides/week1-perspectives.html#relevant-skills",
+    "title": "On projects in(volving) data science",
+    "section": "Relevant skills",
+    "text": "Relevant skills\nThere are a few avenues to prepare for this sort of work.\n\nWe’ll focus on:\n\nrecognizing problem patterns\ndeveloping a functional view of methodology\ncollaborating efficiently\nindependent learning strategies\nengaging with literature constructively\n\n\n\nIt won’t provide you with exhaustive methodological preparation, but should support you in learning ‘on the job’."
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#reading-responses",
+    "href": "materials/slides/week1-perspectives.html#reading-responses",
+    "title": "On projects in(volving) data science",
+    "section": "Reading responses",
+    "text": "Reading responses\nQuestions to review:\n\nWhat is meant by a ‘systems approach’ to data science?\nWhat is meant by ‘design thinking’ in data science?\n(Why) Are these useful concepts?"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#prescriptive-and-descriptive",
+    "href": "materials/slides/week1-perspectives.html#prescriptive-and-descriptive",
+    "title": "On projects in(volving) data science",
+    "section": "Prescriptive and descriptive",
+    "text": "Prescriptive and descriptive\nThe Perspective on Data Science paper (Peng and Parker 2022) is not just descriptive, but also prescriptive: it provides a useful framework for engaging in (applied) research.\n\ndata scientists trade in data analyses\na data analysis is a designed product\nthinking about design principles can help make a better product\n\n\nLet’s look at some design principles from (McGowan, Peng, and Hicks 2021)."
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#design-principles-matchedness",
+    "href": "materials/slides/week1-perspectives.html#design-principles-matchedness",
+    "title": "On projects in(volving) data science",
+    "section": "Design principles: matchedness",
+    "text": "Design principles: matchedness"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#design-principles-exhuastiveness",
+    "href": "materials/slides/week1-perspectives.html#design-principles-exhuastiveness",
+    "title": "On projects in(volving) data science",
+    "section": "Design principles: exhuastiveness",
+    "text": "Design principles: exhuastiveness"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#design-principles-transparency",
+    "href": "materials/slides/week1-perspectives.html#design-principles-transparency",
+    "title": "On projects in(volving) data science",
+    "section": "Design principles: transparency",
+    "text": "Design principles: transparency"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#design-principles-reproducibility",
+    "href": "materials/slides/week1-perspectives.html#design-principles-reproducibility",
+    "title": "On projects in(volving) data science",
+    "section": "Design principles: reproducibility",
+    "text": "Design principles: reproducibility"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#next-time",
+    "href": "materials/slides/week1-perspectives.html#next-time",
+    "title": "On projects in(volving) data science",
+    "section": "Next time",
+    "text": "Next time"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#references",
+    "href": "materials/slides/week1-perspectives.html#references",
+    "title": "On projects in(volving) data science",
+    "section": "References",
+    "text": "References\n\n\n\n\n\n\nDonoho, David. 2017. “50 Years of Data Science.” Journal of Computational and Graphical Statistics 26 (4): 745–66.\n\n\nMcGowan, Lucy D’Agostino, Roger D Peng, and Stephanie C Hicks. 2021. “Design Principles for Data Analysis.” arXiv Preprint arXiv:2103.05689.\n\n\nPeng, Roger D, and Hilary S Parker. 2022. “Perspective on Data Science.” Annual Review of Statistics and Its Application 9: 1–20.\n\n\nTukey, John W. 1962. “The Future of Data Analysis.” The Annals of Mathematical Statistics 33 (1): 1–67."
   }
 ]

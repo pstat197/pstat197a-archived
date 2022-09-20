@@ -8,13 +8,13 @@ This schedule is tentative and may be adjusted at the discretion of the instruct
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
 | Week       | Theme                      | Tuesday meeting                                   | Thursday meeting                                | Section meeting                  |
 +============+============================+===================================================+=================================================+==================================+
-| 0          | Introductions              | NO CLASS                                          | Course orientation                              | NO SECTIONS                      |
+| 0          | Module 0: Introductions    | NO CLASS                                          | Course orientation                              | NO LAB                           |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
-| 1          | Introductions              | Lecture:                                          | Activity:                                       | Software and technology overview |
+| 1          | Module 0: Introductions    | 0.1 Lecture:                                      | 0.2 Activity:                                   | Software and technology overview |
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   on research projects in(volving) data science | -   collaboration using GitHub                  |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
-| 2          | Module 0: Class data       | 0.1 Lecture/discussion:                           | 0.2 Activity:                                   | tidyverse                        |
+| 2          | Module 0: Introductions    | 0.3 Lecture/discussion:                           | 0.4 Activity:                                   | tidyverse                        |
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   introducing class survey data                 | -   exploratory and descriptive analysis        |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
@@ -30,25 +30,25 @@ This schedule is tentative and may be adjusted at the discretion of the instruct
 |            |                            |                                                   |                                                 |                                  |
 |            |                            |                                                   | -   review published analysis of biomarker data |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
-| 5          | Module 2: soil temperature | 2.1 Discussion/lecture:                           | 2.2 Lecture:                                    | time series analysis             |
-|            |                            |                                                   |                                                 |                                  |
-|            |                            | -   sharing results of biomarker analysis;        | -   on time                                     |                                  |
-|            |                            |                                                   |                                                 |                                  |
-|            |                            | -   introducing soil temperature data             |                                                 |                                  |
-+------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
-| 6          | Module 2: soil temperature | 2.3 Lecture:                                      | 2.4 Discussion: results                         | spatial analysis                 |
-|            |                            |                                                   |                                                 |                                  |
-|            |                            | -   on space                                      |                                                 |                                  |
-+------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
-| 7          | Module 3: web fraud        | 3.1 Lecture/discussion:                           | 3.2 Lecture:                                    | text processing                  |
+| 5          | Module 2: web fraud        | 2.1 Lecture/discussion:                           | 2.2 Lecture:                                    | text processing                  |
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   sharing analysis of soil temperature data;    | -   on text as data                             |                                  |
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   introducing web fraud data                    |                                                 |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
-| 8          | Module 3: web fraud        | 3.3 Lecture:                                      | 3.4 Activity:                                   | keras                            |
+| 6          | Module 2: web fraud        | 2.3 Lecture:                                      | 2.4 Activity:                                   | keras                            |
 |            |                            |                                                   |                                                 |                                  |
 |            |                            | -   on multiclass classification                  | -   measuring classification accuracy           |                                  |
++------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
+| 7          | Module 3: soil temperature | 3.1 Discussion/lecture:                           | 3.2 Lecture:                                    | time series analysis             |
+|            |                            |                                                   |                                                 |                                  |
+|            |                            | -   sharing results of biomarker analysis;        | -   on time                                     |                                  |
+|            |                            |                                                   |                                                 |                                  |
+|            |                            | -   introducing soil temperature data             |                                                 |                                  |
++------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
+| 8          | Module 2: soil temperature | 3.3 Lecture:                                      | 3.4 Discussion: results                         | spatial analysis                 |
+|            |                            |                                                   |                                                 |                                  |
+|            |                            | -   on space                                      |                                                 |                                  |
 +------------+----------------------------+---------------------------------------------------+-------------------------------------------------+----------------------------------+
 | 9          | Module 4: vignettes        | 4.1 Activity:                                     | NO CLASS                                        | NO LAB                           |
 |            |                            |                                                   |                                                 |                                  |
