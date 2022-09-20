@@ -11,6 +11,16 @@ execute:
 
 Read this and complete all instructions in the 'action' boxes during your lab section. Your TA will walk you through the activity and help to troubleshoot issues and answer any questions along the way.
 
+**Objectives:**
+
+-   get oriented with RStudio and RStudio projects
+
+-   install packages
+
+-   accept a GitHub classroom team assignment
+
+-   clone a repository
+
 ## Prerequisites
 
 <!--# TA ACTION: ensure everyone has working installs and a github account before going ahead. there may be time to allow a few minutes for anyone who needs the time to complete installs, but if need be you can pair students with technical difficulties with students with working setups and troubleshoot after class. -->
