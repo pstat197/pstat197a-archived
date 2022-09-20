@@ -2,6 +2,11 @@
 title: "Course technology overview"
 editor: visual
 code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
 ---
 
 Read this and complete all instructions in the 'action' boxes during your lab section. Your TA will walk you through the activity and help to troubleshoot issues and answer any questions along the way.
