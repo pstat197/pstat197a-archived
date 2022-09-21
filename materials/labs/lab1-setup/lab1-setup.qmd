@@ -37,10 +37,9 @@ To complete the activity you'll need to:
 **Preparations:**
 
 1.  Log in to your GitHub account.
-2.  Accept the invitation to join the PSTAT197 GitHub organization. Check your UCSB email for the invitation. If you have not received one, request it from a TA or ULA.
-3.  Open your GitHub client.
-4.  Open a new session in RStudio.
-5.  Create a class folder for PSTAT197 somewhere on your machine, *e.g.,* `~/documents/pstat197`.
+2.  Open your GitHub client.
+3.  Open a new session in RStudio.
+4.  Create a class folder for PSTAT197 somewhere on your machine, *e.g.,* `~/documents/pstat197`.
 :::
 
 ## RStudio projects
@@ -95,7 +94,7 @@ rm(list = ls())
 
 -   Create the project in a new directory as a subdirectory of your class folder
 
--   Name it something like `example-project`
+-   Name it `example-project`
 
 *Comment:* when naming files it's good practice to avoid spaces, special characters, and the like. A naming convention we try to follow: choose a descriptive name comprising 1-3 words or common abbreviations separated by hyphens.
 :::

@@ -9,7 +9,7 @@ editor: visual
 
 ### Week 0
 
--   ***Thursday meeting:*** Course orientation \[slides\]
+-   ***Thursday meeting:*** Course orientation [\[slides](slides/week0-intro.qmd)\]
 
 -   ***Assignments*** due by next class meeting:
 
