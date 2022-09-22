@@ -6,23 +6,31 @@ code-copy: true
 
 This activity introduces GitHub repositories and basic Git actions; students will be expected to use these skills to access materials and complete assignments.
 
-### Why are we using Git and GitHub?
+**Objectives:**
+
+**Prerequisites:** completion of lab 1.
+
+# Background
+
+## Why are we using Git and GitHub?
 
 Version control has many benefits, including the ability to track changes and contributions precisely, work in parallel with other contributors, revert to prior versions of files, keep track of issues, quickly share and disseminate work, and solicit user contributions from the coding public. Arguably, for all of these reasons and because of its widespread use, Git/GitHub is a must for data scientists.
 
 In this class you'll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework. This should equip you to utilize a repository for efficient collaboration with your peers on your capstone project.
 
-If I want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:
+## Basic workflow
 
--   create/update local copies of repository files, say, on my laptop;
+If I am working out of a repository and want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:
+
+-   create/update local copies of repository files on my laptop;
 
 -   make the desired change(s) locally;
 
--   send the changes back to the remote repository;
+-   send the changes back to the remote repository.
 
--   update the remote repository by accepting changes.
+Typically these steps are performed iteratively as work progresses -- they are a basic workflow.
 
-These steps correspond to a sequence of **Git actions**: actions that modify the repository files and/or metadata. The most basic sequence is:
+Workflow can be understood as a sequence of **Git actions**: actions that modify the repository files and/or metadata. The most basic sequence that accomplishes the above steps is:
 
 -   `git pull` update the local repository (technically, fetch changes + merge changes from the remote repository);
 
@@ -34,11 +42,9 @@ These steps correspond to a sequence of **Git actions**: actions that modify the
 
 Sometimes contributors take different or additional actions; the complexity of the Git actions required to make a change depends largely on repository settings, permissions, and agreements among collaborators about how workflow should be structured.
 
-### 
+# Activity
 
-# Lab activity
-
-Open your GitHub client and RStudio. In RStudio, open the project associated with your clone of the sandbox repo.
+Open your GitHub client and RStudio. In RStudio, open the project associated with your clone of the group sandbox repository.
 
 <!--# INSTRUCTOR ACTION: create a markdown file just a few minutes before the lab will begin named after your lab section in a lab-specific directory e.g. '2pm-lab/about-us.md' with some small remark; try to come up with something fun/topical. push the file to the main branch -->
 
@@ -48,35 +54,35 @@ Here you'll make a local change and then push that change to the remote reposito
 
 ### Pull
 
-As discussed in the pre-lab activity, the first step to making a change is beginning with the most up-to-date version of the repository files. Your TA will have made a small change to the repository since you first cloned it, so we'll start with retrieving that change.
+The first step to making a change is ensuring you have the most up-to-date version of the repository files.
 
 ::: callout-important
-## Action
+## Action (individual)
 
 **Pull changes from the remote repository:**
 
--   In your GitHub client, open the sandbox repository and then look for a 'Pull' menu item.
+-   In your GitHub client, open the group sandbox repository and then look for a 'Pull' menu item.
 
 -   In the terminal: navigate to the root directory of the repository and `git pull`
 
 Technically, `git pull` = `git fetch` + `git merge`. If you ever wish to examine changes without modifying local files, you can `git fetch`.
 :::
 
-Examine the updated local repository files; notice that there is now a folder named after your lab section containing a markdown file. Open it up and have a look.
+Examine the updated local repository files; notice that there is now a `class-activity` folder containing a copy of this activity.
 
 ### Make changes
 
-Now that you have the most up-to-date version of all files, create a new markdown file in your lab section folder with a fun fact about you (or anything else if you'd rather) that you'll upload to the repository.
+Now that you have the most up-to-date version of all files, create a new markdown file in the class activity folder with a fun fact about you (or anything else if you'd rather) that you'll upload to the repository.
 
 ::: callout-important
-## Action
+## Action (individual)
 
 **Create a markdown file:**
 
 1.  In RStudio, select File \> New File \> Markdown File
 2.  Add an 'About Me' or similar header (use one or more hashes `#` before the header text)
 3.  Write a fun fact about yourself
-4.  Save the file in your lab folder as `YOURGITHUBUSERNAME-about.md`
+4.  Save the file as `YOURGITHUBUSERNAME-about.md` in the class activity folder
 :::
 
 ### Stage and commit changes
@@ -86,7 +92,7 @@ Now that your new file is ready to go you can stage the changes to be committed 
 A *commit* is a bundle of changes that will be submitted to the repository along with a message briefly explaining the changes made. Your GitHub client will often fill in a default message such as 'update FILENAME.EXT'.
 
 ::: callout-important
-## Action
+## Action (individual)
 
 **Stage and commit:**
 
@@ -105,13 +111,16 @@ Often these actions are performed together. However, in some workflows it may ma
 
 The last step is to push your commit to the remote repository. However, as you will see in a moment, too many people trying to push changes at once can create some problems.
 
-Your TA will instruct someone in your class to push their changes. The very first person to do this will have no problems, since their local repository is up to date with the remote.
+::: callout-important
+## Action (group)
 
-Your TA will then instruct someone else to try. But since the first person modified the remote repository, the next person to push changes will no longer be up to date. Git will detect this and the push won't go through. The person must update their local repository first, preferably by `git pull`.
+1.  Choose one person at your table to push their changes. The very first person to do this will have no problems, since their local repository is up to date with the remote.
+2.  Then choose someone else to try -- use the main screen if possible. Since the first person modified the remote repository, the next person to push changes will no longer be up to date. Git will detect this and the push won't go through.
+3.  Have the second person update their local repository by pulling changes, and then try the push again. It should go through once their local is up to date with the remote.
+4.  Have everyone at your table pull changes.
+:::
 
-Under the hood, the update action will merge the first person's commit with the second person's local repository. Git is fairly good at doing this in such a way that changes don't get lost or overwritten, but there are some conflicts that it can't resolve automatically. That will happen if multiple changes are made to the same line of the same file.
-
-In this activity everyone is working on independent files and there's no overlap between changes, so although it would be a bit messy to have everyone pull/push sequentially, in principle it could be done. However, there is a more efficient way to work in parallel: by creating *branches*.
+So far everyone is working on independent files and there's no overlap between changes, so although it would be a bit of a hassle to have everyone check for changes every time they push, in principle it could be done. However, there is a more efficient way to work in parallel: by creating *branches*.
 
 ## Branching
 
@@ -119,10 +128,10 @@ Inspect your GitHub client closely, and note that you are currently on the 'main
 
 ### Create a branch
 
-Here you'll use branches to avoid stepping on each others' toes while pushing your commits. The strategy will be to create a personal branch, push your commit to that branch, and then merge the branch back into the main branch of the repository.
+Here you'll use branches to avoid stepping on each others' toes while pushing your table's remaining commits. The strategy will be to create a personal branch, push your commit to that branch, and then merge the branch back into the main branch of the repository.
 
 ::: callout-important
-## Action
+## Action (individual)
 
 **Create a branch and push your previous commit:**
 
@@ -137,7 +146,7 @@ Here you'll use branches to avoid stepping on each others' toes while pushing yo
 While often the main purpose of branching is to create a version of the repository that only you will modify, contributors can inspect any branch of the repository. This can be useful for sharing ideas or getting input or help.
 
 ::: callout-important
-## Action
+## Action (in pairs)
 
 **Make a commit to your neighbor's branch**
 
@@ -155,7 +164,7 @@ Once you are ready to integrate changes you've developed on a branch you can ope
 'Pull request' is a bit of an odd term; think of it as you making a *request* that your collaborators *pull* your changes for review.
 
 ::: callout-important
-## Action
+## Action (in pairs)
 
 **Open a pull request:**
 
@@ -167,11 +176,19 @@ Once you are ready to integrate changes you've developed on a branch you can ope
 Once a pull request is opened, usually a collaborator with maintain privileges must be the one to merge changes and close the request. However, the rules for this depend on repository settings. For this repository, all contributors can merge and close pull requests.
 
 ::: callout-important
-## Action
+## Action (in pairs)
 
-Open the repository <https://github.com/pstat197/sandbox> in the browser. Navigate to pull requests.
+-   Open the repository in the browser. Navigate to pull requests.
 
-Find your neighbor's pull request; merge their changes and close the request. Then delete the branch.
+-   Find your neighbor's pull request; merge their changes and close the request. Then delete the branch.
 :::
 
+Once everyone at the table is finished, examine the repository on the main screen and verify that everyone's markdown file is present on the main branch. Then have each contributor pull changes and check that they see the same.
+
+## Merge conflicts
+
 ## Checklist
+
+1.  On github.com, your group-sandbox repository has a directory called `class-activity` containing a copy of this activity and one markdown file for each group member with two fun facts about them.
+2.  The repository has only one open branch.
+3.  Each group member has an up-to-date local copy of the repository.

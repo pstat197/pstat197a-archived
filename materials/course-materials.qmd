@@ -19,7 +19,7 @@ editor: visual
 
     -   read [Peng, R. D., & Parker, H. S. (2022). Perspective on data science. *Annual Review of Statistics and Its Application*, *9*, 1-20.](https://doi.org/10.1146/annurev-statistics-040220-013917) (access online via UCSB library);
 
-    -   prepare a [reading response](https://forms.gle/PdRWx7h4PmeGQUBL8)
+    -   prepare a [reading response](https://forms.gle/n2GpNGMVXVaAXSWf9)
 
 <!-- ### Week 1 {#sec-week-1} -->
 

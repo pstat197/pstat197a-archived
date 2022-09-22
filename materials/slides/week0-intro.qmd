@@ -17,7 +17,7 @@ format:
 
 2.  Please sign in using the attendance reporting form found here:
 
-    [https://pstat197.github.io/pstat197a/materials/links.html](https://pstat197.github.io/pstat197a/materials/links.html#sec-class-forms)
+    [https://pstat197.github.io/pstat197a/about/links.html](https://pstat197.github.io/pstat197a/about/links.html#sec-class-forms)
 
 # General orientation
 
@@ -172,4 +172,4 @@ Complete all of the following [***before***]{.underline} our next meeting.
 2.  Install [course software](https://pstat197.github.io/pstat197a/about/links.html) and create a GitHub account.
 3.  Fill out [capstone project intake form](https://forms.gle/zQT8jc85Y71BKYV48).
 4.  Read [Peng, R. D., & Parker, H. S. (2022). Perspective on data science. *Annual Review of Statistics and Its Application*, *9*, 1-20.](https://doi.org/10.1146/annurev-statistics-040220-013917) (access online via UCSB library).
-5.  Prepare a [reading response](https://forms.gle/PdRWx7h4PmeGQUBL8).
+5.  Prepare a [reading response](https://forms.gle/n2GpNGMVXVaAXSWf9).
