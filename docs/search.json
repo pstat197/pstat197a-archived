@@ -39,7 +39,7 @@
     "href": "about/syllabus.html#meetings",
     "title": "Course syllabus",
     "section": "Meetings",
-    "text": "Meetings\nClass meetings are held 2pm – 3:15pm Tuesdays and Thursdays in Ellison 2617.\nSection meetings are held on Wednesdays:\n\n2pm – 2:50pm in Girvetz 2115;\n3pm – 3:50pm in Girvetz 2116;\n4pm – 4:50pm in North Hall 1109."
+    "text": "Meetings\nClass meetings are held 2pm – 3:15pm Tuesdays and Thursdays in Ellison 2617.\nSection meetings are held on Wednesdays:\n\n2pm – 2:50pm in Girvetz 2115 with Josh;\n3pm – 3:50pm in Girvetz 2116 with Erika;\n4pm – 4:50pm in North Hall 1109 with Megan."
   },
   {
     "objectID": "about/syllabus.html#staff",
@@ -278,6 +278,13 @@
     "title": "Course orientation",
     "section": "Checklist",
     "text": "Checklist\nComplete all of the following before our next meeting.\n\nReview all content in the about section of the course webpage.\nInstall course software and create a GitHub account.\nFill out capstone project intake form.\nRead Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library).\nPrepare a reading response."
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#announcementsreminders",
+    "href": "materials/slides/week1-perspectives.html#announcementsreminders",
+    "title": "On projects in(volving) data science",
+    "section": "Announcements/reminders",
+    "text": "Announcements/reminders\n\nJoin Slack workspace, monitor channel #22f-pstat197a for announcements.\nOffice hours by demand immediately following section and class meetings\n\nYan will hold a drop in hour in building 434 room 126 after Josh’s section"
   },
   {
     "objectID": "materials/slides/week1-perspectives.html#google-trends-data-science",

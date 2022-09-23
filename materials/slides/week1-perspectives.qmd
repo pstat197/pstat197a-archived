@@ -19,6 +19,14 @@ execute:
   cache: true
 ---
 
+## Announcements/reminders
+
+-   [Join Slack workspace](https://join.slack.com/t/ucsbdscapstone/shared_invite/zt-1grett38h-CRGobXBZYBrTqCayZr4lGw), monitor channel #22f-pstat197a for announcements.
+
+-   Office hours by demand immediately following section and class meetings
+
+    -   Yan will hold a drop in hour in building 434 room 126 after Josh's section
+
 # On data science
 
 ## Google trends: data science
