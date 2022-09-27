@@ -352,6 +352,7 @@
 <ul>
 <li class="fragment">Yan will hold a drop in hour in building 434 room 126 after Josh’s section</li>
 </ul></li>
+<li class="fragment"><p>Install course software and bring your laptop to section meetings. Remember your table number from today.</p></li>
 </ul>
 </section>
 <section>
@@ -380,6 +381,67 @@
 <p>Look famililar? Tukey’s ‘data analysis’ is proto-modern data science.</p>
 </div>
 </section>
+<section id="early-data-analysis-concepts" class="slide level2">
+<h2>Early data analysis concepts</h2>
+<p>In the 1960’s and 1970’s, these concepts meant very different things.</p>
+<ul>
+<li class="fragment"><p>visualization meant <strong><em>drawing</em></strong></p></li>
+<li class="fragment"><p>computation meant <strong><em>data re-expression by hand</em></strong></p></li>
+</ul>
+<div class="fragment">
+<p>But the ideas were still somewhat radical. At the time most relied on highly reductive numerical results to interpret data:</p>
+<ul>
+<li class="fragment"><p>ANOVA tables</p></li>
+<li class="fragment"><p>regression tables</p></li>
+<li class="fragment"><p>p-values</p></li>
+</ul>
+</div>
+</section>
+<section id="example-boxplots" class="slide level2">
+<h2>Example: boxplots</h2>
+
+<img data-src="img/tukey-eda-boxplot.PNG" class="r-stretch quarto-figure-left"><p class="caption">Figure from <span class="citation" data-cites="tukey1977exploratory">(<a href="#/ref-tukey1977exploratory" role="doc-biblioref" onclick="return false;">Tukey et al. 1977</a>)</span></p></section>
+<section id="early-data-analysis-concepts-1" class="slide level2">
+<h2>Early data analysis concepts</h2>
+<p>The new techniques allowed for <strong><em>iterative</em></strong> investigation:</p>
+<ul>
+<li class="fragment"><p>formulate a question</p></li>
+<li class="fragment"><p>examine data graphics and summaries</p></li>
+<li class="fragment"><p>adjust computations and graphics to hone in on content of interest</p></li>
+<li class="fragment"><p>refine the question</p></li>
+</ul>
+</section>
+<section id="birth-to-death-ratio-by-state" class="slide level2">
+<h2>Birth-to-death ratio by state</h2>
+<p>Suppose we want to explain variation in birth-to-death ratios in the U.S. <sup>1</sup></p>
+<div class="fragment">
+<p>Initial question: is population density an associated factor?</p>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p>This example follows <span class="citation" data-cites="tukey1977exploratory">(<a href="#/ref-tukey1977exploratory" role="doc-biblioref" onclick="return false;">Tukey et al. 1977</a>)</span></p></li></ol></aside></section>
+<section id="first-iteration" class="slide level2">
+<h2>First iteration</h2>
+
+<img data-src="img/tukey-eda-births-1.PNG" class="r-stretch quarto-figure-left"><p class="caption">A first attempt</p></section>
+<section id="first-iteration-1" class="slide level2">
+<h2>First iteration</h2>
+
+<img data-src="img/tukey-eda-births-2.PNG" class="r-stretch quarto-figure-left"><p class="caption">What if we adjust the computation?</p></section>
+<section id="second-iteration" class="slide level2">
+<h2>Second iteration</h2>
+
+<img data-src="img/tukey-eda-births-3.PNG" class="r-stretch quarto-figure-left"><p class="caption">What about median age instead?</p></section>
+<section id="second-iteration-1" class="slide level2">
+<h2>Second iteration</h2>
+
+<img data-src="img/tukey-eda-births-4.PNG" class="r-stretch quarto-figure-left"><p class="caption">Adjust computations for easy linear approximation</p></section>
+<section id="third-iteration" class="slide level2">
+<h2>Third iteration</h2>
+
+<img data-src="img/tukey-eda-births-5.PNG" class="r-stretch quarto-figure-left"><p class="caption">Are there outliers?</p></section>
+<section id="fourth-iteration" class="slide level2">
+<h2>Fourth iteration</h2>
+
+<img data-src="img/tukey-eda-births-6.PNG" class="r-stretch quarto-figure-left"><p class="caption">Are outliers spatially correlated?</p></section>
 <section id="a-bit-of-history" class="slide level2">
 <h2>A bit of history</h2>
 <p>It’s worth noting that in the first half of the 20th century, much of statistics focused on methodology and theory for the analysis of small <em>iid</em> samples, and in particular:</p>
@@ -501,7 +563,7 @@ dat-&gt;nay
 </section>
 <section id="exploratory-approach" class="slide level2">
 <h2>Exploratory approach</h2>
-<p>The “exploratory” approach of the iterative modern data analysis.</p>
+<p>The “exploratory” approach of iterative modern data analysis.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -539,7 +601,7 @@ dat
 <title>
 q-&gt;dat
 </title>
-<path fill="none" stroke="black" d="M293.31,-126.32C301.93,-125.58 310.67,-124.83 318.75,-124.13"></path> <polygon fill="black" stroke="black" points="319.27,-127.6 328.93,-123.26 318.67,-120.63 319.27,-127.6"></polygon> </g> <!-- mdl --> <g id="node4" class="node">
+<path fill="none" stroke="red" stroke-width="2" d="M293.31,-126.32C301.93,-125.58 310.67,-124.83 318.75,-124.13"></path> <polygon fill="red" stroke="red" stroke-width="2" points="319.27,-127.6 328.93,-123.26 318.67,-120.63 319.27,-127.6"></polygon> </g> <!-- mdl --> <g id="node4" class="node">
 <title>
 mdl
 </title>
@@ -547,11 +609,11 @@ mdl
 <title>
 dat-&gt;mdl
 </title>
-<path fill="none" stroke="black" d="M383.33,-123.4C391.12,-124.11 400,-124.92 408.97,-125.74"></path> <polygon fill="black" stroke="black" points="408.82,-129.24 419.09,-126.67 409.45,-122.27 408.82,-129.24"></polygon> </g> <!-- mdl&#45;&gt;q --> <g id="edge3" class="edge">
+<path fill="none" stroke="red" stroke-width="2" d="M383.33,-123.4C391.12,-124.11 400,-124.92 408.97,-125.74"></path> <polygon fill="red" stroke="red" stroke-width="2" points="408.82,-129.24 419.09,-126.67 409.45,-122.27 408.82,-129.24"></polygon> </g> <!-- mdl&#45;&gt;q --> <g id="edge3" class="edge">
 <title>
 mdl-&gt;q
 </title>
-<path fill="none" stroke="black" d="M419.12,-142.37C407.43,-144.71 394.9,-146.81 383.15,-148 359.28,-150.41 353.05,-150.23 329.15,-148 320.83,-147.22 312.13,-146.05 303.55,-144.68"></path> <polygon fill="black" stroke="black" points="304.02,-141.21 293.57,-142.98 302.85,-148.11 304.02,-141.21"></polygon> </g> <!-- f1 --> <g id="node5" class="node">
+<path fill="none" stroke="red" stroke-width="2" d="M419.12,-142.37C407.43,-144.71 394.9,-146.81 383.15,-148 359.28,-150.41 353.05,-150.23 329.15,-148 320.83,-147.22 312.13,-146.05 303.55,-144.68"></path> <polygon fill="red" stroke="red" stroke-width="2" points="304.02,-141.21 293.57,-142.98 302.85,-148.11 304.02,-141.21"></polygon> </g> <!-- f1 --> <g id="node5" class="node">
 <title>
 f1
 </title>
@@ -598,24 +660,23 @@ dots
 </section>
 <section id="machine-learning" class="slide level2">
 <h2>Machine learning</h2>
-<p>Machine learning was largely advanced by computer scientists through 2010 and later, most notably:</p>
+<p>Machine learning was largely advanced by computer scientists through 2010 and later <span class="citation" data-cites="emmert2020introductory">(<a href="#/ref-emmert2020introductory" role="doc-biblioref" onclick="return false;">Emmert-Streib et al. 2020</a>)</span>, most notably:</p>
 <ul>
 <li class="fragment"><p>neural networks and deep learning</p></li>
 <li class="fragment"><p>optimization</p></li>
 <li class="fragment"><p>algorithmic analysis</p></li>
 </ul>
 <div class="fragment">
-<p>This was, of course, hugely important in setting the stage for modern predictive modeling, and engaging with these tools required going beyond statistics.</p>
+<p>This was a major driver in advancing modern predictive modeling, and engaging with these tools required going beyond statistics.</p>
 </div>
 </section>
-<section id="in-sum" class="slide level2">
-<h2>In sum</h2>
+<section id="a-theory-about-data-science" class="slide level2">
+<h2>A theory about data science</h2>
 <ul>
 <li class="fragment"><p>Around mid-century, it was proposed that specialists should be trained in computational as well as statistical methods</p></li>
-<li class="fragment"><p>Over time practitioners developed an iterative process for data-driven problem solving that was more flexible than the classical inferential framework</p></li>
+<li class="fragment"><p>Over time practitioners developed iterative processes for data-driven problem solving that was more flexible than the classical inferential framework</p></li>
 <li class="fragment"><p>Computer scientists advanced the field of machine learning substantially</p></li>
-<li class="fragment"><p>Iterative problem solving together with applied machine learning was well-suited to meet the demands of modern data, but the area was largely non-academic</p></li>
-<li class="fragment"><p>Hence, ‘data science’</p></li>
+<li class="fragment"><p>Iterative problem solving together with applied machine learning was well-suited to meet the demands of modern data, but the area was not codified in an academic discipline</p></li>
 </ul>
 </section></section>
 <section>
@@ -690,30 +751,88 @@ dots
 </div>
 </section></section>
 <section>
-<section id="design-thinking" class="title-slide slide level1 center">
-<h1>Design thinking</h1>
+<section id="systems-and-design-thinking-in-data-science" class="title-slide slide level1 center">
+<h1>Systems and design thinking in data science</h1>
 
 </section>
 <section id="reading-responses" class="slide level2">
 <h2>Reading responses</h2>
-<p>Questions to review:</p>
+<p>Questions on the perspectives paper <span class="citation" data-cites="peng2022perspective">(<a href="#/ref-peng2022perspective" role="doc-biblioref" onclick="return false;">Peng and Parker 2022</a>)</span> to review:</p>
 <ol type="1">
 <li class="fragment">What is meant by a ‘systems approach’ to data science?</li>
 <li class="fragment">What is meant by ‘design thinking’ in data science?</li>
 <li class="fragment">(Why) Are these useful concepts?</li>
 </ol>
 </section>
-<section id="prescriptive-and-descriptive" class="slide level2">
-<h2>Prescriptive <em>and</em> descriptive</h2>
-<p>The Perspective on Data Science paper <span class="citation" data-cites="peng2022perspective">(<a href="#/ref-peng2022perspective" role="doc-biblioref" onclick="return false;">Peng and Parker 2022</a>)</span> is not just descriptive, but also prescriptive: it provides a useful framework for engaging in (applied) research.</p>
+<section id="systems-approach" class="slide level2">
+<h2>Systems approach</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="img/pp2022-fig1.jpeg"></p>
+</div><div class="column" style="width:60%;">
+<p>Several systems affect the relationship between expected and actual results. Where would you locate them on the figure?</p>
+<ol type="1">
+<li class="fragment"><p>Data analytic</p></li>
+<li class="fragment"><p>Software</p></li>
+<li class="fragment"><p>Scientific</p></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="example-systems-for-data-cleaning" class="slide level2">
+<h2>Example systems for data cleaning</h2>
+
+<img data-src="img/pp2022-fig2.jpeg" class="r-stretch"><div class="fragment">
+<p>How might this diagram help an analyst?</p>
+</div>
+</section>
+<section id="design-thinking" class="slide level2">
+<h2>Design thinking</h2>
+<p>The design thinking framework might be summed up:</p>
 <ul>
 <li class="fragment"><p>data scientists trade in data analyses</p></li>
 <li class="fragment"><p>a data analysis is a designed product</p></li>
 <li class="fragment"><p>thinking about design principles can help make a better product</p></li>
 </ul>
 <div class="fragment">
-<p>Let’s look at some design principles from <span class="citation" data-cites="mcgowan2021design">(<a href="#/ref-mcgowan2021design" role="doc-biblioref" onclick="return false;">McGowan, Peng, and Hicks 2021</a>)</span>.</p>
+<p>Many of you focused on how design principles are a response to project constraints. Are there other ways a design perspective might be useful?</p>
 </div>
+</section>
+<section id="scenario-1" class="slide level2 smaller">
+<h2>Scenario 1</h2>
+<p>You’re working at a news organization and developing a recommender system for targeted article previews to deploy on the organization’s website. It will show users article previews based on their behavior. Assume you don’t have any significant resource constraints, and can access users’ profiles in full and log interactions in near-real-time.</p>
+<div class="fragment">
+<p><strong><em>Goal:</em></strong> show previews most likely to attract interest.</p>
+</div>
+<div class="fragment">
+<p>Considerations:</p>
+<ul>
+<li class="fragment"><p>what material should be shown in the preview? headlines? images? text?</p></li>
+<li class="fragment"><p>what behavior can/should be leveraged for the recommender system?</p></li>
+<li class="fragment"><p>what are a few relevant design aspects of how the system should behave?</p></li>
+<li class="fragment"><p>are there ethical concerns?</p></li>
+</ul>
+</div>
+</section>
+<section id="scenario-2" class="slide level2 smaller">
+<h2>Scenario 2</h2>
+<p>You’re working on a research team studying ecological impacts of land use. The team has access to longitudinal species surveys at locations of interest across the U.S., quarterly county-level land allocation statistics, satellite images, and state budget information for sustainability, restoration, and conservation initiatives.</p>
+<div class="fragment">
+<p><strong><em>Goal:</em></strong> identify intervention opportunities that are most likely to positively impact ecological diversity.</p>
+</div>
+<div class="fragment">
+<p>Considerations:</p>
+<ul>
+<li class="fragment"><p>what data would you use and how would you combine data sources?</p></li>
+<li class="fragment"><p>are there external data that might be useful?</p></li>
+<li class="fragment"><p>what analysis outputs would be most important for identifying intervention opportunities?</p></li>
+<li class="fragment"><p>can you think of other design features that might be useful for the data analysis?</p></li>
+</ul>
+</div>
+</section>
+<section id="a-few-design-principles" class="slide level2">
+<h2>A few design principles</h2>
+<p>Let’s look at some design principles from <span class="citation" data-cites="mcgowan2021design">(<a href="#/ref-mcgowan2021design" role="doc-biblioref" onclick="return false;">McGowan, Peng, and Hicks 2021</a>)</span>.</p>
 </section>
 <section id="design-principles-matchedness" class="slide level2">
 <h2>Design principles: matchedness</h2>
@@ -733,6 +852,11 @@ dots
 <img data-src="img/mcgowan-sfig6-reproducible.PNG" class="r-stretch"></section>
 <section id="next-time" class="slide level2">
 <h2>Next time</h2>
+<p>We’ll do a github icebreaker activity.</p>
+<ul>
+<li class="fragment"><p>Complete lab activity from Wednesday section meeting</p></li>
+<li class="fragment"><p>Bring laptops</p></li>
+</ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -744,6 +868,9 @@ dots
 <div id="ref-donoho201750" class="csl-entry" role="doc-biblioentry">
 Donoho, David. 2017. <span>“50 Years of Data Science.”</span> <em>Journal of Computational and Graphical Statistics</em> 26 (4): 745–66.
 </div>
+<div id="ref-emmert2020introductory" class="csl-entry" role="doc-biblioentry">
+Emmert-Streib, Frank, Zhen Yang, Han Feng, Shailesh Tripathi, and Matthias Dehmer. 2020. <span>“An Introductory Review of Deep Learning for Prediction Models with Big Data.”</span> <em>Frontiers in Artificial Intelligence</em> 3: 4.
+</div>
 <div id="ref-mcgowan2021design" class="csl-entry" role="doc-biblioentry">
 McGowan, Lucy D’Agostino, Roger D Peng, and Stephanie C Hicks. 2021. <span>“Design Principles for Data Analysis.”</span> <em>arXiv Preprint arXiv:2103.05689</em>.
 </div>
@@ -753,8 +880,12 @@ Peng, Roger D, and Hilary S Parker. 2022. <span>“Perspective on Data Science.�
 <div id="ref-tukey1962future" class="csl-entry" role="doc-biblioentry">
 Tukey, John W. 1962. <span>“The Future of Data Analysis.”</span> <em>The Annals of Mathematical Statistics</em> 33 (1): 1–67.
 </div>
+<div id="ref-tukey1977exploratory" class="csl-entry" role="doc-biblioentry">
+Tukey, John W et al. 1977. <em>Exploratory Data Analysis</em>. Vol. 2. Reading, MA.
+</div>
 </div>
 </section></section>
+
     </div>
   </div>
 

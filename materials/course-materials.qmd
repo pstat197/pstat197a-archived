@@ -21,11 +21,11 @@ editor: visual
 
     -   prepare a [reading response](https://forms.gle/n2GpNGMVXVaAXSWf9)
 
-<!-- ### Week 1 {#sec-week-1} -->
+### Week 1 {#sec-week-1}
 
-<!-- -   ***Tuesday meeting:*** On projects in(volving) data science \[slides\] -->
+-   ***Tuesday meeting:*** On projects in(volving) data science [\[slides](slides/week1-perspectives.qmd)\]
 
-<!-- -   ***Section meeting:*** software and technology overview \[activity\] -->
+-   ***Section meeting:*** software and technology overview [\[activity](labs/lab1-setup/lab1-setup.qmd)\]
 
 <!-- -   ***Thursday meeting:*** basic GitHub actions \[activity\] -->
 

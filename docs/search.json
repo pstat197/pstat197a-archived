@@ -144,7 +144,7 @@
     "href": "materials/course-materials.html",
     "title": "Course materials",
     "section": "",
-    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response"
+    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: On projects in(volving) data science [slides]\nSection meeting: software and technology overview [activity]"
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html",
@@ -284,7 +284,7 @@
     "href": "materials/slides/week1-perspectives.html#announcementsreminders",
     "title": "On projects in(volving) data science",
     "section": "Announcements/reminders",
-    "text": "Announcements/reminders\n\nJoin Slack workspace, monitor channel #22f-pstat197a for announcements.\nOffice hours by demand immediately following section and class meetings\n\nYan will hold a drop in hour in building 434 room 126 after Josh’s section"
+    "text": "Announcements/reminders\n\nJoin Slack workspace, monitor channel #22f-pstat197a for announcements.\nOffice hours by demand immediately following section and class meetings\n\nYan will hold a drop in hour in building 434 room 126 after Josh’s section\n\nInstall course software and bring your laptop to section meetings. Remember your table number from today."
   },
   {
     "objectID": "materials/slides/week1-perspectives.html#google-trends-data-science",
@@ -299,6 +299,76 @@
     "title": "On projects in(volving) data science",
     "section": "Origins: ‘data analysis’",
     "text": "Origins: ‘data analysis’\nTukey advocated for ‘data analysis’ as a broader field than statistics (Tukey 1962), including:\n\nstatistical theory and methodology;\nvisualization and data display techniques;\ncomputation and scalability;\nbreadth of application.\n\n\nLook famililar? Tukey’s ‘data analysis’ is proto-modern data science."
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#early-data-analysis-concepts",
+    "href": "materials/slides/week1-perspectives.html#early-data-analysis-concepts",
+    "title": "On projects in(volving) data science",
+    "section": "Early data analysis concepts",
+    "text": "Early data analysis concepts\nIn the 1960’s and 1970’s, these concepts meant very different things.\n\nvisualization meant drawing\ncomputation meant data re-expression by hand\n\n\nBut the ideas were still somewhat radical. At the time most relied on highly reductive numerical results to interpret data:\n\nANOVA tables\nregression tables\np-values"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#example-boxplots",
+    "href": "materials/slides/week1-perspectives.html#example-boxplots",
+    "title": "On projects in(volving) data science",
+    "section": "Example: boxplots",
+    "text": "Example: boxplots\n\nFigure from (Tukey et al. 1977)"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#early-data-analysis-concepts-1",
+    "href": "materials/slides/week1-perspectives.html#early-data-analysis-concepts-1",
+    "title": "On projects in(volving) data science",
+    "section": "Early data analysis concepts",
+    "text": "Early data analysis concepts\nThe new techniques allowed for iterative investigation:\n\nformulate a question\nexamine data graphics and summaries\nadjust computations and graphics to hone in on content of interest\nrefine the question"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#birth-to-death-ratio-by-state",
+    "href": "materials/slides/week1-perspectives.html#birth-to-death-ratio-by-state",
+    "title": "On projects in(volving) data science",
+    "section": "Birth-to-death ratio by state",
+    "text": "Birth-to-death ratio by state\nSuppose we want to explain variation in birth-to-death ratios in the U.S. 1\n\nInitial question: is population density an associated factor?\n\nThis example follows (Tukey et al. 1977)"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#first-iteration",
+    "href": "materials/slides/week1-perspectives.html#first-iteration",
+    "title": "On projects in(volving) data science",
+    "section": "First iteration",
+    "text": "First iteration\n\nA first attempt"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#first-iteration-1",
+    "href": "materials/slides/week1-perspectives.html#first-iteration-1",
+    "title": "On projects in(volving) data science",
+    "section": "First iteration",
+    "text": "First iteration\n\nWhat if we adjust the computation?"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#second-iteration",
+    "href": "materials/slides/week1-perspectives.html#second-iteration",
+    "title": "On projects in(volving) data science",
+    "section": "Second iteration",
+    "text": "Second iteration\n\nWhat about median age instead?"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#second-iteration-1",
+    "href": "materials/slides/week1-perspectives.html#second-iteration-1",
+    "title": "On projects in(volving) data science",
+    "section": "Second iteration",
+    "text": "Second iteration\n\nAdjust computations for easy linear approximation"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#third-iteration",
+    "href": "materials/slides/week1-perspectives.html#third-iteration",
+    "title": "On projects in(volving) data science",
+    "section": "Third iteration",
+    "text": "Third iteration\n\nAre there outliers?"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#fourth-iteration",
+    "href": "materials/slides/week1-perspectives.html#fourth-iteration",
+    "title": "On projects in(volving) data science",
+    "section": "Fourth iteration",
+    "text": "Fourth iteration\n\nAre outliers spatially correlated?"
   },
   {
     "objectID": "materials/slides/week1-perspectives.html#a-bit-of-history",
@@ -326,7 +396,7 @@
     "href": "materials/slides/week1-perspectives.html#exploratory-approach",
     "title": "On projects in(volving) data science",
     "section": "Exploratory approach",
-    "text": "Exploratory approach\nThe “exploratory” approach of the iterative modern data analysis.\n\n\n\n\n\n\n\nexplore\n\n \n\ncluster_1\n\n data analysis  \n\ncluster_2\n\n findings   \n\nsci\n\n domain  knowledge   \n\nq\n\n question  formulation   \n\nsci->q\n\n    \n\ndat\n\n data   \n\nq->dat\n\n    \n\nmdl\n\n statistical  model   \n\ndat->mdl\n\n    \n\nmdl->q\n\n    \n\nf1\n\n finding 1   \n\nmdl->f1\n\n    \n\nf2\n\n finding 2   \n\nmdl->f2\n\n    \n\ndots\n\n ⋮  \n\n\n\n\n\n\noutputs are findings\nstatistical model determined by data\nanalysis techniques include empirical methods"
+    "text": "Exploratory approach\nThe “exploratory” approach of iterative modern data analysis.\n\n\n\n\n\n\n\nexplore\n\n \n\ncluster_1\n\n data analysis  \n\ncluster_2\n\n findings   \n\nsci\n\n domain  knowledge   \n\nq\n\n question  formulation   \n\nsci->q\n\n    \n\ndat\n\n data   \n\nq->dat\n\n    \n\nmdl\n\n statistical  model   \n\ndat->mdl\n\n    \n\nmdl->q\n\n    \n\nf1\n\n finding 1   \n\nmdl->f1\n\n    \n\nf2\n\n finding 2   \n\nmdl->f2\n\n    \n\ndots\n\n ⋮  \n\n\n\n\n\n\noutputs are findings\nstatistical model determined by data\nanalysis techniques include empirical methods"
   },
   {
     "objectID": "materials/slides/week1-perspectives.html#drivers-of-change",
@@ -340,14 +410,14 @@
     "href": "materials/slides/week1-perspectives.html#machine-learning",
     "title": "On projects in(volving) data science",
     "section": "Machine learning",
-    "text": "Machine learning\nMachine learning was largely advanced by computer scientists through 2010 and later, most notably:\n\nneural networks and deep learning\noptimization\nalgorithmic analysis\n\n\nThis was, of course, hugely important in setting the stage for modern predictive modeling, and engaging with these tools required going beyond statistics."
+    "text": "Machine learning\nMachine learning was largely advanced by computer scientists through 2010 and later (Emmert-Streib et al. 2020), most notably:\n\nneural networks and deep learning\noptimization\nalgorithmic analysis\n\n\nThis was a major driver in advancing modern predictive modeling, and engaging with these tools required going beyond statistics."
   },
   {
-    "objectID": "materials/slides/week1-perspectives.html#in-sum",
-    "href": "materials/slides/week1-perspectives.html#in-sum",
+    "objectID": "materials/slides/week1-perspectives.html#a-theory-about-data-science",
+    "href": "materials/slides/week1-perspectives.html#a-theory-about-data-science",
     "title": "On projects in(volving) data science",
-    "section": "In sum",
-    "text": "In sum\n\nAround mid-century, it was proposed that specialists should be trained in computational as well as statistical methods\nOver time practitioners developed an iterative process for data-driven problem solving that was more flexible than the classical inferential framework\nComputer scientists advanced the field of machine learning substantially\nIterative problem solving together with applied machine learning was well-suited to meet the demands of modern data, but the area was largely non-academic\nHence, ‘data science’"
+    "section": "A theory about data science",
+    "text": "A theory about data science\n\nAround mid-century, it was proposed that specialists should be trained in computational as well as statistical methods\nOver time practitioners developed iterative processes for data-driven problem solving that was more flexible than the classical inferential framework\nComputer scientists advanced the field of machine learning substantially\nIterative problem solving together with applied machine learning was well-suited to meet the demands of modern data, but the area was not codified in an academic discipline"
   },
   {
     "objectID": "materials/slides/week1-perspectives.html#what-is-research",
@@ -396,14 +466,49 @@
     "href": "materials/slides/week1-perspectives.html#reading-responses",
     "title": "On projects in(volving) data science",
     "section": "Reading responses",
-    "text": "Reading responses\nQuestions to review:\n\nWhat is meant by a ‘systems approach’ to data science?\nWhat is meant by ‘design thinking’ in data science?\n(Why) Are these useful concepts?"
+    "text": "Reading responses\nQuestions on the perspectives paper (Peng and Parker 2022) to review:\n\nWhat is meant by a ‘systems approach’ to data science?\nWhat is meant by ‘design thinking’ in data science?\n(Why) Are these useful concepts?"
   },
   {
-    "objectID": "materials/slides/week1-perspectives.html#prescriptive-and-descriptive",
-    "href": "materials/slides/week1-perspectives.html#prescriptive-and-descriptive",
+    "objectID": "materials/slides/week1-perspectives.html#systems-approach",
+    "href": "materials/slides/week1-perspectives.html#systems-approach",
     "title": "On projects in(volving) data science",
-    "section": "Prescriptive and descriptive",
-    "text": "Prescriptive and descriptive\nThe Perspective on Data Science paper (Peng and Parker 2022) is not just descriptive, but also prescriptive: it provides a useful framework for engaging in (applied) research.\n\ndata scientists trade in data analyses\na data analysis is a designed product\nthinking about design principles can help make a better product\n\n\nLet’s look at some design principles from (McGowan, Peng, and Hicks 2021)."
+    "section": "Systems approach",
+    "text": "Systems approach\n\n\n\n\nSeveral systems affect the relationship between expected and actual results. Where would you locate them on the figure?\n\nData analytic\nSoftware\nScientific"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#example-systems-for-data-cleaning",
+    "href": "materials/slides/week1-perspectives.html#example-systems-for-data-cleaning",
+    "title": "On projects in(volving) data science",
+    "section": "Example systems for data cleaning",
+    "text": "Example systems for data cleaning\n\n\nHow might this diagram help an analyst?"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#design-thinking",
+    "href": "materials/slides/week1-perspectives.html#design-thinking",
+    "title": "On projects in(volving) data science",
+    "section": "Design thinking",
+    "text": "Design thinking\nThe design thinking framework might be summed up:\n\ndata scientists trade in data analyses\na data analysis is a designed product\nthinking about design principles can help make a better product\n\n\nMany of you focused on how design principles are a response to project constraints. Are there other ways a design perspective might be useful?"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#scenario-1",
+    "href": "materials/slides/week1-perspectives.html#scenario-1",
+    "title": "On projects in(volving) data science",
+    "section": "Scenario 1",
+    "text": "Scenario 1\nYou’re working at a news organization and developing a recommender system for targeted article previews to deploy on the organization’s website. It will show users article previews based on their behavior. Assume you don’t have any significant resource constraints, and can access users’ profiles in full and log interactions in near-real-time.\n\nGoal: show previews most likely to attract interest.\n\n\nConsiderations:\n\nwhat material should be shown in the preview? headlines? images? text?\nwhat behavior can/should be leveraged for the recommender system?\nwhat are a few relevant design aspects of how the system should behave?\nare there ethical concerns?"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#scenario-2",
+    "href": "materials/slides/week1-perspectives.html#scenario-2",
+    "title": "On projects in(volving) data science",
+    "section": "Scenario 2",
+    "text": "Scenario 2\nYou’re working on a research team studying ecological impacts of land use. The team has access to longitudinal species surveys at locations of interest across the U.S., quarterly county-level land allocation statistics, satellite images, and state budget information for sustainability, restoration, and conservation initiatives.\n\nGoal: identify intervention opportunities that are most likely to positively impact ecological diversity.\n\n\nConsiderations:\n\nwhat data would you use and how would you combine data sources?\nare there external data that might be useful?\nwhat analysis outputs would be most important for identifying intervention opportunities?\ncan you think of other design features that might be useful for the data analysis?"
+  },
+  {
+    "objectID": "materials/slides/week1-perspectives.html#a-few-design-principles",
+    "href": "materials/slides/week1-perspectives.html#a-few-design-principles",
+    "title": "On projects in(volving) data science",
+    "section": "A few design principles",
+    "text": "A few design principles\nLet’s look at some design principles from (McGowan, Peng, and Hicks 2021)."
   },
   {
     "objectID": "materials/slides/week1-perspectives.html#design-principles-matchedness",
@@ -438,13 +543,13 @@
     "href": "materials/slides/week1-perspectives.html#next-time",
     "title": "On projects in(volving) data science",
     "section": "Next time",
-    "text": "Next time"
+    "text": "Next time\nWe’ll do a github icebreaker activity.\n\nComplete lab activity from Wednesday section meeting\nBring laptops"
   },
   {
     "objectID": "materials/slides/week1-perspectives.html#references",
     "href": "materials/slides/week1-perspectives.html#references",
     "title": "On projects in(volving) data science",
     "section": "References",
-    "text": "References\n\n\n\n\n\n\nDonoho, David. 2017. “50 Years of Data Science.” Journal of Computational and Graphical Statistics 26 (4): 745–66.\n\n\nMcGowan, Lucy D’Agostino, Roger D Peng, and Stephanie C Hicks. 2021. “Design Principles for Data Analysis.” arXiv Preprint arXiv:2103.05689.\n\n\nPeng, Roger D, and Hilary S Parker. 2022. “Perspective on Data Science.” Annual Review of Statistics and Its Application 9: 1–20.\n\n\nTukey, John W. 1962. “The Future of Data Analysis.” The Annals of Mathematical Statistics 33 (1): 1–67."
+    "text": "References\n\n\n\n\n\n\nDonoho, David. 2017. “50 Years of Data Science.” Journal of Computational and Graphical Statistics 26 (4): 745–66.\n\n\nEmmert-Streib, Frank, Zhen Yang, Han Feng, Shailesh Tripathi, and Matthias Dehmer. 2020. “An Introductory Review of Deep Learning for Prediction Models with Big Data.” Frontiers in Artificial Intelligence 3: 4.\n\n\nMcGowan, Lucy D’Agostino, Roger D Peng, and Stephanie C Hicks. 2021. “Design Principles for Data Analysis.” arXiv Preprint arXiv:2103.05689.\n\n\nPeng, Roger D, and Hilary S Parker. 2022. “Perspective on Data Science.” Annual Review of Statistics and Its Application 9: 1–20.\n\n\nTukey, John W. 1962. “The Future of Data Analysis.” The Annals of Mathematical Statistics 33 (1): 1–67.\n\n\nTukey, John W et al. 1977. Exploratory Data Analysis. Vol. 2. Reading, MA."
   }
 ]
