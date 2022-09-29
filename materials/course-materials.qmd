@@ -27,7 +27,13 @@ editor: visual
 
 -   ***Section meeting:*** software and technology overview [\[activity](labs/lab1-setup/lab1-setup.qmd)\]
 
-<!-- -   ***Thursday meeting:*** basic GitHub actions \[activity\] -->
+-   ***Thursday meeting:*** basic GitHub actions [\[activity](activities/github-basics.qmd)\] [\[slides](slides/week1-github.qmd)\]
+
+-   ***Assignments*** due by next class meeting:
+
+    -   read [MDSR 9.1 and 9.2](https://mdsr-book.github.io/mdsr2e/ch-foundations.html#samples-and-populations)
+
+    -   prepare a [reading response](https://forms.gle/jAekx68c7ju4GYxL7)
 
 <!-- ### Week 2 -->
 
