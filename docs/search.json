@@ -144,7 +144,7 @@
     "href": "materials/course-materials.html",
     "title": "Course materials",
     "section": "",
-    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: On projects in(volving) data science [slides]\nSection meeting: software and technology overview [activity]\nThursday meeting: basic GitHub actions [activity] [slides]\nAssignments due by next class meeting:\n\nread MDSR 9.1 and 9.2\nprepare a reading response"
+    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: On projects in(volving) data science [slides]\nSection meeting: software and technology overview [activity]\nThursday meeting: basic GitHub actions [activity] [slides]\nAssignments due by next class meeting:\n\nread MDSR 9.1 and 9.2\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: Introducing class intake survey data [slides]\nSection meeting: tidyverse basics [activity]"
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html",
@@ -593,5 +593,180 @@
     "title": "On projects in(volving) data science",
     "section": "References",
     "text": "References\n\n\n\n\n\n\nDonoho, David. 2017. “50 Years of Data Science.” Journal of Computational and Graphical Statistics 26 (4): 745–66.\n\n\nEmmert-Streib, Frank, Zhen Yang, Han Feng, Shailesh Tripathi, and Matthias Dehmer. 2020. “An Introductory Review of Deep Learning for Prediction Models with Big Data.” Frontiers in Artificial Intelligence 3: 4.\n\n\nMcGowan, Lucy D’Agostino, Roger D Peng, and Stephanie C Hicks. 2021. “Design Principles for Data Analysis.” arXiv Preprint arXiv:2103.05689.\n\n\nPeng, Roger D, and Hilary S Parker. 2022. “Perspective on Data Science.” Annual Review of Statistics and Its Application 9: 1–20.\n\n\nTukey, John W. 1962. “The Future of Data Analysis.” The Annals of Mathematical Statistics 33 (1): 1–67.\n\n\nTukey, John W et al. 1977. Exploratory Data Analysis. Vol. 2. Reading, MA."
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#lessons-from-last-time",
+    "href": "materials/slides/week2-classdata.html#lessons-from-last-time",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Lessons from last time",
+    "text": "Lessons from last time\n\nadd .DS_Store to .gitignore\nopen repo project in RStudio session (not another project or new session)\nrepo clone directory must be kept intact; can move the entire directory but not individual files\nuse client not terminal, at least to start out\nothers?"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#today",
+    "href": "materials/slides/week2-classdata.html#today",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Today",
+    "text": "Today\n\nreview sampling concepts\nintroduce class survey data\npresent descriptive analysis"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#samples-and-populations",
+    "href": "materials/slides/week2-classdata.html#samples-and-populations",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Samples and populations",
+    "text": "Samples and populations\npopulation: collection of all subjects/units of interest\nsample: subjects/units observed in a study\n\nstatistical methodology strives to account for the possibility that the sample could have been different in order to make reliable inferences about the population based on knowledge of the sampling mechanism"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#what-if-inferences-arent-possible",
+    "href": "materials/slides/week2-classdata.html#what-if-inferences-arent-possible",
+    "title": "Descriptive analysis of class survey data",
+    "section": "What if inferences aren’t possible?",
+    "text": "What if inferences aren’t possible?\nEven if inference isn’t possible, data still have value and could be used for:\n\ndescriptive analysis of the sample;\nhypothesis generation;\ndeveloping analysis pipelines."
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#what-about-prediction",
+    "href": "materials/slides/week2-classdata.html#what-about-prediction",
+    "title": "Descriptive analysis of class survey data",
+    "section": "What about prediction?",
+    "text": "What about prediction?\nPrediction is a separate goal but still a form of generalization.\n\nsamples must reflect a broader population for predictions to be accurate at the population level\n\n\n\nif an analyst can’t expect sample statistics to provide reliable estimates of population quantities, they shouldn’t expect predictions based on the sample to be reliable either"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#common-problems",
+    "href": "materials/slides/week2-classdata.html#common-problems",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Common problems",
+    "text": "Common problems\nSeveral issues arise very often in practice that compromise or complicate an analyst’s ability to make inferences (or predictions). Among them:\n\nscope of inference from the sample doesn’t match the study population\nsubjects/units are selected haphazardly or by convenience\nresearcher conflates sample size with number of observations, i.e., takes lots of measurements on few subjects/units"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#helpful-questions",
+    "href": "materials/slides/week2-classdata.html#helpful-questions",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Helpful questions",
+    "text": "Helpful questions\nThe following questions can help make an assessment of the scope of inference:\n\n(protocol) how were subjects/units chosen for measurement and how were measurements collected?\n(mechanism) was there any random selection mechanism?\n(exclusion) are there any subjects/units that couldn’t possibly have been chosen?\n(nonresponse) were any subjects/units selected but not measured?"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#class-survey-data",
+    "href": "materials/slides/week2-classdata.html#class-survey-data",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Class survey data",
+    "text": "Class survey data\n\nsurvey distributed to all students offered enrollment in PSTAT197A fall 2022\n\\(n = 65\\) responses\n\nincludes a few students who did not enroll\ndoes not include several students who did not enroll\ndoes not include one student who enrolled late\n\nno random selection"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#can-the-data-support-inference",
+    "href": "materials/slides/week2-classdata.html#can-the-data-support-inference",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Can the data support inference?",
+    "text": "Can the data support inference?\nFrom the reading responses:\n\nIt depends on the question. If you want to draw conclusions about the pstat197a class specifically, this sample is the population and thus will have reliable data. If you want to draw conclusions about the pstat department as a whole, then this is a bad sample because it is likely biased and thus unreliable"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#alternative-perspectives",
+    "href": "materials/slides/week2-classdata.html#alternative-perspectives",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Alternative perspectives",
+    "text": "Alternative perspectives\nThe comment points to two ways to view the data:\n\na census of PSTAT197A enrollees\na convenience sample of…\n\ncapstone applicants OR\nstudents qualified for capstones OR\nstudents interested in data science OR\nall UCSB students???"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#is-there-a-right-answer",
+    "href": "materials/slides/week2-classdata.html#is-there-a-right-answer",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Is there a right answer?",
+    "text": "Is there a right answer?\nEither way – census or convenience sample – excludes inference.\n\ncensus \\(\\longrightarrow\\) no inference needed\nconvenience \\(\\longrightarrow\\) no inference possible\n\n\nSo on a practical level, it won’t make much difference for designing an analysis of the survey data."
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#descriptive-analysis",
+    "href": "materials/slides/week2-classdata.html#descriptive-analysis",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Descriptive analysis",
+    "text": "Descriptive analysis\nAny analysis of survey data should be regarded as descriptive in nature:\n\nsummary statistics and/or models are not reliable measures of any broader population\nresults should be interpreted narrowly in terms of the sample at hand"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#a-general-approach",
+    "href": "materials/slides/week2-classdata.html#a-general-approach",
+    "title": "Descriptive analysis of class survey data",
+    "section": "A general approach",
+    "text": "A general approach\nStart simple and add complexity gradually.\nFrom simpler to more complex consider questions involving:\n\nSample characteristics\nSingle-variable summaries\nMultivariate summaries\nModel-based outputs (estimates, predictions, etc.)"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#questions-of-interest",
+    "href": "materials/slides/week2-classdata.html#questions-of-interest",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Questions of interest",
+    "text": "Questions of interest\nSample characteristics\n\nIs the proportion of men/women in the class equal (taking into account randomness)?\n\nSingle-variable summaries\n\nAmong the students offered a seat in PSTAT197, what fields of study are the students most interested in?\nWhat level of comfort do students interested in data analysis at UCSB have with mathematics?"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#questions-of-interest-1",
+    "href": "materials/slides/week2-classdata.html#questions-of-interest-1",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Questions of interest",
+    "text": "Questions of interest\nMultivariate summaries\n\nAre students who ranked themselves as strong in statistics, mathematics, and computing more likely or less likely to select an ‘industry’ project as the project type that they want to work on?\n\nModel-based outputs\n\nAre there distinct groups of students in the class defined by self-assessed proficiencies and/or comfort levels with mathematics, statistics, and programming?"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#sample-characteristics",
+    "href": "materials/slides/week2-classdata.html#sample-characteristics",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Sample characteristics",
+    "text": "Sample characteristics\nIs the proportion of men/women in the class equal (taking into account randomness)?\n\n\n\n\nClass standingGenderRaceData sharing\n\n\n\n\n\n\n\nstanding\nn\n\n\n\n\nJunior\n9\n\n\nSenior\n56\n\n\n\n\n\n\n\n\n\n\n\n\ngender\nn\n\n\n\n\nFemale\n25\n\n\nMale\n40\n\n\n\n\n\n\n\n\n\n\n\n\nrace\nn\n\n\n\n\nAsian\n41\n\n\nCaucasian\n17\n\n\nPrefer not to say\n6\n\n\nUnknown\n1\n\n\n\n\n\n\n\nColumns: consent to share project preferences\nRows: consent to share background and preparation\n\n\n\n\n\n\nNo\nYes\n\n\n\n\nNo\n3\n3\n\n\nYes\n2\n57"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#majors",
+    "href": "materials/slides/week2-classdata.html#majors",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Majors",
+    "text": "Majors"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#response-timing",
+    "href": "materials/slides/week2-classdata.html#response-timing",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Response timing",
+    "text": "Response timing"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#privacy",
+    "href": "materials/slides/week2-classdata.html#privacy",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Privacy",
+    "text": "Privacy\nThe following information have been removed from the dataset distributed to the class:\n\npersonal information from section 1 of the survey\nlong text and free response answers, contain some personal details\nresponses from students who did not consent to share\ntype distinction between research experiences"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#single-variable-summaries",
+    "href": "materials/slides/week2-classdata.html#single-variable-summaries",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Single-variable summaries",
+    "text": "Single-variable summaries\nWhat level of comfort do students interested in data analysis at UCSB have with mathematics?\n\nComfortProficiency (numeric)Proficiency (factor)\n\n\n\n\n\n\n\nvariable\nmax\nmean\nmedian\nmin\n\n\n\n\nmath.comf\n5\n3.847458\n4\n2\n\n\nprog.comf\n5\n3.966102\n4\n3\n\n\nstat.comf\n5\n4.084746\n4\n2\n\n\n\n\n\n\n\n\n\n\n\n\nvariable\nmean\nmedian\n\n\n\n\nmath\n2.355932\n2\n\n\nprog\n2.237288\n2\n\n\nstat\n2.576271\n3\n\n\n\n\n\n\n\n\n\n\n\n\nprog\nn1\nmath\nn2\nstat\nn3\n\n\n\n\nBeg\n3\nBeg\n3\nBeg\n2\n\n\nInt\n39\nInt\n32\nInt\n21\n\n\nAdv\n17\nAdv\n24\nAdv\n36"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#multivariable-summaries",
+    "href": "materials/slides/week2-classdata.html#multivariable-summaries",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Multivariable summaries",
+    "text": "Multivariable summaries\nAre students who ranked themselves as strong in statistics, mathematics, and computing more likely or less likely to select an ‘industry’ project as the project type that they want to work on?\n\nCountsProportions\n\n\n\n\n\n\n\nmean.proficiency.fac\nboth\nind\nlab\n\n\n\n\n[1,2.33]\n6\n25\n1\n\n\n(2.33,2.67]\n5\n9\n1\n\n\n(2.67,3]\n3\n6\n1\n\n\n\n\n\n\n\n\n\n\n\n\nmean.proficiency.fac\nboth\nind\nlab\nn\n\n\n\n\n[1,2.33]\n0.188\n0.781\n0.031\n32\n\n\n(2.33,2.67]\n0.333\n0.600\n0.067\n15\n\n\n(2.67,3]\n0.300\n0.600\n0.100\n10"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#combinations",
+    "href": "materials/slides/week2-classdata.html#combinations",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Combinations",
+    "text": "Combinations\nConsider the distinct combinations of comfort and proficiency ratings (separately):\n\nProficiencyComfort\n\n\n\n\n\n\n\nprog\nmath\nstat\nn\n\n\n\n\n1\n1\n1\n1\n\n\n1\n2\n2\n1\n\n\n1\n2\n3\n1\n\n\n2\n1\n1\n1\n\n\n2\n1\n2\n1\n\n\n2\n2\n2\n13\n\n\n2\n2\n3\n11\n\n\n2\n3\n2\n3\n\n\n2\n3\n3\n10\n\n\n3\n2\n2\n2\n\n\n3\n2\n3\n4\n\n\n3\n3\n2\n1\n\n\n3\n3\n3\n10\n\n\n\n\n\n\n\n\n\n\n\n\nprog\nmath\nstat\nn\n\n\n\n\n3\n2\n2\n1\n\n\n3\n3\n3\n2\n\n\n3\n3\n4\n2\n\n\n3\n3\n5\n2\n\n\n3\n4\n3\n4\n\n\n3\n4\n4\n7\n\n\n4\n3\n3\n2\n\n\n4\n3\n4\n5\n\n\n4\n3\n5\n2\n\n\n4\n4\n3\n1\n\n\n4\n4\n4\n5\n\n\n4\n4\n5\n3\n\n\n4\n5\n3\n1\n\n\n4\n5\n4\n4\n\n\n4\n5\n5\n2\n\n\n5\n3\n4\n5\n\n\n5\n3\n5\n1\n\n\n5\n4\n4\n2\n\n\n5\n4\n5\n1\n\n\n5\n5\n4\n1\n\n\n5\n5\n5\n6"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#clustering",
+    "href": "materials/slides/week2-classdata.html#clustering",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Clustering",
+    "text": "Clustering\nCan students be grouped based on combinations of preferences and comfort levels?\n\nCentersVisualizationMethodInterpretation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nprog.prof\nmath.prof\nstat.prof\nprog.comf\nmath.comf\nstat.comf\nsize\ncluster\n\n\n\n\n2.478\n2.739\n2.957\n4.435\n4.522\n4.522\n23\n1\n\n\n2.048\n1.857\n2.238\n4.048\n3.048\n4.048\n21\n2\n\n\n2.133\n2.467\n2.467\n3.133\n3.933\n3.467\n15\n3\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nClustering method, “k means”, groups data by nearest Euclidean distance to each of \\(k\\) centers. \\(k\\) is user-specified; the method finds the centers that minimize within-cluster variance.\n\n\nBased on the centers:\n\nCluster 1: advanced proficiency, very comfortable\nCluster 2: intermediate with less mathematical preparation\nCluster 3: intermediate with less programming preparation"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#assignment",
+    "href": "materials/slides/week2-classdata.html#assignment",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Assignment",
+    "text": "Assignment\nYour task is to extend this analysis with your group by next Tuesday.\n\nHere are some ideas:\n\nexplore variable associations further (e.g., coursework and self-evaluations)\nexperiment with clustering on different variable subsets or using different methods\nsummarize domain or area of interest variables (requires some text manipulation)"
+  },
+  {
+    "objectID": "materials/slides/week2-classdata.html#next-time",
+    "href": "materials/slides/week2-classdata.html#next-time",
+    "title": "Descriptive analysis of class survey data",
+    "section": "Next time",
+    "text": "Next time\nMost of next meeting we’ll devote to planning your group’s task.\n\nDo a little brainstorming on your own\nCome with a few questions/ideas"
   }
 ]

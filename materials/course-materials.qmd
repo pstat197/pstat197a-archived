@@ -35,10 +35,10 @@ editor: visual
 
     -   prepare a [reading response](https://forms.gle/jAekx68c7ju4GYxL7)
 
-<!-- ### Week 2 -->
+### Week 2
 
-<!-- -   ***Tuesday meeting:*** Introducing class intake survey data \[slides\] -->
+-   ***Tuesday meeting:*** Introducing class intake survey data [\[slides](slides/week2-classdata.qmd)\]
 
-<!-- -   ***Section meeting:*** tidyverse basics \[activity\] -->
+-   ***Section meeting:*** tidyverse basics \[activity\]
 
 <!-- -   ***Thursday meeting:*** Exploratory/descriptive analysis of class survey data \[activity\] -->
