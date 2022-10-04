@@ -68,9 +68,8 @@ Prediction is a separate goal but still a form of generalization.
 
 -   samples must reflect a broader population for predictions to be accurate at the population level
 
-```{=html}
 <!-- -->
-```
+
 -   if an analyst can't expect sample statistics to provide reliable estimates of population quantities, they shouldn't expect predictions based on the sample to be reliable either
 
 ## Common problems

@@ -1,0 +1,278 @@
+---
+title: "Untitled"
+editor: visual
+code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
+---
+
+## Objectives
+
+Review R basics (data types and object classes); introduce core tidyverse libraries (dplyr, tidyr, and ggplot); replicate in-class analysis of class survey data.
+
+## Prerequisites
+
+Installations of course software.
+
+# R basics for total beginners
+
+Here we'll cover some bare essentials in R. You can find a more thorough introduction in [MSDR Appendix B](https://mdsr-book.github.io/mdsr2e/ch-R.html#ch:R).
+
+## Data types
+
+There are five main data types in R.
+
+***Numeric*** (double- or single-precision floating point) data represent real numbers. Numeric data are abbreviated `num` and by default are stored as double-precision floating point.
+
+```{r}
+# a number
+4.5
+
+# check structure
+str(4.5)
+
+# stored as double
+is.double(4.5)
+```
+
+***Integer*** data are integers. For the most part they behave like numeric data, except occupy less memory, which can in some cases be convenient. To distinguish integers from doubles, R uses a trailing `L` after values; the data type is abbreviated `int`.
+
+```{r}
+# an integer
+4L
+
+# check structure
+str(4L)
+```
+
+***Logical*** data are binary and represented in R as having values `TRUE` and `FALSE`. They are abbreviated `logi` in R. Often they are automatically coerced to integer data with values 0 (false) and 1 (true) to perform arithmetic and other operations.
+
+```{r}
+# logical value
+TRUE
+
+# check structure
+str(TRUE)
+
+# arithmetic
+TRUE + FALSE
+
+# check structure
+str(FALSE + FALSE)
+```
+
+***Character*** data represent strings of text and are sometimes called 'strings'. They are abbreviated `chr` in R and values are surrounded by quotation marks; this distinguishes, for example, the *character* 4 from the *number* 4. Single quotations can be used to input strings as well as double quotations. Arithmetic is not possible with strings for obvious reasons.
+
+```{r}
+# a character string
+'yay'
+
+# check structure
+str('yay')
+
+# string arithmetic won't work
+'4' + '1'
+
+# but can be performed after coercing character to string
+as.numeric('4') + as.numeric('1')
+```
+
+***Factor*** data represent categorical variables. In R these are encoded numerically according to the number of 'levels' of the factor, which represent the unique values of the categorical variable, and each level is labeled. R will print the labels, not the levels, of factors; the data type is abbreviated `fct`.
+
+```{r}
+# a factor
+factor(1, levels = c(1, 2), labels = c('blue', 'red'))
+
+# less verbose definition
+factor('blue', levels = c('blue', 'red'))
+
+# check structure
+str(factor('blue', levels = c('blue', 'red')))
+```
+
+Usually factors won't be defined explicitly, but instead *interpreted* from character data. The levels and labels of factors can be manipulated using a variety of helper functions.
+
+## Object classes
+
+The most basic type of object in R is a ***vector**.* Vectors are concatenations of data values of the same type. They are defined using the concatenation operator `c()` and are indexed by consecutive integers; subvectors can be retrieved by specifying the indices between square brackets.
+
+```{r}
+# numeric vector
+c(1, 4, 7)
+
+# character vector
+c('blue', 'red')
+
+# indexing
+c(1, 4, 7)[1]
+c(1, 4, 7)[2]
+c(1, 4, 7)[3]
+c(1, 4, 7)[2:3]
+c(1, 4, 7)[c(1, 3)]
+```
+
+Usually objects are assigned names for easy retrieval. Vectors will not show any special object class if the structure is examined; `str()` will simply return the data type, index range, and the values.
+
+```{r}
+# assign a name
+my_vec <- c(1, 4, 7)
+
+# check structure
+str(my_vec)
+```
+
+Next up in complexity are ***arrays***. These are blocks of data values of the same type indexed along two or more dimensions. For arrays, `str()` will return the data type, index structure, and data values; when printed directly, data values are arranged according to the indexing.
+
+```{r}
+# an array
+my_ary <- array(data = c(1, 2, 3, 4, 5, 6, 7, 8), 
+           dim = c(2, 4))
+
+my_ary
+
+str(my_ary)
+
+# another array
+my_oth_ary <- array(data = c(1, 2, 3, 4, 5, 6, 7, 8), 
+           dim = c(2, 2, 2))
+
+my_oth_ary
+
+str(my_oth_ary)
+```
+
+For arrays, elements can be retrieved by index coordinates, and slices can be retrieved by leaving index positions blank, which will return all elements along the corresponding indices.
+
+```{r}
+# one element
+my_ary[1, 2]
+
+# one element
+my_oth_ary[1, 2, 1]
+
+# a slice (second row)
+my_ary[2, ]
+
+# a slice (first layer)
+my_oth_ary[ , , 1]
+```
+
+Next there are ***lists***, which are perhaps the most flexible data structure. A list is an indexed collection of any objects.
+
+```{r}
+# a list
+list('cat', c(1, 4, 7), TRUE)
+
+# a named list
+list(animal = 'cat',
+     numbers = c(1, 4, 7),
+     short = TRUE)
+```
+
+List elements can be retrieved by index in double square brackets, or by name.
+
+```{r}
+# assign a name
+my_lst <- list(animal = 'cat',
+               numbers = c(1, 4, 7),
+               short = TRUE)
+
+# check structure
+str(my_lst)
+
+# retrieve an element
+my_lst[[1]]
+
+# equivalent
+my_lst$animal
+```
+
+Finally, ***data frames*** are type-heterogeneous lists of vectors of equal length. More informally, they are 2D arrays with columns of differing data types. `str()` will essentially show the list structure; but when printed, data frames will appear arranged in a table.
+
+```{r}
+# a data frame
+my_df <- data.frame(animal = c('cat', 'hare', 'tortoise'),
+                    has.fur = c(TRUE, TRUE, FALSE),
+                    weight.lbs = c(9.1, 8.2, 22.7))
+
+str(my_df)
+
+my_df
+```
+
+The data frame is the standard object type for representing datasets in R. For the most part, modern computing in R is designed around the data frame.
+
+## Packages
+
+R packages are add-ons that can include special functions, datasets, object classes, and the like. They are published software and can be installed using `install.packages('PACKAGE NAME')` and, once installed, loaded via `library('PACKAGE NAME')` or `require('PACKAGE NAME')`.
+
+# Tidyverse basics
+
+```{r}
+library(tidyverse)
+```
+
+## Concepts
+
+The tidyverse is a collection of packages for data manipulation, visualization, and statistical modeling. Some are specialized, such as `forcats` or `lubridate`, which contain functions for manipulating factors and dates and times, respectively. The packages share some common underyling principles.
+
+1.  Packages are built around the data frame
+2.  Functions are designed to work with the pipe operator `%>%`
+3.  Packages facilitate readable code
+
+The tidyverse facilitates programming in readable sequences of steps that are performed on dataframe. For example:
+
+```{r, eval = F}
+my_df %>% STEP1() %>% STEP2() %>% STEP3()
+```
+
+If it helps, imagine that step 1 is defining a new variable, step 2 is selecting a subset of columns, and step 3 is fitting a model of some kind.
+
+## Tibbles
+
+tidyverse packages leverage a slight generalization of the data frame called a ***tibble***. For the most part, tibbles behave as data frames do, but they are slightly more flexible in ways you'll encounter later.
+
+For now, think of a tibble as just another name for a data frame.
+
+## The pipe operator `%>%`
+
+In short, `x %>% f(y)` is equivalent to `f(x, y)` .
+
+In other words, the pipe operator 'pipes' the result of the left-hand operation into the first argument of the right-hand function.
+
+```{r}
+# a familiar example
+my_vec <- c(1, 2, 5) 
+str(my_vec)
+
+# use the pipe operator instead
+my_vec %>% str()
+```
+
+## dplyr verbs
+
+The `dplyr` package contains functions for manipulating data frames (tibbles). The functions are named with verbs that describe common operations.
+
+***filter*** -- filter the rows of a data frame according to a condition and return a subset of rows meeting that condition
+
+***select*** -- select a subset of columns from a data frame
+
+***pull*** -- extract a single column from a data frame
+
+***mutate*** -- define a new column as a function of existing columns
+
+```{r}
+# retrieve pollution data
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab2-tidyverse/data/background-clean.csv'
+pollution <- read_csv(url)
+
+```
+
+## tidyr verbs
+
+## Grouped summaries
+
+## ggplot
