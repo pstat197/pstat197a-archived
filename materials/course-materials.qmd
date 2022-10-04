@@ -39,6 +39,6 @@ editor: visual
 
 -   ***Tuesday meeting:*** Introducing class intake survey data [\[slides](slides/week2-classdata.qmd)\]
 
--   ***Section meeting:*** tidyverse basics \[activity\]
+-   ***Section meeting:*** tidyverse basics [\[activity](labs/lab2-tidyverse/lab2-tidyverse.qmd)\]
 
 <!-- -   ***Thursday meeting:*** Exploratory/descriptive analysis of class survey data \[activity\] -->

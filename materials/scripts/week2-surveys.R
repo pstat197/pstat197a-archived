@@ -112,18 +112,3 @@ bind_cols(proficiency, comfort) %>%
   labs(x = 'projection 1', 
        y = 'projection 2',
        color = 'cluster')
-
-# summary of classes taken
-classes <- background %>%
-  select(11:29) %>%
-  mutate_all(~factor(.x, levels = c('no', 'yes'))) %>%
-  mutate_all(~as.numeric(.x) - 1) %>%
-  summarize_all(mean) %>%
-  gather() %>%
-  arrange(desc(value)) 
-
-classes %>%
-  ggplot(aes(x = value, y = reorder(key, value))) +
-  geom_point() +
-  scale_x_sqrt() +
-  labs(x = 'proportion of class', y = '')
