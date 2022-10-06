@@ -144,7 +144,7 @@
     "href": "materials/course-materials.html",
     "title": "Course materials",
     "section": "",
-    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: On projects in(volving) data science [slides]\nSection meeting: software and technology overview [activity]\nThursday meeting: basic GitHub actions [activity] [slides]\nAssignments due by next class meeting:\n\nread MDSR 9.1 and 9.2\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: Introducing class intake survey data [slides]\nSection meeting: tidyverse basics [activity]"
+    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: On projects in(volving) data science [slides]\nSection meeting: software and technology overview [activity]\nThursday meeting: basic GitHub actions [activity] [slides]\nAssignments due by next class meeting:\n\nread MDSR 9.1 and 9.2\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: Introducing class intake survey data [slides]\nSection meeting: tidyverse basics [activity]\nThursday meeting: planning group work for analysis of survey data [slides]\nAssignments:\n\nfirst team assignment due Friday, October 14, 11:59 PM PST [accept via GH classroom here]"
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html",
@@ -845,5 +845,54 @@
     "title": "Descriptive analysis of class survey data",
     "section": "Next time",
     "text": "Next time\nMost of next meeting we’ll devote to planning your group’s task.\n\nDo a little brainstorming on your own\nCome with a few questions/ideas"
+  },
+  {
+    "objectID": "materials/slides/week2-workshop.html#today",
+    "href": "materials/slides/week2-workshop.html#today",
+    "title": "Group assignment workshops",
+    "section": "Today",
+    "text": "Today\n\nfinish discussing results from last time\nsetup for first group assignment due next Friday\n\nassignment objectives and instructions\nreview repository\n\nworkshop ideas and plan tasks in groups"
+  },
+  {
+    "objectID": "materials/slides/week2-workshop.html#assignment-objective",
+    "href": "materials/slides/week2-workshop.html#assignment-objective",
+    "title": "Group assignment workshops",
+    "section": "Assignment objective",
+    "text": "Assignment objective\nYour task: prepare and present a descriptive analysis of the survey responses addressing 2-3 questions or goals of your choosing.\n\nquestions or goals should be of moderate complexity; easy to state and understand but should require a little work to answer\n\ntoo simple: what proportion of students have research experience?\nbetter: are students with research experience more confident/comfortable with technical skills than students without, considering coursework history?"
+  },
+  {
+    "objectID": "materials/slides/week2-workshop.html#outcomes",
+    "href": "materials/slides/week2-workshop.html#outcomes",
+    "title": "Group assignment workshops",
+    "section": "Outcomes",
+    "text": "Outcomes\nThe learning outcomes for this assignment are less focused on methodology:\n\nformulate questions and plan a simple analysis\npractice using a GitHub repo in a team project setting\nprepare a report\nlearn one or more new-to-you data manipulation techniques"
+  },
+  {
+    "objectID": "materials/slides/week2-workshop.html#assignment-set-up",
+    "href": "materials/slides/week2-workshop.html#assignment-set-up",
+    "title": "Group assignment workshops",
+    "section": "Assignment set-up",
+    "text": "Assignment set-up\n\naccept GH classroom assignment here; this will create/add your team repo\nclone repo to local\nreview repo contents:\n\ndata with survey responses and metadata\nscripts with preprocessing and in-class analysis\nresults with report template for preparing write-up\nREADME.md with assignment instructions"
+  },
+  {
+    "objectID": "materials/slides/week2-workshop.html#deliverable",
+    "href": "materials/slides/week2-workshop.html#deliverable",
+    "title": "Group assignment workshops",
+    "section": "Deliverable",
+    "text": "Deliverable\nYour ‘submission’ will be in the form of commits to the group repository, in particular:\n\nan updated results/report.qmd file containing your write-up source\na rendered results/report.html file\n\n\nPlease make final commits by Friday, October 14, 11:59pm PST.\n\n\nRecall there is a 24-hour grace period; any commits submitted after Saturday 11:59pm may not receive review."
+  },
+  {
+    "objectID": "materials/slides/week2-workshop.html#resources",
+    "href": "materials/slides/week2-workshop.html#resources",
+    "title": "Group assignment workshops",
+    "section": "Resources",
+    "text": "Resources\n\nlab 2 and in-class analysis scripts/week2-surveys.R\nslack and course staff OH\nMDSR ch. 4 on data wrangling\nRStudio cheatsheets and tidyverse documentation, esp. dplyr, tidyr, ggplot2"
+  },
+  {
+    "objectID": "materials/slides/week2-workshop.html#workshopping-today",
+    "href": "materials/slides/week2-workshop.html#workshopping-today",
+    "title": "Group assignment workshops",
+    "section": "Workshopping today",
+    "text": "Workshopping today\nTry to accomplish three goals:\n\npool ideas for questions or themes to explore in the data\npair up, divide work, and assign tasks\nagree on a communication plan for finishing work\n\nslack groupchat or similar\nmeeting outside of class sometime next week"
   }
 ]
