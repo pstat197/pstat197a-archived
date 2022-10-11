@@ -18,13 +18,42 @@ In class we discussed multiple testing in the context of an application that inv
 -   functional programming using `tidyverse`
 
 We'll illustrate these strategies using the biomarker data.
+
+::: callout-important
+## Action
+
+Create a new script for lab 3 in your labs project/folder and copy-paste the code chunk below at the top of the script.
+:::
+
 ```{r}
 library(tidyverse)
-asd <- read_csv('data/biomarker-clean.csv') %>%
-  select(-ados)
+
+# data location
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab3-iteration/data/biomarker-clean.csv'
+
+# function for outlier trimming
+trim_fn <- function(x){
+  x[x > 3] <- 3
+  x[x < -3] <- -3
+  
+  return(x)
+}
+
+# read in and preprocess data
+asd <- read_csv(url) %>%
+  select(-ados) %>%
+  # log transform
+  mutate(across(.cols = -group, log10)) %>%
+  # center and scale
+  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
+  # trim outliers
+  mutate(across(.cols = -group, trim_fn))
+
 ```
 
 ## Loops
+
+### Simple examples
 
 A ***loop*** is a set of instructions to be repeated a specified number of times while incrementing a flag or index value. For example:
 
@@ -90,4 +119,173 @@ rslt
 
 Loops are substantially similar in any programming language but usually not optimized for performance. Additionally, they are somewhat verbose and hard to read due to explicit use of indexing in the syntax.
 
+### Multiple testing with loops
 
+In base R, the $t$-test is performed using `t.test(...)` , which takes as arguments two vectors of observations (one for each group). For instance:
+
+```{r}
+x <- asd %>% filter(group == 'ASD') %>% pull(CHIP)
+y <- asd %>% filter(group == 'TD') %>% pull(CHIP)
+t.test(x, y, var.equal = F)
+```
+
+The output is a list:
+
+```{r}
+t.test(x, y) %>% str()
+```
+
+So if we want the p-value:
+
+```{r}
+t.test(x, y, var.equal = F)$p.value
+```
+
+To calculate $p$-values for all tests using a loop, we wrap the code we used to perform one $t$-test in a `for` loop and add appropriate indexing. For speed, we'll just compute the first 100 tests:
+
+```{r}
+n_tests <- 100
+p_vals <- rep(NA, n_tests)
+for(i in 1:n_tests){
+  x <- asd %>% filter(group == 'ASD') %>% pull(i + 1)
+  y <- asd %>% filter(group == 'TD') %>% pull(i + 1)
+  p_vals[i] <- t.test(x, y, var.equal = F)$p.value
+}
+```
+
+To line these up with the proteins they correspond to, it's necessary to keep track of the indexing carefully. In this case, the indexing corresponds to the order of columns. So we could create a dataframe like so:
+
+```{r}
+tibble(protein = colnames(asd)[2:(n_tests + 1)],
+       p = p_vals)
+```
+
+Alternatively, we could have set up the loop to output this result:
+
+```{r}
+n_tests <- 100
+rslt <- tibble(protein = colnames(asd)[2:(n_tests + 1)],
+               p = NA)
+for(i in 1:n_tests){
+  x <- asd %>% filter(group == 'ASD') %>% pull(i + 1)
+  y <- asd %>% filter(group == 'TD') %>% pull(i + 1)
+  rslt$p[i] <- t.test(x, y, var.equal = F)$p.value
+}
+```
+
+::: callout-important
+## Action
+
+Follow the example above to write a loop that stores both the $p$-values **and** the estimated differences for the first 50 proteins.
+:::
+
+## Apply family
+
+### Simple examples
+
+In R, the apply family of functions allows one to efficiently iterate a function over an index set. So, to execute our simple for loop using `apply` , we could do something like this:
+
+```{r}
+vals <- rnorm(n = 4)
+simple_fn <- function(x){2*x}
+lapply(vals, simple_fn)
+```
+
+This applies `simple_fn` to each element of `vals` , and returns the result as a list. If we want a neater output format, we could use `sapply` , which is short for *sort-apply:*
+
+```{r}
+sapply(vals, simple_fn)
+```
+
+In more complex settings it often makes sense to apply a function across an index set. This is very similar conceptually to a for loop, but can be a bit faster and easier to read.
+
+```{r}
+# apply a function to an index set
+simple_fn_ix <- function(i){2*vals[i]}
+rslt_apply <- sapply(1:length(vals), simple_fn_ix)
+
+# equivalent for loop
+rslt_loop <- rep(NA, length(vals))
+for(i in 1:length(vals)){
+  rslt_loop[i] <- 2*vals[i]
+}
+
+# compare
+rbind(rslt_loop, rslt_apply)
+```
+
+## $t$-tests using apply
+
+We can use `apply` functions to compute $t$-tests for the proteins in the ASD data by coercing the data to a list of data frames that contain the grouping and level for each protein.
+
+```{r}
+# number of tests to perform
+n_tests <- 100
+
+# convert to a list
+asd_list <- asd %>% 
+  select(1:(n_tests + 1)) %>%
+  pivot_longer(cols = -group,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  group_by(protein) %>%
+  group_split()
+
+# first entry in list
+asd_list[[1]]
+```
+
+The function `t.test(...)` can also perform the test using a *formula* of the form `y ~ x` and a data frame containing `x` and `y`, as below.
+
+```{r}
+t.test(level ~ group, data = asd_list[[1]])
+```
+
+If we just want the $p$-value again, we can wrap this code in a function whose argument is the index i . This function will return the $p$-value for the $i$th protein.
+
+```{r}
+# p value for ith protein
+tt_fn <- function(i){
+  t.test(level ~ group, data = asd_list[[i]])$p.value
+}
+
+# check
+tt_fn(1)
+```
+
+Now to perform many tests, we can simply iterate this function over an index:
+
+```{r}
+sapply(1:n_tests, tt_fn)
+```
+
+You might have noticed this was much faster than the loop. We can time it:
+
+```{r}
+start <- Sys.time()
+rslt <- sapply(1:n_tests, tt_fn)
+end <- Sys.time()
+
+end - start
+```
+
+And compare with the for loop:
+
+```{r}
+start <- Sys.time()
+n_tests <- 100
+rslt <- tibble(protein = colnames(asd)[2:(n_tests + 1)],
+               p = NA)
+for(i in 1:n_tests){
+  x <- asd %>% filter(group == 'ASD') %>% pull(i + 1)
+  y <- asd %>% filter(group == 'TD') %>% pull(i + 1)
+  rslt$p[i] <- t.test(x, y, var.equal = F)$p.value
+}
+end <- Sys.time()
+
+end - start
+```
+
+::: callout-important
+## Action
+:::

@@ -58,7 +58,7 @@ Data from @hewitson2021blood
     -   1,317 measured, 192 failed quality control
 
     -   (we don't know which ones failed QC so will use all)
-    
+
 ```{r}
 library(tidyverse)
 library(knitr)

@@ -48,3 +48,9 @@ editor: visual
     -   first team assignment due Friday, October 14, 11:59 PM PST \[[accept via GH classroom here](https://classroom.github.com/a/d-4iOFtd)\]
 
     <!-- -   for next time, read [MDSR 10.1 - 10.2](https://mdsr-book.github.io/mdsr2e/ch-modeling.html) and prepare a reading response -->
+
+### Week 3
+
+-   ***Tuesday meeting:*** introducing biomarker data; multiple testing \[[slides](slides/week3-biomarkers.qmd)\]
+
+-   ***Section meeting:*** iteration strategies \[activity\]
