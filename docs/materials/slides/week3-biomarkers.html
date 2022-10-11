@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.0.38">
 
   <meta name="author" content="Trevor Ruiz">
-  <title>Module 1: biomarker data</title>
+  <title>Biomarkers of ASD</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -402,18 +402,12 @@
     <div class="slides">
 
 <section id="title-slide" class="center">
-  <h1 class="title">Module 1: biomarker data</h1>
+  <h1 class="title">Biomarkers of ASD</h1>
   <p class="subtitle">PSTAT197A/CMPSC190DD Fall 2022</p>
   <p class="author">Trevor Ruiz</p>
   <p class="institute">UCSB</p>
 </section>
 
-<section class="slide level2">
-
-<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-1_55936ced663e4cd3a8fbedc6195ffdad">
-
-</div>
-</section>
 <section id="announcementsreminders" class="slide level2">
 <h2>Announcements/reminders</h2>
 <ul>
@@ -426,6 +420,7 @@
 <li class="fragment">please add your lab scripts from labs 1, 2</li>
 <li class="fragment"><code>labs/labN-TITLE-USERNAME.R</code></li>
 </ul></li>
+<li class="fragment"><p>section attendance is expected</p></li>
 </ul>
 </section>
 <section>
@@ -455,6 +450,9 @@
 <li class="fragment"><p>(we don’t know which ones failed QC so will use all)</p></li>
 </ul></li>
 </ul>
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-1_55936ced663e4cd3a8fbedc6195ffdad">
+
+</div>
 </section>
 <section id="sample-characteristics" class="slide level2 scrollable">
 <h2>Sample characteristics</h2>
@@ -768,6 +766,7 @@
 <p>Questions:</p>
 <ol type="1">
 <li class="fragment">What are the hypotheses in words?</li>
+<li class="fragment">What are the test assumptions?</li>
 <li class="fragment">What is the conclusion of the test?</li>
 </ol>
 </div>
@@ -906,10 +905,10 @@ P\left[ \bigcup_{i \in C} R_i | \mathcal{H} \right] \leq \sum_{i \in C} P(R_i|\m
 <section id="computations" class="slide level2 scrollable">
 <h2>Computations</h2>
 <div class="panel-tabset">
-<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Preprocessing</a></li><li><a href="#tabset-3-2">Nesting</a></li><li><a href="#tabset-3-3">Tests</a></li><li><a href="#tabset-3-4">Corrections</a></li></ul>
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Preprocessing</a></li><li><a href="#tabset-3-2">Assumptions</a></li><li><a href="#tabset-3-3">Tests</a></li><li><a href="#tabset-3-4">Corrections</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1">
-<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-10_1d47cc11bd97061377e114f8f8f07081">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-10_76a87d9783a7b19f6c1892f2e2d11b8b">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>trim_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb6-2"><a href="#cb6-2"></a>  x[x <span class="sc">&gt;</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a>  x[x <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">3</span></span>
@@ -924,18 +923,15 @@ P\left[ \bigcup_{i \in C} R_i | \mathcal{H} \right] \leq \sum_{i \in C} P(R_i|\m
 <span id="cb6-12"><a href="#cb6-12"></a>  <span class="co"># center and scale</span></span>
 <span id="cb6-13"><a href="#cb6-13"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, <span class="sc">~</span> <span class="fu">scale</span>(.x)[, <span class="dv">1</span>])) <span class="sc">%&gt;%</span></span>
 <span id="cb6-14"><a href="#cb6-14"></a>  <span class="co"># trim outliers (affects results??)</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, trim_fn))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div id="tabset-3-2">
-<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-11_fd47fd5e293c91666249d439435fe4c4">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>asd_nested <span class="ot">&lt;-</span> asd_clean <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>group, </span>
-<span id="cb7-3"><a href="#cb7-3"></a>               <span class="at">names_to =</span> <span class="st">'protein'</span>, </span>
-<span id="cb7-4"><a href="#cb7-4"></a>               <span class="at">values_to =</span> <span class="st">'level'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">nest</span>(<span class="at">data =</span> <span class="fu">c</span>(level, group))</span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a>asd_nested <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, trim_fn))</span>
+<span id="cb6-16"><a href="#cb6-16"></a></span>
+<span id="cb6-17"><a href="#cb6-17"></a>asd_nested <span class="ot">&lt;-</span> asd_clean <span class="sc">%&gt;%</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>group, </span>
+<span id="cb6-19"><a href="#cb6-19"></a>               <span class="at">names_to =</span> <span class="st">'protein'</span>, </span>
+<span id="cb6-20"><a href="#cb6-20"></a>               <span class="at">values_to =</span> <span class="st">'level'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a>  <span class="fu">nest</span>(<span class="at">data =</span> <span class="fu">c</span>(level, group))</span>
+<span id="cb6-22"><a href="#cb6-22"></a></span>
+<span id="cb6-23"><a href="#cb6-23"></a>asd_nested <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   protein data              
@@ -947,23 +943,34 @@ P\left[ \bigcup_{i \in C} R_i | \mathcal{H} \right] \leq \sum_{i \in C} P(R_i|\m
 </div>
 </div>
 </div>
+<div id="tabset-3-2">
+<div class="cell" data-layout-align="center" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-11_60451fa4acd72bf309cb441d644faa89">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="week3-biomarkers_files/figure-revealjs/unnamed-chunk-11-1.png" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 <div id="tabset-3-3">
 <div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-12_3260bbe2b6deac2c8fbdcf1015d22221">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># compute for several groups</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>test_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(.df){</span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">t_test</span>(.df, </span>
-<span id="cb9-4"><a href="#cb9-4"></a>         <span class="at">formula =</span> level <span class="sc">~</span> group,</span>
-<span id="cb9-5"><a href="#cb9-5"></a>         <span class="at">order =</span> <span class="fu">c</span>(<span class="st">'ASD'</span>, <span class="st">'TD'</span>),</span>
-<span id="cb9-6"><a href="#cb9-6"></a>         <span class="at">alternative =</span> <span class="st">'two-sided'</span>,</span>
-<span id="cb9-7"><a href="#cb9-7"></a>         <span class="at">var.equal =</span> F)</span>
-<span id="cb9-8"><a href="#cb9-8"></a>}</span>
-<span id="cb9-9"><a href="#cb9-9"></a></span>
-<span id="cb9-10"><a href="#cb9-10"></a>tt_out <span class="ot">&lt;-</span> asd_nested <span class="sc">%&gt;%</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a>  <span class="fu">mutate</span>(<span class="at">ttest =</span> <span class="fu">map</span>(data, test_fn)) <span class="sc">%&gt;%</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a>  <span class="fu">unnest</span>(ttest) <span class="sc">%&gt;%</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a>  <span class="fu">arrange</span>(p_value)</span>
-<span id="cb9-14"><a href="#cb9-14"></a></span>
-<span id="cb9-15"><a href="#cb9-15"></a>tt_out <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># compute for several groups</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>test_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(.df){</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">t_test</span>(.df, </span>
+<span id="cb8-4"><a href="#cb8-4"></a>         <span class="at">formula =</span> level <span class="sc">~</span> group,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>         <span class="at">order =</span> <span class="fu">c</span>(<span class="st">'ASD'</span>, <span class="st">'TD'</span>),</span>
+<span id="cb8-6"><a href="#cb8-6"></a>         <span class="at">alternative =</span> <span class="st">'two-sided'</span>,</span>
+<span id="cb8-7"><a href="#cb8-7"></a>         <span class="at">var.equal =</span> F)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>}</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a>tt_out <span class="ot">&lt;-</span> asd_nested <span class="sc">%&gt;%</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>  <span class="fu">mutate</span>(<span class="at">ttest =</span> <span class="fu">map</span>(data, test_fn)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>  <span class="fu">unnest</span>(ttest) <span class="sc">%&gt;%</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a>  <span class="fu">arrange</span>(p_value)</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>tt_out <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 9
   protein     data     statistic  t_df     p_value alternative estimate lower_ci
@@ -979,18 +986,18 @@ P\left[ \bigcup_{i \in C} R_i | \mathcal{H} \right] \leq \sum_{i \in C} P(R_i|\m
 </div>
 <div id="tabset-3-4">
 <div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-13_c86f00e229005a58128b1388ac6d7e86">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># multiple testing corrections</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>m <span class="ot">&lt;-</span> <span class="fu">nrow</span>(tt_out)</span>
-<span id="cb11-3"><a href="#cb11-3"></a>hm <span class="ot">&lt;-</span> <span class="fu">log</span>(m) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>m) <span class="sc">-</span> <span class="fu">digamma</span>(<span class="dv">1</span>)</span>
-<span id="cb11-4"><a href="#cb11-4"></a>  </span>
-<span id="cb11-5"><a href="#cb11-5"></a>tt_corrected <span class="ot">&lt;-</span> tt_out <span class="sc">%&gt;%</span></span>
-<span id="cb11-6"><a href="#cb11-6"></a>  <span class="fu">select</span>(data, protein, p_value) <span class="sc">%&gt;%</span></span>
-<span id="cb11-7"><a href="#cb11-7"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb11-8"><a href="#cb11-8"></a>  <span class="fu">mutate</span>(<span class="at">p_bh =</span> p_value<span class="sc">*</span>m<span class="sc">/</span>rank,</span>
-<span id="cb11-9"><a href="#cb11-9"></a>         <span class="at">p_by =</span> p_value<span class="sc">*</span>m<span class="sc">*</span>hm<span class="sc">/</span>rank,</span>
-<span id="cb11-10"><a href="#cb11-10"></a>         <span class="at">p_bonf =</span> p_value<span class="sc">*</span>m)</span>
-<span id="cb11-11"><a href="#cb11-11"></a></span>
-<span id="cb11-12"><a href="#cb11-12"></a>tt_corrected <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># multiple testing corrections</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>m <span class="ot">&lt;-</span> <span class="fu">nrow</span>(tt_out)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>hm <span class="ot">&lt;-</span> <span class="fu">log</span>(m) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>m) <span class="sc">-</span> <span class="fu">digamma</span>(<span class="dv">1</span>)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  </span>
+<span id="cb10-5"><a href="#cb10-5"></a>tt_corrected <span class="ot">&lt;-</span> tt_out <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="fu">select</span>(data, protein, p_value) <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="fu">mutate</span>(<span class="at">p_bh =</span> p_value<span class="sc">*</span>m<span class="sc">/</span>rank,</span>
+<span id="cb10-9"><a href="#cb10-9"></a>         <span class="at">p_by =</span> p_value<span class="sc">*</span>m<span class="sc">*</span>hm<span class="sc">/</span>rank,</span>
+<span id="cb10-10"><a href="#cb10-10"></a>         <span class="at">p_bonf =</span> p_value<span class="sc">*</span>m)</span>
+<span id="cb10-11"><a href="#cb10-11"></a></span>
+<span id="cb10-12"><a href="#cb10-12"></a>tt_corrected <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   data               protein           p_value  rank      p_bh      p_by  p_bonf
@@ -1008,11 +1015,27 @@ P\left[ \bigcup_{i \in C} R_i | \mathcal{H} \right] \leq \sum_{i \in C} P(R_i|\m
 </section>
 <section id="results" class="slide level2">
 <h2>Results</h2>
-<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-14_204f1377cd8a51f5a20412396c748780">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># top 10</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>tt_corrected <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">select</span>(protein, p_by) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">slice_min</span>(<span class="at">order_by =</span> p_by, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Comparing methods</a></li><li><a href="#tabset-4-2">Top 10 proteins</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<div class="cell" data-layout-align="center" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-14_41187a796375630f05bfbe95d4b26809">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="week3-biomarkers_files/figure-revealjs/unnamed-chunk-14-1.png" width="576"></p>
+<p></p><figcaption>Adjusted vs.&nbsp;raw p-values for each multiple correction method.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-2">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-15_8664fccaa7abd98bb8f00161001014af">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># top 10</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>tt_corrected <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">select</span>(protein, p_by) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">slice_min</span>(<span class="at">order_by =</span> p_by, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
    protein              p_by
@@ -1029,11 +1052,22 @@ P\left[ \bigcup_{i \in C} R_i | \mathcal{H} \right] \leq \sum_{i \in C} P(R_i|\m
 10 Cadherin-5      0.00179  </code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
 </section>
 <section id="neat-graphic-volcano-plot" class="slide level2">
 <h2>Neat graphic: volcano plot</h2>
 
-<img data-src="week3-biomarkers_files/figure-revealjs/unnamed-chunk-15-1.png" width="288" class="r-stretch quarto-figure-center"><p class="caption">Upregulation and downregulation of serum levels of proteins analyzed – p-values against number of doublings (positive) or halvings (negative) of serum level in ASD group relative to TD group.</p></section>
+<img data-src="week3-biomarkers_files/figure-revealjs/unnamed-chunk-16-1.png" width="288" class="r-stretch quarto-figure-center"><p class="caption">Upregulation and downregulation of serum levels of proteins analyzed – p-values against number of doublings (positive) or halvings (negative) of serum level in ASD group relative to TD group.</p></section>
+<section id="next-time" class="slide level2">
+<h2>Next time</h2>
+<p>Other approaches to the same problem:</p>
+<ul>
+<li class="fragment"><p>correlation with ADOS (severity diagnostic score)</p></li>
+<li class="fragment"><p>variable importance in random forest classifier</p></li>
+</ul>
+</section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 

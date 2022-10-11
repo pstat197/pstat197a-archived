@@ -20,33 +20,6 @@ execute:
   cache: true
 ---
 
-```{r}
-library(tidyverse)
-library(knitr)
-library(infer)
-
-# data import
-sample_info <- read_csv('data/biomarker-sample-info.csv')
-asd <- read_csv('data/biomarker-clean.csv')
-
-# data preprocessing
-trim_fn <- function(x){
-  x[x > 3] <- 3
-  x[x < -3] <- -3
-  
-  return(x)
-}
-
-asd_clean <- asd %>% 
-  select(-ados) %>%
-  # log transform
-  mutate(across(.cols = -group, log10)) %>%
-  # center and scale
-  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
-  # trim outliers (affects results??)
-  mutate(across(.cols = -group, trim_fn))
-```
-
 ## Announcements/reminders
 
 -   don't forget to fill out attendance form for each class meeting
@@ -57,6 +30,8 @@ asd_clean <- asd %>%
 
     -   please add your lab scripts from labs 1, 2
     -   `labs/labN-TITLE-USERNAME.R`
+
+-   section attendance is expected
 
 # Module introduction
 
@@ -83,6 +58,33 @@ Data from @hewitson2021blood
     -   1,317 measured, 192 failed quality control
 
     -   (we don't know which ones failed QC so will use all)
+    
+```{r}
+library(tidyverse)
+library(knitr)
+library(infer)
+
+# data import
+sample_info <- read_csv('data/biomarker-sample-info.csv')
+asd <- read_csv('data/biomarker-clean.csv')
+
+# data preprocessing
+trim_fn <- function(x){
+  x[x > 3] <- 3
+  x[x < -3] <- -3
+  
+  return(x)
+}
+
+asd_clean <- asd %>% 
+  select(-ados) %>%
+  # log transform
+  mutate(across(.cols = -group, log10)) %>%
+  # center and scale
+  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
+  # trim outliers (affects results??)
+  mutate(across(.cols = -group, trim_fn))
+```
 
 ## Sample characteristics {.scrollable}
 
@@ -226,7 +228,8 @@ asd %>%
 Questions:
 
 1.  What are the hypotheses in words?
-2.  What is the conclusion of the test?
+2.  What are the test assumptions?
+3.  What is the conclusion of the test?
 
 ## Many tests
 
@@ -389,12 +392,7 @@ asd_clean <- asd %>%
   mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
   # trim outliers (affects results??)
   mutate(across(.cols = -group, trim_fn))
-```
 
-### Nesting
-
-```{r}
-#| echo: true
 asd_nested <- asd_clean %>%
   pivot_longer(-group, 
                names_to = 'protein', 
@@ -402,6 +400,29 @@ asd_nested <- asd_clean %>%
   nest(data = c(level, group))
 
 asd_nested %>% head(4)
+```
+
+### Assumptions
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| fig-align: center
+# check variance ratios
+asd_clean %>% 
+  pivot_longer(-group, 
+               names_to = "protein", 
+               values_to = "level") %>%
+  group_by(protein, group) %>%
+  summarize(level.var = var(level), .groups = 'drop') %>%
+  pivot_wider(id_cols = protein, 
+              names_from = 'group', 
+              values_from = 'level.var') %>%
+  mutate(var.ratio = ASD/TD) %>%
+  ggplot(aes(x = var.ratio)) +
+  geom_histogram(bins = 50) +
+  scale_x_log10() +
+  labs(x = 'var(ASD)/var(TD)')
 ```
 
 ### Tests
@@ -446,6 +467,35 @@ tt_corrected %>% head(5)
 
 ## Results
 
+::: panel-tabset
+### Comparing methods
+
+```{r}
+#| fig-align: center
+#| fig-width: 6
+#| fig-height: 4
+#| fig-cap: Adjusted vs. raw p-values for each multiple correction method.
+tt_corrected %>%
+  rename(bh.adj = p_bh,
+         by.adj = p_by,
+         bonf.adj = p_bonf,
+         p.value = p_value) %>%
+  mutate(p.raw = p.value) %>%
+  pivot_longer(cols = c(contains('.adj'), p.raw), 
+               names_to = 'correction',
+               values_to = 'p.adj') %>%
+  ggplot(aes(x = p.value, 
+             y = p.adj, 
+             color = correction,
+             linetype = correction)) +
+  geom_path() +
+  scale_y_log10() +
+  scale_x_sqrt() +
+  labs(x = 'p value', y = 'adjusted p value')
+```
+
+### Top 10 proteins
+
 ```{r}
 #| echo: true
 # top 10
@@ -453,6 +503,8 @@ tt_corrected %>%
   select(protein, p_by) %>%
   slice_min(order_by = p_by, n = 10)
 ```
+:::
+
 ## Neat graphic: volcano plot
 
 ```{r}
@@ -494,6 +546,12 @@ plot_df %>%
   labs(y = '-log10(p)')
 ```
 
+## Next time
 
+Other approaches to the same problem:
+
+-   correlation with ADOS (severity diagnostic score)
+
+-   variable importance in random forest classifier
 
 ## References

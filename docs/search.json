@@ -898,142 +898,142 @@
   {
     "objectID": "materials/slides/week3-biomarkers.html#announcementsreminders",
     "href": "materials/slides/week3-biomarkers.html#announcementsreminders",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Announcements/reminders",
-    "text": "Announcements/reminders\n\ndon’t forget to fill out attendance form for each class meeting\n\nbut don’t fill it out if you don’t come to class\n\nfirst group assignment due Friday 10/14 11:59pm PST\n\nplease add your lab scripts from labs 1, 2\nlabs/labN-TITLE-USERNAME.R"
+    "text": "Announcements/reminders\n\ndon’t forget to fill out attendance form for each class meeting\n\nbut don’t fill it out if you don’t come to class\n\nfirst group assignment due Friday 10/14 11:59pm PST\n\nplease add your lab scripts from labs 1, 2\nlabs/labN-TITLE-USERNAME.R\n\nsection attendance is expected"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#background",
     "href": "materials/slides/week3-biomarkers.html#background",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Background",
     "text": "Background\nLevels of proteins in plasma/serum are altered in autism spectrum disorder (ASD).\n\nGoal: identify a panel of proteins useful as a blood biomarker for early detection of ASD.\n\na ‘panel’ is a handful of tests that help distinguish between conditions\nso in other words, find proteins whose serum levels are predictive of ASD"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#dataset",
     "href": "materials/slides/week3-biomarkers.html#dataset",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Dataset",
     "text": "Dataset\nData from Hewitson et al. (2021)\n\nSerum samples from 76 boys with ASD and 78 typically developing (TD) boys, 18 months-8 years of age\nA total of 1,125 proteins were analyzed from each sample\n\n1,317 measured, 192 failed quality control\n(we don’t know which ones failed QC so will use all)"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#sample-characteristics",
     "href": "materials/slides/week3-biomarkers.html#sample-characteristics",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Sample characteristics",
     "text": "Sample characteristics\n\nAgeDemographicsComorbiditiesMedications\n\n\n\n\n\n\n\nAttribute\nASD (n = 76)\nTD (n = 78)\n\n\n\n\nAge: mean (SD) years\n5.6 (1.7)\n5.7 (2.0)\n\n\n\n\n\n\n\n\n\n\n\n\nAttribute\nASD (n = 76)\nTD (n = 78)\n\n\n\n\nWhite/Caucasian\n33 (45.2%)\n40 (51.9%)\n\n\nHispanic/Latino\n26 (35.6%)\n6 (7.8%)\n\n\nAfrican American/Black\n3 (4.1%)\n14 (18.2%)\n\n\nAsian or Pacific Islander\n2 (2.6%)\n3 (3.9%)\n\n\nMultiple ethnicities or Other\n9 (12.3%)\n14 (18.2%)\n\n\nNot reported\n3 (4.1%)\n1 (1.2%)\n\n\n\n\n\n\n\n\n\n\n\n\nAttribute\nASD (n = 76)\nTD (n = 78)\n\n\n\n\nNone\n38 (52.8%)\n58 (75.3%)\n\n\nADHD\n2 (2.8%)\n1 (1.3%)\n\n\nSeasonal Allergies\n30 (41.7%)\n17 (22.4%)\n\n\nAsthma\n2 (2.8%)\n0 (0%)\n\n\nCeliac Disease\n1 (1.4%)\n0 (0%)\n\n\nGERD\n1 (1.4%)\n0 (0%)\n\n\nPTSD\n0 (0%)\n1 (1.3%)\n\n\nSleep Apnea\n2 (2.8%)\n0 (0%)\n\n\nNot reported\n4 (5.6%)\n1 (1.3%)\n\n\n\n\n\n\n\n\n\n\n\n\nAttribute\nASD (n = 76)\nTD (n = 78)\n\n\n\n\nNone\n69 (92%)\n75 (97.4%)\n\n\nAnti-depressant\n2 (2.7%)\n0 (0%)\n\n\nAnti-psychotic\n0 (0%)\n1 (1.3%)\n\n\nSedative\n1 (1.3%)\n0 (0%)\n\n\nSSRI\n2 (2.27%)\n0 (0%)\n\n\nStimulant\n1 (1.3%)\n1 (1.3%)\n\n\nNot reported\n1 (1.3%)\n1 (1.3%)"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#data-glimpse",
     "href": "materials/slides/week3-biomarkers.html#data-glimpse",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Data glimpse",
     "text": "Data glimpse\n\nExample rowsGroup sizes\n\n\n\nasd_clean %>% head(5)\n\n# A tibble: 5 × 1,318\n  group    CHIP  CEBPB     NSE   PIAS4 `IL-10 Ra`  STAT3   IRF1 `c-Jun` `Mcl-1`\n  <chr>   <dbl>  <dbl>   <dbl>   <dbl>      <dbl>  <dbl>  <dbl>   <dbl>   <dbl>\n1 ASD    0.335   0.520 -0.554   0.650      -0.358  0.305 -0.484   0.309  1.57  \n2 ASD   -0.0715  1.01   3       1.28       -0.133  1.13   0.253   0.408  0.0643\n3 ASD   -0.406  -0.531 -0.0592  1.13        0.554 -0.334  0.287  -0.845  1.42  \n4 ASD   -0.102  -0.251  1.47    0.0773     -0.705  0.893  2.61   -0.372 -0.467 \n5 ASD   -0.395  -0.536  0.0410 -0.299      -0.830  0.899  1.01   -0.843 -1.15  \n# … with 1,308 more variables: OAS1 <dbl>, `c-Myc` <dbl>, SMAD3 <dbl>,\n#   SMAD2 <dbl>, `IL-23` <dbl>, PDGFRA <dbl>, `IL-12` <dbl>, STAT1 <dbl>,\n#   STAT6 <dbl>, LRRK2 <dbl>, Osteocalcin <dbl>, `IL-5` <dbl>, GPDA <dbl>,\n#   IgA <dbl>, LPPL <dbl>, HEMK2 <dbl>, PDXK <dbl>, TLR4 <dbl>, REG4 <dbl>,\n#   `HSP 27` <dbl>, `YKL-40` <dbl>, `Alpha enolase` <dbl>, `Apo L1` <dbl>,\n#   CD38 <dbl>, CD59 <dbl>, FABPL <dbl>, `GDF-11` <dbl>, BTC <dbl>,\n#   `HIF-1a` <dbl>, S100A6 <dbl>, SECTM1 <dbl>, RSPO3 <dbl>, PSP <dbl>, …\n\n\n\n\n\n\n# A tibble: 2 × 2\n  group     n\n  <chr> <int>\n1 ASD      76\n2 TD       78"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#module-objectives",
     "href": "materials/slides/week3-biomarkers.html#module-objectives",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Module objectives",
     "text": "Module objectives\nMethodology\n\nmultiple testing\nclassification: logistic regression; random forests\nvariable selection: LASSO regularization\nclassification accuracy measures\n\n\nConcepts\n\ndata partitioning for predictive modeling\nmodel interpretability\nhigh dimensional data \\(n < p\\)"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#marginal-differences",
     "href": "materials/slides/week3-biomarkers.html#marginal-differences",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Marginal differences",
     "text": "Marginal differences\nIdea: test for a significant difference in serum levels between groups for a given protein, say protein \\(i\\).\n\nNotation:\n\n\\(\\mu^i_{ASD}\\): mean serum level of protein \\(i\\) in the ASD group\n\\(\\mu^i_{TD}\\): mean serum level of protein \\(i\\) in the TD group\n\\(\\delta_i\\): difference in means \\(\\mu^i_{ASD} - \\mu^i_{TD}\\)\nhats indicate sample estimates (e.g. \\(\\hat{\\delta}_i\\))"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#review-t-test",
     "href": "materials/slides/week3-biomarkers.html#review-t-test",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Review: \\(t\\)-test",
     "text": "Review: \\(t\\)-test\nThe \\(t\\)-test tests \\(H_{0i}: \\delta_i = 0\\) against its negation \\(\\neg H_{0i}: \\delta_i \\neq 0\\) using the rule\n\\[\n\\text{reject $H_{0i}$ if}\\qquad \\left|\\frac{\\hat{\\delta}_i}{SE(\\hat{\\delta}_i)}\\right| > t_\\alpha\n\\]\n\n\\(SE(\\hat{\\delta}_i)\\) is a standard error for the difference estimate; quantifies variability of the estimate\nprocedure controls type I error at \\(\\alpha\\), ensuring \\(P\\left(\\text{reject}_i|H_i\\right) \\leq 0.05\\)"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#review-p-values",
     "href": "materials/slides/week3-biomarkers.html#review-p-values",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Review: \\(p\\)-values",
     "text": "Review: \\(p\\)-values\nThe \\(p\\)-value for a test is the probability of obtaining a sample at least as contrary to \\(H_{0i}\\) as the sample in hand, assuming \\(H_{0i}\\) is true.\n\nBy construction, \\(p < \\alpha\\) just in case the test rejects with type I error controlled at \\(\\alpha\\).\n\n\nSo a common heuristic is:\n\\[\n\\text{reject $H_{0i}$ if} \\qquad p_i \\leq \\alpha\n\\]"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#one-test",
     "href": "materials/slides/week3-biomarkers.html#one-test",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "One test",
-    "text": "One test\nHere is R output for one test.\n\nasd %>%\n  t_test(formula = CHIP ~ group,\n         order = c('ASD', 'TD'),\n         alternative = 'two-sided',\n         var.equal = F)\n\n# A tibble: 1 × 7\n  statistic  t_df p_value alternative estimate lower_ci upper_ci\n      <dbl> <dbl>   <dbl> <chr>          <dbl>    <dbl>    <dbl>\n1     0.927  75.7   0.357 two.sided       384.    -441.    1210.\n\n\n\nQuestions:\n\nWhat are the hypotheses in words?\nWhat is the conclusion of the test?"
+    "text": "One test\nHere is R output for one test.\n\nasd %>%\n  t_test(formula = CHIP ~ group,\n         order = c('ASD', 'TD'),\n         alternative = 'two-sided',\n         var.equal = F)\n\n# A tibble: 1 × 7\n  statistic  t_df p_value alternative estimate lower_ci upper_ci\n      <dbl> <dbl>   <dbl> <chr>          <dbl>    <dbl>    <dbl>\n1     0.927  75.7   0.357 two.sided       384.    -441.    1210.\n\n\n\nQuestions:\n\nWhat are the hypotheses in words?\nWhat are the test assumptions?\nWhat is the conclusion of the test?"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#many-tests",
     "href": "materials/slides/week3-biomarkers.html#many-tests",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Many tests",
     "text": "Many tests\nA plausible approach for identifying a protein panel, then, is to select all those proteins for which the \\(t\\)-test indicates a significant difference.\n\n1,317 tests\neasy to compute\nconceptually straightforward\n\n\nHow likely are mistakes?"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#test-outcomes",
     "href": "materials/slides/week3-biomarkers.html#test-outcomes",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Test outcomes",
     "text": "Test outcomes\nLet \\(H_i\\) denote the \\(i\\)th null hypothesis and \\(R_i\\) denote the event that \\(H_i\\) is rejected.\n\n\n\n\n\n\\(H_i\\)\n\\(\\neg H_i\\)\n\n\n\n\n\\(R_i\\)\n\\(V\\) false rejections\n\\(S\\) correct\n\n\n\\(\\neg R_i\\)\n\\(T\\) correct\n\\(W\\) false non-rejections\n\n\n\n\n\nThe multiple testing problem is that individual error rates compound over multiple tests."
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#familywise-error",
     "href": "materials/slides/week3-biomarkers.html#familywise-error",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Familywise error",
     "text": "Familywise error\nFamilywise error rate (FWER) is the probability of one or more type I errors: \\(P(V \\geq 1)\\).\n\nSuppose there are \\(m\\) true hypotheses \\(\\mathcal{H}: \\{H_i: i \\in C\\}\\).\n\n\nIf the tests are independent and exact then:\n\\[\n\\begin{aligned}\nP(V \\geq 1)\n&= P\\left[ \\bigcup_{i \\in C} R_i | \\mathcal{H} \\right] \\\\\n&= 1 - \\prod_{i \\in C} \\left( 1- P(R_i|H_i) \\right) \\\\\n&= 1 - (1 - \\alpha)^m\n\\end{aligned}\n\\]"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#fwer-example",
     "href": "materials/slides/week3-biomarkers.html#fwer-example",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "FWER Example",
     "text": "FWER Example\nIf individual tests are exactly controlled at \\(\\alpha = 0.05\\) and independent, at least one error is nearly certain by 100 tests.\n\nFamilywise error rate as a function of the number of tests, assuming tests are independent with exact type I error 0.05."
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#bonferroni-correction",
     "href": "materials/slides/week3-biomarkers.html#bonferroni-correction",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Bonferroni correction",
     "text": "Bonferroni correction\nThe simplest multiple testing correction is based on the Bonferroni inequality:\n\\[\nP\\left[ \\bigcup_{i \\in C} R_i | \\mathcal{H} \\right] \\leq \\sum_{i \\in C} P(R_i|\\mathcal{H})\n\\]\n\nIf the individual tests are controlled at level \\(\\alpha\\), then \\(FWER \\leq m\\alpha\\).\n\n\nSo a simple solution is to test at level \\(\\alpha^* = \\frac{\\alpha}{m}\\).\n\n\nIn other words, reject if \\(p_i < \\frac{\\alpha}{m}\\)."
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#false-discovery-rate",
     "href": "materials/slides/week3-biomarkers.html#false-discovery-rate",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "False discovery rate",
     "text": "False discovery rate\nFWER control will limit false rejections, but at the cost of power; controlling the probability of one type I error is a conservative approach.\n\nMore common in modern applications are procedures to control false discovery rate: the expected proportion of rejections that are false.\n\\[\n\\text{FDR} = \\mathbb{E}\\left[\\frac{\\text{false rejections}}{\\text{total rejections}}\\right]\n\\]\n\n\nConceptually, if say FDR is controlled at \\(0.05\\), then one would expect 5% of rejections to be false."
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#benjamini-hochberg-correction",
     "href": "materials/slides/week3-biomarkers.html#benjamini-hochberg-correction",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Benjamini-Hochberg correction",
     "text": "Benjamini-Hochberg correction\nBenjamini and Hochberg (1995) conceived a procedure based on sorting \\(p\\)-values.\n\nSupposing \\(m\\) independent tests are performed:\n\nSort the \\(p\\)-values in increasing order \\(p_{(1)}, p_{(2)}, \\dots, p_{(m)}\\)\nReject whenever \\(p_{(i)} < \\frac{i\\alpha}{m}\\)\n\n\n\nThey proved that this controls FDR at \\(\\alpha\\)."
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#benjamini-yekutieli-correction",
     "href": "materials/slides/week3-biomarkers.html#benjamini-yekutieli-correction",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Benjamini-Yekutieli correction",
     "text": "Benjamini-Yekutieli correction\nThe Benjamini-Hochberg assumes tests are independent, which is obviously not true in most situations. (Why?)\n\nBenjamini and Yekutieli (2001) modified the correction to hold without the independence assumption:\n\nSort the \\(p\\)-values in increasing order \\(p_{(1)}, p_{(2)}, \\dots, p_{(m)}\\)\nReject whenever \\(p_{(i)} < \\frac{i\\alpha}{m H_m}\\)\n\n\n\nAbove, \\(H_m = \\sum_{i = 1}^m \\frac{1}{i}\\) ."
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#implementing-corrections",
     "href": "materials/slides/week3-biomarkers.html#implementing-corrections",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Implementing corrections",
     "text": "Implementing corrections\nThe easiest way to implement these corrections is to adjust the \\(p\\)-values with a multiplier:\n\n(Bonferroni) \\(p^b_i = m\\times p_i\\)\n(Benjamini-Hochberg) \\(p^{bh}_{(i)} = \\frac{m}{i} p_{(i)}\\)\n(Benjamini-Yekuteili) \\(p^{bh}_{(i)} = \\frac{m H_m}{i} p_{(i)}\\)"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#computations",
     "href": "materials/slides/week3-biomarkers.html#computations",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Computations",
-    "text": "Computations\n\nPreprocessingNestingTestsCorrections\n\n\n\ntrim_fn <- function(x){\n  x[x > 3] <- 3\n  x[x < -3] <- -3\n  \n  return(x)\n}\n\nasd_clean <- asd %>% \n  select(-ados) %>%\n  # log transform\n  mutate(across(.cols = -group, log10)) %>%\n  # center and scale\n  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%\n  # trim outliers (affects results??)\n  mutate(across(.cols = -group, trim_fn))\n\n\n\n\nasd_nested <- asd_clean %>%\n  pivot_longer(-group, \n               names_to = 'protein', \n               values_to = 'level') %>%\n  nest(data = c(level, group))\n\nasd_nested %>% head(4)\n\n# A tibble: 4 × 2\n  protein data              \n  <chr>   <list>            \n1 CHIP    <tibble [154 × 2]>\n2 CEBPB   <tibble [154 × 2]>\n3 NSE     <tibble [154 × 2]>\n4 PIAS4   <tibble [154 × 2]>\n\n\n\n\n\n# compute for several groups\ntest_fn <- function(.df){\n  t_test(.df, \n         formula = level ~ group,\n         order = c('ASD', 'TD'),\n         alternative = 'two-sided',\n         var.equal = F)\n}\n\ntt_out <- asd_nested %>%\n  mutate(ttest = map(data, test_fn)) %>%\n  unnest(ttest) %>%\n  arrange(p_value)\n\ntt_out %>% head(5)\n\n# A tibble: 5 × 9\n  protein     data     statistic  t_df     p_value alternative estimate lower_ci\n  <chr>       <list>       <dbl> <dbl>       <dbl> <chr>          <dbl>    <dbl>\n1 DERM        <tibble>     -6.10  151.     8.27e-9 two.sided     -0.885    -1.17\n2 RELT        <tibble>     -5.65  152.     7.82e-8 two.sided     -0.775    -1.05\n3 FSTL1       <tibble>     -5.27  152.     4.66e-7 two.sided     -0.783    -1.08\n4 C1QR1       <tibble>     -5.26  152.     4.79e-7 two.sided     -0.782    -1.08\n5 Calcineurin <tibble>     -5.24  151.     5.37e-7 two.sided     -0.734    -1.01\n# … with 1 more variable: upper_ci <dbl>\n\n\n\n\n\n# multiple testing corrections\nm <- nrow(tt_out)\nhm <- log(m) + 1/(2*m) - digamma(1)\n  \ntt_corrected <- tt_out %>%\n  select(data, protein, p_value) %>%\n  mutate(rank = row_number()) %>%\n  mutate(p_bh = p_value*m/rank,\n         p_by = p_value*m*hm/rank,\n         p_bonf = p_value*m)\n\ntt_corrected %>% head(5)\n\n# A tibble: 5 × 7\n  data               protein           p_value  rank      p_bh      p_by  p_bonf\n  <list>             <chr>               <dbl> <int>     <dbl>     <dbl>   <dbl>\n1 <tibble [154 × 2]> DERM        0.00000000827     1 0.0000109 0.0000845 1.09e-5\n2 <tibble [154 × 2]> RELT        0.0000000782      2 0.0000515 0.000400  1.03e-4\n3 <tibble [154 × 2]> FSTL1       0.000000466       3 0.000205  0.00159   6.14e-4\n4 <tibble [154 × 2]> C1QR1       0.000000479       4 0.000158  0.00122   6.31e-4\n5 <tibble [154 × 2]> Calcineurin 0.000000537       5 0.000141  0.00110   7.07e-4"
+    "text": "Computations\n\nPreprocessingAssumptionsTestsCorrections\n\n\n\ntrim_fn <- function(x){\n  x[x > 3] <- 3\n  x[x < -3] <- -3\n  \n  return(x)\n}\n\nasd_clean <- asd %>% \n  select(-ados) %>%\n  # log transform\n  mutate(across(.cols = -group, log10)) %>%\n  # center and scale\n  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%\n  # trim outliers (affects results??)\n  mutate(across(.cols = -group, trim_fn))\n\nasd_nested <- asd_clean %>%\n  pivot_longer(-group, \n               names_to = 'protein', \n               values_to = 'level') %>%\n  nest(data = c(level, group))\n\nasd_nested %>% head(4)\n\n# A tibble: 4 × 2\n  protein data              \n  <chr>   <list>            \n1 CHIP    <tibble [154 × 2]>\n2 CEBPB   <tibble [154 × 2]>\n3 NSE     <tibble [154 × 2]>\n4 PIAS4   <tibble [154 × 2]>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n# compute for several groups\ntest_fn <- function(.df){\n  t_test(.df, \n         formula = level ~ group,\n         order = c('ASD', 'TD'),\n         alternative = 'two-sided',\n         var.equal = F)\n}\n\ntt_out <- asd_nested %>%\n  mutate(ttest = map(data, test_fn)) %>%\n  unnest(ttest) %>%\n  arrange(p_value)\n\ntt_out %>% head(5)\n\n# A tibble: 5 × 9\n  protein     data     statistic  t_df     p_value alternative estimate lower_ci\n  <chr>       <list>       <dbl> <dbl>       <dbl> <chr>          <dbl>    <dbl>\n1 DERM        <tibble>     -6.10  151.     8.27e-9 two.sided     -0.885    -1.17\n2 RELT        <tibble>     -5.65  152.     7.82e-8 two.sided     -0.775    -1.05\n3 FSTL1       <tibble>     -5.27  152.     4.66e-7 two.sided     -0.783    -1.08\n4 C1QR1       <tibble>     -5.26  152.     4.79e-7 two.sided     -0.782    -1.08\n5 Calcineurin <tibble>     -5.24  151.     5.37e-7 two.sided     -0.734    -1.01\n# … with 1 more variable: upper_ci <dbl>\n\n\n\n\n\n# multiple testing corrections\nm <- nrow(tt_out)\nhm <- log(m) + 1/(2*m) - digamma(1)\n  \ntt_corrected <- tt_out %>%\n  select(data, protein, p_value) %>%\n  mutate(rank = row_number()) %>%\n  mutate(p_bh = p_value*m/rank,\n         p_by = p_value*m*hm/rank,\n         p_bonf = p_value*m)\n\ntt_corrected %>% head(5)\n\n# A tibble: 5 × 7\n  data               protein           p_value  rank      p_bh      p_by  p_bonf\n  <list>             <chr>               <dbl> <int>     <dbl>     <dbl>   <dbl>\n1 <tibble [154 × 2]> DERM        0.00000000827     1 0.0000109 0.0000845 1.09e-5\n2 <tibble [154 × 2]> RELT        0.0000000782      2 0.0000515 0.000400  1.03e-4\n3 <tibble [154 × 2]> FSTL1       0.000000466       3 0.000205  0.00159   6.14e-4\n4 <tibble [154 × 2]> C1QR1       0.000000479       4 0.000158  0.00122   6.31e-4\n5 <tibble [154 × 2]> Calcineurin 0.000000537       5 0.000141  0.00110   7.07e-4"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#tests",
@@ -1045,22 +1045,36 @@
   {
     "objectID": "materials/slides/week3-biomarkers.html#references",
     "href": "materials/slides/week3-biomarkers.html#references",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "References",
     "text": "References\n\n\n\n\n\n\nBenjamini, Yoav, and Yosef Hochberg. 1995. “Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing.” Journal of the Royal Statistical Society: Series B (Methodological) 57 (1): 289–300.\n\n\nBenjamini, Yoav, and Daniel Yekutieli. 2001. “The Control of the False Discovery Rate in Multiple Testing Under Dependency.” Annals of Statistics, 1165–88.\n\n\nHewitson, Laura, Jeremy A Mathews, Morgan Devlin, Claire Schutte, Jeon Lee, and Dwight C German. 2021. “Blood Biomarker Discovery for Autism Spectrum Disorder: A Proteomic Analysis.” PLoS One 16 (2): e0246581."
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#results",
     "href": "materials/slides/week3-biomarkers.html#results",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Results",
-    "text": "Results\n\n# top 10\ntt_corrected %>%\n  select(protein, p_by) %>%\n  slice_min(order_by = p_by, n = 10)\n\n# A tibble: 10 × 2\n   protein              p_by\n   <chr>               <dbl>\n 1 DERM            0.0000845\n 2 RELT            0.000400 \n 3 Calcineurin     0.00110  \n 4 C1QR1           0.00122  \n 5 MRC2            0.00132  \n 6 IgD             0.00136  \n 7 CXCL16, soluble 0.00149  \n 8 PTN             0.00154  \n 9 FSTL1           0.00159  \n10 Cadherin-5      0.00179"
+    "text": "Results\n\nComparing methodsTop 10 proteins\n\n\n\n\n\n\n\nAdjusted vs. raw p-values for each multiple correction method.\n\n\n\n\n\n\n\n# top 10\ntt_corrected %>%\n  select(protein, p_by) %>%\n  slice_min(order_by = p_by, n = 10)\n\n# A tibble: 10 × 2\n   protein              p_by\n   <chr>               <dbl>\n 1 DERM            0.0000845\n 2 RELT            0.000400 \n 3 Calcineurin     0.00110  \n 4 C1QR1           0.00122  \n 5 MRC2            0.00132  \n 6 IgD             0.00136  \n 7 CXCL16, soluble 0.00149  \n 8 PTN             0.00154  \n 9 FSTL1           0.00159  \n10 Cadherin-5      0.00179"
   },
   {
     "objectID": "materials/slides/week3-biomarkers.html#neat-graphic-volcano-plot",
     "href": "materials/slides/week3-biomarkers.html#neat-graphic-volcano-plot",
-    "title": "Module 1: biomarker data",
+    "title": "Biomarkers of ASD",
     "section": "Neat graphic: volcano plot",
     "text": "Neat graphic: volcano plot\n\nUpregulation and downregulation of serum levels of proteins analyzed – p-values against number of doublings (positive) or halvings (negative) of serum level in ASD group relative to TD group."
+  },
+  {
+    "objectID": "materials/slides/week3-biomarkers.html#assumptions",
+    "href": "materials/slides/week3-biomarkers.html#assumptions",
+    "title": "Biomarkers of ASD",
+    "section": "Assumptions",
+    "text": "Assumptions"
+  },
+  {
+    "objectID": "materials/slides/week3-biomarkers.html#next-time",
+    "href": "materials/slides/week3-biomarkers.html#next-time",
+    "title": "Biomarkers of ASD",
+    "section": "Next time",
+    "text": "Next time\nOther approaches to the same problem:\n\ncorrelation with ADOS (severity diagnostic score)\nvariable importance in random forest classifier"
   }
 ]

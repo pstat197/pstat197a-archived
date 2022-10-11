@@ -1,0 +1,93 @@
+---
+title: "Iteration strategies"
+editor: visual
+code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
+---
+
+In class we discussed multiple testing in the context of an application that involved performing 1,317 $t$-tests. Implementing these tests involves ***iterated computations***: repeatedly performing the same computations. Here we'll look at a few strategies for iteration in R:
+
+-   loops
+
+-   functions in the `apply` family
+
+-   functional programming using `tidyverse`
+
+We'll illustrate these strategies using the biomarker data.
+```{r}
+library(tidyverse)
+asd <- read_csv('data/biomarker-clean.csv') %>%
+  select(-ados)
+```
+
+## Loops
+
+A ***loop*** is a set of instructions to be repeated a specified number of times while incrementing a flag or index value. For example:
+
+```{r}
+for(i in 1:4){
+  print(2*i)
+}
+```
+
+Here the instructions are:
+
+1.  initialize index/flag `i` at `i = 1`
+2.  execute code within the braces `{...}`
+3.  increment `i <- i + 1`
+4.  stop after `i = 4`
+
+We could make the loop a bit more verbose:
+
+```{r}
+flag_vals <- c(1, 2, 3, 4)
+for(i in flag_vals){
+  out <- 2*i
+  print(out)
+}
+```
+
+Now to retain the results in memory, a storage data structure must be defined and the output of each iteration assigned to some element(s) of the storage object.
+
+```{r}
+rslt <- rep(NA, 4)
+for(i in 1:4){
+  rslt[i] <- 2*i
+}
+rslt
+```
+
+If we want to perform the same calculation for all values in a vector, we might do something like this:
+
+```{r}
+rslt <- rep(NA, 4)
+input_vals <- c(15, 27, 3, 12.6)
+for(i in 1:4){
+  rslt[i] <- 2*input_vals[i]
+}
+rslt
+```
+
+::: callout-caution
+## Check your understanding
+
+Why does the following loop produce an `NA` ?
+
+```{r}
+rslt <- rep(NA, 4)
+input_vals <- rnorm(n = 3)
+for(i in 1:4){
+  rslt[i] <- 2*input_vals[i]
+}
+
+rslt
+```
+:::
+
+Loops are substantially similar in any programming language but usually not optimized for performance. Additionally, they are somewhat verbose and hard to read due to explicit use of indexing in the syntax.
+
+

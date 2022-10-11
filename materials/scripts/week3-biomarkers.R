@@ -15,7 +15,7 @@ setwd("~/pstat197/pstat197a/materials/slides/data")
 #   write_csv('biomarker-clean.csv')
 
 # read data
-asd <- read_csv('data/biomarker-clean.csv')
+asd <- read_csv('biomarker-clean.csv')
 
 # check that matches data description
 asd %>% count(group)
@@ -72,6 +72,21 @@ asd_nested %>%
          alternative = 'two-sided',
          var.equal = F)
 
+# check variance ratios
+asd_prep %>% 
+  pivot_longer(-group, 
+               names_to = "protein", 
+               values_to = "level") %>%
+  group_by(protein, group) %>%
+  summarize(level.var = var(level), .groups = 'drop') %>%
+  pivot_wider(id_cols = protein, 
+              names_from = 'group', 
+              values_from = 'level.var') %>%
+  mutate(var.ratio = ASD/TD) %>%
+  ggplot(aes(x = var.ratio)) +
+  geom_histogram(aes(y = ..density..), bins = 50) +
+  scale_x_log10()
+
 # compute for several groups
 test_fn <- function(.df){
   t_test(.df, 
@@ -97,6 +112,25 @@ tt_corrected <- tt_out %>%
   mutate(p_bh = p_value*m/rank,
          p_by = p_value*m*hm/rank,
          p_bonf = p_value*m)
+
+## comparing methods
+tt_corrected %>%
+  rename(bh.adj = p_bh,
+         by.adj = p_by,
+         bonf.adj = p_bonf,
+         p.value = p_value) %>%
+  mutate(p.raw = p.value) %>%
+  pivot_longer(cols = c(contains('.adj'), p.raw), 
+               names_to = 'correction',
+               values_to = 'p.adj') %>%
+  ggplot(aes(x = p.value, 
+             y = p.adj, 
+             color = correction,
+             linetype = correction)) +
+  geom_path() +
+  scale_y_log10() +
+  scale_x_sqrt() +
+  labs(x = 'p value', y = 'adjusted p value')
 
 ## 'volcano' plot
 ratio_fn <- function(.df){
