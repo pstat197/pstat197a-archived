@@ -207,7 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#loops" id="toc-loops" class="nav-link active" data-scroll-target="#loops">Loops</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#loops" id="toc-loops" class="nav-link" data-scroll-target="#loops">Loops</a>
   <ul class="collapse">
   <li><a href="#simple-examples" id="toc-simple-examples" class="nav-link" data-scroll-target="#simple-examples">Simple examples</a></li>
   <li><a href="#multiple-testing-with-loops" id="toc-multiple-testing-with-loops" class="nav-link" data-scroll-target="#multiple-testing-with-loops">Multiple testing with loops</a></li>
@@ -215,8 +216,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#apply-family" id="toc-apply-family" class="nav-link" data-scroll-target="#apply-family">Apply family</a>
   <ul class="collapse">
   <li><a href="#simple-examples-1" id="toc-simple-examples-1" class="nav-link" data-scroll-target="#simple-examples-1">Simple examples</a></li>
-  </ul></li>
   <li><a href="#t-tests-using-apply" id="toc-t-tests-using-apply" class="nav-link" data-scroll-target="#t-tests-using-apply"><span class="math inline">\(t\)</span>-tests using apply</a></li>
+  </ul></li>
+  <li><a href="#tidyverse" id="toc-tidyverse" class="nav-link" data-scroll-target="#tidyverse">Tidyverse</a>
+  <ul class="collapse">
+  <li><a href="#nesting" id="toc-nesting" class="nav-link" data-scroll-target="#nesting">Nesting</a></li>
+  <li><a href="#the-map-function" id="toc-the-map-function" class="nav-link" data-scroll-target="#the-map-function">The <code>map()</code> function</a></li>
+  <li><a href="#adjusting-p-values" id="toc-adjusting-p-values" class="nav-link" data-scroll-target="#adjusting-p-values">Adjusting p-values</a></li>
+  </ul></li>
+  <li><a href="#checklist" id="toc-checklist" class="nav-link" data-scroll-target="#checklist">Checklist</a></li>
   </ul>
 </nav>
     </div>
@@ -239,13 +247,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>In class we discussed multiple testing in the context of an application that involved performing 1,317 <span class="math inline">\(t\)</span>-tests. Implementing these tests involves <strong><em>iterated computations</em></strong>: repeatedly performing the same computations. Here we’ll look at a few strategies for iteration in R:</p>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>In class we discussed multiple testing in the context of an application that involved performing 1,317 <span class="math inline">\(t\)</span>-tests. Implementing these tests involves <strong><em>iteration</em></strong>: repeatedly performing the same computations.</p>
+<p><strong><em>Objective.</em></strong> Here we’ll look at a few strategies for iteration in R:</p>
 <ul>
 <li><p>loops</p></li>
 <li><p>functions in the <code>apply</code> family</p></li>
 <li><p>functional programming using <code>tidyverse</code></p></li>
 </ul>
-<p>We’ll illustrate these strategies using the biomarker data.</p>
+<p>We’ll illustrate these strategies using the biomarker data and reproduce some of the results shown in class.</p>
 <div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -259,30 +270,32 @@ Action
 <p>Create a new script for lab 3 in your labs project/folder and copy-paste the code chunk below at the top of the script.</p>
 </div>
 </div>
-<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-1_db3de6fe56efe8d814eb982d696aaba7">
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-1_aad748ae5c69c9516b9bd753b5562d84">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># data location</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab3-iteration/data/biomarker-clean.csv'</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># function for outlier trimming</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>trim_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  x[x <span class="sc">&gt;</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  x[x <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">3</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># read in and preprocess data</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>asd <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url) <span class="sc">%&gt;%</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ados) <span class="sc">%&gt;%</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># log transform</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, log10)) <span class="sc">%&gt;%</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># center and scale</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, <span class="sc">~</span> <span class="fu">scale</span>(.x)[, <span class="dv">1</span>])) <span class="sc">%&gt;%</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># trim outliers</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, trim_fn))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('infer') # execute once then comment out</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># data location</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab3-iteration/data/biomarker-clean.csv'</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># function for outlier trimming</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>trim_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  x[x <span class="sc">&gt;</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  x[x <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">3</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># read in and preprocess data</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>asd <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url) <span class="sc">%&gt;%</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ados) <span class="sc">%&gt;%</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># log transform</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, log10)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># center and scale</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, <span class="sc">~</span> <span class="fu">scale</span>(.x)[, <span class="dv">1</span>])) <span class="sc">%&gt;%</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># trim outliers</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, trim_fn))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 <section id="loops" class="level2">
 <h2 class="anchored" data-anchor-id="loops">Loops</h2>
 <section id="simple-examples" class="level3">
@@ -431,7 +444,7 @@ sample estimates:
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  p_vals[i] <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x, y, <span class="at">var.equal =</span> F)<span class="sc">$</span>p.value</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>To line these up with the proteins they correspond to, it’s necessary to keep track of the indexing carefully. In this case, the indexing corresponds to the order of columns. So we could create a dataframe like so:</p>
+<p>To line these up with the proteins they correspond to, it’s necessary to keep track of the indexing carefully. In this case, the indexing corresponds to the order of columns. So we could create a data frame like so:</p>
 <div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-11_48bc417637a2faf21f2f52d3069d090b">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">protein =</span> <span class="fu">colnames</span>(asd)[<span class="dv">2</span><span class="sc">:</span>(n_tests <span class="sc">+</span> <span class="dv">1</span>)],</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">p =</span> p_vals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -529,9 +542,8 @@ rslt_apply 1.062206 1.619845 5.018638 0.800267</code></pre>
 </div>
 </div>
 </section>
-</section>
-<section id="t-tests-using-apply" class="level2">
-<h2 class="anchored" data-anchor-id="t-tests-using-apply"><span class="math inline">\(t\)</span>-tests using apply</h2>
+<section id="t-tests-using-apply" class="level3">
+<h3 class="anchored" data-anchor-id="t-tests-using-apply"><span class="math inline">\(t\)</span>-tests using apply</h3>
 <p>We can use <code>apply</code> functions to compute <span class="math inline">\(t\)</span>-tests for the proteins in the ASD data by coercing the data to a list of data frames that contain the grouping and level for each protein.</p>
 <div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-16_0a5d3a63da03aab7d03bee0b3f76f4bd">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of tests to perform</span></span>
@@ -650,6 +662,35 @@ mean in group ASD  mean in group TD
 <pre><code>Time difference of 11.63856 secs</code></pre>
 </div>
 </div>
+<p>Another nice feature of <code>sapply</code> is its ability to sort and arrange multiple outputs. For example, if the function is adjusted to return both the <span class="math inline">\(p\)</span>-value and the test statistic:</p>
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-22_16f8e8e515ba188f86d3d6b148167ffa">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>tt_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(i){</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  test_rslt <span class="ot">&lt;-</span> <span class="fu">t.test</span>(level <span class="sc">~</span> group, <span class="at">data =</span> asd_list[[i]])</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">pval =</span> test_rslt<span class="sc">$</span>p.value, </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">tstat =</span> test_rslt<span class="sc">$</span>statistic)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  out</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tt_fn</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      pval    tstat.t 
+ 0.1191888 -1.5671297 </code></pre>
+</div>
+</div>
+<p>Then <code>sapply</code> will return a matrix:</p>
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-23_08842cfe1f2bcf541de39d2b0ba9cc15">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, tt_fn) <span class="sc">%&gt;%</span> <span class="fu">t</span>() <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+    pval tstat.t
+   &lt;dbl&gt;   &lt;dbl&gt;
+1 0.119   -1.57 
+2 0.297   -1.05 
+3 0.830   -0.215
+4 0.0303  -2.19 
+5 0.814    0.236</code></pre>
+</div>
+</div>
 <div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -660,9 +701,239 @@ Action
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>sapply</code> to obtain the estimated differences and standard errors for the groupwise comparisons for the first 50 proteins.</li>
+<li>Arrange the result in a data frame with a column indicating the protein, a column indicating the estimated group difference, and a column indicating the standard error.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="tidyverse" class="level2">
+<h2 class="anchored" data-anchor-id="tidyverse">Tidyverse</h2>
+<p>A final strategy for iteration comes from functional programming tools in <code>tidyverse</code> . The basic idea is:</p>
+<ul>
+<li><p>define a grouping structure using relevant variables (in this case, proteins)</p></li>
+<li><p>collapse the data into separate data frames by group</p></li>
+<li><p>apply a function that goes from input data to result over the groups</p></li>
+</ul>
+<section id="nesting" class="level3">
+<h3 class="anchored" data-anchor-id="nesting">Nesting</h3>
+<p>One thing that tibbles can do that data frames cannot is store <em>list-columns:</em> columns that are lists of arbitrary objects. This allows for the arrangement of a much more general collection of objects in tabular form.</p>
+<p>An intuitive example is <em>nested</em> data: a list-column of data frames having the same columns. If we nest the ASD data by protein, we obtain a data frame that looks like this:</p>
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-24_6972f8505a4cc7cf23b00819e1cbf78b">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>asd_nested <span class="ot">&lt;-</span> asd <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>group, </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">'protein'</span>, </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">'level'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">data =</span> <span class="fu">c</span>(level, group))</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>asd_nested <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  protein  data              
+  &lt;chr&gt;    &lt;list&gt;            
+1 CHIP     &lt;tibble [154 × 2]&gt;
+2 CEBPB    &lt;tibble [154 × 2]&gt;
+3 NSE      &lt;tibble [154 × 2]&gt;
+4 PIAS4    &lt;tibble [154 × 2]&gt;
+5 IL-10 Ra &lt;tibble [154 × 2]&gt;</code></pre>
+</div>
+</div>
+<p>The <code>data</code> column consists of data frames, one per protein, containing the variables <code>group</code> and <code>level</code> :</p>
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-25_7186e48cec18420f95b6a1759a4d3d49">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>asd_nested <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(1L) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+# A tibble: 154 × 2
+     level group
+     &lt;dbl&gt; &lt;chr&gt;
+ 1  0.335  ASD  
+ 2 -0.0715 ASD  
+ 3 -0.406  ASD  
+ 4 -0.102  ASD  
+ 5 -0.395  ASD  
+ 6 -0.126  ASD  
+ 7  0.486  ASD  
+ 8 -0.990  ASD  
+ 9 -0.108  ASD  
+10  0.485  ASD  
+# … with 144 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="the-map-function" class="level3">
+<h3 class="anchored" data-anchor-id="the-map-function">The <code>map()</code> function</h3>
+<p>In an ordinary data frame one can define a new variable as a function of other variables. The same can be done with list-columns in a tibble: one can define a new variable as a function of the elements of a list stored in another column. To do this, one uses the <code>map()</code> function, which is essentially the tidyverse version of <code>lapply()</code> .</p>
+<p>In particular, here we can write a function that takes a data frame with protein level and group as input, and returns a t test as output; then computing each test is as simple as calling <code>mutate</code> :</p>
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-26_1790acc831ee27f1ae89c9053d20a1d0">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>tt_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(.df){</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(level <span class="sc">~</span> group, <span class="at">data =</span> .df)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>rslt <span class="ot">&lt;-</span> asd_nested <span class="sc">%&gt;%</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ttest.out =</span> <span class="fu">map</span>(data, tt_fn))</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>rslt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   protein  data               ttest.out
+   &lt;chr&gt;    &lt;list&gt;             &lt;list&gt;   
+ 1 CHIP     &lt;tibble [154 × 2]&gt; &lt;htest&gt;  
+ 2 CEBPB    &lt;tibble [154 × 2]&gt; &lt;htest&gt;  
+ 3 NSE      &lt;tibble [154 × 2]&gt; &lt;htest&gt;  
+ 4 PIAS4    &lt;tibble [154 × 2]&gt; &lt;htest&gt;  
+ 5 IL-10 Ra &lt;tibble [154 × 2]&gt; &lt;htest&gt;  
+ 6 STAT3    &lt;tibble [154 × 2]&gt; &lt;htest&gt;  
+ 7 IRF1     &lt;tibble [154 × 2]&gt; &lt;htest&gt;  
+ 8 c-Jun    &lt;tibble [154 × 2]&gt; &lt;htest&gt;  
+ 9 Mcl-1    &lt;tibble [154 × 2]&gt; &lt;htest&gt;  
+10 OAS1     &lt;tibble [154 × 2]&gt; &lt;htest&gt;  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>rslt <span class="sc">%&gt;%</span> <span class="fu">slice</span>(1L) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(ttest.out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
 
+    Welch Two Sample t-test
+
+data:  level by group
+t = -0.18812, df = 151.74, p-value = 0.851
+alternative hypothesis: true difference in means between group ASD and group TD is not equal to 0
+95 percent confidence interval:
+ -0.2588194  0.2138173
+sample estimates:
+mean in group ASD  mean in group TD 
+      -0.04922954       -0.02672849 </code></pre>
 </div>
 </div>
+<p>While all the data we might want are there, the output is a little unwieldy. Luckily, the <code>infer</code> package contains a pipe-operator-friendly function <code>infer::t_test</code> that returns results in a tidy fashion. Notice below that instead of explicitly loading the library, one can call the function using <code>PACKAGENAME::FUNCTIONNAME</code> ; however, the package must still be installed.</p>
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-27_6e388a53327918b95f9820f7ac38a0aa">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>asd_nested <span class="sc">%&gt;%</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(1L) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> data) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  infer<span class="sc">::</span><span class="fu">t_test</span>(<span class="at">formula =</span> level <span class="sc">~</span> group,</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">order =</span> <span class="fu">c</span>(<span class="st">'ASD'</span>, <span class="st">'TD'</span>),</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="st">'two-sided'</span>,</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">var.equal =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  statistic  t_df p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1    -0.188  152.   0.851 two.sided    -0.0225   -0.259    0.214</code></pre>
+</div>
+</div>
+<p>We can create a wrapper around this function suitable for our purposes and then apply it to the list-column in <code>asd_nested</code> :</p>
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-28_1efdc942f90e7e47ac1d48650864975c">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wrapper around infer::t_test</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>tt_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(.df){</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  infer<span class="sc">::</span><span class="fu">t_test</span>(.df, </span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">formula =</span> level <span class="sc">~</span> group,</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">order =</span> <span class="fu">c</span>(<span class="st">'ASD'</span>, <span class="st">'TD'</span>),</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="st">'two-sided'</span>,</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">var.equal =</span> F)</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="co"># compute test results</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>tt_out <span class="ot">&lt;-</span> asd_nested <span class="sc">%&gt;%</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>n_tests) <span class="sc">%&gt;%</span></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ttest =</span> <span class="fu">map</span>(data, tt_fn))</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="co"># preview</span></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>tt_out <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  protein data               ttest           
+  &lt;chr&gt;   &lt;list&gt;             &lt;list&gt;          
+1 CHIP    &lt;tibble [154 × 2]&gt; &lt;tibble [1 × 7]&gt;
+2 CEBPB   &lt;tibble [154 × 2]&gt; &lt;tibble [1 × 7]&gt;
+3 NSE     &lt;tibble [154 × 2]&gt; &lt;tibble [1 × 7]&gt;
+4 PIAS4   &lt;tibble [154 × 2]&gt; &lt;tibble [1 × 7]&gt;</code></pre>
+</div>
+</div>
+<p>Notice that <code>ttest</code> is also a list-column comprised of separate data frames. This column can be un-nested to show the output of <code>infer::t_test</code> explicitly:</p>
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-29_9f1d82ef2e92396665bf041809bcbb3d">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>tt_out <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(ttest) <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 9
+  protein data     statistic  t_df p_value alternative estimate lower_ci
+  &lt;chr&gt;   &lt;list&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+1 CHIP    &lt;tibble&gt;    -0.188  152.  0.851  two.sided    -0.0225  -0.259 
+2 CEBPB   &lt;tibble&gt;     2.16   150.  0.0322 two.sided     0.317    0.0273
+3 NSE     &lt;tibble&gt;     0.937  151.  0.350  two.sided     0.148   -0.164 
+4 PIAS4   &lt;tibble&gt;     1.64   152.  0.104  two.sided     0.222   -0.0459
+# … with 1 more variable: upper_ci &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>This approach has a few advantages, namely, it is syntactically more readable than either of the other approaches and it works with the pipe operator, so could in theory be incorporated into a chain that performs additional calculations on, say, the results of the <span class="math inline">\(t\)</span>-test. However, the drawback is that it is slow:</p>
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-30_f73d6fe9bae4ed4a6ed23282cc9ddd48">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># time it</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>tt_out <span class="ot">&lt;-</span> asd_nested <span class="sc">%&gt;%</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span>n_tests) <span class="sc">%&gt;%</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ttest =</span> <span class="fu">map</span>(data, tt_fn))</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>end <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>end <span class="sc">-</span> start</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 4.896297 secs</code></pre>
+</div>
+</div>
+</section>
+<section id="adjusting-p-values" class="level3">
+<h3 class="anchored" data-anchor-id="adjusting-p-values">Adjusting p-values</h3>
+<p>To adjust the <span class="math inline">\(p\)</span>-values, we simply manipulate the <code>p_value</code> column:</p>
+<div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-31_1c7cbb9546c6bff0bcc7b162cd75a365">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bonferroni correction</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>tt_out <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(ttest) <span class="sc">%&gt;%</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p_adj =</span> p_value<span class="sc">*</span>n_tests) <span class="sc">%&gt;%</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(protein, p_value, p_adj) <span class="sc">%&gt;%</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(p_adj) <span class="sc">%&gt;%</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  protein     p_value     p_adj
+  &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
+1 FSTL1   0.000000466 0.0000466
+2 C1QR1   0.000000479 0.0000479
+3 DSC2    0.000129    0.0129   
+4 HIF-1a  0.000196    0.0196   </code></pre>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Implement the Benjamini-Hochberg correction</strong></p>
+<ol type="1">
+<li>Sort the raw <span class="math inline">\(p\)</span>-values using <code>arrange()</code></li>
+<li>Add a <code>rank</code> column of consecutive integers (neat trick: try using <code>row_number()</code>)</li>
+<li>Add a column <code>p_adj</code> containing <span class="math inline">\(\frac{m}{i} p_{(i)}\)</span> where <span class="math inline">\(m\)</span> is the number of tests, <span class="math inline">\(i\)</span> is the rank of the <span class="math inline">\(p\)</span>-value, and <span class="math inline">\(p_{(i)}\)</span> is the <span class="math inline">\(i\)</span>th smallest <span class="math inline">\(p\)</span>-value</li>
+<li>Find the collection of proteins with significantly different serum levels between the ASD and TD groups while controlling the false discovery rate at 1%.</li>
+</ol>
+<p>Develop working code to execute 50 tests. Then use it to compute all 1317 tests.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="checklist" class="level2">
+<h2 class="anchored" data-anchor-id="checklist">Checklist</h2>
+<ul>
+<li><p>You’ve computed <span class="math inline">\(p\)</span>-values iteratively using a loop, <code>sapply</code> , and <code>nest</code>+<code>map</code> .</p></li>
+<li><p>You have commented codes in your script for each action item.</p></li>
+<li><p>You’ve obtained a list of the significant proteins with 1% FDR.</p></li>
+</ul>
 
 
 </section>

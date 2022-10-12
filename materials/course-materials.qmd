@@ -53,4 +53,4 @@ editor: visual
 
 -   ***Tuesday meeting:*** introducing biomarker data; multiple testing \[[slides](slides/week3-biomarkers.qmd)\]
 
--   ***Section meeting:*** iteration strategies \[activity\]
+-   ***Section meeting:*** iteration strategies \[[activity](labs/lab3-iteration/lab3-iteration.qmd)\]
