@@ -32,7 +32,7 @@ trim_fn <- function(x){
 
 # trim_fn(-5:5)
 
-asd_prep <- asd %>% 
+asd_clean <- asd %>% 
   select(-ados) %>%
   # log transform
   mutate(across(.cols = -group, log10)) %>%
@@ -45,14 +45,14 @@ asd_prep <- asd %>%
 ####################
 
 # one t test
-asd_prep %>%
+asd_clean %>%
   t_test(formula = CHIP ~ group,
          order = c('ASD', 'TD'),
          alternative = 'two-sided',
          var.equal = F)
 
 # nesting for many t tests
-asd_nested <- asd_prep %>%
+asd_nested <- asd_clean %>%
   pivot_longer(-group, 
                names_to = 'protein', 
                values_to = 'level') %>%
@@ -73,7 +73,7 @@ asd_nested %>%
          var.equal = F)
 
 # check variance ratios
-asd_prep %>% 
+asd_clean %>% 
   pivot_longer(-group, 
                names_to = "protein", 
                values_to = "level") %>%
@@ -169,3 +169,18 @@ tt_corrected %>%
   select(protein, p_by) %>%
   slice_min(p_by, n = 10)
 
+## CORRELATIONS
+################
+
+asd_clean <- asd %>% 
+  # log transform
+  mutate(across(.cols = -group, log10)) %>%
+  # center and scale
+  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
+  # trim outliers (affects results??)
+  mutate(across(.cols = -group, trim_fn)) %>%
+  # ados only for ASD group
+  filter(group == 'ASD')
+
+asd_clean %>%
+  

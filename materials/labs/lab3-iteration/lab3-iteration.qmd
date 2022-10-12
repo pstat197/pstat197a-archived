@@ -73,7 +73,7 @@ Here the instructions are:
 1.  initialize index/flag `i` at `i = 1`
 2.  execute code within the braces `{...}`
 3.  increment `i <- i + 1`
-4.  stop after `i = 4`
+4.  repeat steps 2-3 until `i = 5`
 
 We could make the loop a bit more verbose:
 
@@ -202,7 +202,7 @@ This applies `simple_fn` to each element of `vals` , and returns the result as a
 sapply(vals, simple_fn)
 ```
 
-In more complex settings it often makes sense to apply a function across an index set. This is very similar conceptually to a for loop, but can be a bit faster and easier to read.
+In more complex settings it often makes sense to apply a function across an index set. This is very similar conceptually to a for loop, but faster and easier to read.
 
 ```{r}
 # apply a function to an index set
@@ -246,7 +246,7 @@ The function `t.test(...)` can also perform the test using a *formula* of the fo
 t.test(level ~ group, data = asd_list[[1]])
 ```
 
-If we just want the $p$-value again, we can wrap this code in a function whose argument is the index i . This function will return the $p$-value for the $i$th protein.
+If we just want the $p$-value again, we can wrap this code in a function whose argument is the index $i$. This function will return the $p$-value for the $i$th protein.
 
 ```{r}
 # p value for ith protein
@@ -258,7 +258,7 @@ tt_fn <- function(i){
 tt_fn(1)
 ```
 
-Now to perform many tests, we can simply iterate this function over an index:
+Now to perform many tests, we can simply iterate this function over consecutive index values `1:n_tests`:
 
 ```{r}
 sapply(1:n_tests, tt_fn)
@@ -325,7 +325,7 @@ A final strategy for iteration comes from functional programming tools in `tidyv
 
 -   collapse the data into separate data frames by group
 
--   apply a function that goes from input data to result over the groups
+-   apply a function to each data frame that produces test output given input data
 
 ### Nesting
 
@@ -353,9 +353,11 @@ asd_nested %>%
 
 ### The `map()` function
 
-In an ordinary data frame one can define a new variable as a function of other variables. The same can be done with list-columns in a tibble: one can define a new variable as a function of the elements of a list stored in another column. To do this, one uses the `map()` function, which is essentially the tidyverse version of `lapply()` .
+In an ordinary data frame one can define a new variable as a function of other variables. The same can be done with list-columns in a tibble: one can define a new variable as a function of the elements of a list stored in another column. To do this, one uses the `map()` function, which is essentially the tidyverse version of `lapply()` :
 
-In particular, here we can write a function that takes a data frame with protein level and group as input, and returns a t test as output; then computing each test is as simple as calling `mutate` :
+-   `map(.x, .fn)` means roughly "apply the function `.fn` to each element in `.x` "
+
+Here we can write a function that takes a data frame with protein level and group as input, and returns a t test as output; then computing each test is as simple as calling `mutate` :
 
 ```{r}
 tt_fn <- function(.df){
@@ -371,7 +373,7 @@ rslt
 rslt %>% slice(1L) %>% pull(ttest.out)
 ```
 
-While all the data we might want are there, the output is a little unwieldy. Luckily, the `infer` package contains a pipe-operator-friendly function `infer::t_test` that returns results in a tidy fashion. Notice below that instead of explicitly loading the library, one can call the function using `PACKAGENAME::FUNCTIONNAME` ; however, the package must still be installed.
+While all the data we might want are there, the output is a little unwieldy. Luckily, the `infer` package contains a pipe-operator-friendly function `infer::t_test` that returns results in a tidy fashion.
 
 ```{r}
 asd_nested %>% 
@@ -425,6 +427,8 @@ end <- Sys.time()
 end - start
 ```
 
+It's not as slow as a for loop, but it's much slower than `apply` functions. If speed is a concern or the number of iterations is especially large, `apply` would be a better choice.
+
 ### Adjusting p-values
 
 To adjust the $p$-values, we simply manipulate the `p_value` column:
@@ -459,3 +463,5 @@ Develop working code to execute 50 tests. Then use it to compute all 1317 tests.
 -   You have commented codes in your script for each action item.
 
 -   You've obtained a list of the significant proteins with 1% FDR.
+
+-   You've saved your work somewhere where you can access it later.

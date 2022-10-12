@@ -317,7 +317,7 @@ Action
 <li>initialize index/flag <code>i</code> at <code>i = 1</code></li>
 <li>execute code within the braces <code>{...}</code></li>
 <li>increment <code>i &lt;- i + 1</code></li>
-<li>stop after <code>i = 4</code></li>
+<li>repeat steps 2-3 until <code>i = 5</code></li>
 </ol>
 <p>We could make the loop a bit more verbose:</p>
 <div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-3_61594cbcf738916ab161dd85ae5b15b1">
@@ -521,7 +521,7 @@ Action
 <pre><code>[1] 1.062206 1.619845 5.018638 0.800267</code></pre>
 </div>
 </div>
-<p>In more complex settings it often makes sense to apply a function across an index set. This is very similar conceptually to a for loop, but can be a bit faster and easier to read.</p>
+<p>In more complex settings it often makes sense to apply a function across an index set. This is very similar conceptually to a for loop, but faster and easier to read.</p>
 <div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-15_378d5716659a4a9287204f2824142a78">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply a function to an index set</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>simple_fn_ix <span class="ot">&lt;-</span> <span class="cf">function</span>(i){<span class="dv">2</span><span class="sc">*</span>vals[i]}</span>
@@ -594,7 +594,7 @@ mean in group ASD  mean in group TD
        -0.1341683         0.1061909 </code></pre>
 </div>
 </div>
-<p>If we just want the <span class="math inline">\(p\)</span>-value again, we can wrap this code in a function whose argument is the index i . This function will return the <span class="math inline">\(p\)</span>-value for the <span class="math inline">\(i\)</span>th protein.</p>
+<p>If we just want the <span class="math inline">\(p\)</span>-value again, we can wrap this code in a function whose argument is the index <span class="math inline">\(i\)</span>. This function will return the <span class="math inline">\(p\)</span>-value for the <span class="math inline">\(i\)</span>th protein.</p>
 <div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-18_4b3e6baace76f64750cf66611d4ff85b">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p value for ith protein</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>tt_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(i){</span>
@@ -607,7 +607,7 @@ mean in group ASD  mean in group TD
 <pre><code>[1] 0.1191888</code></pre>
 </div>
 </div>
-<p>Now to perform many tests, we can simply iterate this function over an index:</p>
+<p>Now to perform many tests, we can simply iterate this function over consecutive index values <code>1:n_tests</code>:</p>
 <div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-19_7d192b0231bf59115e3022d96af9d349">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>n_tests, tt_fn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -715,7 +715,7 @@ Action
 <ul>
 <li><p>define a grouping structure using relevant variables (in this case, proteins)</p></li>
 <li><p>collapse the data into separate data frames by group</p></li>
-<li><p>apply a function that goes from input data to result over the groups</p></li>
+<li><p>apply a function to each data frame that produces test output given input data</p></li>
 </ul>
 <section id="nesting" class="level3">
 <h3 class="anchored" data-anchor-id="nesting">Nesting</h3>
@@ -766,8 +766,11 @@ Action
 </section>
 <section id="the-map-function" class="level3">
 <h3 class="anchored" data-anchor-id="the-map-function">The <code>map()</code> function</h3>
-<p>In an ordinary data frame one can define a new variable as a function of other variables. The same can be done with list-columns in a tibble: one can define a new variable as a function of the elements of a list stored in another column. To do this, one uses the <code>map()</code> function, which is essentially the tidyverse version of <code>lapply()</code> .</p>
-<p>In particular, here we can write a function that takes a data frame with protein level and group as input, and returns a t test as output; then computing each test is as simple as calling <code>mutate</code> :</p>
+<p>In an ordinary data frame one can define a new variable as a function of other variables. The same can be done with list-columns in a tibble: one can define a new variable as a function of the elements of a list stored in another column. To do this, one uses the <code>map()</code> function, which is essentially the tidyverse version of <code>lapply()</code> :</p>
+<ul>
+<li><code>map(.x, .fn)</code> means roughly “apply the function <code>.fn</code> to each element in <code>.x</code>”</li>
+</ul>
+<p>Here we can write a function that takes a data frame with protein level and group as input, and returns a t test as output; then computing each test is as simple as calling <code>mutate</code> :</p>
 <div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-26_1790acc831ee27f1ae89c9053d20a1d0">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>tt_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(.df){</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(level <span class="sc">~</span> group, <span class="at">data =</span> .df)</span>
@@ -809,7 +812,7 @@ mean in group ASD  mean in group TD
       -0.04922954       -0.02672849 </code></pre>
 </div>
 </div>
-<p>While all the data we might want are there, the output is a little unwieldy. Luckily, the <code>infer</code> package contains a pipe-operator-friendly function <code>infer::t_test</code> that returns results in a tidy fashion. Notice below that instead of explicitly loading the library, one can call the function using <code>PACKAGENAME::FUNCTIONNAME</code> ; however, the package must still be installed.</p>
+<p>While all the data we might want are there, the output is a little unwieldy. Luckily, the <code>infer</code> package contains a pipe-operator-friendly function <code>infer::t_test</code> that returns results in a tidy fashion.</p>
 <div class="cell" data-hash="lab3-iteration_cache/html/unnamed-chunk-27_6e388a53327918b95f9820f7ac38a0aa">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>asd_nested <span class="sc">%&gt;%</span> </span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(1L) <span class="sc">%&gt;%</span> </span>
@@ -883,6 +886,7 @@ mean in group ASD  mean in group TD
 <pre><code>Time difference of 4.896297 secs</code></pre>
 </div>
 </div>
+<p>It’s not as slow as a for loop, but it’s much slower than <code>apply</code> functions. If speed is a concern or the number of iterations is especially large, <code>apply</code> would be a better choice.</p>
 </section>
 <section id="adjusting-p-values" class="level3">
 <h3 class="anchored" data-anchor-id="adjusting-p-values">Adjusting p-values</h3>
@@ -933,6 +937,7 @@ Action
 <li><p>You’ve computed <span class="math inline">\(p\)</span>-values iteratively using a loop, <code>sapply</code> , and <code>nest</code>+<code>map</code> .</p></li>
 <li><p>You have commented codes in your script for each action item.</p></li>
 <li><p>You’ve obtained a list of the significant proteins with 1% FDR.</p></li>
+<li><p>You’ve saved your work somewhere where you can access it later.</p></li>
 </ul>
 
 
