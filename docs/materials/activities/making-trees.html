@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Activity: making trees</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Activity: making trees</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../" class="sidebar-logo-link">
+      <img src="../../img/ucsbds_hex.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Data Science Capstone Preparation</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/pstat197" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://ucsbdscapstone.slack.com" title="" class="sidebar-tool px-1"><i class="bi bi-slack"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">About</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about/syllabus.html" class="sidebar-item-text sidebar-link">Course syllabus</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about/outcomes.html" class="sidebar-item-text sidebar-link">Learning outcomes</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about/schedule.html" class="sidebar-item-text sidebar-link">Course schedule</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about/technology.html" class="sidebar-item-text sidebar-link">Technology</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about/links.html" class="sidebar-item-text sidebar-link">Links</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../materials/course-materials.html" class="sidebar-item-text sidebar-link">Course materials</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#building-a-tree" id="toc-building-a-tree" class="nav-link active" data-scroll-target="#building-a-tree">Building a tree</a>
+  <ul class="collapse">
+  <li><a href="#step-1-resample-the-data" id="toc-step-1-resample-the-data" class="nav-link" data-scroll-target="#step-1-resample-the-data">Step 1: resample the data</a></li>
+  <li><a href="#step-2-select-predictors-at-random" id="toc-step-2-select-predictors-at-random" class="nav-link" data-scroll-target="#step-2-select-predictors-at-random">Step 2: select predictors at random</a></li>
+  <li><a href="#step-3a-find-your-first-split" id="toc-step-3a-find-your-first-split" class="nav-link" data-scroll-target="#step-3a-find-your-first-split">Step 3a: find your first split</a></li>
+  <li><a href="#step-3b-find-your-second-split" id="toc-step-3b-find-your-second-split" class="nav-link" data-scroll-target="#step-3b-find-your-second-split">Step 3b: find your second split</a></li>
+  <li><a href="#step-4-draw-the-tree" id="toc-step-4-draw-the-tree" class="nav-link" data-scroll-target="#step-4-draw-the-tree">Step 4: draw the tree</a></li>
+  </ul></li>
+  <li><a href="#classifying-a-new-observation" id="toc-classifying-a-new-observation" class="nav-link" data-scroll-target="#classifying-a-new-observation">Classifying a new observation</a></li>
+  <li><a href="#algorithmic-considerations" id="toc-algorithmic-considerations" class="nav-link" data-scroll-target="#algorithmic-considerations">Algorithmic considerations</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Activity: making trees</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>For the purposes of this activity we’ll use data from the 1994 census (there are fewer variables than the proteomics data and sometimes a little variety is nice).</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On the group workstation at your table, have one person open a new R script and copy-paste the chunk below to load the data.</p>
+<p>You will not need to store a copy of your work (unless you want to) – so the script is just to be able to perform some simple calculations during class.</p>
+</div>
+</div>
+<div class="cell" data-hash="making-trees_cache/html/unnamed-chunk-1_df947e0cd56ec10dd4941c1dcbe83c66">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># data location</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"http://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># import</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>census <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"age"</span>, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"workclass"</span>, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"fnlwgt"</span>, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"education"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"education_1"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"marital_status"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"occupation"</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"relationship"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"race"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"sex"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"capital_gain"</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"capital_loss"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"hours_per_week"</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"native_country"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"income"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income =</span> <span class="fu">factor</span>(income)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>fnlwgt, <span class="sc">-</span>education_1)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>census <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 13
+    age workclass   education marital_status occupation relationship race  sex  
+  &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;
+1    39 State-gov   Bachelors Never-married  Adm-cleri… Not-in-fami… White Male 
+2    50 Self-emp-n… Bachelors Married-civ-s… Exec-mana… Husband      White Male 
+3    38 Private     HS-grad   Divorced       Handlers-… Not-in-fami… White Male 
+4    53 Private     11th      Married-civ-s… Handlers-… Husband      Black Male 
+# … with 5 more variables: capital_gain &lt;dbl&gt;, capital_loss &lt;dbl&gt;,
+#   hours_per_week &lt;dbl&gt;, native_country &lt;chr&gt;, income &lt;fct&gt;</code></pre>
+</div>
+</div>
+<p>Your group’s job is to build a tree to classify high earners and low earners based on a bootstrap sample and a random subset of predictors.</p>
+<p>The <code>income</code> variable is the response or variable of interest; the rest are potential predictors.</p>
+<div class="cell" data-hash="making-trees_cache/html/unnamed-chunk-2_1d3e7dfa7e0bfc2f118fa8e0462ab27c">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect repsonse</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>census <span class="sc">%&gt;%</span> <span class="fu">pull</span>(income) <span class="sc">%&gt;%</span> <span class="fu">str</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Factor w/ 2 levels "&lt;=50K","&gt;50K": 1 1 1 1 1 1 1 2 2 2 ...</code></pre>
+</div>
+</div>
+<section id="building-a-tree" class="level2">
+<h2 class="anchored" data-anchor-id="building-a-tree">Building a tree</h2>
+<section id="step-1-resample-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-resample-the-data">Step 1: resample the data</h3>
+<p>First, draw a sample with replacement from the observations. This is known as a <em>bootstrap</em> sample. We’ll keep this relatively small to simplify matters.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Draw a bootstrap sample</strong></p>
+<p>Copy the code chunk below and execute once.</p>
+<div class="cell" data-hash="making-trees_cache/html/unnamed-chunk-3_c655b4aaab78d5439d19152de4d7ff9e">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resample data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>census_boot <span class="ot">&lt;-</span> census <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">200</span>, <span class="at">replace =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>You will build your tree using this data.</p>
+</section>
+<section id="step-2-select-predictors-at-random" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-select-predictors-at-random">Step 2: select predictors at random</h3>
+<p>Next draw a set of predictors at random. We’ll also keep this set small so that you can develop the tree ‘by hand’.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Select two random predictors</strong></p>
+<p>Copy and paste the code chunk below into your script and execute once without modification.</p>
+<div class="cell" data-hash="making-trees_cache/html/unnamed-chunk-4_6f128d3fe6e899f43913fed204773099">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve column names</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>possible_predictors <span class="ot">&lt;-</span> census <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>income) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># grab 2 columns at random</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>predictors <span class="ot">&lt;-</span> <span class="fu">sample</span>(possible_predictors,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">size =</span> <span class="dv">2</span>, </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">replace =</span> F)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># select these columns from the bootstrap sample</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> census_boot <span class="sc">%&gt;%</span> </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(income, <span class="fu">any_of</span>(predictors)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>You will build your tree using only these predictors from the bootstrap sample as <em>training</em> data.</p>
+</section>
+<section id="step-3a-find-your-first-split" class="level3">
+<h3 class="anchored" data-anchor-id="step-3a-find-your-first-split">Step 3a: find your first split</h3>
+<p>Now your job is to choose exactly one of the predictors to make a binary split of the data.</p>
+<ul>
+<li><p>for categorical variables, determine which categories you will classify as high-income vs.&nbsp;low-income</p></li>
+<li><p>for continuous variables, choose a cutoff value so that any observation greater/less than the cutoff is classified as a high/low (or vice-versa) earner</p></li>
+</ul>
+<p><strong><em>You do not need to make quantitatively rigorous choices.</em></strong> Try to make a choice that you think is reasonable, but don’t agonize over it. The code below might help you decide which variable to use and how to make the split: use it to inspect each of the two variables and decide which one better distinguishes the income groups.</p>
+<div class="cell" data-hash="making-trees_cache/html/unnamed-chunk-5_c0dac49d06ecc850e8a4e4061af830be">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># comment out -- don't overwrite your bootstrap sample!</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>census_boot <span class="ot">&lt;-</span> census <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">200</span>, <span class="at">replace =</span> T)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># for continuous variables</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>census_boot <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="co"># replace with predictor name </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> income)) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">35</span>) <span class="co"># adjust cutoff</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="making-trees_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>census_boot <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="co"># replace with predictor name</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> ..density..)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">color =</span> income, <span class="at">fill =</span> income),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">35</span>) <span class="co"># adjust cutoff</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="making-trees_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for categorical variables</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>census_boot <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(workclass, income) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(income, n) <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(<span class="sc">~</span> <span class="fu">replace_na</span>(.x, <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">high.inc =</span> <span class="st">`</span><span class="at">&lt;=50K</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="st">`</span><span class="at">&gt;50K</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 4
+# Groups:   workclass [7]
+  workclass        `&lt;=50K` `&gt;50K` high.inc
+  &lt;chr&gt;              &lt;int&gt;  &lt;int&gt; &lt;lgl&gt;   
+1 ?                     11      1 TRUE    
+2 Federal-gov            4      2 TRUE    
+3 Local-gov             17      7 TRUE    
+4 Private              103     29 TRUE    
+5 Self-emp-inc           4      2 TRUE    
+6 Self-emp-not-inc       5      6 FALSE   
+7 State-gov              4      5 FALSE   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pick out categories that are majority high income</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>highinc_categories <span class="ot">&lt;-</span> census_boot <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(workclass, <span class="co"># replace with predictor name</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>           income) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(income, n) <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(<span class="sc">~</span> <span class="fu">replace_na</span>(.x, <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">high.inc =</span> <span class="st">`</span><span class="at">&lt;=50K</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="st">`</span><span class="at">&gt;50K</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(high.inc <span class="sc">==</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(workclass) <span class="co"># replace with predictor name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Make your first split</strong></p>
+<ol type="1">
+<li>Choose whichever of the two predictors you think best distinguishes the high income and low income groups.</li>
+<li>Find a cutoff value if the variable is continuous, or the categories that you will classify as high income if the variable is categorical.</li>
+<li>If categorical, store a vector of the category names that are classified as high income (see code above). If continuous, store the cutoff value.</li>
+<li>Write down the rule.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="step-3b-find-your-second-split" class="level3">
+<h3 class="anchored" data-anchor-id="step-3b-find-your-second-split">Step 3b: find your second split</h3>
+<p>Now filter the data to just those rows classified as (but not necessarily actually) high income based on your first split.</p>
+<div class="cell" data-hash="making-trees_cache/html/unnamed-chunk-6_88a7d94966e394d8644e1b17fec8c9cc">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># continuous case -- example</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>census_boot_sub <span class="ot">&lt;-</span> census_boot <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;</span> cutoff)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># categorical case -- example</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>census_boot_sub <span class="ot">&lt;-</span> census_boot <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(workclass <span class="sc">%in%</span> highinc_categories)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Find a second split</strong></p>
+<ol type="1">
+<li>Repeat step 3a but with the filtered data <code>census_boot_sub</code> instead of the full bootstrap sample.</li>
+<li>Write down the rule.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="step-4-draw-the-tree" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-draw-the-tree">Step 4: draw the tree</h3>
+<p>We could in theory keep creating binary splits until all observations are correctly classified. However, since we’re doing this by hand and just for illustration purposes, we’ll stop after two splits – it’ll be more of a sapling than a fully grown tree.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Make a diagram</strong></p>
+<p>Draw your tree on your group’s whiteboard. It should have just one ‘root’ node and just three ‘leaf’ nodes.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="classifying-a-new-observation" class="level2">
+<h2 class="anchored" data-anchor-id="classifying-a-new-observation">Classifying a new observation</h2>
+<p>Use your tree to determine how to classify the following observation:</p>
+<div class="cell" data-hash="making-trees_cache/html/unnamed-chunk-7_f3051bbb8de35d33f425e819d504dc43">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>census <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">age</td>
+<td style="text-align: left;">51</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">workclass</td>
+<td style="text-align: left;">Private</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">education</td>
+<td style="text-align: left;">Bachelors</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">marital_status</td>
+<td style="text-align: left;">Divorced</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">occupation</td>
+<td style="text-align: left;">Adm-clerical</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">relationship</td>
+<td style="text-align: left;">Not-in-family</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">race</td>
+<td style="text-align: left;">White</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sex</td>
+<td style="text-align: left;">Female</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">capital_gain</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">capital_loss</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hours_per_week</td>
+<td style="text-align: left;">40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">native_country</td>
+<td style="text-align: left;">United-States</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">income</td>
+<td style="text-align: left;">&lt;=50K</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="algorithmic-considerations" class="level2">
+<h2 class="anchored" data-anchor-id="algorithmic-considerations">Algorithmic considerations</h2>
+<p>You just did a loose version of what’s known as <em>recursive partitioning –</em> repeatedly splitting the data. That’s a specific method of constructing a tree.</p>
+<p>How did you decide which of your two variables to use? Could you write code to make the same choice automatically? This, it turns out, is the main challenge in fully automating the process. The recursive partitioning algorithm requires two things:</p>
+<ol type="1">
+<li>a criterion by which one split is considered ‘better’ than another</li>
+<li>a stopping rule</li>
+</ol>
+<p>It is fairly simple to compute the best cutoff (or categorical mapping) for a given predictor – one can do a brute-force search for the split that minimizes misclassifications. However, when there are many possible variables to split on, a criterion is needed to determine the best choice. You can read about how this is done in <a href="https://mdsr-book.github.io/mdsr2e/ch-learningI.html#decision-trees">MDSR 11.1.1</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Site content created for PSTAT197A Fall 2022 by Trevor Ruiz using Quarto; hex logo by Priscilla Siow.</div>
+  </div>
+</footer>
+
+
+
+</body></html>

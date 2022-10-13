@@ -180,7 +180,135 @@ asd_clean <- asd %>%
   # trim outliers (affects results??)
   mutate(across(.cols = -group, trim_fn)) %>%
   # ados only for ASD group
-  filter(group == 'ASD')
+  filter(group == 'ASD') %>%
+  select(-group)
+
+# look for linear association
+asd_clean %>%
+  select(1:17) %>%
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  ggplot(aes(x = level, y = ados)) +
+  geom_point() +
+  geom_smooth(formula = 'y ~ x', 
+              method = 'lm', 
+              se = F) +
+  facet_wrap(~ protein, nrow = 4, ncol = 4)
+
+# compute correlations
+ados_cors <- asd_clean %>%
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  group_by(protein) %>%
+  summarize(correlation = cor(ados, level)) %>%
+  arrange(correlation) %>%
+  mutate(abs.corr = abs(correlation),
+         rank = row_number()) 
+
+cor_test <- function(x, y){
+  cor_out <- cor.test(x, y, method = 'pearson')
+  tibble(estimate = cor_out$estimate,
+         p.value = cor_out$p.value)
+}
 
 asd_clean %>%
-  
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  group_by(protein) %>%
+  summarize(correlation = cor_test(ados, level)) %>%
+  unnest(correlation) %>%
+  arrange(p.value)
+
+# plot correlations
+ados_cors %>%
+  ggplot(aes(x = rank,
+             y = correlation)) +
+  geom_path() +
+  geom_point(data = slice_max(ados_cors, abs.corr, n = 10)) +
+  geom_text(data = slice_max(ados_cors, abs.corr, n = 10),
+            aes(label = protein, hjust = 'inward'),
+            check_overlap = T,
+            size = 3)
+
+# top 10
+ados_cors %>% slice_max(abs.corr, n = 10)
+
+# regression approach (equivalent)
+fit_fn <- function(.df){
+  lm(ados ~ level, data = .df)
+}
+
+asd_clean %>%
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  nest(data = c(ados, level)) %>%
+  mutate(fit = map(data, fit_fn),
+         fit_tidy = map(fit, broom::tidy)) %>%
+  unnest(fit_tidy) %>%
+  filter(term == 'level') %>%
+  select(protein, estimate, p.value) %>%
+  slice_min(p.value, n = 10)
+
+# do these pass multiple testing?
+m <- ncol(asd_clean) - 1
+hm <- log(m) + 1/(2*m) - digamma(1)
+
+asd_clean %>%
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  nest(data = c(ados, level)) %>%
+  mutate(fit = map(data, fit_fn),
+         fit_tidy = map(fit, broom::tidy)) %>%
+  unnest(fit_tidy) %>%
+  filter(term == 'level') %>%
+  select(protein, estimate, p.value) %>%
+  arrange(p.value) %>%
+  mutate(rank = row_number(),
+         p.adj = p.value*m*hm/rank) %>%
+  slice_min(p.value, n = 10) %>%
+  select(protein, p.adj, p.value)
+
+## visualize
+selected_proteins <- ados_cors %>% 
+  slice_max(abs.corr, n = 10) %>%
+  pull(protein)
+
+asd_clean %>%
+  select(c(ados, any_of(selected_proteins))) %>%
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  ggplot(aes(x = level, y = ados)) +
+  geom_point() +
+  geom_smooth(formula = 'y ~ x', method = 'lm', se = F) +
+  facet_wrap(~ protein, nrow = 2)
+
+library(randomForest)
+asd_clean <- asd %>% 
+  select(-ados) %>%
+  # log transform
+  mutate(across(.cols = -group, log10)) %>%
+  # center and scale
+  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
+  # trim outliers (affects results??)
+  mutate(across(.cols = -group, trim_fn))
+
+asd_preds <- asd_clean %>% select(-group)
+asd_resp <- asd_clean %>% pull(group) %>% factor()
+
+set.seed(101222)
+rf_out <- randomForest(x = asd_preds, y = asd_resp,
+                       mtry = 100, ntree = 1000, 
+                       importance = T)
+
+rf_out$confusion
+rf_out$importance %>% 
+  as_tibble() %>%
+  mutate(protein = rownames(rf_out$importance)) %>%
+  slice_max(MeanDecreaseGini, n = 10) %>%
+  select(protein)

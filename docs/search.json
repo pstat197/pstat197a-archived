@@ -140,11 +140,39 @@
     "text": "Checklist\n\nOn github.com, your group-sandbox repository has a directory called class-activity containing a copy of this activity and one markdown file for each group member with two fun facts about them.\nThe repository has only one open branch.\nThe README file lists each group member’s name.\nEach group member has an up-to-date local copy of the repository."
   },
   {
+    "objectID": "materials/activities/making-trees.html",
+    "href": "materials/activities/making-trees.html",
+    "title": "Activity: making trees",
+    "section": "",
+    "text": "For the purposes of this activity we’ll use data from the 1994 census (there are fewer variables than the proteomics data and sometimes a little variety is nice).\nYour group’s job is to build a tree to classify high earners and low earners based on a bootstrap sample and a random subset of predictors.\nThe income variable is the response or variable of interest; the rest are potential predictors."
+  },
+  {
+    "objectID": "materials/activities/making-trees.html#building-a-tree",
+    "href": "materials/activities/making-trees.html#building-a-tree",
+    "title": "Activity: making trees",
+    "section": "Building a tree",
+    "text": "Building a tree\n\nStep 1: resample the data\nFirst, draw a sample with replacement from the observations. This is known as a bootstrap sample. We’ll keep this relatively small to simplify matters.\n\n\n\n\n\n\nAction\n\n\n\nDraw a bootstrap sample\nCopy the code chunk below and execute once.\n\n# resample data\ncensus_boot <- census %>%\n  sample_n(size = 200, replace = T)\n\n\n\nYou will build your tree using this data.\n\n\nStep 2: select predictors at random\nNext draw a set of predictors at random. We’ll also keep this set small so that you can develop the tree ‘by hand’.\n\n\n\n\n\n\nAction\n\n\n\nSelect two random predictors\nCopy and paste the code chunk below into your script and execute once without modification.\n\n# retrieve column names\npossible_predictors <- census %>% \n  select(-income) %>%\n  colnames()\n\n# grab 2 columns at random\npredictors <- sample(possible_predictors,\n                     size = 2, \n                     replace = F)\n\n# select these columns from the bootstrap sample\ntrain <- census_boot %>% \n  select(c(income, any_of(predictors)))\n\n\n\nYou will build your tree using only these predictors from the bootstrap sample as training data.\n\n\nStep 3a: find your first split\nNow your job is to choose exactly one of the predictors to make a binary split of the data.\n\nfor categorical variables, determine which categories you will classify as high-income vs. low-income\nfor continuous variables, choose a cutoff value so that any observation greater/less than the cutoff is classified as a high/low (or vice-versa) earner\n\nYou do not need to make quantitatively rigorous choices. Try to make a choice that you think is reasonable, but don’t agonize over it. The code below might help you decide which variable to use and how to make the split: use it to inspect each of the two variables and decide which one better distinguishes the income groups.\n\n# comment out -- don't overwrite your bootstrap sample!\ncensus_boot <- census %>% \n  sample_n(size = 200, replace = T)\n\n# for continuous variables\ncensus_boot %>%\n  ggplot(aes(x = age, # replace with predictor name \n             y = income)) +\n  geom_jitter(height = 0.1) +\n  geom_vline(xintercept = 35) # adjust cutoff\n\n\n\ncensus_boot %>%\n  ggplot(aes(x = age, # replace with predictor name\n           y = ..density..)) +\n  geom_density(aes(color = income, fill = income),\n               alpha = 0.5) +\n  geom_vline(xintercept = 35) # adjust cutoff\n\n\n\n# for categorical variables\ncensus_boot %>%\n  group_by(workclass, income) %>%\n  count() %>%\n  spread(income, n) %>%\n  mutate_all(~ replace_na(.x, 0)) %>%\n  mutate(high.inc = `<=50K` > `>50K`)\n\n# A tibble: 7 × 4\n# Groups:   workclass [7]\n  workclass        `<=50K` `>50K` high.inc\n  <chr>              <int>  <int> <lgl>   \n1 ?                     11      1 TRUE    \n2 Federal-gov            4      2 TRUE    \n3 Local-gov             17      7 TRUE    \n4 Private              103     29 TRUE    \n5 Self-emp-inc           4      2 TRUE    \n6 Self-emp-not-inc       5      6 FALSE   \n7 State-gov              4      5 FALSE   \n\n# pick out categories that are majority high income\nhighinc_categories <- census_boot %>%\n  group_by(workclass, # replace with predictor name\n           income) %>%\n  count() %>%\n  spread(income, n) %>%\n  mutate_all(~ replace_na(.x, 0)) %>%\n  mutate(high.inc = `<=50K` > `>50K`) %>%\n  filter(high.inc == T) %>%\n  pull(workclass) # replace with predictor name\n\n\n\n\n\n\n\nAction\n\n\n\nMake your first split\n\nChoose whichever of the two predictors you think best distinguishes the high income and low income groups.\nFind a cutoff value if the variable is continuous, or the categories that you will classify as high income if the variable is categorical.\nIf categorical, store a vector of the category names that are classified as high income (see code above). If continuous, store the cutoff value.\nWrite down the rule.\n\n\n\n\n\nStep 3b: find your second split\nNow filter the data to just those rows classified as (but not necessarily actually) high income based on your first split.\n\n# continuous case -- example\ncensus_boot_sub <- census_boot %>%\n  filter(age > cutoff)\n\n# categorical case -- example\ncensus_boot_sub <- census_boot %>%\n  filter(workclass %in% highinc_categories)\n\n\n\n\n\n\n\nAction\n\n\n\nFind a second split\n\nRepeat step 3a but with the filtered data census_boot_sub instead of the full bootstrap sample.\nWrite down the rule.\n\n\n\n\n\nStep 4: draw the tree\nWe could in theory keep creating binary splits until all observations are correctly classified. However, since we’re doing this by hand and just for illustration purposes, we’ll stop after two splits – it’ll be more of a sapling than a fully grown tree.\n\n\n\n\n\n\nAction\n\n\n\nMake a diagram\nDraw your tree on your group’s whiteboard. It should have just one ‘root’ node and just three ‘leaf’ nodes."
+  },
+  {
+    "objectID": "materials/activities/making-trees.html#classifying-a-new-observation",
+    "href": "materials/activities/making-trees.html#classifying-a-new-observation",
+    "title": "Activity: making trees",
+    "section": "Classifying a new observation",
+    "text": "Classifying a new observation\nUse your tree to determine how to classify the following observation:\n\ncensus %>%\n  sample_n(size = 1) %>%\n  t() %>%\n  knitr::kable()\n\n\n\n\nage\n51\n\n\nworkclass\nPrivate\n\n\neducation\nBachelors\n\n\nmarital_status\nDivorced\n\n\noccupation\nAdm-clerical\n\n\nrelationship\nNot-in-family\n\n\nrace\nWhite\n\n\nsex\nFemale\n\n\ncapital_gain\n0\n\n\ncapital_loss\n0\n\n\nhours_per_week\n40\n\n\nnative_country\nUnited-States\n\n\nincome\n<=50K"
+  },
+  {
+    "objectID": "materials/activities/making-trees.html#algorithmic-considerations",
+    "href": "materials/activities/making-trees.html#algorithmic-considerations",
+    "title": "Activity: making trees",
+    "section": "Algorithmic considerations",
+    "text": "Algorithmic considerations\nYou just did a loose version of what’s known as recursive partitioning – repeatedly splitting the data. That’s a specific method of constructing a tree.\nHow did you decide which of your two variables to use? Could you write code to make the same choice automatically? This, it turns out, is the main challenge in fully automating the process. The recursive partitioning algorithm requires two things:\n\na criterion by which one split is considered ‘better’ than another\na stopping rule\n\nIt is fairly simple to compute the best cutoff (or categorical mapping) for a given predictor – one can do a brute-force search for the split that minimizes misclassifications. However, when there are many possible variables to split on, a criterion is needed to determine the best choice. You can read about how this is done in MDSR 11.1.1."
+  },
+  {
     "objectID": "materials/course-materials.html",
     "href": "materials/course-materials.html",
     "title": "Course materials",
     "section": "",
-    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: On projects in(volving) data science [slides]\nSection meeting: software and technology overview [activity]\nThursday meeting: basic GitHub actions [activity] [slides]\nAssignments due by next class meeting:\n\nread MDSR 9.1 and 9.2\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: Introducing class intake survey data [slides]\nSection meeting: tidyverse basics [activity]\nThursday meeting: planning group work for analysis of survey data [slides]\nAssignments:\n\nfirst team assignment due Friday, October 14, 11:59 PM PST [accept via GH classroom here]\n\n\n\n\n\n\n\nTuesday meeting: introducing biomarker data; multiple testing [slides]\nSection meeting: iteration strategies [activity]"
+    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: On projects in(volving) data science [slides]\nSection meeting: software and technology overview [activity]\nThursday meeting: basic GitHub actions [activity] [slides]\nAssignments due by next class meeting:\n\nread MDSR 9.1 and 9.2\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: Introducing class intake survey data [slides]\nSection meeting: tidyverse basics [activity]\nThursday meeting: planning group work for analysis of survey data [slides]\nAssignments:\n\nfirst team assignment due Friday, October 14, 11:59 PM PST [accept via GH classroom here]\n\n\n\n\n\n\nTuesday meeting: introducing biomarker data; multiple testing [slides]\nSection meeting: iteration strategies [activity]\nThursday meeting: correlation analysis; random forests [slides] [activity]\nAssignments due by next class meeting:\n\nread MDSR 10.1 - 10.2\nread Hewitson et al. 2021\nprepare a reading response"
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html",
@@ -1097,5 +1125,145 @@
     "title": "Biomarkers of ASD",
     "section": "References",
     "text": "References\n\n\n\n\n\n\nBenjamini, Yoav, and Yosef Hochberg. 1995. “Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing.” Journal of the Royal Statistical Society: Series B (Methodological) 57 (1): 289–300.\n\n\nBenjamini, Yoav, and Daniel Yekutieli. 2001. “The Control of the False Discovery Rate in Multiple Testing Under Dependency.” Annals of Statistics, 1165–88.\n\n\nHewitson, Laura, Jeremy A Mathews, Morgan Devlin, Claire Schutte, Jeon Lee, and Dwight C German. 2021. “Blood Biomarker Discovery for Autism Spectrum Disorder: A Proteomic Analysis.” PLoS One 16 (2): e0246581."
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#announcementsreminders",
+    "href": "materials/slides/week3-randomforest.html#announcementsreminders",
+    "title": "Biomarkers of ASD II",
+    "section": "Announcements/reminders",
+    "text": "Announcements/reminders\nMake your final commits for the first group assignment by Friday 10/14 11:59pm PST\n\nshould include an updated report.qmd and report.html with your write-up\n\n\nNext group assignment to be distributed Tuesday 10/18.\n\nGroups will be randomly assigned\nTask: replicate and redesign proteomic analysis"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#last-time",
+    "href": "materials/slides/week3-randomforest.html#last-time",
+    "title": "Biomarkers of ASD II",
+    "section": "Last time",
+    "text": "Last time\n\nintroduced ASD proteomic dataset\nused multiple testing corrections to identify proteins whose serum levels differ significantly between ASD/TD groups\ndiscussed the difference between controlling familywise error vs. false discovery"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#today",
+    "href": "materials/slides/week3-randomforest.html#today",
+    "title": "Biomarkers of ASD II",
+    "section": "Today",
+    "text": "Today\nWe’ll talk about two more approaches to identifying proteins of interest:\n\ncorrelation-based identification of proteins\nrandom forest classifier"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#ados-score",
+    "href": "materials/slides/week3-randomforest.html#ados-score",
+    "title": "Biomarkers of ASD II",
+    "section": "ADOS score",
+    "text": "ADOS score\n\n\n\nAutism Diagnostic Observation Schedule (ADOS) scores are determined by psychological assessment and measure ASD severity.\n\nasd %>% \n  select(group, ados) %>% \n  group_by(group) %>% \n  sample_n(size = 2)\n\n# A tibble: 4 × 2\n# Groups:   group [2]\n  group  ados\n  <chr> <dbl>\n1 ASD      19\n2 ASD      12\n3 TD       NA\n4 TD       NA\n\n\n\nados is only measured for the ASD group\nnumerical score between 6 and 23 (at least in this sample)"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#correlation-approach",
+    "href": "materials/slides/week3-randomforest.html#correlation-approach",
+    "title": "Biomarkers of ASD II",
+    "section": "Correlation approach",
+    "text": "Correlation approach\nSo here’s an idea:\n\ncompute correlations of each protein with ADOS;\npick the 10 proteins with the strongest correlation"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#computation",
+    "href": "materials/slides/week3-randomforest.html#computation",
+    "title": "Biomarkers of ASD II",
+    "section": "Computation",
+    "text": "Computation\nThis is a simple aggregation operation and can be executed in R with summarize() :\n\n# compute correlations\nasd_clean %>%\n  pivot_longer(cols = -ados,\n               names_to = 'protein',\n               values_to = 'level') %>%\n  group_by(protein) %>%\n  summarize(correlation = cor(ados, level))\n\n# A tibble: 1,317 × 2\n   protein                   correlation\n   <chr>                           <dbl>\n 1 14-3-3                         0.0970\n 2 14-3-3 protein beta/alpha      0.0481\n 3 14-3-3 protein theta           0.122 \n 4 14-3-3 protein zeta/delta      0.0735\n 5 14-3-3E                       -0.127 \n 6 17-beta-HSD 1                  0.0969\n 7 3HAO                           0.0773\n 8 3HIDH                          0.0452\n 9 4-1BB                          0.0290\n10 4-1BB ligand                   0.0799\n# … with 1,307 more rows"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#visual-assessment",
+    "href": "materials/slides/week3-randomforest.html#visual-assessment",
+    "title": "Biomarkers of ASD II",
+    "section": "Visual assessment",
+    "text": "Visual assessment"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#sort-and-slice",
+    "href": "materials/slides/week3-randomforest.html#sort-and-slice",
+    "title": "Biomarkers of ASD II",
+    "section": "Sort and slice",
+    "text": "Sort and slice\n\nListVisual\n\n\n\n\n# A tibble: 10 × 4\n   protein          correlation abs.corr  rank\n   <chr>                  <dbl>    <dbl> <int>\n 1 CO8A1                  0.362    0.362  1317\n 2 C5b, 6 Complex        -0.337    0.337     1\n 3 Thrombospondin-1       0.310    0.310  1316\n 4 ILT-2                 -0.309    0.309     2\n 5 TRAIL R4               0.296    0.296  1315\n 6 HCE000414             -0.296    0.296     3\n 7 C1r                   -0.290    0.290     4\n 8 GM-CSF                 0.290    0.290  1314\n 9 Angiogenin            -0.284    0.284     5\n10 HCG                    0.278    0.278  1313"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#slr-coefficients-instead",
+    "href": "materials/slides/week3-randomforest.html#slr-coefficients-instead",
+    "title": "Biomarkers of ASD II",
+    "section": "SLR coefficients instead?",
+    "text": "SLR coefficients instead?\nFact: the simple linear regression coefficient estimate is proportional to the correlation coefficient.\n\nSo it should give similar results to sort the SLR coefficients by significance.\n\n\n\n\n# A tibble: 1,317 × 3\n   protein          estimate p.value\n   <chr>               <dbl>   <dbl>\n 1 CO8A1               0.391 0.00131\n 2 C5b, 6 Complex     -0.401 0.00290\n 3 Thrombospondin-1    0.317 0.00635\n 4 ILT-2              -0.546 0.00664\n 5 TRAIL R4            0.353 0.00933\n 6 HCE000414          -0.278 0.00950\n 7 C1r                -0.341 0.0110 \n 8 GM-CSF              0.345 0.0110 \n 9 Angiogenin         -0.314 0.0130 \n10 HCG                 0.306 0.0149 \n# … with 1,307 more rows"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#fdr-control",
+    "href": "materials/slides/week3-randomforest.html#fdr-control",
+    "title": "Biomarkers of ASD II",
+    "section": "FDR control",
+    "text": "FDR control\nIf we do the correlation analysis this way, do the identified proteins pass multiple testing significance thresholds?\n\n\n# A tibble: 10 × 3\n   protein          p.value  p.adj\n   <chr>              <dbl>  <dbl>\n 1 CO8A1            0.00131 0.0145\n 2 C5b, 6 Complex   0.00290 0.0342\n 3 Thrombospondin-1 0.00635 0.112 \n 4 ILT-2            0.00664 0.0641\n 5 TRAIL R4         0.00933 1.29  \n 6 HCE000414        0.00950 0.916 \n 7 C1r              0.0110  0.242 \n 8 GM-CSF           0.0110  0.124 \n 9 Angiogenin       0.0130  0.142 \n10 HCG              0.0149  0.159 \n\n\n\nprobably just introducing selection noise\nbut also, this result diverges considerably from the paper (?)"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#aside-correlation-test",
+    "href": "materials/slides/week3-randomforest.html#aside-correlation-test",
+    "title": "Biomarkers of ASD II",
+    "section": "Aside: correlation test",
+    "text": "Aside: correlation test\nThe SLR approach is equivalent to sorting the correlations. (Take a moment to check the results.)\n\nWe could use inference on the population correlation to obtain a \\(p\\)-value associated with each sample correlation coefficient. These match the ones from SLR.\n\ncor_test <- function(x, y){\n  cor_out <- cor.test(x, y)\n  tibble(estimate = cor_out$estimate,\n         p.value = cor_out$p.value)\n}\n\nasd_clean %>%\n  pivot_longer(cols = -ados,\n               names_to = 'protein',\n               values_to = 'level') %>%\n  group_by(protein) %>%\n  summarize(correlation = cor_test(ados, level)) %>%\n  unnest(correlation) %>%\n  arrange(p.value)\n\n# A tibble: 1,317 × 3\n   protein          estimate p.value\n   <chr>               <dbl>   <dbl>\n 1 CO8A1               0.362 0.00131\n 2 C5b, 6 Complex     -0.337 0.00290\n 3 Thrombospondin-1    0.310 0.00635\n 4 ILT-2              -0.309 0.00664\n 5 TRAIL R4            0.296 0.00933\n 6 HCE000414          -0.296 0.00950\n 7 C1r                -0.290 0.0110 \n 8 GM-CSF              0.290 0.0110 \n 9 Angiogenin         -0.284 0.0130 \n10 HCG                 0.278 0.0149 \n# … with 1,307 more rows"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#background",
+    "href": "materials/slides/week3-randomforest.html#background",
+    "title": "Biomarkers of ASD II",
+    "section": "Background",
+    "text": "Background\nA binary tree is a directed graph in which:\n\nthere is at most one path between any two nodes\neach node has at most two outward-directed edges"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#classification-tree",
+    "href": "materials/slides/week3-randomforest.html#classification-tree",
+    "title": "Biomarkers of ASD II",
+    "section": "Classification tree",
+    "text": "Classification tree\nA classification tree is a binary tree in which the paths represent classification rules.\n\nA goofy classification tree."
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#example-classifying-high-earners",
+    "href": "materials/slides/week3-randomforest.html#example-classifying-high-earners",
+    "title": "Biomarkers of ASD II",
+    "section": "Example: classifying high earners",
+    "text": "Example: classifying high earners\nSay we want to predict income based on captial gains and education level using census data.\n\n\n# A tibble: 6 × 3\n# Groups:   income [2]\n  income educ     capital_gain\n  <fct>  <fct>           <dbl>\n1 <=50K  hs                  0\n2 <=50K  advanced            0\n3 <=50K  college             0\n4 >50K   hs               7688\n5 >50K   hs               7688\n6 >50K   college          5178\n\n\n\nWe could construct a classification tree by ‘splitting’ based on the values of predictor variables."
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#activity-building-trees",
+    "href": "materials/slides/week3-randomforest.html#activity-building-trees",
+    "title": "Biomarkers of ASD II",
+    "section": "Activity: building trees",
+    "text": "Activity: building trees\nTo get a sense of the process of tree construction, we’ll do an activity in groups: each group will build a tree ‘by hand’.\n\nfirst let’s look at the instructions together\nthen take about 15-20 minutes to do it"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#random-forests",
+    "href": "materials/slides/week3-randomforest.html#random-forests",
+    "title": "Biomarkers of ASD II",
+    "section": "Random forests",
+    "text": "Random forests\nA random forest is a classifier based on many trees. It is constructed by:\n\nbuilding some large number of \\(T\\) trees using bootstrap samples and random subsets of predictors (what you just did, repeated many times)\ntaking a majority vote across all trees to determine the classification\n\n\nSo let’s take a vote using your trees!"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#variable-importance-scores",
+    "href": "materials/slides/week3-randomforest.html#variable-importance-scores",
+    "title": "Biomarkers of ASD II",
+    "section": "Variable importance scores",
+    "text": "Variable importance scores\nIf the number of trees \\(T\\) is large (as it should be):\n\ntrees are built using lots of random subsets of predictors\ncan keep track of which ones are used most often to define splits\n\n\nVariable importance scores provide a measure of how influential each predictor is in a random forest."
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#results",
+    "href": "materials/slides/week3-randomforest.html#results",
+    "title": "Biomarkers of ASD II",
+    "section": "Results",
+    "text": "Results\nBack to the proteomics data, the variable importance scores from a random forest provide another means of identifying proteins.\n\n\n\n\n# grow RF\nset.seed(101222)\nrf_out <- randomForest(x = asd_preds, y = asd_resp,\n                       mtry = 100, ntree = 1000, \n                       importance = T)\n\n# variable importance\nrf_out$importance %>% \n  as_tibble() %>%\n  mutate(protein = rownames(rf_out$importance)) %>%\n  slice_max(MeanDecreaseGini, n = 10) %>%\n  select(protein)\n\n# A tibble: 10 × 1\n   protein    \n   <chr>      \n 1 DERM       \n 2 IgD        \n 3 TGF-b R III\n 4 TSP4       \n 5 Notch 1    \n 6 MAPK14     \n 7 RELT       \n 8 ERBB1      \n 9 CK-MB      \n10 SOST"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#errors",
+    "href": "materials/slides/week3-randomforest.html#errors",
+    "title": "Biomarkers of ASD II",
+    "section": "Errors",
+    "text": "Errors\nBut how accurate is the predictor?\n\n\n\n\n\n\nASD\nTD\nclass.error\n\n\n\n\nASD\n53\n23\n0.3026316\n\n\nTD\n19\n59\n0.2435897"
+  },
+  {
+    "objectID": "materials/slides/week3-randomforest.html#next-week",
+    "href": "materials/slides/week3-randomforest.html#next-week",
+    "title": "Biomarkers of ASD II",
+    "section": "Next week",
+    "text": "Next week\n\nlogistic regression\nvariable selection\na design view of the proteomic analysis"
   }
 ]

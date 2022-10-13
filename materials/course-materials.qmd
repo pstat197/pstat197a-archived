@@ -47,10 +47,18 @@ editor: visual
 
     -   first team assignment due Friday, October 14, 11:59 PM PST \[[accept via GH classroom here](https://classroom.github.com/a/d-4iOFtd)\]
 
-    <!-- -   for next time, read [MDSR 10.1 - 10.2](https://mdsr-book.github.io/mdsr2e/ch-modeling.html) and prepare a reading response -->
-
 ### Week 3
 
 -   ***Tuesday meeting:*** introducing biomarker data; multiple testing \[[slides](slides/week3-biomarkers.qmd)\]
 
 -   ***Section meeting:*** iteration strategies \[[activity](labs/lab3-iteration/lab3-iteration.qmd)\]
+
+-   ***Thursday meeting:*** correlation analysis; random forests \[[slides](slides/week3-randomforest.qmd)\] \[[activity](activities/making-trees.qmd)\]
+
+-   ***Assignments*** due by next class meeting:
+
+    -   read [MDSR 10.1 - 10.2](https://mdsr-book.github.io/mdsr2e/ch-modeling.html)
+
+    -   read [Hewitson *et al.* 2021](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7904196/)
+
+    -   prepare a reading response
