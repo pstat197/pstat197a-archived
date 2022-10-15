@@ -61,4 +61,4 @@ editor: visual
 
     -   read [Hewitson *et al.* 2021](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7904196/)
 
-    -   prepare a reading response
+    -   prepare a [reading response](https://forms.gle/o4QYoPh8tCAYswLt7)
