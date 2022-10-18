@@ -355,7 +355,7 @@ asd_nested %>%
 
 In an ordinary data frame one can define a new variable as a function of other variables. The same can be done with list-columns in a tibble: one can define a new variable as a function of the elements of a list stored in another column. To do this, one uses the `map()` function, which is essentially the tidyverse version of `lapply()` :
 
--   `map(.x, .fn)` means roughly "apply the function `.fn` to each element in `.x` "
+-   `map(.x, .fn)` means roughly "apply the function `.fn` to each element in `.x`"
 
 Here we can write a function that takes a data frame with protein level and group as input, and returns a t test as output; then computing each test is as simple as calling `mutate` :
 

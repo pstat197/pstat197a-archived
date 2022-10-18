@@ -1,0 +1,30 @@
+---
+title: "Measuring classification accuracy"
+editor: visual
+code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
+---
+
+::: callout-important
+## Action
+
+**Setup**
+
+1.  Create a new script for this lab in your labs directory.
+2.  Copy-paste the code chunk below at the top of your script to load required packages and data.
+:::
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(modelr)
+library(rsample)
+library(yardstick)
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab4-logistic/data/biomarker-clean.RData'
+
+load('data/biomarker-clean.RData')
+```
