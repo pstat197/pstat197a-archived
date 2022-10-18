@@ -154,7 +154,7 @@ highinc_categories <- census_boot %>%
   count() %>%
   spread(income, n) %>%
   mutate_all(~ replace_na(.x, 0)) %>%
-  mutate(high.inc = `<=50K` > `>50K`) %>%
+  mutate(high.inc = `<=50K` < `>50K`) %>%
   filter(high.inc == T) %>%
   pull(workclass) # replace with predictor name
 ```

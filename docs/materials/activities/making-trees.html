@@ -369,7 +369,7 @@ Action
 <li><p>for continuous variables, choose a cutoff value so that any observation greater/less than the cutoff is classified as a high/low (or vice-versa) earner</p></li>
 </ul>
 <p><strong><em>You do not need to make quantitatively rigorous choices.</em></strong> Try to make a choice that you think is reasonable, but don’t agonize over it. The code below might help you decide which variable to use and how to make the split: use it to inspect each of the two variables and decide which one better distinguishes the income groups.</p>
-<div class="cell" data-hash="making-trees_cache/html/unnamed-chunk-5_c0dac49d06ecc850e8a4e4061af830be">
+<div class="cell" data-hash="making-trees_cache/html/unnamed-chunk-5_e2d552289f33bb63746bb456498a917c">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># comment out -- don't overwrite your bootstrap sample!</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>census_boot <span class="ot">&lt;-</span> census <span class="sc">%&gt;%</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">200</span>, <span class="at">replace =</span> T)</span>
@@ -419,7 +419,7 @@ Action
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(income, n) <span class="sc">%&gt;%</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(<span class="sc">~</span> <span class="fu">replace_na</span>(.x, <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">high.inc =</span> <span class="st">`</span><span class="at">&lt;=50K</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="st">`</span><span class="at">&gt;50K</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">high.inc =</span> <span class="st">`</span><span class="at">&lt;=50K</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="st">`</span><span class="at">&gt;50K</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(high.inc <span class="sc">==</span> T) <span class="sc">%&gt;%</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(workclass) <span class="co"># replace with predictor name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

@@ -47,6 +47,8 @@ editor: visual
 
     -   first team assignment due Friday, October 14, 11:59 PM PST \[[accept via GH classroom here](https://classroom.github.com/a/d-4iOFtd)\]
 
+## Module 1: biomarker identification
+
 ### Week 3
 
 -   ***Tuesday meeting:*** introducing biomarker data; multiple testing \[[slides](slides/week3-biomarkers.qmd)\]
@@ -62,3 +64,11 @@ editor: visual
     -   read [Hewitson *et al.* 2021](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7904196/)
 
     -   prepare a [reading response](https://forms.gle/o4QYoPh8tCAYswLt7)
+
+### Week 4
+
+-   ***Tuesday meeting:*** random forests cont'd; logistic regression \[[slides](slides/week4-logistic.qmd)\]
+-   ***Section meeting:*** logistic regression and classification metrics \[activity\]
+-   ***Thursday meeting:*** LASSO regularization \[slides\]
+-   ***Assignments:***
+    -   second group assignment due ***Friday, October 28, 11:59pm PST*** \[[accept via GH classroom](https://classroom.github.com/a/YmfzBeRn)\] \[[group assignments](https://docs.google.com/spreadsheets/d/1rkPDeIrd6zhFB7wnVpbU6HYs1aM1RGz9ulU6ypaQrwU/edit?usp=sharing)\]

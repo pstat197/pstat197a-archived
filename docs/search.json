@@ -151,7 +151,7 @@
     "href": "materials/activities/making-trees.html#building-a-tree",
     "title": "Activity: making trees",
     "section": "Building a tree",
-    "text": "Building a tree\n\nStep 1: resample the data\nFirst, draw a sample with replacement from the observations. This is known as a bootstrap sample. We’ll keep this relatively small to simplify matters.\n\n\n\n\n\n\nAction\n\n\n\nDraw a bootstrap sample\nCopy the code chunk below and execute once.\n\n# resample data\ncensus_boot <- census %>%\n  sample_n(size = 200, replace = T)\n\n\n\nYou will build your tree using this data.\n\n\nStep 2: select predictors at random\nNext draw a set of predictors at random. We’ll also keep this set small so that you can develop the tree ‘by hand’.\n\n\n\n\n\n\nAction\n\n\n\nSelect two random predictors\nCopy and paste the code chunk below into your script and execute once without modification.\n\n# retrieve column names\npossible_predictors <- census %>% \n  select(-income) %>%\n  colnames()\n\n# grab 2 columns at random\npredictors <- sample(possible_predictors,\n                     size = 2, \n                     replace = F)\n\n# select these columns from the bootstrap sample\ntrain <- census_boot %>% \n  select(c(income, any_of(predictors)))\n\n\n\nYou will build your tree using only these predictors from the bootstrap sample as training data.\n\n\nStep 3a: find your first split\nNow your job is to choose exactly one of the predictors to make a binary split of the data.\n\nfor categorical variables, determine which categories you will classify as high-income vs. low-income\nfor continuous variables, choose a cutoff value so that any observation greater/less than the cutoff is classified as a high/low (or vice-versa) earner\n\nYou do not need to make quantitatively rigorous choices. Try to make a choice that you think is reasonable, but don’t agonize over it. The code below might help you decide which variable to use and how to make the split: use it to inspect each of the two variables and decide which one better distinguishes the income groups.\n\n# comment out -- don't overwrite your bootstrap sample!\ncensus_boot <- census %>% \n  sample_n(size = 200, replace = T)\n\n# for continuous variables\ncensus_boot %>%\n  ggplot(aes(x = age, # replace with predictor name \n             y = income)) +\n  geom_jitter(height = 0.1) +\n  geom_vline(xintercept = 35) # adjust cutoff\n\n\n\ncensus_boot %>%\n  ggplot(aes(x = age, # replace with predictor name\n           y = ..density..)) +\n  geom_density(aes(color = income, fill = income),\n               alpha = 0.5) +\n  geom_vline(xintercept = 35) # adjust cutoff\n\n\n\n# for categorical variables\ncensus_boot %>%\n  group_by(workclass, income) %>%\n  count() %>%\n  spread(income, n) %>%\n  mutate_all(~ replace_na(.x, 0)) %>%\n  mutate(high.inc = `<=50K` > `>50K`)\n\n# A tibble: 7 × 4\n# Groups:   workclass [7]\n  workclass        `<=50K` `>50K` high.inc\n  <chr>              <int>  <int> <lgl>   \n1 ?                     11      1 TRUE    \n2 Federal-gov            4      2 TRUE    \n3 Local-gov             17      7 TRUE    \n4 Private              103     29 TRUE    \n5 Self-emp-inc           4      2 TRUE    \n6 Self-emp-not-inc       5      6 FALSE   \n7 State-gov              4      5 FALSE   \n\n# pick out categories that are majority high income\nhighinc_categories <- census_boot %>%\n  group_by(workclass, # replace with predictor name\n           income) %>%\n  count() %>%\n  spread(income, n) %>%\n  mutate_all(~ replace_na(.x, 0)) %>%\n  mutate(high.inc = `<=50K` > `>50K`) %>%\n  filter(high.inc == T) %>%\n  pull(workclass) # replace with predictor name\n\n\n\n\n\n\n\nAction\n\n\n\nMake your first split\n\nChoose whichever of the two predictors you think best distinguishes the high income and low income groups.\nFind a cutoff value if the variable is continuous, or the categories that you will classify as high income if the variable is categorical.\nIf categorical, store a vector of the category names that are classified as high income (see code above). If continuous, store the cutoff value.\nWrite down the rule.\n\n\n\n\n\nStep 3b: find your second split\nNow filter the data to just those rows classified as (but not necessarily actually) high income based on your first split.\n\n# continuous case -- example\ncensus_boot_sub <- census_boot %>%\n  filter(age > cutoff)\n\n# categorical case -- example\ncensus_boot_sub <- census_boot %>%\n  filter(workclass %in% highinc_categories)\n\n\n\n\n\n\n\nAction\n\n\n\nFind a second split\n\nRepeat step 3a but with the filtered data census_boot_sub instead of the full bootstrap sample.\nWrite down the rule.\n\n\n\n\n\nStep 4: draw the tree\nWe could in theory keep creating binary splits until all observations are correctly classified. However, since we’re doing this by hand and just for illustration purposes, we’ll stop after two splits – it’ll be more of a sapling than a fully grown tree.\n\n\n\n\n\n\nAction\n\n\n\nMake a diagram\nDraw your tree on your group’s whiteboard. It should have just one ‘root’ node and just three ‘leaf’ nodes."
+    "text": "Building a tree\n\nStep 1: resample the data\nFirst, draw a sample with replacement from the observations. This is known as a bootstrap sample. We’ll keep this relatively small to simplify matters.\n\n\n\n\n\n\nAction\n\n\n\nDraw a bootstrap sample\nCopy the code chunk below and execute once.\n\n# resample data\ncensus_boot <- census %>%\n  sample_n(size = 200, replace = T)\n\n\n\nYou will build your tree using this data.\n\n\nStep 2: select predictors at random\nNext draw a set of predictors at random. We’ll also keep this set small so that you can develop the tree ‘by hand’.\n\n\n\n\n\n\nAction\n\n\n\nSelect two random predictors\nCopy and paste the code chunk below into your script and execute once without modification.\n\n# retrieve column names\npossible_predictors <- census %>% \n  select(-income) %>%\n  colnames()\n\n# grab 2 columns at random\npredictors <- sample(possible_predictors,\n                     size = 2, \n                     replace = F)\n\n# select these columns from the bootstrap sample\ntrain <- census_boot %>% \n  select(c(income, any_of(predictors)))\n\n\n\nYou will build your tree using only these predictors from the bootstrap sample as training data.\n\n\nStep 3a: find your first split\nNow your job is to choose exactly one of the predictors to make a binary split of the data.\n\nfor categorical variables, determine which categories you will classify as high-income vs. low-income\nfor continuous variables, choose a cutoff value so that any observation greater/less than the cutoff is classified as a high/low (or vice-versa) earner\n\nYou do not need to make quantitatively rigorous choices. Try to make a choice that you think is reasonable, but don’t agonize over it. The code below might help you decide which variable to use and how to make the split: use it to inspect each of the two variables and decide which one better distinguishes the income groups.\n\n# comment out -- don't overwrite your bootstrap sample!\ncensus_boot <- census %>% \n  sample_n(size = 200, replace = T)\n\n# for continuous variables\ncensus_boot %>%\n  ggplot(aes(x = age, # replace with predictor name \n             y = income)) +\n  geom_jitter(height = 0.1) +\n  geom_vline(xintercept = 35) # adjust cutoff\n\n\n\ncensus_boot %>%\n  ggplot(aes(x = age, # replace with predictor name\n           y = ..density..)) +\n  geom_density(aes(color = income, fill = income),\n               alpha = 0.5) +\n  geom_vline(xintercept = 35) # adjust cutoff\n\n\n\n# for categorical variables\ncensus_boot %>%\n  group_by(workclass, income) %>%\n  count() %>%\n  spread(income, n) %>%\n  mutate_all(~ replace_na(.x, 0)) %>%\n  mutate(high.inc = `<=50K` > `>50K`)\n\n# A tibble: 7 × 4\n# Groups:   workclass [7]\n  workclass        `<=50K` `>50K` high.inc\n  <chr>              <int>  <int> <lgl>   \n1 ?                     11      1 TRUE    \n2 Federal-gov            4      2 TRUE    \n3 Local-gov             17      7 TRUE    \n4 Private              103     29 TRUE    \n5 Self-emp-inc           4      2 TRUE    \n6 Self-emp-not-inc       5      6 FALSE   \n7 State-gov              4      5 FALSE   \n\n# pick out categories that are majority high income\nhighinc_categories <- census_boot %>%\n  group_by(workclass, # replace with predictor name\n           income) %>%\n  count() %>%\n  spread(income, n) %>%\n  mutate_all(~ replace_na(.x, 0)) %>%\n  mutate(high.inc = `<=50K` < `>50K`) %>%\n  filter(high.inc == T) %>%\n  pull(workclass) # replace with predictor name\n\n\n\n\n\n\n\nAction\n\n\n\nMake your first split\n\nChoose whichever of the two predictors you think best distinguishes the high income and low income groups.\nFind a cutoff value if the variable is continuous, or the categories that you will classify as high income if the variable is categorical.\nIf categorical, store a vector of the category names that are classified as high income (see code above). If continuous, store the cutoff value.\nWrite down the rule.\n\n\n\n\n\nStep 3b: find your second split\nNow filter the data to just those rows classified as (but not necessarily actually) high income based on your first split.\n\n# continuous case -- example\ncensus_boot_sub <- census_boot %>%\n  filter(age > cutoff)\n\n# categorical case -- example\ncensus_boot_sub <- census_boot %>%\n  filter(workclass %in% highinc_categories)\n\n\n\n\n\n\n\nAction\n\n\n\nFind a second split\n\nRepeat step 3a but with the filtered data census_boot_sub instead of the full bootstrap sample.\nWrite down the rule.\n\n\n\n\n\nStep 4: draw the tree\nWe could in theory keep creating binary splits until all observations are correctly classified. However, since we’re doing this by hand and just for illustration purposes, we’ll stop after two splits – it’ll be more of a sapling than a fully grown tree.\n\n\n\n\n\n\nAction\n\n\n\nMake a diagram\nDraw your tree on your group’s whiteboard. It should have just one ‘root’ node and just three ‘leaf’ nodes."
   },
   {
     "objectID": "materials/activities/making-trees.html#classifying-a-new-observation",
@@ -172,7 +172,14 @@
     "href": "materials/course-materials.html",
     "title": "Course materials",
     "section": "",
-    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: On projects in(volving) data science [slides]\nSection meeting: software and technology overview [activity]\nThursday meeting: basic GitHub actions [activity] [slides]\nAssignments due by next class meeting:\n\nread MDSR 9.1 and 9.2\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: Introducing class intake survey data [slides]\nSection meeting: tidyverse basics [activity]\nThursday meeting: planning group work for analysis of survey data [slides]\nAssignments:\n\nfirst team assignment due Friday, October 14, 11:59 PM PST [accept via GH classroom here]\n\n\n\n\n\n\nTuesday meeting: introducing biomarker data; multiple testing [slides]\nSection meeting: iteration strategies [activity]\nThursday meeting: correlation analysis; random forests [slides] [activity]\nAssignments due by next class meeting:\n\nread MDSR 10.1 - 10.2\nread Hewitson et al. 2021\nprepare a reading response"
+    "text": "Objectives: set expectations; explore data science raison d’etre; introduce systems and design thinking; introduce software tools and collaborative coding; conduct exploratory/descriptive analysis of class background and interests.\n\n\n\nThursday meeting: Course orientation [slides]\nAssignments due by next class meeting:\n\ninstall course software and create github account;\nfill out intake form\nread Peng, R. D., & Parker, H. S. (2022). Perspective on data science. Annual Review of Statistics and Its Application, 9, 1-20. (access online via UCSB library);\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: On projects in(volving) data science [slides]\nSection meeting: software and technology overview [activity]\nThursday meeting: basic GitHub actions [activity] [slides]\nAssignments due by next class meeting:\n\nread MDSR 9.1 and 9.2\nprepare a reading response\n\n\n\n\n\n\nTuesday meeting: Introducing class intake survey data [slides]\nSection meeting: tidyverse basics [activity]\nThursday meeting: planning group work for analysis of survey data [slides]\nAssignments:\n\nfirst team assignment due Friday, October 14, 11:59 PM PST [accept via GH classroom here]"
+  },
+  {
+    "objectID": "materials/course-materials.html#module-1-biomarker-identification",
+    "href": "materials/course-materials.html#module-1-biomarker-identification",
+    "title": "Course materials",
+    "section": "Module 1: biomarker identification",
+    "text": "Module 1: biomarker identification\n\nWeek 3\n\nTuesday meeting: introducing biomarker data; multiple testing [slides]\nSection meeting: iteration strategies [activity]\nThursday meeting: correlation analysis; random forests [slides] [activity]\nAssignments due by next class meeting:\n\nread MDSR 10.1 - 10.2\nread Hewitson et al. 2021\nprepare a reading response\n\n\n\n\nWeek 4\n\nTuesday meeting: random forests cont’d; logistic regression [slides]\nSection meeting: logistic regression and classification metrics [activity]\nThursday meeting: LASSO regularization [slides]\nAssignments:\n\nsecond group assignment due Friday, October 28, 11:59pm PST [accept via GH classroom] [group assignments]"
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html",
@@ -1265,5 +1272,187 @@
     "title": "Biomarkers of ASD II",
     "section": "Next week",
     "text": "Next week\n\nlogistic regression\nvariable selection\na design view of the proteomic analysis"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#announcementsreminders",
+    "href": "materials/slides/week4-logistic.html#announcementsreminders",
+    "title": "Biomarkers of ASD III",
+    "section": "Announcements/reminders",
+    "text": "Announcements/reminders\n\nNext assignment and groups posted on class website\n\nDue Friday, October 28, 11:59pm\n\nAny feedback on the first group assignment?"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#from-last-time",
+    "href": "materials/slides/week4-logistic.html#from-last-time",
+    "title": "Biomarkers of ASD III",
+    "section": "From last time",
+    "text": "From last time\nIn groups you made \\(T = 7\\) trees ‘by hand’. To make each tree:\n\nrandomly resample observations and choose two predictors at random\nchoose a variable and a split by manual inspection, then repeat\n\nthis method of tree construction is called recursive partitioning\n\n\n\nThen each of you classified a new observation. We took a majority vote to decide on the final classification.\n\n\nThis is a random forest consisting of \\(T = 7\\) trees."
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#random-forests",
+    "href": "materials/slides/week4-logistic.html#random-forests",
+    "title": "Biomarkers of ASD III",
+    "section": "Random forests",
+    "text": "Random forests\nTo implement random forests algorithmically, one can control:\n\nnumber of trees \\(T\\)\nnumber of predictors \\(m\\) to choose at random for each tree\nbootstrap sample size and method\ntree depth as specified by…\n\nminimum number of observations per split (‘node size’)\nmaximum number of terminal nodes"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#variable-importance",
+    "href": "materials/slides/week4-logistic.html#variable-importance",
+    "title": "Biomarkers of ASD III",
+    "section": "Variable importance",
+    "text": "Variable importance\nSuppose we had a random forest of three trees.\n\n\n\n\n\n\n\n\n\nG\n\n \n\ncluster1\n\n tree #1  \n\ncluster2\n\n tree #2  \n\ncluster3\n\n tree #3   \n\nage\n\n age   \n\nedu\n\n edu   \n\nage->edu\n\n   \n\nl2\n\n >50k   \n\nage->l2\n\n   \n\nl1\n\n >50k   \n\nedu->l1\n\n   \n\nl3\n\n <50k   \n\nedu->l3\n\n   \n\nedu2\n\n edu   \n\nl4\n\n >50k   \n\nedu2->l4\n\n   \n\nl5\n\n <50k   \n\nedu2->l5\n\n   \n\ngain\n\n gain   \n\nage2\n\n age   \n\ngain->age2\n\n   \n\nl7\n\n <50k   \n\ngain->l7\n\n   \n\nsex\n\n sex   \n\nsex->gain\n\n   \n\nl6\n\n >50k   \n\nsex->l6\n\n   \n\nl8\n\n <50k   \n\nage2->l8\n\n   \n\nl9\n\n >50k   \n\nage2->l9\n\n  \n\n\n\n\n\n\n\nWhich variables seem most important?\nHow can you tell?"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#how-to-measure-importance",
+    "href": "materials/slides/week4-logistic.html#how-to-measure-importance",
+    "title": "Biomarkers of ASD III",
+    "section": "How to measure importance?",
+    "text": "How to measure importance?\nA natural thought is to measure importance by the use frequency of each variable.\n\nBut use frequency doesn’t capture the quality of splits. Imagine:\n\nsplitting often on education but with little improvement in classifications\nand splitting infrequently on captial gain but with dramatic improvement\ncapital gain is probably more important for classification even though it’s used less"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#quality-of-splits",
+    "href": "materials/slides/week4-logistic.html#quality-of-splits",
+    "title": "Biomarkers of ASD III",
+    "section": "Quality of splits",
+    "text": "Quality of splits\nWhen you were building trees, you had to choose which variable to split on.\n\nHow did you pick?\nDid you have a principle or goal in mind?\nWhat would make one split better than another?"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#measuring-quality-node-homogeneity",
+    "href": "materials/slides/week4-logistic.html#measuring-quality-node-homogeneity",
+    "title": "Biomarkers of ASD III",
+    "section": "Measuring quality: node homogeneity",
+    "text": "Measuring quality: node homogeneity\nOne approach is to tree construction is to choose splits that optimize quantitative measures of node homogeneity. If \\(p_k\\) is the proportion of observations in class \\(k\\):\n\n(Gini index) \\(1 - \\sum_{k = 1}^K p_k^2\\)\n(entropy) \\(-\\sum_{k = 1}^K p_k \\log_2 p_k\\)\n\n\nSmaller values indicate greater homogeneity."
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#variable-importance-scores",
+    "href": "materials/slides/week4-logistic.html#variable-importance-scores",
+    "title": "Biomarkers of ASD III",
+    "section": "Variable importance scores",
+    "text": "Variable importance scores\nThe change in node homogeneity can be calculated for every split:\n\\[\nh(\\text{before}) - \\underbrace{\\Big[(p_L \\times h(\\text{after}_L) - p_R \\times h(\\text{after}_R)\\Big]}_{\\text{weighted avg. of homogeneity in child nodes}}\n\\]\n\nThe average change across all nodes associated with a given predictor in all trees gives an easy measure of importance.\n\nfavors high-quality splits over splitting frequency"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#proteomics-application",
+    "href": "materials/slides/week4-logistic.html#proteomics-application",
+    "title": "Biomarkers of ASD III",
+    "section": "Proteomics application",
+    "text": "Proteomics application\nBack to the proteomics data, the variable importance scores from a random forest provide another means of identifying proteins.\n\nfit a random forest\ncompute importance scores\nrank predictors and choose top \\(n\\)"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#results",
+    "href": "materials/slides/week4-logistic.html#results",
+    "title": "Biomarkers of ASD III",
+    "section": "Results",
+    "text": "Results\n\nFittingImportance scoresAccuracy\n\n\n\n# reproducibility\nset.seed(101422)\n\n# fit rf\nrf_out <- randomForest(x = asd_preds, # predictors\n                       y = asd_resp, # response\n                       ntree = 1000, # number of trees\n                       importance = T) # compute importance\n\nBy default, randomForest():\n\nuses \\(\\sqrt{p}\\) predictors for each tree\ntrees grown until exact classification accuracy is achieved\nbootstrap sample size equal to number of observations\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRows show true classes, columns show predicted classes.\n\n\n\n\n\n\nASD\nTD\nclass.error\n\n\n\n\nASD\n49\n27\n0.3552632\n\n\nTD\n21\n57\n0.2692308"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#putting-things-together",
+    "href": "materials/slides/week4-logistic.html#putting-things-together",
+    "title": "Biomarkers of ASD III",
+    "section": "Putting things together",
+    "text": "Putting things together\nLet \\(\\hat{S}_j\\) indicate the set of proteins selected by method \\(j\\) . Then the final estimate is\n\\[\n\\hat{S}^* = \\bigcap_j \\hat{S}_j\n\\]\n\nIn other words, those proteins that are selected by all three methods. Remarks:\n\nprobably fairly high selection variance\nprobably pretty conservative"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#core-panel",
+    "href": "materials/slides/week4-logistic.html#core-panel",
+    "title": "Biomarkers of ASD III",
+    "section": "“Core” panel",
+    "text": "“Core” panel\n\nMultiple testingRandom forestIntersection\n\n\n\ntt_fn <- function(.df){\n  infer::t_test(.df,\n         formula = level ~ group,\n         alternative = 'two-sided',\n         order = c('ASD', 'TD'),\n         var.equal = F)\n}\n\ns1 <- read_csv('data/biomarker-clean.csv') %>% \n  mutate(across(.cols = -c(group, ados), log10)) %>%\n  mutate(across(.cols = -c(group, ados), ~ scale(.x)[, 1])) %>%\n  mutate(across(.cols = -c(group, ados), trim_fn)) %>%\n  select(-ados) %>%\n  pivot_longer(-group,\n               names_to = \"protein\",\n               values_to = \"level\") %>%\n  nest(data = c(group, level)) %>%\n  mutate(test = map(data, tt_fn)) %>%\n  unnest(test) %>%\n  arrange(p_value) %>%\n  mutate(m = n(),\n         hm = log(m) + 1/(2*m) - digamma(1),\n         rank = row_number(),\n         p.adj = m*hm*p_value/rank) %>%\n  slice_min(p.adj, n = 10) %>%\n  pull(protein)\n\n\n\n\n# reproducibility\nset.seed(101422)\n\n# fit rf\nrf_out <- randomForest(x = asd_preds,\n                       y = asd_resp,                    \n                       ntree = 1000, \n                       importance = T) \n\n# select most important predictors\ns2 <- rf_out$importance %>% \n  as_tibble() %>%\n  mutate(protein = rownames(rf_out$importance)) %>%\n  slice_max(MeanDecreaseGini, n = 10) %>%\n  pull(protein)\n\n\n\n\ns_star <- intersect(s1, s2)\ns_star\n\n[1] \"DERM\"  \"RELT\"  \"IgD\"   \"PTN\"   \"FSTL1\""
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#how-accurate-is-the-panel",
+    "href": "materials/slides/week4-logistic.html#how-accurate-is-the-panel",
+    "title": "Biomarkers of ASD III",
+    "section": "How accurate is the panel?",
+    "text": "How accurate is the panel?\nGoal: use a statistical model to evaluate classification accuracy using the ‘core’ panel of proteins \\(\\hat{S}^*\\).\n\nThe logistic regression model is the most widely-used statistical model for binary data."
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#the-bernoulli-distribution",
+    "href": "materials/slides/week4-logistic.html#the-bernoulli-distribution",
+    "title": "Biomarkers of ASD III",
+    "section": "The Bernoulli distribution",
+    "text": "The Bernoulli distribution\nThe Bernoulli distribution describes the probability of a binary outcome (think coin toss). Mathematically:\n\\[\nY \\sim \\text{bernoulli}(p)\n\\quad\\Longleftrightarrow\\quad\nP(Y = y) = p^y (1 - p)^{1 - y}\n\\quad\\text{for}\\quad\ny \\in \\{0, 1\\}\n\\]\n\nThis just says that \\(P(Y = 1) = p\\) and \\(P(Y = 0) = 1 - p\\).\n\n\nProperties:\n\n\\(\\mathbb{E}Y = p\\)\n\\(\\text{var}Y = p(1 - p)\\)"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#the-logistic-regression-model",
+    "href": "materials/slides/week4-logistic.html#the-logistic-regression-model",
+    "title": "Biomarkers of ASD III",
+    "section": "The logistic regression model",
+    "text": "The logistic regression model\nThe logistic regression model for a response \\(Y\\in\\{0, 1\\}\\) and covariates \\(X\\in\\mathbb{R}^p\\) is:\n\\[\n\\begin{cases}\nY_i|X_i = x_i \\stackrel{iid}{\\sim} \\text{bernoulli}(p_i)\n\\quad\\text{for}\\quad i = 1, \\dots, n\\\\\n\\log\\left(\\frac{p_i}{1 - p_i}\\right) = \\beta_0 + \\beta_1 x_{i1} + \\cdots + \\beta_p x_{ip}\n\\end{cases}\n\\]\n\nThis is a generalized linear model because \\(g\\left(\\mathbb{E}Y\\right) = X\\beta\\) and \\(Y\\sim EF\\).\n\n\nParameters are estimated by maximum likelihood."
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#the-model-visually",
+    "href": "materials/slides/week4-logistic.html#the-model-visually",
+    "title": "Biomarkers of ASD III",
+    "section": "The model, visually",
+    "text": "The model, visually\n\\[\n\\log\\left(\\frac{p_i}{1 - p_i}\\right) = x_i^T\\beta\n\\quad\\Longleftrightarrow\\quad\np_i = \\frac{1}{1 + e^{-x_i^T\\beta}}\n\\]\n\nPlotting the right hand side for one predictor with \\(\\beta^T = [0 \\; 1]\\):"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#assumptions",
+    "href": "materials/slides/week4-logistic.html#assumptions",
+    "title": "Biomarkers of ASD III",
+    "section": "Assumptions",
+    "text": "Assumptions\n\nObservations are independent\nProbability of event is monotonic in each predictor\nMean-variance relationship following Bernoulli distribution"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#fitting-with-one-predictor",
+    "href": "materials/slides/week4-logistic.html#fitting-with-one-predictor",
+    "title": "Biomarkers of ASD III",
+    "section": "Fitting with one predictor",
+    "text": "Fitting with one predictor\n\nMLEEstimatesVisualization\n\n\nMaximum likelihood: find the parameter values for which the joint probability of the data is greatest according to the model.\n\nWritten as an optimization problem in terms of the negative log-likelihood:\n\\[\n\\hat{\\beta} = \\arg\\min_\\beta \\left\\{ -\\ell(\\beta; x, y) \\right\\}\n\\]\nComputed by iteratively re-weighted least squares (IRLS).\n\n\n\n\nasd_sub <- asd_clean %>% \n  select(group, any_of(s_star)) %>%\n  mutate(group = (group == 'ASD'))\n\nfit <- glm(group ~ DERM, family = 'binomial', data = asd_sub)\n\nfit %>% broom::tidy() %>% knitr::kable()\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n-0.016712\n0.1804471\n-0.0926145\n0.9262099\n\n\nDERM\n-1.116996\n0.2239268\n-4.9882173\n0.0000006\n\n\n\n\n\n\n\n\n\n\n\n\nProportion of subjects in ASD group after binning by DERM level (points) with estimated probability (curve)."
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#fitting-with-several-predictors",
+    "href": "materials/slides/week4-logistic.html#fitting-with-several-predictors",
+    "title": "Biomarkers of ASD III",
+    "section": "Fitting with several predictors",
+    "text": "Fitting with several predictors\nThe fitting procedure is identical.\n\n\nfit <- glm(group ~ ., \n           family = 'binomial', \n           data = asd_sub)\n\nfit %>%\n  broom::tidy() %>%\n  knitr::kable()\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n-0.0933124\n0.1993486\n-0.4680863\n0.6397229\n\n\nDERM\n-0.6033605\n0.2798359\n-2.1561227\n0.0310741\n\n\nRELT\n-0.4376278\n0.2859314\n-1.5305345\n0.1258845\n\n\nIgD\n-0.6616877\n0.2129419\n-3.1073631\n0.0018876\n\n\nPTN\n-0.2339665\n0.2731089\n-0.8566785\n0.3916226\n\n\nFSTL1\n-0.3600695\n0.2592400\n-1.3889426\n0.1648502"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#measuring-accuracy",
+    "href": "materials/slides/week4-logistic.html#measuring-accuracy",
+    "title": "Biomarkers of ASD III",
+    "section": "Measuring accuracy",
+    "text": "Measuring accuracy\nThere are two types of errors:\n\n\n\n\nPredicted 0\nPredicted 1\n\n\n\n\nClass 0\ntrue negative (TN)\nfalse positive (FP)\n\n\nClass 1\nfalse negative (FN)\ntrue positive (TP)\n\n\n\n\n\nasd_sub %>%\n  modelr::add_predictions(fit, type = 'response') %>%\n  mutate(pred_class = pred > 0.5) %>%\n  select(group, pred_class) %>%\n  mutate_all(~factor(.x, labels = c('TD', 'ASD'))) %>%\n  table()\n\n     pred_class\ngroup TD ASD\n  TD  58  20\n  ASD 20  56"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#accuracy-rates",
+    "href": "materials/slides/week4-logistic.html#accuracy-rates",
+    "title": "Biomarkers of ASD III",
+    "section": "Accuracy rates",
+    "text": "Accuracy rates\nThe most basic accuracy rates are:\n\nSensitivity/recall: \\(\\frac{TP}{P}\\) , proportion of positives that are correctly classified\nSpecificity: \\(\\frac{TN}{N}\\) , proportion of negatives that are correctly classified\nAccuracy: proportion of observations that are correctly classified"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#your-turn",
+    "href": "materials/slides/week4-logistic.html#your-turn",
+    "title": "Biomarkers of ASD III",
+    "section": "Your turn",
+    "text": "Your turn\nTry calculating sensitivity, specificity, and accuracy for the logistic regression using the core proteins selected.\n\n\n    TD ASD    \nTD  58  20  78\nASD 20  56  76\n    78  76 154"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#using-yardstickmetric_set",
+    "href": "materials/slides/week4-logistic.html#using-yardstickmetric_set",
+    "title": "Biomarkers of ASD III",
+    "section": "Using yardstick::metric_set()",
+    "text": "Using yardstick::metric_set()\n\nlibrary(yardstick)\n\nclass_metrics <- metric_set(sensitivity, specificity, accuracy)\n\nasd_sub %>%\n  modelr::add_predictions(fit, type = 'response') %>%\n  class_metrics(estimate = factor(pred > 0.5),\n                truth = factor(group), \n                event_level = 'second') %>%\n  knitr::kable()\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nsensitivity\nbinary\n0.7368421\n\n\nspecificity\nbinary\n0.7435897\n\n\naccuracy\nbinary\n0.7402597"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#roc-analysis",
+    "href": "materials/slides/week4-logistic.html#roc-analysis",
+    "title": "Biomarkers of ASD III",
+    "section": "ROC analysis",
+    "text": "ROC analysis\nThe error rates you just calculated are based on classifying a subject as ASD whenever \\(\\hat{p}_i > 0.5\\).\n\nif we wanted a more sensitive classifier, could use \\(\\hat{p}_i > 0.4\\);\nfor a more specific classifier, use \\(\\hat{p}_i > 0.6\\).\n\n\n\n\nA receiver operating characteristic (ROC) curve shows this tradeoff between sensitivity and specificity."
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#other-accuracy-metrics",
+    "href": "materials/slides/week4-logistic.html#other-accuracy-metrics",
+    "title": "Biomarkers of ASD III",
+    "section": "Other accuracy metrics",
+    "text": "Other accuracy metrics\nSome other metrics that are useful to know:\n\nprecision \\(\\frac{TP}{TP + FP}\\), proportion of estimated positives that are correct\nfalse discovery rate \\(\\frac{FP}{TP + FP}\\), proportion of estimated positives that are incorrect\nF1 score \\(\\frac{2TP}{2TP + FP + FN}\\), harmonic mean of precision and recall\nAUROC area under ROC curve"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#next-time",
+    "href": "materials/slides/week4-logistic.html#next-time",
+    "title": "Biomarkers of ASD III",
+    "section": "Next time",
+    "text": "Next time\n\nvariable selection via regularized estimation\ndesign assessment of Hewitson analysis\n\nmini assignment: sketch a diagram representing the data analysis in the paper; come prepared to share"
   }
 ]

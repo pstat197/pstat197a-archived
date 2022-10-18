@@ -174,11 +174,11 @@ tt_corrected %>%
 
 asd_clean <- asd %>% 
   # log transform
-  mutate(across(.cols = -group, log10)) %>%
+  mutate(across(.cols = -c(group, ados), log10)) %>%
   # center and scale
-  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
+  mutate(across(.cols = -c(group, ados), ~ scale(.x)[, 1])) %>%
   # trim outliers (affects results??)
-  mutate(across(.cols = -group, trim_fn)) %>%
+  mutate(across(.cols = -c(group, ados), trim_fn)) %>%
   # ados only for ASD group
   filter(group == 'ASD') %>%
   select(-group)
