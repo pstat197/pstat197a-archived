@@ -9,6 +9,22 @@ execute:
   cache: true
 ---
 
+In class you saw how to fit a logistic regression model using `glm()` and some basic classification accuracy measures.
+
+**Objectives**
+
+In this lab you'll carry out a more rigorous quantification of predictive accuracy by data partitioning. You'll learn to use:
+
+-   functions from the `rsample` package to partition data and retrieve partitions
+
+-   functions from the `modelr` package to compute predictions
+
+-   functions from the `yardstick` package for classification metrics
+
+**Prerequisites**
+
+Follow the action item below to get set up for the lab. You may need to install one or more packages if the `library()` calls return an error.
+
 ::: callout-important
 ## Action
 
@@ -19,12 +35,59 @@ execute:
 :::
 
 ```{r}
+# load packages
 library(tidyverse)
 library(tidymodels)
 library(modelr)
 library(rsample)
 library(yardstick)
-url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab4-logistic/data/biomarker-clean.RData'
 
-load('data/biomarker-clean.RData')
+# read data
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab4-logistic/data/biomarker_clean.csv'
+
+s_star <- c("DERM", "RELT", "IgD", "PTN", "FSTL1")
+biomarker <- read_csv(url) %>%
+  # subset to proteins of interest and group
+  select(group, any_of(s_star)) %>%
+  # convert group (chr) to binary (lgl)
+  mutate(class = (group == 'ASD')) %>%
+  select(-group)
 ```
+
+## Data partitioning
+
+In class we fit a logistic regression model to the data and evaluated classification accuracy on the very same data.
+
+Because the parameter estimates optimize errors on the data used to fit the model, evaluating accuracy on the same data gives an overly optimistic assessment, because the errors have been made as small as possible.
+
+***Data partitioning*** consists in setting aside a random subset of observations that will be used *only* to assess predictive accuracy and *not* to fit any models. The held out data is treated as a 'test' set of observations to try to predict. This provides a more realistic assessment of predictive accuracy that is closer to what can be expected if genuinely new data is collected.
+
+Partitioning is easy to do using `rsample::initial_split` and specifying the proportion of data that should be retained for model fitting (the 'training' set).
+
+Partitions are computed at random, so for reproducibility it is necessary to set the RNG seed at a fixed value.
+
+::: callout-important
+## Action
+
+**Partition the biomarker data into training and test sets**
+
+Copy-paste the code chunk below into your script and execute once.
+
+*Remarks:*
+
+-   `set.seed()` needs to be executed *together* with the lines that follow to ensure the same result is rendered every time
+
+-   the output simply summarizes the partitions
+
+```{r}
+# for reproducibility
+set.seed(102022)
+
+# partition data
+partitions <- biomarker %>%
+  initial_split(prop = 0.8)
+
+# examine
+partitions
+```
+:::

@@ -443,6 +443,22 @@ curve(fx(x, 0, 1), from = -10, to = 10,
 2.  Probability of event is monotonic in each predictor
 3.  Mean-variance relationship following Bernoulli distribution
 
+## Parameter interpretation
+
+According to the model, the log-odds are linear in the predictors:
+
+$$
+\log\underbrace{\left(\frac{p_i}{1 - p_i}\right)}_{\text{odds}} = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}
+$$
+
+. . .
+
+So a unit increase in the $j$th predictor $x_{ij} \rightarrow x_{ij} + 1$ is associated with a change in log-odds of $\beta_j$.
+
+. . .
+
+Therefore the same unit increase is associated with a change in the odds by a factor of $e^\beta_j$.
+
 ## Fitting with one predictor
 
 ::: panel-tabset
@@ -562,7 +578,7 @@ tbl_exp
 # sum(diag(tbl))/sum(tbl)
 ```
 
-## Using `yardstick::metric_set()` 
+## Using `yardstick::metric_set()`
 
 ```{r}
 #| echo: true

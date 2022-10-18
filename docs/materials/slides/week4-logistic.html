@@ -871,6 +871,19 @@ p_i = \frac{1}{1 + e^{-x_i^T\beta}}
 <li class="fragment">Mean-variance relationship following Bernoulli distribution</li>
 </ol>
 </section>
+<section id="parameter-interpretation" class="slide level2">
+<h2>Parameter interpretation</h2>
+<p>According to the model, the log-odds are linear in the predictors:</p>
+<p><span class="math display">\[
+\log\underbrace{\left(\frac{p_i}{1 - p_i}\right)}_{\text{odds}} = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}
+\]</span></p>
+<div class="fragment">
+<p>So a unit increase in the <span class="math inline">\(j\)</span>th predictor <span class="math inline">\(x_{ij} \rightarrow x_{ij} + 1\)</span> is associated with a change in log-odds of <span class="math inline">\(\beta_j\)</span>.</p>
+</div>
+<div class="fragment">
+<p>Therefore the same unit increase is associated with a change in the odds by a factor of <span class="math inline">\(e^\beta_j\)</span>.</p>
+</div>
+</section>
 <section id="fitting-with-one-predictor" class="slide level2">
 <h2>Fitting with one predictor</h2>
 <div class="panel-tabset">

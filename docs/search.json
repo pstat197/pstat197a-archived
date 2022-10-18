@@ -1454,5 +1454,12 @@
     "title": "Biomarkers of ASD III",
     "section": "Next time",
     "text": "Next time\n\nvariable selection via regularized estimation\ndesign assessment of Hewitson analysis\n\nmini assignment: sketch a diagram representing the data analysis in the paper; come prepared to share"
+  },
+  {
+    "objectID": "materials/slides/week4-logistic.html#parameter-interpretation",
+    "href": "materials/slides/week4-logistic.html#parameter-interpretation",
+    "title": "Biomarkers of ASD III",
+    "section": "Parameter interpretation",
+    "text": "Parameter interpretation\nAccording to the model, the log-odds are linear in the predictors:\n\\[\n\\log\\underbrace{\\left(\\frac{p_i}{1 - p_i}\\right)}_{\\text{odds}} = \\beta_0 + \\beta_1 x_{i1} + \\cdots + \\beta_p x_{ip}\n\\]\n\nSo a unit increase in the \\(j\\)th predictor \\(x_{ij} \\rightarrow x_{ij} + 1\\) is associated with a change in log-odds of \\(\\beta_j\\).\n\n\nTherefore the same unit increase is associated with a change in the odds by a factor of \\(e^\\beta_j\\)."
   }
 ]
