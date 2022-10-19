@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Measuring classification accuracy</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Measuring classification accuracy</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../../" class="sidebar-logo-link">
+      <img src="../../../img/ucsbds_hex.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../../">Data Science Capstone Preparation</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/pstat197" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://ucsbdscapstone.slack.com" title="" class="sidebar-tool px-1"><i class="bi bi-slack"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">About</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../about/syllabus.html" class="sidebar-item-text sidebar-link">Course syllabus</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../about/outcomes.html" class="sidebar-item-text sidebar-link">Learning outcomes</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../about/schedule.html" class="sidebar-item-text sidebar-link">Course schedule</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../about/technology.html" class="sidebar-item-text sidebar-link">Technology</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../about/links.html" class="sidebar-item-text sidebar-link">Links</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../materials/course-materials.html" class="sidebar-item-text sidebar-link">Course materials</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-partitioning" id="toc-data-partitioning" class="nav-link active" data-scroll-target="#data-partitioning">Data partitioning</a></li>
+  <li><a href="#model-fitting" id="toc-model-fitting" class="nav-link" data-scroll-target="#model-fitting">Model fitting</a></li>
+  <li><a href="#predictions" id="toc-predictions" class="nav-link" data-scroll-target="#predictions">Predictions</a></li>
+  <li><a href="#accuracy-measures" id="toc-accuracy-measures" class="nav-link" data-scroll-target="#accuracy-measures">Accuracy measures</a></li>
+  <li><a href="#checklist" id="toc-checklist" class="nav-link" data-scroll-target="#checklist">Checklist</a></li>
+  <li><a href="#extras" id="toc-extras" class="nav-link" data-scroll-target="#extras">Extras</a>
+  <ul class="collapse">
+  <li><a href="#roc-curves" id="toc-roc-curves" class="nav-link" data-scroll-target="#roc-curves">ROC curves</a></li>
+  <li><a href="#combined-metric-types" id="toc-combined-metric-types" class="nav-link" data-scroll-target="#combined-metric-types">Combined metric types</a></li>
+  <li><a href="#exploring-partitions" id="toc-exploring-partitions" class="nav-link" data-scroll-target="#exploring-partitions">Exploring partitions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Measuring classification accuracy</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>In class you saw how to fit a logistic regression model using <code>glm()</code> and some basic classification accuracy measures.</p>
+<p><strong>Objectives</strong></p>
+<p>In this lab you’ll carry out a more rigorous quantification of predictive accuracy by data partitioning. You’ll learn to use:</p>
+<ul>
+<li><p>functions from the <code>rsample</code> package to partition data and retrieve partitions</p></li>
+<li><p>functions from the <code>modelr</code> package to compute predictions</p></li>
+<li><p>functions from the <code>yardstick</code> package for classification metrics</p></li>
+</ul>
+<p><strong>Prerequisites</strong></p>
+<p>Follow the action item below to get set up for the lab. You may need to install one or more packages if the <code>library()</code> calls return an error.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Setup</strong></p>
+<ol type="1">
+<li>Create a new script for this lab in your labs directory.</li>
+<li>Copy-paste the code chunk below at the top of your script to load required packages and data.</li>
+</ol>
+</div>
+</div>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-1_b81622161cab42b857c7ff8180f84f75">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yardstick)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab4-logistic/data/biomarker_clean.csv'</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>s_star <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"DERM"</span>, <span class="st">"RELT"</span>, <span class="st">"IgD"</span>, <span class="st">"PTN"</span>, <span class="st">"FSTL1"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>biomarker <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url) <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># subset to proteins of interest and group</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(group, <span class="fu">any_of</span>(s_star)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># convert group (chr) to binary (lgl)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">class =</span> (group <span class="sc">==</span> <span class="st">'ASD'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="data-partitioning" class="level2">
+<h2 class="anchored" data-anchor-id="data-partitioning">Data partitioning</h2>
+<p>In class we fit a logistic regression model to the data and evaluated classification accuracy on the very same data.</p>
+<p>Because the parameter estimates optimize errors on the data used to fit the model, evaluating accuracy on the same data gives an overly optimistic assessment, because the errors have been made as small as possible.</p>
+<p><strong><em>Data partitioning</em></strong> consists in setting aside a random subset of observations that will be used <em>only</em> to assess predictive accuracy and <em>not</em> to fit any models. The held out data is treated as a ‘test’ set of observations to try to predict. This provides a more realistic assessment of predictive accuracy that is closer to what can be expected if genuinely new data is collected.</p>
+<p>Partitioning is easy to do using <code>rsample::initial_split</code> and specifying the proportion of data that should be retained for model fitting (the ‘training’ set).</p>
+<p>Partitions are computed at random, so for reproducibility it is necessary to set the RNG seed at a fixed value.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Partition the biomarker data into training and test sets</strong></p>
+<p>Copy-paste the code chunk below into your script and execute once.</p>
+<p><em>Remarks:</em></p>
+<ul>
+<li><p><code>set.seed()</code> needs to be executed <em>together</em> with the lines that follow to ensure the same result is rendered every time</p></li>
+<li><p>the output simply summarizes the partitions</p></li>
+</ul>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-2_f13ced9d923a2d7548f548056134adef">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for reproducibility</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">102022</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># partition data</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>partitions <span class="ot">&lt;-</span> biomarker <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">initial_split</span>(<span class="at">prop =</span> <span class="fl">0.8</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># examine</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>partitions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;Training/Testing/Total&gt;
+&lt;123/31/154&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>To retrieve the data partitions, one needs to use the helper functions <code>training()</code> and <code>testing()</code> :</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-3_58a92425168ccff1722f7b93249c7488">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># training set</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">training</span>(partitions) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+    DERM   RELT    IgD     PTN  FSTL1 class
+   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;
+1 -0.409  0.108  1.82  -0.457  -1.31  TRUE 
+2  1.25   0.802 -0.461  0.910   0.973 FALSE
+3 -0.697 -0.921 -1.26   0.0444 -1.46  TRUE 
+4 -0.591  1.34   2.31   0.269   0.802 TRUE </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># testing set</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">testing</span>(partitions) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+      DERM   RELT    IgD     PTN  FSTL1 class
+     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;
+1  0.140   -0.586 -1.53  -1.72   -1.96  TRUE 
+2 -0.276    0.410  0.454 -0.0375 -1.41  TRUE 
+3  0.927   -1.12   1.15  -0.290   0.190 TRUE 
+4 -0.00743 -0.319 -0.762 -1.27   -1.05  TRUE </code></pre>
+</div>
+</div>
+</section>
+<section id="model-fitting" class="level2">
+<h2 class="anchored" data-anchor-id="model-fitting">Model fitting</h2>
+<p>Fitting a logistic regression model is, as you saw in class, a one-line affair:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-4_4d50936d8436e26fb93f12d8bf4c3cee">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit glm</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(class <span class="sc">~</span> ., </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> biomarker, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>glm()</code> function can fit many kinds of <em>generalized linear models</em>. Logistic regression is just one of this class of models in which:</p>
+<ul>
+<li><p>the response follows a <em>binomial</em> distribution (the Bernoulli distribution is the binomial with <span class="math inline">\(n = 1\)</span>)</p></li>
+<li><p>the log-odds or <em>logit</em> transformation of the event/class probability <span class="math inline">\(p_i\)</span> is linear in the predictors</p></li>
+</ul>
+<p>The parameter estimates reported in tabular form are:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-5_fee927995d7d471d49d34c819f602b94">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  term        estimate std.error statistic p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)  -0.0933     0.199    -0.468 0.640  
+2 DERM         -0.603      0.280    -2.16  0.0311 
+3 RELT         -0.438      0.286    -1.53  0.126  
+4 IgD          -0.662      0.213    -3.11  0.00189
+5 PTN          -0.234      0.273    -0.857 0.392  
+6 FSTL1        -0.360      0.259    -1.39  0.165  </code></pre>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Fit the model and interpret a parameter</strong></p>
+<ol type="1">
+<li>Copy-paste the code above in your script and execute to fit the logistic regression model.</li>
+<li>Confer with your neighbor and interpret one of the parameters of your choosing.</li>
+</ol>
+<p><em>By interpret, we mean: what is the estimated change in P(ASD) associated with a +1SD change in log protein level?</em></p>
+</div>
+</div>
+</section>
+<section id="predictions" class="level2">
+<h2 class="anchored" data-anchor-id="predictions">Predictions</h2>
+<p>The <code>modelr</code> package makes it relatively easy to compute predictions for a wide range of model objects in R. Its pipe-friendly <code>add_predictions(.df, .mdl, type)</code> function will add a column of predictions of type <code>type</code> using model <code>.mdl</code> to data frame <code>.df</code> .</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-6_a80223c3ea0f8d7c243f7b4bd0e89eb4">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute predictions on the test set</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">testing</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 31 × 7
+       DERM    RELT    IgD     PTN  FSTL1 class    pred
+      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;   &lt;dbl&gt;
+ 1  0.140   -0.586  -1.53  -1.72   -1.96  TRUE   2.20  
+ 2 -0.276    0.410   0.454 -0.0375 -1.41  TRUE   0.108 
+ 3  0.927   -1.12    1.15  -0.290   0.190 TRUE  -0.925 
+ 4 -0.00743 -0.319  -0.762 -1.27   -1.05  TRUE   1.23  
+ 5 -0.484   -0.612  -0.625 -0.990  -1.16  TRUE   1.53  
+ 6  0.111   -0.489  -1.15   0.0483 -1.12  TRUE   1.21  
+ 7 -0.972   -0.535   0.502 -0.594  -0.427 TRUE   0.687 
+ 8 -0.344    0.0337  0.998 -2.00   -0.309 TRUE   0.0179
+ 9 -1.13    -0.385  -0.929  0.892  -0.597 TRUE   1.38  
+10  0.398    0.325  -1.17  -0.0114 -0.415 TRUE   0.450 
+# … with 21 more rows</code></pre>
+</div>
+</div>
+<p>Inspect the <code>pred</code> column. Notice that the predictions are not classes or probabilities. The default type of predictions are log-odds. One could back-transform:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-7_3113774a45f460c542bfc7c9485b62fd">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manually transform to probabilities</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">testing</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">probs =</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>pred))) <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(class, pred, probs) <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  class   pred probs
+  &lt;lgl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 TRUE   2.20  0.900
+2 TRUE   0.108 0.527
+3 TRUE  -0.925 0.284
+4 TRUE   1.23  0.774
+5 TRUE   1.53  0.822</code></pre>
+</div>
+</div>
+<p>Or simply change the <code>type</code> of predictions to <code>response</code> in order to obtain predicted probabilities:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-8_37cdc598e9ea7ccedadc6d520cac9a9d">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict on scale of response</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">testing</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit, <span class="at">type =</span> <span class="st">'response'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(class, pred) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  class  pred
+  &lt;lgl&gt; &lt;dbl&gt;
+1 TRUE  0.900
+2 TRUE  0.527
+3 TRUE  0.284
+4 TRUE  0.774
+5 TRUE  0.822</code></pre>
+</div>
+</div>
+<p>If we want to convert these predicted class probabilities into predicted classes, we can simply define a new variable based on whether the probabilities exceed 0.5 (or any other threshold):</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-9_dfc6402dedbe3422ce6ed388bdedf6c5">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict classes</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">testing</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit, <span class="at">type =</span> <span class="st">'response'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred.class =</span> (pred <span class="sc">&gt;</span> <span class="fl">0.5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(class, pred, pred.class) <span class="sc">%&gt;%</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  class  pred pred.class
+  &lt;lgl&gt; &lt;dbl&gt; &lt;lgl&gt;     
+1 TRUE  0.900 TRUE      
+2 TRUE  0.527 TRUE      
+3 TRUE  0.284 FALSE     
+4 TRUE  0.774 TRUE      
+5 TRUE  0.822 TRUE      </code></pre>
+</div>
+</div>
+</section>
+<section id="accuracy-measures" class="level2">
+<h2 class="anchored" data-anchor-id="accuracy-measures">Accuracy measures</h2>
+<p>The classification accuracy measures we discussed in class are based on tabulating observation counts when grouping by predicted and observed classes.</p>
+<p>This tabulation can be done in a base-R way by piping a data frame of the predicted and observed classes into <code>table()</code> :</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-10_84a3390ffb9bb1cfac0f18b9378bfb8e">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabulate</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">testing</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit, <span class="at">type =</span> <span class="st">'response'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred.class =</span> (pred <span class="sc">&gt;</span> <span class="fl">0.5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(class, pred.class) <span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       pred.class
+class   FALSE TRUE
+  FALSE    10    6
+  TRUE      3   12</code></pre>
+</div>
+</div>
+<p>However, the metrics discussed in class are somewhat painful to compute from the output above. Luckily, <code>yardstick</code> makes that process easier: the package has specialized functions that compute each metric. One need only:</p>
+<ul>
+<li><p>provide the predicted and true labels as factors</p></li>
+<li><p>indicate which factor is the truth and which is the prediction</p></li>
+<li><p>indicate which factor level is considered a ‘positive’</p></li>
+</ul>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-11_124173091734cfe0e050c3036b481a50">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store predictions as factors</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pred_df <span class="ot">&lt;-</span> <span class="fu">testing</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_predictions</span>(fit, <span class="at">type =</span> <span class="st">'response'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred.class =</span> (pred <span class="sc">&gt;</span> <span class="fl">0.5</span>),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">group =</span> <span class="fu">factor</span>(class, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'TD'</span>, <span class="st">'ASD'</span>)),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">pred.group =</span> <span class="fu">factor</span>(pred.class, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'TD'</span>, <span class="st">'ASD'</span>))) </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># check order of factor levels</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">%&gt;%</span> <span class="fu">pull</span>(group) <span class="sc">%&gt;%</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "TD"  "ASD"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute specificity</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specificity</span>(<span class="at">truth =</span> group, </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">estimate =</span> pred.group,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">event_level =</span> <span class="st">'second'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 specificity binary         0.625</code></pre>
+</div>
+</div>
+<p>The second level is ASD, which in this context is a positive. We knew since we supplied the labels in defining the factors, and the order of levels will match the order of labels. However, we can also check as above using <code>levels()</code> . Hence, <code>event_level = 'second'</code> .</p>
+<p>Sensitivity, accuracy, and other metrics can be computed similarly:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-12_d663606b762234ea52ff4305a115a69d">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sensitivity</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sensitivity</span>(<span class="at">truth =</span> group,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">estimate =</span> pred.group,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">event_level =</span> <span class="st">'second'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 sensitivity binary           0.8</code></pre>
+</div>
+</div>
+<p>You can <a href="https://yardstick.tidymodels.org/reference/index.html#classification-metrics">check the package documentation</a> for a complete list of available metrics.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Compute the accuracy</strong></p>
+<p>Find the appropriate function from the package documentation (link immediately above) and use it to compute the accuracy.</p>
+<p><em>Remark:</em> from the table, you know the result should be <span class="math inline">\(\frac{10 + 12}{10 + 12 + 6 + 3} \approx 0.7097\)</span> .</p>
+</div>
+</div>
+<p>The package also has a helper function that allows you to define a panel of metrics so that you can compute several simultaneously. If we want a panel of specificity and sensitivity, the following will do the trick:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-13_2ca7a18b6d164c7b88b1081fd9a3203a">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define panel (arguments must be yardstick metric function names)</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>panel_fn <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(sensitivity, specificity)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># compute</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">%&gt;%</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">panel_fn</span>(<span class="at">truth =</span> group,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">estimate =</span> pred.group,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">event_level =</span> <span class="st">'second'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  .metric     .estimator .estimate
+  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+1 sensitivity binary         0.8  
+2 specificity binary         0.625</code></pre>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Action
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Compute a panel of precision, recall, and F1 score</strong></p>
+<ol type="1">
+<li>Find the appropriate yardstick functions and define a metric panel</li>
+<li>Compute on the test data</li>
+</ol>
+</div>
+</div>
+<p>As a final comment, the table of classifications can be obtained in <code>yardstick</code> using the <code>conf_mat()</code> function. (The cross-classification table of predicted versus actual classes is called a <em>confusion matrix</em>.)</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-14_83bf072635a3d54cd65235bb9ffe5c0a">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">%&gt;%</span> <span class="fu">conf_mat</span>(<span class="at">truth =</span> group, <span class="at">estimate =</span> pred.group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Truth
+Prediction TD ASD
+       TD  10   3
+       ASD  6  12</code></pre>
+</div>
+</div>
+</section>
+<section id="checklist" class="level2">
+<h2 class="anchored" data-anchor-id="checklist">Checklist</h2>
+<ol type="1">
+<li>You partitioned the data into training and test sets</li>
+<li>You fit a logistic regression model using the training set</li>
+<li>You evaluated accuracy on the test set</li>
+</ol>
+<hr>
+</section>
+<section id="extras" class="level2">
+<h2 class="anchored" data-anchor-id="extras">Extras</h2>
+<p>If there is extra time, or you’re interested in exploring a bit further on your own, read on.</p>
+<section id="roc-curves" class="level3">
+<h3 class="anchored" data-anchor-id="roc-curves">ROC curves</h3>
+<p>The <code>yardstick</code> package also supplies functions for computing <a href="https://yardstick.tidymodels.org/reference/index.html#class-probability-metrics">class probability metrics</a> based on the estimated class probabilities rather than the estimated classes. ROC curves and AUROC are examples.</p>
+<p><code>roc_curve()</code> will find all unique probability thresholds and, for each threshold, calculate sensitivity and specificity:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-15_74adaf7b08f40fe1e397ee0c11cc9d50">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> group, <span class="at">estimate =</span> pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 33 × 3
+   .threshold specificity sensitivity
+        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+ 1  -Inf           0            1    
+ 2     0.0664      0            1    
+ 3     0.117       0            0.938
+ 4     0.158       0            0.875
+ 5     0.186       0.0667       0.875
+ 6     0.191       0.0667       0.812
+ 7     0.197       0.0667       0.75 
+ 8     0.262       0.0667       0.688
+ 9     0.284       0.0667       0.625
+10     0.299       0.133        0.625
+# … with 23 more rows</code></pre>
+</div>
+</div>
+<p>This can be used to plot the ROC curve:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-16_7f107446232d26efef7df266b2673871">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> group, </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">estimate =</span> pred,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">event_level =</span> <span class="st">'second'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> sensitivity, <span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> specificity)) <span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="lab4-logistic_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>In this case the ROC curve is so choppy because the test set only includes 31 observations. In general, for a collection of <span class="math inline">\(n\)</span> observations there are at most <span class="math inline">\(n + 1\)</span> unique thresholds and usually considerably fewer.</p>
+<p>The area under the ROC curve is also easy to compute:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-17_df96906f61ae4525555cb027261fe766">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">%&gt;%</span> <span class="fu">roc_auc</span>(<span class="at">truth =</span> group, </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimate =</span> pred,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">event_level =</span> <span class="st">'second'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 roc_auc binary         0.712</code></pre>
+</div>
+</div>
+</section>
+<section id="combined-metric-types" class="level3">
+<h3 class="anchored" data-anchor-id="combined-metric-types">Combined metric types</h3>
+<p>If you wish to compute <em>both</em> classification metrics based on a class prediction <em>and</em> class probability metrics based on a probability prediction in a metric panel, the classification should be provided as the argument to <code>estimate = ...</code> and class probability column can be provided as an unnamed argument following the <code>estimate</code> argument.</p>
+<p>For example:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-18_62943bd4141b937680309f418af8a784">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>panel <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(roc_auc, accuracy) </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">%&gt;%</span> <span class="fu">panel</span>(<span class="at">truth =</span> group,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">estimate =</span> pred.group,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                  pred,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">event_level =</span> <span class="st">'second'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy binary         0.710
+2 roc_auc  binary         0.712</code></pre>
+</div>
+</div>
+</section>
+<section id="exploring-partitions" class="level3">
+<h3 class="anchored" data-anchor-id="exploring-partitions">Exploring partitions</h3>
+<p>Review this section if you want a deeper understanding of data partitioning.</p>
+<p>The rationale for partitioning is that held out data will give a more honest assessment. Conversely, evaluating accuracy on data used to fit a model will provide an overly optimistic assessment.</p>
+<p>We can experimentally confirm this intuition by:</p>
+<ul>
+<li>repeatedly partitioning the data at random</li>
+<li>evaluating accuracy on both partitions</li>
+<li>averaging across partitions</li>
+</ul>
+<p>This procedure will reveal that <em>on average</em> the accuracy is better on training data. Don’t worry too much about the computations; focus on the output and the concepts.</p>
+<p>We’ll use the tidyverse iteration strategy from lab 3. First we’ll need some helper functions that are basically wrappers around each step we went through in this lab:</p>
+<ul>
+<li>fitting a model</li>
+<li>adding predictions</li>
+<li>evaluating metrics</li>
+</ul>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-19_dcc7c5d1293189ec49dd1ba8ce820a9a">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define some helper functions</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>fit_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(.df){</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(class <span class="sc">~</span> ., <span class="at">family =</span> <span class="st">'binomial'</span>, <span class="at">data =</span> .df)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>pred_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(.df, .mdl){</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  .df <span class="sc">%&gt;%</span> <span class="fu">add_predictions</span>(.mdl, <span class="at">type =</span> <span class="st">'response'</span>)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>panel <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(sensitivity, specificity, accuracy, roc_auc)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>eval_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(.df){</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  .df <span class="sc">%&gt;%</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">factor</span>(class, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'TD'</span>, <span class="st">'ASD'</span>)),</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">pred.group =</span> <span class="fu">factor</span>(pred <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'TD'</span>, <span class="st">'ASD'</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">panel</span>(<span class="at">truth =</span> group,</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">estimate =</span> pred.group,</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>          pred,</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">event_level =</span> <span class="st">'second'</span>)</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now let’s create 400 random partitions of the data and perform the steps in this lab for every partition. In addition, we’ll compute predictions and evaluate accuracy on the training set, which we did not do above and is generally not done.</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-20_52798e8db7afe0ff1d1118b21a7b0c43">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101922</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>n_splits <span class="ot">&lt;-</span> <span class="dv">400</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">partition =</span> <span class="dv">1</span><span class="sc">:</span>n_splits,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">split =</span> <span class="fu">map</span>(partition, <span class="sc">~</span> <span class="fu">initial_split</span>(biomarker, <span class="at">prop =</span> <span class="fl">0.8</span>)),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">train =</span> <span class="fu">map</span>(split, training),</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">test =</span> <span class="fu">map</span>(split, testing),</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fit =</span> <span class="fu">map</span>(train, fit_fn),</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">pred_test =</span> <span class="fu">map2</span>(test, fit, pred_fn),</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">pred_train =</span> <span class="fu">map2</span>(train, fit, pred_fn),</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">eval_test =</span> <span class="fu">map</span>(pred_test, eval_fn),</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">eval_train =</span> <span class="fu">map</span>(pred_train, eval_fn))</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>out <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 9
+  partition split            train    test     fit    pred_test pred_train
+      &lt;int&gt; &lt;list&gt;           &lt;list&gt;   &lt;list&gt;   &lt;list&gt; &lt;list&gt;    &lt;list&gt;    
+1         1 &lt;split [123/31]&gt; &lt;tibble&gt; &lt;tibble&gt; &lt;glm&gt;  &lt;tibble&gt;  &lt;tibble&gt;  
+2         2 &lt;split [123/31]&gt; &lt;tibble&gt; &lt;tibble&gt; &lt;glm&gt;  &lt;tibble&gt;  &lt;tibble&gt;  
+3         3 &lt;split [123/31]&gt; &lt;tibble&gt; &lt;tibble&gt; &lt;glm&gt;  &lt;tibble&gt;  &lt;tibble&gt;  
+4         4 &lt;split [123/31]&gt; &lt;tibble&gt; &lt;tibble&gt; &lt;glm&gt;  &lt;tibble&gt;  &lt;tibble&gt;  
+# … with 2 more variables: eval_test &lt;list&gt;, eval_train &lt;list&gt;</code></pre>
+</div>
+</div>
+<p>We can extract the accuracy of predictions on each of the training and test sets as follows:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-21_9bcf80ce799508e560d57b5a7477e36a">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>test_accuracy <span class="ot">&lt;-</span> out <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(partition, <span class="fu">contains</span>(<span class="st">'eval'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(eval_test) <span class="sc">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(partition, .metric, .estimate) <span class="sc">%&gt;%</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> .estimate)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>train_accuracy <span class="ot">&lt;-</span> out <span class="sc">%&gt;%</span> </span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(partition, <span class="fu">contains</span>(<span class="st">'eval'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(eval_train) <span class="sc">%&gt;%</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(partition, .metric, .estimate) <span class="sc">%&gt;%</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, <span class="at">values_from =</span> .estimate)</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>test_accuracy <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  partition sensitivity specificity accuracy roc_auc
+      &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+1         1       0.6         0.562    0.581   0.675
+2         2       0.778       0.538    0.677   0.645
+3         3       0.684       0.917    0.774   0.846
+4         4       0.684       0.833    0.742   0.842</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>train_accuracy <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  partition sensitivity specificity accuracy roc_auc
+      &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+1         1       0.803       0.806    0.805   0.858
+2         2       0.741       0.831    0.789   0.858
+3         3       0.737       0.742    0.740   0.825
+4         4       0.719       0.773    0.748   0.825</code></pre>
+</div>
+</div>
+<p>Lastly, we can average the metrics over all partitions and also check the variability across partitions. We’ll start with the training set:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-22_85c754d43d1236b04546b272c891b37b">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>train_summaries <span class="ot">&lt;-</span> train_accuracy <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">roc.auc =</span> roc_auc) <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>partition) <span class="sc">%&gt;%</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_all</span>(<span class="at">.funs =</span> <span class="fu">list</span>(<span class="at">mean =</span> mean, <span class="at">sd =</span> sd)) <span class="sc">%&gt;%</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(key, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">'metric'</span>, <span class="st">'stat'</span>), <span class="at">sep =</span> <span class="st">'_'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(stat, value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now compute the average and variability on the test set:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-23_8cb134336039e37f8b9065e5144f69c0">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>test_summaries <span class="ot">&lt;-</span> test_accuracy <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">roc.auc =</span> roc_auc) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>partition) <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_all</span>(<span class="at">.funs =</span> <span class="fu">list</span>(<span class="at">mean =</span> mean, <span class="at">sd =</span> sd)) <span class="sc">%&gt;%</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(key, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">'metric'</span>, <span class="st">'stat'</span>), <span class="at">sep =</span> <span class="st">'_'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(stat, value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now let’s put them side-by-side:</p>
+<div class="cell" data-hash="lab4-logistic_cache/html/unnamed-chunk-24_fff15c68b0cc654acb398b7fbe5bd5b5">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(train_summaries, </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>          test_summaries,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">by =</span> <span class="st">'metric'</span>,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">'.train'</span>, <span class="st">'.test'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(metric, <span class="fu">contains</span>(<span class="st">'mean'</span>), <span class="fu">contains</span>(<span class="st">'sd'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">metric</th>
+<th style="text-align: right;">mean.train</th>
+<th style="text-align: right;">mean.test</th>
+<th style="text-align: right;">sd.train</th>
+<th style="text-align: right;">sd.test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">accuracy</td>
+<td style="text-align: right;">0.7573374</td>
+<td style="text-align: right;">0.7225806</td>
+<td style="text-align: right;">0.0207045</td>
+<td style="text-align: right;">0.0702816</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">roc.auc</td>
+<td style="text-align: right;">0.8348238</td>
+<td style="text-align: right;">0.7994956</td>
+<td style="text-align: right;">0.0158188</td>
+<td style="text-align: right;">0.0706822</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sensitivity</td>
+<td style="text-align: right;">0.7565383</td>
+<td style="text-align: right;">0.7093282</td>
+<td style="text-align: right;">0.0308425</td>
+<td style="text-align: right;">0.1073645</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">specificity</td>
+<td style="text-align: right;">0.7569019</td>
+<td style="text-align: right;">0.7416470</td>
+<td style="text-align: right;">0.0282898</td>
+<td style="text-align: right;">0.1148716</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Notice that:</p>
+<ol type="1">
+<li>The apparent accuracy according to all metrics is higher on average on the training data across partitionings</li>
+<li>The accuracy metrics on the test data are more variable across partitionings</li>
+</ol>
+<p>This behavior is the justification for data partitioning: evaluating predictions on the same data that was used to fit the model <em>overestimates</em> the accuracy compared with data that was not used in fitting.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Site content created for PSTAT197A Fall 2022 by Trevor Ruiz using Quarto; hex logo by Priscilla Siow.</div>
+  </div>
+</footer>
+
+
+
+</body></html>
