@@ -69,6 +69,6 @@ editor: visual
 
 -   ***Tuesday meeting:*** random forests cont'd; logistic regression \[[slides](slides/week4-logistic.qmd)\]
 -   ***Section meeting:*** logistic regression and classification metrics \[[activity](labs/lab4-logistic/lab4-logistic.qmd)\]
--   ***Thursday meeting:*** LASSO regularization \[slides\]
+-   ***Thursday meeting:*** LASSO regularization \[[slides](slides/week4-lasso.qmd)\]
 -   ***Assignments:***
     -   second group assignment due ***Friday, October 28, 11:59pm PST*** \[[accept via GH classroom](https://classroom.github.com/a/YmfzBeRn)\] \[[group assignments](https://docs.google.com/spreadsheets/d/1rkPDeIrd6zhFB7wnVpbU6HYs1aM1RGz9ulU6ypaQrwU/edit?usp=sharing)\]

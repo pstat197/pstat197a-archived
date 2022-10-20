@@ -1299,7 +1299,7 @@
     "href": "materials/slides/week4-logistic.html#variable-importance",
     "title": "Biomarkers of ASD III",
     "section": "Variable importance",
-    "text": "Variable importance\nSuppose we had a random forest of three trees.\n\n\n\n\n\n\n\n\n\nG\n\n \n\ncluster1\n\n tree #1  \n\ncluster2\n\n tree #2  \n\ncluster3\n\n tree #3   \n\nage\n\n age   \n\nedu\n\n edu   \n\nage->edu\n\n   \n\nl2\n\n >50k   \n\nage->l2\n\n   \n\nl1\n\n >50k   \n\nedu->l1\n\n   \n\nl3\n\n <50k   \n\nedu->l3\n\n   \n\nedu2\n\n edu   \n\nl4\n\n >50k   \n\nedu2->l4\n\n   \n\nl5\n\n <50k   \n\nedu2->l5\n\n   \n\ngain\n\n gain   \n\nage2\n\n age   \n\ngain->age2\n\n   \n\nl7\n\n <50k   \n\ngain->l7\n\n   \n\nsex\n\n sex   \n\nsex->gain\n\n   \n\nl6\n\n >50k   \n\nsex->l6\n\n   \n\nl8\n\n <50k   \n\nage2->l8\n\n   \n\nl9\n\n >50k   \n\nage2->l9\n\n  \n\n\n\n\n\n\n\nWhich variables seem most important?\nHow can you tell?"
+    "text": "Variable importance\nSuppose we had a random forest of three trees.\n\n\n\n\n\n\n\n\n\nG\n\n \n\ncluster3\n\n tree #3  \n\ncluster2\n\n tree #2  \n\ncluster1\n\n tree #1   \n\nage\n\n age   \n\nedu\n\n edu   \n\nage->edu\n\n   \n\nl2\n\n >50k   \n\nage->l2\n\n   \n\nl1\n\n >50k   \n\nedu->l1\n\n   \n\nl3\n\n <50k   \n\nedu->l3\n\n   \n\nedu2\n\n edu   \n\nl4\n\n >50k   \n\nedu2->l4\n\n   \n\nl5\n\n <50k   \n\nedu2->l5\n\n   \n\ngain\n\n gain   \n\nage2\n\n age   \n\ngain->age2\n\n   \n\nl7\n\n <50k   \n\ngain->l7\n\n   \n\nsex\n\n sex   \n\nsex->gain\n\n   \n\nl6\n\n >50k   \n\nsex->l6\n\n   \n\nl8\n\n <50k   \n\nage2->l8\n\n   \n\nl9\n\n >50k   \n\nage2->l9\n\n  \n\n\n\n\n\n\n\nWhich variables seem most important?\nHow can you tell?"
   },
   {
     "objectID": "materials/slides/week4-logistic.html#how-to-measure-importance",
@@ -1510,5 +1510,180 @@
     "title": "Measuring classification accuracy",
     "section": "Extras",
     "text": "Extras\nIf there is extra time, or you’re interested in exploring a bit further on your own, read on.\n\nROC curves\nThe yardstick package also supplies functions for computing class probability metrics based on the estimated class probabilities rather than the estimated classes. ROC curves and AUROC are examples.\nroc_curve() will find all unique probability thresholds and, for each threshold, calculate sensitivity and specificity:\n\npred_df %>%\n  roc_curve(truth = group, estimate = pred)\n\n# A tibble: 33 × 3\n   .threshold specificity sensitivity\n        <dbl>       <dbl>       <dbl>\n 1  -Inf           0            1    \n 2     0.0664      0            1    \n 3     0.117       0            0.938\n 4     0.158       0            0.875\n 5     0.186       0.0667       0.875\n 6     0.191       0.0667       0.812\n 7     0.197       0.0667       0.75 \n 8     0.262       0.0667       0.688\n 9     0.284       0.0667       0.625\n10     0.299       0.133        0.625\n# … with 23 more rows\n\n\nThis can be used to plot the ROC curve:\n\npred_df %>%\n  roc_curve(truth = group, \n            estimate = pred,\n            event_level = 'second') %>%\n  ggplot(aes(y = sensitivity, x = 1 - specificity)) +\n  geom_path() +\n  geom_abline(slope = 1, intercept = 0)\n\n\n\n\nIn this case the ROC curve is so choppy because the test set only includes 31 observations. In general, for a collection of \\(n\\) observations there are at most \\(n + 1\\) unique thresholds and usually considerably fewer.\nThe area under the ROC curve is also easy to compute:\n\npred_df %>% roc_auc(truth = group, \n                    estimate = pred,\n                    event_level = 'second')\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  <chr>   <chr>          <dbl>\n1 roc_auc binary         0.712\n\n\n\n\nCombined metric types\nIf you wish to compute both classification metrics based on a class prediction and class probability metrics based on a probability prediction in a metric panel, the classification should be provided as the argument to estimate = ... and class probability column can be provided as an unnamed argument following the estimate argument.\nFor example:\n\npanel <- metric_set(roc_auc, accuracy) \n\npred_df %>% panel(truth = group,\n                  estimate = pred.group,\n                  pred,\n                  event_level = 'second')\n\n# A tibble: 2 × 3\n  .metric  .estimator .estimate\n  <chr>    <chr>          <dbl>\n1 accuracy binary         0.710\n2 roc_auc  binary         0.712\n\n\n\n\nExploring partitions\nReview this section if you want a deeper understanding of data partitioning.\nThe rationale for partitioning is that held out data will give a more honest assessment. Conversely, evaluating accuracy on data used to fit a model will provide an overly optimistic assessment.\nWe can experimentally confirm this intuition by:\n\nrepeatedly partitioning the data at random\nevaluating accuracy on both partitions\naveraging across partitions\n\nThis procedure will reveal that on average the accuracy is better on training data. Don’t worry too much about the computations; focus on the output and the concepts.\nWe’ll use the tidyverse iteration strategy from lab 3. First we’ll need some helper functions that are basically wrappers around each step we went through in this lab:\n\nfitting a model\nadding predictions\nevaluating metrics\n\n\n# define some helper functions\nfit_fn <- function(.df){\n  glm(class ~ ., family = 'binomial', data = .df)\n}\n\npred_fn <- function(.df, .mdl){\n  .df %>% add_predictions(.mdl, type = 'response')\n}\n\npanel <- metric_set(sensitivity, specificity, accuracy, roc_auc)\n\neval_fn <- function(.df){\n  .df %>%\n    mutate(group = factor(class, labels = c('TD', 'ASD')),\n           pred.group = factor(pred > 0.5, labels = c('TD', 'ASD'))) %>%\n    panel(truth = group,\n          estimate = pred.group,\n          pred,\n          event_level = 'second')\n  \n}\n\nNow let’s create 400 random partitions of the data and perform the steps in this lab for every partition. In addition, we’ll compute predictions and evaluate accuracy on the training set, which we did not do above and is generally not done.\n\nset.seed(101922)\nn_splits <- 400\nout <- tibble(partition = 1:n_splits,\n       split = map(partition, ~ initial_split(biomarker, prop = 0.8)),\n       train = map(split, training),\n       test = map(split, testing),\n       fit = map(train, fit_fn),\n       pred_test = map2(test, fit, pred_fn),\n       pred_train = map2(train, fit, pred_fn),\n       eval_test = map(pred_test, eval_fn),\n       eval_train = map(pred_train, eval_fn))\n\nout %>% head(4)\n\n# A tibble: 4 × 9\n  partition split            train    test     fit    pred_test pred_train\n      <int> <list>           <list>   <list>   <list> <list>    <list>    \n1         1 <split [123/31]> <tibble> <tibble> <glm>  <tibble>  <tibble>  \n2         2 <split [123/31]> <tibble> <tibble> <glm>  <tibble>  <tibble>  \n3         3 <split [123/31]> <tibble> <tibble> <glm>  <tibble>  <tibble>  \n4         4 <split [123/31]> <tibble> <tibble> <glm>  <tibble>  <tibble>  \n# … with 2 more variables: eval_test <list>, eval_train <list>\n\n\nWe can extract the accuracy of predictions on each of the training and test sets as follows:\n\ntest_accuracy <- out %>% \n  select(partition, contains('eval')) %>%\n  unnest(eval_test) %>%\n  select(partition, .metric, .estimate) %>%\n  pivot_wider(names_from = .metric, values_from = .estimate)\n\ntrain_accuracy <- out %>% \n  select(partition, contains('eval')) %>%\n  unnest(eval_train) %>%\n  select(partition, .metric, .estimate) %>%\n  pivot_wider(names_from = .metric, values_from = .estimate)\n\ntest_accuracy %>% head(4)\n\n# A tibble: 4 × 5\n  partition sensitivity specificity accuracy roc_auc\n      <int>       <dbl>       <dbl>    <dbl>   <dbl>\n1         1       0.6         0.562    0.581   0.675\n2         2       0.778       0.538    0.677   0.645\n3         3       0.684       0.917    0.774   0.846\n4         4       0.684       0.833    0.742   0.842\n\ntrain_accuracy %>% head(4)\n\n# A tibble: 4 × 5\n  partition sensitivity specificity accuracy roc_auc\n      <int>       <dbl>       <dbl>    <dbl>   <dbl>\n1         1       0.803       0.806    0.805   0.858\n2         2       0.741       0.831    0.789   0.858\n3         3       0.737       0.742    0.740   0.825\n4         4       0.719       0.773    0.748   0.825\n\n\nLastly, we can average the metrics over all partitions and also check the variability across partitions. We’ll start with the training set:\n\ntrain_summaries <- train_accuracy %>%\n  rename(roc.auc = roc_auc) %>%\n  select(-partition) %>%\n  summarize_all(.funs = list(mean = mean, sd = sd)) %>%\n  gather() %>%\n  separate(key, into = c('metric', 'stat'), sep = '_') %>%\n  spread(stat, value)\n\nNow compute the average and variability on the test set:\n\ntest_summaries <- test_accuracy %>%\n  rename(roc.auc = roc_auc) %>%\n  select(-partition) %>%\n  summarize_all(.funs = list(mean = mean, sd = sd)) %>%\n  gather() %>%\n  separate(key, into = c('metric', 'stat'), sep = '_') %>%\n  spread(stat, value)\n\nNow let’s put them side-by-side:\n\nleft_join(train_summaries, \n          test_summaries,\n          by = 'metric',\n          suffix = c('.train', '.test')) %>%\n  select(metric, contains('mean'), contains('sd')) %>%\n  knitr::kable()\n\n\n\n\nmetric\nmean.train\nmean.test\nsd.train\nsd.test\n\n\n\n\naccuracy\n0.7573374\n0.7225806\n0.0207045\n0.0702816\n\n\nroc.auc\n0.8348238\n0.7994956\n0.0158188\n0.0706822\n\n\nsensitivity\n0.7565383\n0.7093282\n0.0308425\n0.1073645\n\n\nspecificity\n0.7569019\n0.7416470\n0.0282898\n0.1148716\n\n\n\n\n\nNotice that:\n\nThe apparent accuracy according to all metrics is higher on average on the training data across partitionings\nThe accuracy metrics on the test data are more variable across partitionings\n\nThis behavior is the justification for data partitioning: evaluating predictions on the same data that was used to fit the model overestimates the accuracy compared with data that was not used in fitting."
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#announcementsreminders",
+    "href": "materials/slides/week4-lasso.html#announcementsreminders",
+    "title": "Biomarkers of ASD IV",
+    "section": "Announcements/reminders",
+    "text": "Announcements/reminders\n\nOffice hours follow all class and section meetings in building 434 room 122.\n\nEnter through courtyard, not on Storke side"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#two-steps",
+    "href": "materials/slides/week4-lasso.html#two-steps",
+    "title": "Biomarkers of ASD IV",
+    "section": "Two steps",
+    "text": "Two steps\nAt a very high level, the analysis we’ve covered is a ‘two-step’ procedure:\n\n(selection step) select variables\n(estimation step) train a classifier using selected variables\n\n\nA likely reason for this approach is that one cannot fit a regression model with 1317 predictors based on only 154 data points (\\(p > n\\))."
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#a-schematic",
+    "href": "materials/slides/week4-lasso.html#a-schematic",
+    "title": "Biomarkers of ASD IV",
+    "section": "A schematic",
+    "text": "A schematic\nHere’s a representation of the design of the analysis procedure.\n\n\n\n\n\n\n\nG\n\n \n\ncluster1\n\n statistical modeling  \n\ncluster2\n\n outputs   \n\ndata\n\n data   \n\nfit\n\n logistic   regression   \n\ndata->fit\n\n    \n\ns1\n\n multiple   testing   \n\ndata->s1\n\n    \n\ns2\n\n correlation   analysis   \n\ndata->s2\n\n    \n\ns3\n\n random   forest   \n\ndata->s3\n\n    \n\njoin\n\n   \n\ndata->join\n\n multiple partitioning   \n\nselec\n\n ensemble   selection   \n\nselec->fit\n\n    \n\nsel\n\n selected   variables   \n\nfit->sel\n\n    \n\nfit->join\n\n   \n\ns1->selec\n\n    \n\ns2->selec\n\n    \n\ns3->selec\n\n    \n\npred\n\n accuracy   quantification   \n\njoin->pred\n\n   \n\n\n\n\n\n\nlots of failure modes\nrepeated use of the same data for different sub-analyses"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#what-about-one-step",
+    "href": "materials/slides/week4-lasso.html#what-about-one-step",
+    "title": "Biomarkers of ASD IV",
+    "section": "What about one step?",
+    "text": "What about one step?\nIf we did simultaneous selection and estimation, our schematic might look like this:\n\n\n\n\n\n\n\nG\n\n \n\ncluster1\n\n data partitioning  \n\ncluster2\n\n statistical modeling  \n\ncluster3\n\n outputs   \n\ndata\n\n data   \n\ntrain\n\n training   set   \n\ndata->train\n\n    \n\ntest\n\n test   set   \n\ndata->test\n\n    \n\nfit\n\n selection and   estimation   \n\ntrain->fit\n\n    \n\njoin\n\n   \n\ntest->join\n\n   \n\nsel\n\n selected   variables   \n\nfit->sel\n\n    \n\nfit->join\n\n   \n\npred\n\n accuracy   quantification   \n\njoin->pred"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#minute-activity",
+    "href": "materials/slides/week4-lasso.html#minute-activity",
+    "title": "Biomarkers of ASD IV",
+    "section": "10 Minute Activity",
+    "text": "10 Minute Activity\nWith your table, share your diagrams.\n\nidentify common elements/aspects\npick one or a blend that you like best and sketch it on the whiteboard"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#design-assessment",
+    "href": "materials/slides/week4-lasso.html#design-assessment",
+    "title": "Biomarkers of ASD III",
+    "section": "Design assessment",
+    "text": "Design assessment\nHow would you score the proteomics analysis along the following dimensions?\n\nreproducibility: how easy is it to reproduce the results exactly?\ntransparency: how widely distributed is potential variability in results across the elements of the data analysis?\nreplicability: how likely is it that if the study were conducted with new subjects, the same panel would be obtained?"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#sparse-estimation",
+    "href": "materials/slides/week4-lasso.html#sparse-estimation",
+    "title": "Biomarkers of ASD IV",
+    "section": "Sparse estimation",
+    "text": "Sparse estimation\nImagine a logistic regression model with all 1317 predictors:\n\\[\n\\log\\left(\\frac{p_i}{1 - p_i}\\right) = \\beta_0 + \\sum_{j = 1}^{1317} \\beta_j x_{ij}\n\\]\n\nSuppose we also assume sparsity constraint: a condition that most of them must be zero.\n\n\nAs long as the constraint is strong enough so that the number of nonzero coefficients is \\(n\\) or fewer (i.e., \\(\\|\\beta\\|_0 < n\\)), one can compute estimates."
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#the-lasso",
+    "href": "materials/slides/week4-lasso.html#the-lasso",
+    "title": "Biomarkers of ASD IV",
+    "section": "The LASSO",
+    "text": "The LASSO\nThe Least Absolute Shrinkage and Selection Operator (LASSO) is the most widely-used sparse regression estimator.\n\nMathematically, the LASSO is the \\(L_1\\)-constrained MLE, i.e., the solution to the optimization problem:\n\\[\n\\begin{aligned}\n\\text{maximize}\\quad &\\mathcal{L}(\\beta; x, y) \\\\\n\\text{subject to}\\quad &\\|\\beta\\|_1 < t\n\\end{aligned}\n\\]"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#lagrangian-form",
+    "href": "materials/slides/week4-lasso.html#lagrangian-form",
+    "title": "Biomarkers of ASD IV",
+    "section": "Lagrangian form",
+    "text": "Lagrangian form\nThe solution to the constrained problem\n\\[\n\\begin{aligned}\n\\text{maximize}\\quad &\\mathcal{L}(\\beta; x, y) \\\\\n\\text{subject to}\\quad &\\|\\beta\\|_1 < t\n\\end{aligned}\n\\]\ncan be expressed as the unconstrained optimization\n\\[\n\\hat{\\beta} = \\arg\\min_\\beta \\left\\{-\\mathcal{L}(\\beta; x, y) + \\lambda\\|\\beta\\|_1\\right\\}\n\\]\nwhere \\(\\lambda\\) is a Lagrange multiplier."
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#toy-example",
+    "href": "materials/slides/week4-lasso.html#toy-example",
+    "title": "Biomarkers of ASD IV",
+    "section": "Toy example",
+    "text": "Toy example\n\n\nI simulated 250 observations according to a logistic regression model with 13 predictors, all but 3 of which had zero coefficients:\n\\[\n\\beta = \\left[ 0\\; 3\\; 0\\; 0\\; 0\\; 0\\; 0\\; 0\\; 0\\; 0\\; 0\\; 2\\; 2\\right]^T\n\\]\nAnd computed LASSO estimates for a few values of \\(\\lambda\\).\n\n\n\n# A tibble: 14 × 4\n   term  truth lambda1 lambda2\n   <chr> <dbl>   <dbl>   <dbl>\n 1 Int    -0.5  -0.171  -0.206\n 2 V1      0     0       0    \n 3 V2      3     1.49    1.96 \n 4 V3      0     0       0    \n 5 V4      0     0       0    \n 6 V5      0     0       0    \n 7 V6      0     0       0    \n 8 V7      0     0       0    \n 9 V8      0     0       0.084\n10 V9      0     0       0    \n11 V10     0     0       0    \n12 V11     0     0      -0.069\n13 V12     2     0.892   1.29 \n14 V13     2     1.01    1.40"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#constraint-strength",
+    "href": "materials/slides/week4-lasso.html#constraint-strength",
+    "title": "Biomarkers of ASD IV",
+    "section": "Constraint strength",
+    "text": "Constraint strength\nIn practice, \\(\\lambda\\) controls the strength of the constraint and thus the sparsity:\n\nLarger \\(\\lambda\\) ➜ stronger constraint ➜ more sparse\nSmaller \\(\\lambda\\) ➜ weaker constraint ➜ less sparse"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#selecting-lambda",
+    "href": "materials/slides/week4-lasso.html#selecting-lambda",
+    "title": "Biomarkers of ASD IV",
+    "section": "Selecting \\(\\lambda\\)",
+    "text": "Selecting \\(\\lambda\\)\nHow to choose the strength of constraint?\n\nCompute estimates for a “path” \\(\\lambda_1 > \\lambda_2 > \\cdots > \\lambda_K\\)\nChoose \\(\\lambda^*\\) that minimizes an error metric.\n\n\nTypically prediction error is used as the metric, and estimated by:\n\npartitioning the data many times\naveraging test set predictive accuracy across partitions"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#regularization-profile-estimates",
+    "href": "materials/slides/week4-lasso.html#regularization-profile-estimates",
+    "title": "Biomarkers of ASD IV",
+    "section": "Regularization profile: estimates",
+    "text": "Regularization profile: estimates\n\nValue of coefficient estimates as a function of regularization strength for the toy example. Each path corresponds to one model coefficient. Vertical line indicates optimal strength."
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#regularization-profile-error",
+    "href": "materials/slides/week4-lasso.html#regularization-profile-error",
+    "title": "Biomarkers of ASD IV",
+    "section": "Regularization profile: error",
+    "text": "Regularization profile: error\n\nPrediction error metric (‘deviance’, similar to RMSE) as a function of regularization strength. Two plausible choices shown – one more conservative, one less conservative."
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#lambda-selection",
+    "href": "materials/slides/week4-lasso.html#lambda-selection",
+    "title": "Biomarkers of ASD IV",
+    "section": "\\(\\lambda\\) selection",
+    "text": "\\(\\lambda\\) selection\n\nEstimate profile with optimal choice indicated by vertical line."
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#coefficient-estimates",
+    "href": "materials/slides/week4-lasso.html#coefficient-estimates",
+    "title": "Biomarkers of ASD IV",
+    "section": "Coefficient estimates",
+    "text": "Coefficient estimates\n\n\n\n\n\nterm\nestimate\ntruth\n\n\n\n\n(Intercept)\n-0.1712466\n-0.5\n\n\nV2\n1.4867846\n3.0\n\n\nV12\n0.8922530\n2.0\n\n\nV13\n1.0142979\n2.0"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#as-a-two-step-procedure",
+    "href": "materials/slides/week4-lasso.html#as-a-two-step-procedure",
+    "title": "Biomarkers of ASD III",
+    "section": "As a two-step procedure",
+    "text": "As a two-step procedure\nNotice that the estimate magnitudes are off by a considerable amount. If we recompute estimates without the constraint:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n-0.2620012\n0.1894367\n-1.383054\n0.1666482\n\n\nV2\n2.5653900\n0.3313415\n7.742434\n0.0000000\n\n\nV12\n1.7554670\n0.2786778\n6.299271\n0.0000000\n\n\nV13\n1.8323539\n0.2632716\n6.959937\n0.0000000"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#design-assessment-1",
+    "href": "materials/slides/week4-lasso.html#design-assessment-1",
+    "title": "Biomarkers of ASD IV",
+    "section": "Design assessment",
+    "text": "Design assessment\nHow would you score the proteomics analysis along the following dimensions?\n\nreproducibility: how easy is it to reproduce the results exactly?\ntransparency: how widely distributed is potential variability in results across the elements of the data analysis?\nreplicability: how likely is it that if the study were conducted with new subjects, the same panel would be obtained?"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#errors",
+    "href": "materials/slides/week4-lasso.html#errors",
+    "title": "Biomarkers of ASD IV",
+    "section": "Errors",
+    "text": "Errors\nNow if I simulate some new observations:\n\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nsensitivity\nbinary\n0.8500000\n\n\nspecificity\nbinary\n0.9000000\n\n\nroc_auc\nbinary\n0.9508333"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#alternative-analysis",
+    "href": "materials/slides/week4-lasso.html#alternative-analysis",
+    "title": "Biomarkers of ASD IV",
+    "section": "Alternative analysis",
+    "text": "Alternative analysis\n\nPreprocessing\\(\\lambda\\) selectionRefittingAccuracy\n\n\nLog-transform, center and scale, but don’t trim outliers.\n\nlibrary(tidymodels)\n\n# read in data\nbiomarker <- read_csv('data/biomarker-clean.csv') %>%\n  select(-ados) %>%\n  mutate(across(-group, ~scale(log(.x))[,1]),\n         class = as.numeric(group == 'ASD'))\n\n# partition\nset.seed(101622)\npartitions <- biomarker %>%\n  initial_split(prop = 0.8)\n\nx_train <- training(partitions) %>%\n  select(-group, -class) %>%\n  as.matrix()\ny_train <- training(partitions) %>%\n  pull(class)\n\n\n\nEstimated error\n\n# reproducibility\nset.seed(102022)\n\n# multiple partitioning for lambda selection\ncv_out <- cv.glmnet(x_train, \n                    y_train, \n                    family = 'binomial', \n                    nfolds = 5, \n                    type.measure = 'deviance')\n\ncvout_df <- tidy(cv_out) \n\n\n\n\n\n\n\n\n\n\nCoefficient paths\n\n# LASSO estimates\nfit <- glmnet(x_train, y_train, family = 'binomial')\nfit_df <- tidy(fit)\n\n\n\n\n\n\n\n\n\n\n\n\nAfter dropping the penalty and recomputing estimates, the final model is:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n-0.0404465\n0.2312305\n-0.1749184\n0.8611438\n\n\nMAPK2\n-0.9896079\n0.2831955\n-3.4944340\n0.0004751\n\n\nIgD\n-0.8264133\n0.2471363\n-3.3439569\n0.0008259\n\n\nDERM\n-0.9971069\n0.2758803\n-3.6142740\n0.0003012\n\n\n\n\n\n\n\n\n\n\n\n\n.metric\n.estimator\n.estimate\n\n\n\n\nsensitivity\nbinary\n0.8125000\n\n\nspecificity\nbinary\n0.7333333\n\n\nroc_auc\nbinary\n0.8375000"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#recomputing-estimates",
+    "href": "materials/slides/week4-lasso.html#recomputing-estimates",
+    "title": "Biomarkers of ASD IV",
+    "section": "Recomputing estimates",
+    "text": "Recomputing estimates\nNotice that the estimate magnitudes are off by a considerable amount. If we recompute estimates without the constraint:\n\n\n\n\n\nterm\nestimate\nstd.error\nstatistic\np.value\n\n\n\n\n(Intercept)\n-0.2620012\n0.1894367\n-1.383054\n0.1666482\n\n\nV2\n2.5653900\n0.3313415\n7.742434\n0.0000000\n\n\nV12\n1.7554670\n0.2786778\n6.299271\n0.0000000\n\n\nV13\n1.8323539\n0.2632716\n6.959937\n0.0000000"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#test",
+    "href": "materials/slides/week4-lasso.html#test",
+    "title": "Biomarkers of ASD III",
+    "section": "test",
+    "text": "test\n\n\n# reproducibility\nset.seed(102022)\n\n# multiple partitioning for lambda selection\ncv_out <- cv.glmnet(x_train, \n                    y_train, \n                    family = 'binomial', \n                    nfolds = 5, \n                    type.measure = 'deviance')\n\n# plot\ntidy(cv_out) %>% plot_fn1(lam = cv_out$lambda.1se)"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#some-final-thoughts",
+    "href": "materials/slides/week4-lasso.html#some-final-thoughts",
+    "title": "Biomarkers of ASD IV",
+    "section": "Some final thoughts",
+    "text": "Some final thoughts\n\nRegardless of method, classification based on serum levels seems to achieve 70-80% accuracy out of sample.\nNot specific enough to be used as a diagnostic tool, but may be helpful in early detection.\nPublished analysis seems a little over-complicated; computationally intensive methods are less transparent and more difficult to reproduce."
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#concepts-discussed",
+    "href": "materials/slides/week4-lasso.html#concepts-discussed",
+    "title": "Biomarkers of ASD IV",
+    "section": "Concepts discussed",
+    "text": "Concepts discussed\n\nmultiple hypothesis testing, FWER and FDR control\nclassification using logistic regression, random forests\nvariable selection using LASSO regularization\ndata partitioning and accuracy quantification"
+  },
+  {
+    "objectID": "materials/slides/week4-lasso.html#transferrable-skills",
+    "href": "materials/slides/week4-lasso.html#transferrable-skills",
+    "title": "Biomarkers of ASD IV",
+    "section": "Transferrable skills",
+    "text": "Transferrable skills\n\niterative computations in R, three ways\nfitting a logistic regression model with glm()\nuse of yardstick and rsample for quantifying classification accuracy"
   }
 ]
