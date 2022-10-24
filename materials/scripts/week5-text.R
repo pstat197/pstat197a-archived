@@ -2,6 +2,13 @@ library(tidyverse)
 library(tidytext)
 library(textstem)
 library(rvest)
+library(randomForest)
+library(tidymodels)
+library(Matrix)
+library(sparsesvd)
+library(nnet)
+library(glmnet)
+library(yardstick)
 setwd("~/pstat197/pstat197a/materials/datasets")
 
 # grab a few rows of raw html
@@ -112,8 +119,38 @@ clean_sample_long %>%
 ## EXPLORATORY ANALYSIS
 ########################
 
+remove <- c('\n', 
+            '[[:punct:]]', 
+            'nbsp', 
+            '[[:digit:]]', 
+            '[[:symbol:]]') %>%
+  paste(collapse = '|')
+
+# preprocessing function
+parse_fn <- function(.html){
+  read_html(.html) %>%
+    # select paragraph elements
+    html_elements('p') %>%
+    # parse html
+    html_text2() %>%
+    # collapse into one string
+    str_c(collapse = ' ') %>%
+    # drop links
+    qdapRegex::rm_url() %>%
+    # remove punctuation, numbers, etc.
+    str_replace_all(remove, ' ') %>%
+    # add whitespace between captial letters
+    str_replace_all("([a-z])([A-Z])", "\\1 \\2") %>%
+    # convert to lowercase letters
+    tolower() %>%
+    # remove extra whitespace
+    str_replace_all("\\s+", " ")
+}
+
 # read in more pages
-raw_full <- read_csv('web-fraud/fraud-raw.csv')
+# raw_full <- read_csv('web-fraud/fraud-raw.csv')
+# save(raw_full, file = 'fraud-raw.RData')
+load('fraud-raw.RData')
 
 # check label counts
 raw_full %>%
@@ -135,6 +172,11 @@ raw_full_labeled <- raw_full %>%
 set.seed(102222)
 raw_subsample <- raw_full_labeled %>%
   slice_sample(prop = 0.2)
+
+# rawdata <- raw_subsample %>%
+#   select(original_url, text_tmp, internal_feedback)
+# save(rawdata, file = 'data/carpe-raw-subsample.RData')
+
 
 # preprocess
 clean_subsample <- raw_subsample %>%
@@ -173,15 +215,13 @@ subsample_df <- clean_subsample %>%
   rename(class_fct = class_binary) %>%
   right_join(dtm_df, by = '.id')
 
-library(randomForest)
-library(tidymodels)
-
+# partition
 set.seed(102222)
 partitions <- subsample_df %>%
-  initial_split()
+  initial_split(prop = 0.8)
 
 x_train <- training(partitions) %>%
-  select(-.id, -class_fct) 
+  select(-.id, -class_fct)
 
 y_train <- training(partitions) %>% pull(class_fct)
 
@@ -190,23 +230,81 @@ x_test <- testing(partitions) %>%
 
 y_test <- testing(partitions) %>% pull(class_fct)
 
-set.seed(102222)
-rf_out <- randomForest(x = x_train, 
-                       y = y_train,
-                       xtest = x_test,
-                       ytest = y_test,
-                       mtry = 100,
-                       maxnodes = 20,
-                       ntree = 500)
+# dimension reduction
+max_pcs <- 200
+pca_out <- prcomp(x_train, 
+                  center = T, 
+                  scale = F,
+                  rank. = max_pcs)
 
-(rf_out$confusion %>% diag() %>% sum())/nrow(x_train)
+# examine cumulative variance plot
+tidy(pca_out, matrix = 'pcs') %>% 
+  filter(PC <= max_pcs) %>%
+  ggplot(aes(x = PC, y = cumulative)) +
+  geom_path()
 
-training(partitions) %>% 
-  count(class_fct) %>%
-  mutate(prop = n/sum(n))
+# select a number of pcs
+n_pc <- tidy(pca_out, matrix = 'pcs') %>%
+  filter(cumulative > 0.6) %>%
+  slice_min(cumulative) %>%
+  pull(PC)
 
-summary(rf_out)
-rf_out$importance %>%
-  as_tibble() %>%
-  bind_cols(lemma = rownames(rf_out$importance)) %>%
-  arrange(desc(MeanDecreaseGini))
+# check number of model parameters
+n_levels <- levels(y_train) %>% length()
+n_parm <- n_pc*(n_levels - 1)
+
+# transform training data
+pc_df <- tidy(pca_out, matrix = 'samples') %>%
+  filter(PC <= n_pc) %>%
+  mutate(PC = paste('PC', PC, sep = '')) %>%
+  pivot_wider(names_from = 'PC', values_from = 'value') %>%
+  select(-row) 
+
+train <- bind_cols(class = y_train, pc_df)
+
+# transform testing data
+test <- bind_cols(class = y_test, 
+          predict(pca_out, x_test)[, 1:n_pc])
+
+# fit logistic regression
+fit <- glmnet(x = pc_df,
+              y = y_train,
+              family = 'binomial',
+              alpha = 0.2)
+
+cvout <- cv.glmnet(x = as.matrix(pc_df),
+                   y = y_train,
+                   family = 'binomial',
+                   alpha = 0.2)
+
+tidy(cvout) %>% 
+  ggplot(aes(x = -log(lambda), y = estimate)) +
+  geom_path() +
+  geom_point(data = filter(tidy(cvout), 
+                    lambda == cvout$lambda.min))
+
+tidy(cvout) %>% 
+  ggplot(aes(x = -log(lambda), y = nzero)) +
+  geom_path() + 
+  geom_point(data = filter(tidy(cvout), 
+                           lambda == cvout$lambda.min))
+
+
+probs <- predict(fit, 
+        s = cvout$lambda.min, 
+        newx = predict(pca_out, x_test)[, 1:n_pc],
+        type = 'response')
+ 
+panel <- metric_set(sensitivity, specificity, accuracy, roc_auc)
+
+tibble(class = y_test,
+       probs = probs[, 1]) %>%
+  mutate(class.pred = factor(probs > 0.5, 
+                             labels = levels(y_test))) %>%
+  panel(estimate = class.pred,
+        truth = class,
+        probs,
+        event_level = 'second')
+
+
+
