@@ -49,6 +49,8 @@ editor: visual
 
 ## Module 1: biomarker identification
 
+*Objectives: introduce variable selection, classification, and multiple testing problems; discuss classification accuracy metrics and data partitioning; fit logistic regression and random forest classifiers in R; learn to implement multiple testing corrections for FDR control (Benjamini-Hochberg and Benjamini-Yekutieli); discuss selection via penalized estimation.*
+
 ### Week 3
 
 -   ***Tuesday meeting:*** introducing biomarker data; multiple testing \[[slides](slides/week3-biomarkers.qmd)\]
@@ -72,3 +74,15 @@ editor: visual
 -   ***Thursday meeting:*** LASSO regularization \[[slides](slides/week4-lasso.qmd)\]
 -   ***Assignments:***
     -   second group assignment due ***Friday, October 28, 11:59pm PST*** \[[accept via GH classroom](https://classroom.github.com/a/YmfzBeRn)\] \[[group assignments](https://docs.google.com/spreadsheets/d/1rkPDeIrd6zhFB7wnVpbU6HYs1aM1RGz9ulU6ypaQrwU/edit?usp=sharing)\]
+
+## Module 2: fraud claims
+
+*Objectives: introduce NLP techniques for converting text to data and web scraping tools in R; discuss dimension reduction techniques; introduce multiclass classification; learn to process text, fit multinomial logistic regression models, and train neural networks in R.*
+
+### Week 5
+
+-   ***Tuesday meeting:*** data introduction and basic NLP techniques \[[slides](slides/week5-text.qmd)\]
+
+-   ***Section meeting:*** string manipulation and text processing in R \[activity\]
+
+-   ***Thursday meeting:*** dimension reduction; multinomial logistic regression \[slides\]

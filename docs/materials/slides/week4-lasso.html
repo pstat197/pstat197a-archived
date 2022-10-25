@@ -87,6 +87,25 @@
     code span.va { color: #111111; } /* Variable */
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -653,7 +672,7 @@ join-&gt;pred
 </section>
 <section id="the-lasso" class="slide level2">
 <h2>The LASSO</h2>
-<p>The <strong>L</strong>east <strong>A</strong>bsolute <strong>S</strong>hrinkage and <strong>S</strong>election <strong>O</strong>perator (LASSO) is the most widely-used sparse regression estimator.</p>
+<p>The <strong>L</strong>east <strong>A</strong>bsolute <strong>S</strong>hrinkage and <strong>S</strong>election <strong>O</strong>perator (LASSO) (<span class="citation" data-cites="tibshirani1996regression">Tibshirani (<a href="#/ref-tibshirani1996regression" role="doc-biblioref" onclick="return false;">1996</a>)</span> ) is the most widely-used sparse regression estimator.</p>
 <div class="fragment">
 <p>Mathematically, the LASSO is the <span class="math inline">\(L_1\)</span>-constrained MLE, <em>i.e.,</em> the solution to the optimization problem:</p>
 <p><span class="math display">\[
@@ -912,7 +931,7 @@ join-&gt;pred
 <span id="cb3-10"><a href="#cb3-10"></a></span>
 <span id="cb3-11"><a href="#cb3-11"></a>cvout_df <span class="ot">&lt;-</span> <span class="fu">tidy</span>(cv_out) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-12_41a1f98d9812218041ddd4e5bee75488">
+<div class="cell" data-layout-align="center" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-12_16fd3f139d085ca130d3f9ef03b7ddf2">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1037,7 +1056,7 @@ join-&gt;pred
 <li class="fragment"><p>data partitioning and accuracy quantification</p></li>
 </ul>
 </section>
-<section id="transferrable-skills" class="slide level2">
+<section id="transferrable-skills" class="slide level2 smaller scrollable">
 <h2>Transferrable skills</h2>
 <ul>
 <li class="fragment"><p>iterative computations in R, three ways</p></li>
@@ -1047,6 +1066,11 @@ join-&gt;pred
 
 <div class="footer footer-default">
 
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-tibshirani1996regression" class="csl-entry" role="doc-biblioentry">
+Tibshirani, Robert. 1996. <span>“Regression Shrinkage and Selection via the Lasso.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 58 (1): 267–88.
+</div>
 </div>
 </section></section>
     </div>

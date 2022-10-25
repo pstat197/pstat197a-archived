@@ -180,7 +180,7 @@ As long as the constraint is strong enough so that the number of nonzero coeffic
 
 ## The LASSO
 
-The **L**east **A**bsolute **S**hrinkage and **S**election **O**perator (LASSO) is the most widely-used sparse regression estimator.
+The **L**east **A**bsolute **S**hrinkage and **S**election **O**perator (LASSO) (@tibshirani1996regression ) is the most widely-used sparse regression estimator.
 
 . . .
 
@@ -466,7 +466,7 @@ cvout_df %>%
                   ymax = conf.high),
               alpha = 0.2) +
   geom_point(data = filter(cvout_df, 
-                           lambda == cv_out$lambda.min)) +
+                           lambda == cv_out$lambda.1se)) +
   labs(y = 'estimated error')
 ```
 
