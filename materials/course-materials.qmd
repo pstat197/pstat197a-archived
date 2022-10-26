@@ -83,6 +83,6 @@ editor: visual
 
 -   ***Tuesday meeting:*** data introduction and basic NLP techniques \[[slides](slides/week5-text.qmd)\]
 
--   ***Section meeting:*** string manipulation and text processing in R \[activity\]
+-   ***Section meeting:*** string manipulation and text processing in R \[[activity](labs/lab5-text/lab5-text.qmd)\]
 
 -   ***Thursday meeting:*** dimension reduction; multinomial logistic regression \[slides\]
