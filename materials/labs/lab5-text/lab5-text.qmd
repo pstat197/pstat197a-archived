@@ -114,7 +114,7 @@ seuss_lines_clean <- seuss_lines_df %>%
   filter(line_num > 0)
 ```
 
-::: callout-action
+::: callout-important
 ## Action
 
 **Line summaries**
