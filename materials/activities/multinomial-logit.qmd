@@ -45,7 +45,7 @@ claims <- paste(url, 'claims-multi-tfidf.csv', sep = '') %>%
 claims
 ```
 
-## Activity 1
+## Activity 1 (10 min)
 
 You'll be given about ten minutes to do the following on your group's workstation.
 
@@ -112,7 +112,7 @@ You will most likely get a warning of some kind -- that's expected. Take note of
 Briefly discuss with your table: what do you think the warning means?
 :::
 
-## Activity 2
+## Activity 2 (10 min)
 
 This part will guide you through the following steps.
 
@@ -205,7 +205,7 @@ Briefly discuss with your table:
 2.  Does the classifier do a better job picking out relevant pages or irrelevant pages?
 :::
 
-## Activity 3 (15 min)
+## Activity 3 (10 min)
 
 Now we'll fit a multinomial logistic regression model using the *multiclass* labels rather than the binary ones, still using regularization to prevent overfitting.
 

@@ -364,7 +364,7 @@ $$
 \hat{Y}_i = \arg\max_k \hat{p}_k
 $$
 
-## Activity 3
+## Activity 3 (10 min)
 
 1.  Follow instructions to fit a multinomial model to the claims data.
 
