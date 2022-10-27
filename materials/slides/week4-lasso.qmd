@@ -1,5 +1,5 @@
 ---
-title: "Biomarkers of ASD IV"
+title: "Variable selection with the LASSO"
 subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
 author: "Trevor Ruiz"
 institute: 'UCSB'

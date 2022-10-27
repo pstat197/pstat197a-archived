@@ -1,5 +1,5 @@
 ---
-title: "Fraud claims I"
+title: "Text to data: basic NLP"
 subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
 author: "Trevor Ruiz"
 institute: 'UCSB'
@@ -93,7 +93,7 @@ At face value:
 
 How do we obtain useable data from HTML?
 
-## Labels  {.scrollable}
+## Labels {.scrollable}
 
 It'll be hard to classify labels ocurring \<1% of the time.
 
@@ -106,7 +106,7 @@ rawdata %>%
   knitr::kable()
 ```
 
-## Lumping  {.scrollable}
+## Lumping {.scrollable}
 
 We can ***lump*** infrequent labels together (see `forcats` \[[docs](https://forcats.tidyverse.org/)\]).
 
@@ -295,7 +295,7 @@ parse_fn <- function(.html){
     str_c(collapse = ' ') %>%
     rm_url() %>%
     rm_email() %>%
-    str_remove_all('\'s') %>%
+    str_remove_all('\'') %>%
     str_replace_all(remove, ' ') %>%
     str_replace_all("([a-z])([A-Z])", "\\1 \\2") %>%
     tolower() %>%
@@ -437,7 +437,7 @@ locomotion %>% lemmatize_words()
 
 Also works by pattern matching and replacement using a source dictionary.
 
-## `tidytext::unnest_tokens()`  {.scrollable}
+## `tidytext::unnest_tokens()` {.scrollable}
 
 ```{r}
 boat_text <- 'this boat that we just built is just fine and dont try to tell us its not the sides and the back are divine its the bottom i guess we forgot'
