@@ -73,6 +73,25 @@ claims <- clean %>%
 
 # save(claims, file = 'data/claims-tfidf.RData')
 
+# tokenize w/ bigrams
+claims_bigrams <- clean %>% 
+  unnest_tokens(output = token, 
+                input = text_clean, 
+                token = 'ngrams',
+                n = 2,
+                stopwords = str_remove_all(stop_words$word, 
+                                           '[[:punct:]]')) %>%
+  filter(str_length(token) > 6) %>%
+  count(.id, bclass, token, name = 'n') %>%
+  bind_tf_idf(term = token, 
+              document = .id,
+              n = n) %>%
+  pivot_wider(id_cols = c('.id', 'bclass'),
+              names_from = 'token',
+              values_from = 'tf_idf',
+              values_fill = 0)
+
+# generate multiclass labels
 multi_labels <- rawdata %>%
   transmute(mclass = fct_lump(internal_feedback,
                              prop = 0.1),
@@ -84,10 +103,35 @@ multi_labels <- rawdata %>%
                                other = 'Other'),
             .id = paste('url', row_number(), sep = '')) 
 
+# merge with word token tfidf
 claims_multi <- multi_labels %>% 
   right_join(claims, by = '.id') 
 
-save(claims_multi, file = 'data/claims-multi-tfidf.RData')
+# merge with bigram tfidf
+claims_multi_bigram <- multi_labels %>% 
+  right_join(claims_bigrams, by = '.id') 
+
+# save
+save(list = c('claims_multi', 'claims_multi_bigram'), 
+     file = 'data/claims-processed.RData')
+
+
+claims_long <- clean %>% 
+  unnest_tokens(output = token, 
+                input = text_clean, 
+                token = 'words',
+                stopwords = str_remove_all(stop_words$word, 
+                                           '[[:punct:]]')) %>%
+  mutate(token.lem = lemmatize_words(token)) %>%
+  filter(str_length(token.lem) > 2) %>%
+  count(.id, bclass, token.lem, name = 'n') %>%
+  bind_tf_idf(term = token.lem, 
+              document = .id,
+              n = n) 
+
+
+save(list = c('claims_multi', 'claims_long', 'clean'),
+     file = 'data/claims-clean.RData')
 
 ## PROJECTION
 ##############

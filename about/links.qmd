@@ -20,6 +20,8 @@ title: "Links"
 
 -   [R for Data Science](https://r4ds.had.co.nz/) by Wickham and Grolemund.
 
+-   [Deep Learning](https://www.deeplearningbook.org/) by Goodfellow, Bengio, and Courville.
+
 ***Documentation:***
 
 -   [Tidyverse](https://www.tidyverse.org/) and [tidymodels](https://www.tidymodels.org/) packages

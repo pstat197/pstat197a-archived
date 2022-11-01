@@ -1,6 +1,7 @@
 ---
 title: 'Course materials'
 editor: visual
+bibliography: slides/refs.bib
 ---
 
 ## Introductory module
@@ -86,3 +87,24 @@ editor: visual
 -   ***Section meeting:*** string manipulation and text processing in R \[[activity](labs/lab5-text/lab5-text.qmd)\]
 
 -   ***Thursday meeting:*** dimension reduction; multinomial logistic regression \[[slides](slides/week5-multinomial.qmd)\] \[[activity](activities/multinomial-logit.qmd)\]
+
+-   Optional further reading:
+
+    -   MDSR [Ch. 19](https://mdsr-book.github.io/mdsr2e/ch-text.html)
+
+    -   @cambria2014jumping
+
+    -   @khan2010review
+
+### Week 6
+
+-   ***Tuesday meeting:*** feedforward neural networks \[[slides](slides/week6-nn.qmd)\]
+
+-   ***Section meeting:*** fitting neural nets with keras \[activity\]
+
+-   ***Assignments:***
+
+    -   Midquarter assessments \[[form](https://forms.gle/v7xUk83EfxiFEKVS9)\]
+    -   Read @emmert2020introductory (§1-5, §9) and prepare a reading response
+
+-   Optional further reading: @alzubaidi2021review
