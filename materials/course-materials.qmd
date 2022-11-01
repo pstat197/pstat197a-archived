@@ -18,7 +18,7 @@ bibliography: slides/refs.bib
 
     -   fill out [intake form](https://forms.gle/zQT8jc85Y71BKYV48)
 
-    -   read [Peng, R. D., & Parker, H. S. (2022). Perspective on data science. *Annual Review of Statistics and Its Application*, *9*, 1-20.](https://doi.org/10.1146/annurev-statistics-040220-013917) (access online via UCSB library);
+    -   read @peng2022perspective;
 
     -   prepare a [reading response](https://forms.gle/n2GpNGMVXVaAXSWf9)
 
@@ -50,7 +50,7 @@ bibliography: slides/refs.bib
 
 ## Module 1: biomarker identification
 
-*Objectives: introduce variable selection, classification, and multiple testing problems; discuss classification accuracy metrics and data partitioning; fit logistic regression and random forest classifiers in R; learn to implement multiple testing corrections for FDR control (Benjamini-Hochberg and Benjamini-Yekutieli); discuss selection via penalized estimation.*
+*Objectives: introduce variable selection, classification, and multiple testing problems; discuss classification accuracy metrics and data partitioning; fit logistic regression and random forest classifiers in R; learn to implement multiple testing corrections for FDR control (Benjamini-Hochberg and Benjamini-Yekutieli); discuss selection via penalized estimation. Data from @hewitson2021blood .*
 
 ### Week 3
 
@@ -64,7 +64,7 @@ bibliography: slides/refs.bib
 
     -   read [MDSR 10.1 - 10.2](https://mdsr-book.github.io/mdsr2e/ch-modeling.html)
 
-    -   read [Hewitson *et al.* 2021](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7904196/)
+    -   read @hewitson2021blood
 
     -   prepare a [reading response](https://forms.gle/o4QYoPh8tCAYswLt7)
 
@@ -107,4 +107,8 @@ bibliography: slides/refs.bib
     -   Midquarter assessments \[[form](https://forms.gle/v7xUk83EfxiFEKVS9)\]
     -   Read @emmert2020introductory (§1-5, §9) and prepare a reading response
 
--   Optional further reading: @alzubaidi2021review
+-   Optional further reading:
+
+    -   @alzubaidi2021review
+
+    -   @Goodfellow-et-al-2016 Ch. 6 (advanced)
