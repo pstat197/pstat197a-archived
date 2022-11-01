@@ -1,0 +1,45 @@
+---
+title: "Training neural networks"
+editor: visual
+code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
+---
+
+## Pre-lab activity
+
+Please complete this activity before arriving at your section meeting. It should only take you about 15 minutes.
+
+### Python installation
+
+We will use packages that interface to python from R to train neural networks in this lab. For this a current python installation is needed.
+
+Select the download appropriate for your operating system [here](https://www.python.org/downloads/) and follow installation instructions.
+
+### Keras and Tensorflow
+
+Open RStudio and execute the following commands in the console. You should have already installed `keras` with other packages in the first lab; however, if `library(keras)` returns an error execute `install.packages('keras')` and then try again. This will install Tensorflow (for python) in a manner suitable for use in R, along with a few other packages.
+
+```{r}
+#| eval: false
+library(keras)
+install_keras()
+```
+
+To confirm the installation worked, try:
+
+```{r}
+library(tensorflow)
+tf$constant('Hello world')
+```
+
+You may see a long message related to CUDA libraries in addition to the output shown above, but if you see this output at the end, your installation was successful.
+
+If you did not see the expected output, try configuring a virtual environment for the installation explicitly as shown [here](https://tensorflow.rstudio.com/install/#installation).
+
+If you are unable to troubleshoot after a short period of time, partner with a classmate for the lab activity and then ask for help from course staff.
+
+## Lab activity
