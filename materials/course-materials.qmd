@@ -100,7 +100,7 @@ bibliography: slides/refs.bib
 
 -   ***Tuesday meeting:*** feedforward neural networks \[[slides](slides/week6-nn.qmd)\]
 
--   ***Section meeting:*** fitting neural nets with keras \[activity\]
+-   ***Section meeting:*** fitting neural nets with keras \[[activity](labs/lab6-nn/lab6-nn.qmd)\]
 
 -   ***Assignments:***
 
