@@ -1275,7 +1275,7 @@ activation-&gt;out
 <h2>Loss functions</h2>
 <p>The most common loss function for classification is</p>
 <p><span class="math display">\[
-L(Y, f(X)) = -\frac{1}{n}\sum_i y_i\log p_i
+L(Y, f(X)) = -\frac{1}{n}\sum_i \left[y_i\log p_i + (1 - y_i)\log(1 - p_i)\right]
 \qquad\text{(cross-entropy)}
 \]</span></p>
 <div class="fragment">

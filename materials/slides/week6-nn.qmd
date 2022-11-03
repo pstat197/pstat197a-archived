@@ -561,7 +561,7 @@ The most common activation functions are:
 The most common loss function for classification is
 
 $$
-L(Y, f(X)) = -\frac{1}{n}\sum_i y_i\log p_i
+L(Y, f(X)) = -\frac{1}{n}\sum_i \left[y_i\log p_i + (1 - y_i)\log(1 - p_i)\right]
 \qquad\text{(cross-entropy)}
 $$
 
