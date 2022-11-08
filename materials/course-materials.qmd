@@ -108,7 +108,7 @@ bibliography: slides/refs.bib
 
     -   Midquarter assessments \[[form](https://forms.gle/v7xUk83EfxiFEKVS9)\]
     -   Request winter add code \[[form](https://forms.gle/S8j2MPcnunU6Kzek9)\]
-    -   Read @emmert2020introductory (§1-5, §9) and prepare a reading response
+    -   Read @emmert2020introductory (§1-5, §9) and prepare a [reading response](https://forms.gle/FSAStof9zNCLBM578)
     -   third group assignment ***due Monday, November 14, 11:59pm PST*** \[[accept via GH classroom](https://classroom.github.com/a/jHAX1yAx)\] \[[group assignments](https://docs.google.com/spreadsheets/d/15hqIKKFG00LoFy1i0JBwSzZI3U66fKe9N3FDoH7pq2o/edit?usp=sharing)\]
 
 -   Optional further reading:
