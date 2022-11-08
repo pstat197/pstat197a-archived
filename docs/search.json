@@ -2319,98 +2319,98 @@
   {
     "objectID": "materials/slides/week7-forecasting.html#word-clouds",
     "href": "materials/slides/week7-forecasting.html#word-clouds",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Word clouds",
     "text": "Word clouds\n\nFrom self-assessments: identify a helpful feature that improved groupwork."
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#word-clouds-1",
     "href": "materials/slides/week7-forecasting.html#word-clouds-1",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Word clouds",
     "text": "Word clouds\n\nFrom self-assessments: identify an area of improvement"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#above",
     "href": "materials/slides/week7-forecasting.html#above",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "ABoVE",
     "text": "ABoVE\nThe Arctic-Boreal Vulnerability Experiment (ABoVE) is a NASA Terrestrial Ecology Program field campaign in Alaska and western Canada from 2016 to 2021.\n\nResearch for ABoVE will link field-based, process-level studies with geospatial data products derived from airborne and satellite sensors, providing a foundation for improving the analysis, and modeling capabilities needed to understand and predict ecosystem responses and societal implications.\n\n\nFind ABoVE data here."
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#above-soil-temperatures",
     "href": "materials/slides/week7-forecasting.html#above-soil-temperatures",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "ABoVE Soil Temperatures",
     "text": "ABoVE Soil Temperatures\nWe’ll work with soil temperatures.\n\nNicolsky, D.J., V.E. Romanovsky, A.L. Kholodov, K. Dolgikh, and N. Hasson. 2022. ABoVE: Soil Temperature Profiles, USArray Seismic Stations, 2016-2021. ORNL DAAC, Oak Ridge, Tennessee, USA. https://doi.org/10.3334/ORNLDAAC/1680\n\n\nObservations of soil temperatures (centigrade)\nMeasured at 63 locations in Alaska\nRecorded four times daily at multiple depths"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#site-locations",
     "href": "materials/slides/week7-forecasting.html#site-locations",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Site locations",
     "text": "Site locations\n\n\n\nWe’ll use 57 of the 63 sites for now.\n\nLocations of selected monitoring stations."
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#example-rows",
     "href": "materials/slides/week7-forecasting.html#example-rows",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Example rows",
     "text": "Example rows\n\n\n# A tibble: 6 × 7\n  site   latitude longitude elevation date_time           depth  temp\n  <chr>     <dbl>     <dbl>     <dbl> <dttm>              <dbl> <dbl>\n1 B21K-1     69.6     -155.        96 2017-08-14 12:00:00   0    3.46\n2 B21K-1     69.6     -155.        96 2017-08-14 12:00:00   0.2  3.48\n3 B21K-1     69.6     -155.        96 2017-08-14 12:00:00   1    3.38\n4 B21K-1     69.6     -155.        96 2017-08-14 12:00:00   1.5  3.31\n5 B21K-1     69.6     -155.        96 2017-08-14 18:00:00   0    3.92\n6 B21K-1     69.6     -155.        96 2017-08-14 18:00:00   0.2  4.16"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#temperature-profiles",
     "href": "materials/slides/week7-forecasting.html#temperature-profiles",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Temperature profiles",
-    "text": "Temperature profiles\n\nObservations for a single site at four depths (one path per depth).\nWhat is happening over time?\nWhat is happening across depth?"
+    "text": "Temperature profiles\n\nObservations for a single site at four depths (one path per depth).\nWhat is happening over time?\nWhat is happening across depth?\nAny other observations?"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#comparing-sites",
     "href": "materials/slides/week7-forecasting.html#comparing-sites",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Comparing sites",
     "text": "Comparing sites\n\nProfiles at two sites.\nHow do the sites differ?\nHow are they similar?"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#comparing-sites-1",
     "href": "materials/slides/week7-forecasting.html#comparing-sites-1",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Comparing sites",
     "text": "Comparing sites\n\n\n\n\n\n\n\n\nHere are the locations of the sites just compared.\n\nwhat factors might account for some of the differences in temperature profiles between the sites?\nare any of them recorded in our data?"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#goals",
     "href": "materials/slides/week7-forecasting.html#goals",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Goals",
-    "text": "Goals\nOur overall goal this week is to build a forecasting model.\n\nTo start, let’s approximate the seasonal trend."
+    "text": "Goals\nOur overall goal this week is to build a forecasting model.\n\nStrategy:\n\nTo start, approximate the seasonal trend.\nDe-trend the data and model the correlation structure of deviations from seasonal trend.\nForecast as: \\(\\text{trend} + \\mathbb{E}(\\text{future}| \\text{present})\\)"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#annual-cycles",
     "href": "materials/slides/week7-forecasting.html#annual-cycles",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Annual cycles",
     "text": "Annual cycles\nThe seasonality is annual – let’s examine the annual cycle instead of the usual time course plot.\n\n\n\n\n\n\n\nAnnual cycle for site H17K-1 at 0.2m depth.\n\n\n\n\n\n\nCan you see the start and stop dates in the plot?\nAny other observations?"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#pooling-sites",
     "href": "materials/slides/week7-forecasting.html#pooling-sites",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Pooling sites",
     "text": "Pooling sites\nHow would you estimate the annual cycle based on data at each site?\n\nDaily average temperatures at 0.2m depth for 37 sites, 2017-2019."
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#as-an-estimation-problem",
     "href": "materials/slides/week7-forecasting.html#as-an-estimation-problem",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "As an estimation problem",
     "text": "As an estimation problem\nModeling the trend can be formulated as estimating the model:\n\\[\nY_{i, t} = f(t) + \\epsilon_{i, t}\n\\]\n\nWhere:\n\n\\(Y_{i, t}\\) is the temperature at site \\(i\\) and time \\(t\\)\n\\(f(t)\\) is the mean temperature at time \\(t\\)\n\\(\\epsilon_{i, t}\\) is a random error\n\n\n\nBut how do you estimate an arbitrary function?"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#basis-functions",
     "href": "materials/slides/week7-forecasting.html#basis-functions",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Basis functions",
     "text": "Basis functions\nA basis function is an element of a basis for a function space.\n\nIf \\(\\{f_j\\}\\) form a basis for a function space \\(C\\) then\n\\[\nf \\in C \\quad\\Longleftrightarrow f = \\sum_j c_j f_j\n\\]\n\n\nA finite subset of basis functions can be used to approximate functions in the space:\n\\[\nf \\approx \\sum_{j = 1}^J c_j f_j\n\\]"
   },
@@ -2424,50 +2424,92 @@
   {
     "objectID": "materials/slides/week7-forecasting.html#spline-basis",
     "href": "materials/slides/week7-forecasting.html#spline-basis",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Spline basis",
-    "text": "Spline basis\nThe spline basis is a basis for piecewise polynomials of a specified order.\n\nBases for piecewise polynomials of order 1 through 4 joined at six knot points.\ngenerated recursively based on ‘knots’ – joining locations\nknots are usually placed at data quantiles and boundaries"
+    "text": "Spline basis\nThe spline basis is a basis for piecewise polynomials of a specified order.\n\nBases for piecewise polynomials of order 1 through 4 joined at evenly-spaced knot points.\nGenerated recursively based on ‘knots’ – joining locations"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#first-try",
     "href": "materials/slides/week7-forecasting.html#first-try",
     "title": "Forecasting soil temperatures",
     "section": "First try",
-    "text": "First try\nModel: \\(Y_{i,t} = \\mu + \\beta\\text{elev}_i + \\sum_{j = 1}^7 \\gamma_j f_j(t) + \\epsilon_{i, t}\\)\n\nChoosing knotsFitted curve\n\n\n\n\n\n\n\nKnots placed at 0.2-spaced quantiles.\n\n\n\n\n\n\n\n\n\n\n\nEstimated mean with 95% prediction interval at median site elevation.\n\n\n\n\n\n\n\n\nWhat do you think?"
+    "text": "First try\nModel: \\(Y_{i,t} = \\beta_0 + \\beta_1\\cdot\\text{elev}_i + \\sum_{j = 1}^7 \\gamma_j \\cdot f_j(t) + \\epsilon_{i, t}\\)\n\nChoosing knotsFitted curve\n\n\n\n\n\n\n\nKnots placed at 0.2-spaced quantiles.\n\n\n\n\n\n\n\n\n\n\n\nEstimated mean with 95% prediction interval at median site elevation."
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#a-problem",
     "href": "materials/slides/week7-forecasting.html#a-problem",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "A problem",
-    "text": "A problem\n\nSpline bases produce discontinuities\nSo what we really want is to approximate the seasonal mean by a harmonic function\nThe choice of basis should be appropriate for the function being approximated!"
+    "text": "A problem\n\n\n\n\n\n\n\nSpline bases produce discontinuities\n\n\n\n\n\nThe choice of basis must match problem context.\n\nhere, need boundaries to meet\nin other words, need a harmonic function"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#fourier-basis",
     "href": "materials/slides/week7-forecasting.html#fourier-basis",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Fourier basis",
-    "text": "Fourier basis\nThe Fourier basis is a basis for square-integrable functions on a closed interval; basis functions are harmonic.\n\nThe Fourier basis can be used to approximate harmonic functions with a known period.\n\n\n\n\n\n\n\n4 Fourier basis functions on the interval [0, 1]."
+    "text": "Fourier basis\nThe Fourier basis is a basis for square-integrable functions on closed intervals consisting of sine-cosine pairs.\n\n\n\n\n\n\n4 Fourier basis functions on the interval [1, 365]."
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#second-try",
     "href": "materials/slides/week7-forecasting.html#second-try",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Second try",
-    "text": "Second try\n\nSeasonal mean\n\n\n\n\n\nSeasonal mean approximation using 4 Fourier basis functions.\n\n\n\n\nTime plot\n\n\n\n\n\nSeasonal mean approxiamtion using 4 Fourier basis functions."
+    "text": "Second try\n\nSeasonal meanTime plot\n\n\n\n\n\n\n\nSeasonal mean approximation using 4 Fourier basis functions.\n\n\n\n\n\n\n\n\n\n\n\nSeasonal mean approxiamtion using 4 Fourier basis functions."
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#forecasting",
     "href": "materials/slides/week7-forecasting.html#forecasting",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Forecasting",
     "text": "Forecasting\nDoes this forecast make sense? Why or why not?"
   },
   {
     "objectID": "materials/slides/week7-forecasting.html#next-time",
     "href": "materials/slides/week7-forecasting.html#next-time",
-    "title": "Forecasting soil temperatures",
+    "title": "Curve fitting using basis approximations",
     "section": "Next time",
-    "text": "Next time\n\nFit a time series model to the residuals\n\n\\[\ne_{i, t} = Y_{i, t} - \\left(\\hat{\\mu} + \\hat{\\beta}\\text{elev}_i + \\hat{f}(t)\\right)\n\\]\n\nForecast \\(\\hat{e}_{i, t} = \\mathbb{E}\\left(e_{i, t}|e_{i, t - 1}\\right)\\) using the residual model\n“Feed forward” residual forecasts to obtain temperature forecasts\n\\[\n\\hat{Y}_{i, t} = \\hat{\\mu} + \\hat{\\beta}\\text{elev}_i + \\hat{f}(t) + \\hat{e}_{i, t}\n\\]"
+    "text": "Next time\n\nFit a time series model to the residuals\n\\[\ne_{i, t} = Y_{i, t} - \\underbrace{\\left(\\hat{\\beta_0} + \\hat{\\beta_1}\\text{elev}_i + \\hat{f}(t)\\right)}_{\\text{mean function } \\hat{\\mu}(i, t)}\n\\]\nForecast \\(\\hat{e}_{i, t} = \\mathbb{E}\\left(e_{i, t}|e_{i, t - 1}\\right)\\) using the residual model\n“Feed forward” residual forecasts to obtain temperature forecasts\n\\[\n\\hat{Y}_{i, t} = \\hat{\\mu}(i, t) + \\hat{e}_{i, t}\n\\]"
+  },
+  {
+    "objectID": "materials/slides/week7-forecasting.html#basis-approximation",
+    "href": "materials/slides/week7-forecasting.html#basis-approximation",
+    "title": "Curve fitting using basis approximations",
+    "section": "Basis approximation",
+    "text": "Basis approximation\nA nifty trick is to estimate \\(f\\) using a suitable basis approximation:\n\\[\nY_{i, t} = \\beta_0 + \\color{maroon}{\\underbrace{\\sum_{j = 1}^J \\beta_j f_j(t)}_{\\tilde{f}(t) \\approx f(t)}} + \\epsilon_{i, t}\n\\]\n\nThis model can be fit using standard linear regression. (Think of the \\(f_j(t)\\)’s as \\(J\\) ‘new’ predictors.)"
+  },
+  {
+    "objectID": "materials/slides/week7-forecasting.html#a-first-try-spline-basis",
+    "href": "materials/slides/week7-forecasting.html#a-first-try-spline-basis",
+    "title": "Forecasting soil temperatures",
+    "section": "A first try: spline basis",
+    "text": "A first try: spline basis"
+  },
+  {
+    "objectID": "materials/slides/week7-forecasting.html#knot-placement",
+    "href": "materials/slides/week7-forecasting.html#knot-placement",
+    "title": "Curve fitting using basis approximations",
+    "section": "Knot placement",
+    "text": "Knot placement\nAppropriate placement of knots is essential for quality function approximation.\n\ndefault: place at data quantiles\nbetter: concentrated in regions with irregular trend\n\n\n\n\n\n\n\n\n\n\nWhere would you put them for our data?"
+  },
+  {
+    "objectID": "materials/slides/week7-forecasting.html#knot-spacing",
+    "href": "materials/slides/week7-forecasting.html#knot-spacing",
+    "title": "Curve fitting using basis approximations",
+    "section": "Knot spacing",
+    "text": "Knot spacing\nKnot spacing will affect how densely basis functions are concentrated around particular regions of data.\n\nHere are bases generated on some unevenly-spaced knots:\n\n\n\n\n\n\n\n\n\n\n\nCheck your understanding: where would this spline basis have the most flexible approximation capability?"
+  },
+  {
+    "objectID": "materials/slides/week7-forecasting.html#a-first-attempt-spline-basis",
+    "href": "materials/slides/week7-forecasting.html#a-first-attempt-spline-basis",
+    "title": "Curve fitting using basis approximations",
+    "section": "A first attempt: spline basis",
+    "text": "A first attempt: spline basis\nModel: \\(Y_{i,t} = \\beta_0 + \\beta_1\\cdot\\text{elev}_i + \\sum_{j = 1}^7 \\gamma_j \\cdot f_j(t) + \\epsilon_{i, t}\\)\n\nKnot placementFitted curve\n\n\n\n\n\n\n\nKnots placed at vertical lines.\n\n\n\n\n\n\n\n\n\n\n\nEstimated mean with 95% prediction interval at median site elevation."
+  },
+  {
+    "objectID": "materials/course-materials.html#module-3-soil-temperatures",
+    "href": "materials/course-materials.html#module-3-soil-temperatures",
+    "title": "Course materials",
+    "section": "Module 3: soil temperatures",
+    "text": "Module 3: soil temperatures\nObjectives: build a forecasting model; introduce concepts of spatial and temporal correlation structures; discuss function approximation and curve fitting with regression techniques; fit elementary time series and spatial models; interpolation.\n\nWeek 7\n\nTuesday meeting: data introduction; function approximation using basis expansions [slides]\nSection meeting: curve fitting\nThursday meeting: temporal correlation; a forecasting model"
   }
 ]

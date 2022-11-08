@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.0.38">
 
   <meta name="author" content="Trevor Ruiz">
-  <title>Forecasting soil temperatures</title>
+  <title>Curve fitting using basis approximations</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -319,7 +319,7 @@
     <div class="slides">
 
 <section id="title-slide" class="center">
-  <h1 class="title">Forecasting soil temperatures</h1>
+  <h1 class="title">Curve fitting using basis approximations</h1>
   <p class="subtitle">PSTAT197A/CMPSC190DD Fall 2022</p>
   <p class="author">Trevor Ruiz</p>
   <p class="institute">UCSB</p>
@@ -362,7 +362,7 @@
 </section>
 <section id="site-locations" class="slide level2">
 <h2>Site locations</h2>
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-1_b2750663a12a03ff759a513277377166">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-1_df0eb0dbfe40464d97e457417ba938e3">
 
 </div>
 <p>We’ll use 57 of the 63 sites for now.</p>
@@ -390,6 +390,7 @@
 <img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-4-1.png" width="576" class="r-stretch quarto-figure-left"><p class="caption">Observations for a single site at four depths (one path per depth).</p><ul>
 <li class="fragment"><p>What is happening over time?</p></li>
 <li class="fragment"><p>What is happening across depth?</p></li>
+<li class="fragment"><p>Any other observations?</p></li>
 </ul>
 </section>
 <section id="comparing-sites" class="slide level2">
@@ -420,9 +421,14 @@
 </section>
 <section id="goals" class="slide level2">
 <h2>Goals</h2>
-<p>Our overall goal this week is to <strong><em>build a forecasting model.</em></strong></p>
+<p>Our overall goal this week is to <strong>build a forecasting model.</strong></p>
 <div class="fragment">
-<p>To start, let’s approximate the seasonal trend.</p>
+<p>Strategy:</p>
+<ol type="1">
+<li class="fragment">To start, approximate the seasonal trend.</li>
+<li class="fragment">De-trend the data and model the correlation structure of deviations from seasonal trend.</li>
+<li class="fragment">Forecast as: <span class="math inline">\(\text{trend} + \mathbb{E}(\text{future}| \text{present})\)</span></li>
+</ol>
 </div>
 </section></section>
 <section>
@@ -432,7 +438,7 @@
 </section>
 <section id="annual-cycles" class="slide level2">
 <h2>Annual cycles</h2>
-<p>The seasonality is annual – let’s examine the <em>annual cycle</em> instead of the usual time course plot.</p>
+<p>The seasonality is annual – let’s examine the annual cycle instead of the usual time course plot.</p>
 <div class="columns">
 <div class="column" style="width:60%;">
 <div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-7_5a9a5592e06b74dfefb1852e31817669">
@@ -473,12 +479,12 @@ Y_{i, t} = f(t) + \epsilon_{i, t}
 </ul>
 </div>
 <div class="fragment">
-<p><em>But how do you estimate an arbitrary function?</em></p>
+<p>But how do you estimate an arbitrary function?</p>
 </div>
 </section>
 <section id="basis-functions" class="slide level2">
 <h2>Basis functions</h2>
-<p>A <strong><em>basis function</em></strong> is an element of a basis for a function space.</p>
+<p>A <strong>basis function</strong> is an element of a basis for a function space.</p>
 <div class="fragment">
 <p>If <span class="math inline">\(\{f_j\}\)</span> form a basis for a function space <span class="math inline">\(C\)</span> then</p>
 <p><span class="math display">\[
@@ -492,49 +498,88 @@ f \approx \sum_{j = 1}^J c_j f_j
 \]</span></p>
 </div>
 </section>
-<section id="basis-function-approximation" class="slide level2">
-<h2>Basis function approximation</h2>
-<p>A nifty trick is to estimate <span class="math inline">\(f\)</span> using a suitable basis function approximation:</p>
+<section id="basis-approximation" class="slide level2">
+<h2>Basis approximation</h2>
+<p>A nifty trick is to estimate <span class="math inline">\(f\)</span> using a suitable <span style="color: maroon;">basis approximation</span>:</p>
 <p><span class="math display">\[
-Y_{i, t} = \beta_0 + \sum_{j = 1}^J \beta_j f_j(t) + \epsilon_{i, t}
+Y_{i, t} = \beta_0 + \color{maroon}{\underbrace{\sum_{j = 1}^J \beta_j f_j(t)}_{\tilde{f}(t) \approx f(t)}} + \epsilon_{i, t}
 \]</span></p>
 <div class="fragment">
-<p>This model can be fit using standard linear regression. (Think of <span class="math inline">\(f_j(t)\)</span> as <span class="math inline">\(J\)</span> ‘new’ predictors.)</p>
+<p>This model can be fit using standard linear regression. (Think of the <span class="math inline">\(f_j(t)\)</span>’s as <span class="math inline">\(J\)</span> ‘new’ predictors.)</p>
 </div>
 </section>
 <section id="spline-basis" class="slide level2">
 <h2>Spline basis</h2>
-<p>The <em>spline basis</em> is a basis for piecewise polynomials of a specified order.</p>
+<p>The spline basis is a basis for piecewise polynomials of a specified order.</p>
 
-<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Bases for piecewise polynomials of order 1 through 4 joined at six knot points.</p><ul>
-<li class="fragment">generated recursively based on ‘knots’ – joining locations</li>
-<li class="fragment">knots are usually placed at data quantiles and boundaries</li>
-</ul>
+<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Bases for piecewise polynomials of order 1 through 4 joined at evenly-spaced knot points.</p><div class="fragment">
+<p>Generated recursively based on ‘knots’ – joining locations</p>
+</div>
 </section>
-<section id="first-try" class="slide level2">
-<h2>First try</h2>
-<p>Model: <span class="math inline">\(Y_{i,t} = \mu + \beta\text{elev}_i + \sum_{j = 1}^7 \gamma_j f_j(t) + \epsilon_{i, t}\)</span></p>
+<section id="knot-spacing" class="slide level2">
+<h2>Knot spacing</h2>
+<p>Knot spacing will affect how densely basis functions are concentrated around particular regions of data.</p>
+<div class="fragment">
+<p>Here are bases generated on some unevenly-spaced knots:</p>
+<div class="cell" data-layout-align="center" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-10_7d2a1738dcb51445e4c052558b642745">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-10-1.png" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Check your understanding: where would this spline basis have the most flexible approximation capability?</p>
+</div>
+</section>
+<section id="knot-placement" class="slide level2">
+<h2>Knot placement</h2>
+<p>Appropriate placement of knots is essential for quality function approximation.</p>
+<ul>
+<li class="fragment"><p>default: place at data quantiles</p></li>
+<li class="fragment"><p>better: concentrated in regions with irregular trend</p></li>
+</ul>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-11_8b7beab5807d5330ad77d4420d7d1a67">
+<div class="cell-output-display">
+<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-11-1.png" width="576"></p>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>Where would you put them for our data?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="a-first-attempt-spline-basis" class="slide level2">
+<h2>A first attempt: spline basis</h2>
+<p>Model: <span class="math inline">\(Y_{i,t} = \beta_0 + \beta_1\cdot\text{elev}_i + \sum_{j = 1}^7 \gamma_j \cdot f_j(t) + \epsilon_{i, t}\)</span></p>
 <div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Choosing knots</a></li><li><a href="#tabset-1-2">Fitted curve</a></li></ul>
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Knot placement</a></li><li><a href="#tabset-1-2">Fitted curve</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-10_dea32c61442ab38d2d7d9bc392b104f2">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-12_ae2b78bdb725b05737d98a76c9013c7a">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-10-1.png" width="576"></p>
-<p></p><figcaption>Knots placed at 0.2-spaced quantiles.</figcaption><p></p>
+<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-12-1.png" width="576"></p>
+<p></p><figcaption>Knots placed at vertical lines.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <div id="tabset-1-2">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-11_be7fffa30472399cee864a81de81c5c0">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-13_4b818bc3c3f4b63d6e3d8f281308da9a">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-11-1.png" width="576"></p>
+<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-13-1.png" width="576"></p>
 <p></p><figcaption>Estimated mean with 95% prediction interval at median site elevation.</figcaption><p></p>
 </figure>
 </div>
@@ -543,31 +588,40 @@ Y_{i, t} = \beta_0 + \sum_{j = 1}^J \beta_j f_j(t) + \epsilon_{i, t}
 </div>
 </div>
 </div>
-<ul>
-<li class="fragment">What do you think?</li>
-</ul>
 </section>
 <section id="a-problem" class="slide level2">
 <h2>A problem</h2>
-
-<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-12-1.png" width="576" class="r-stretch quarto-figure-left"><p class="caption">Spline bases produce discontinuities</p><ul>
-<li class="fragment"><p>So what we really want is to approximate the seasonal mean by a <em>harmonic</em> function</p></li>
-<li class="fragment"><p>The choice of basis should be appropriate for the function being approximated!</p></li>
-</ul>
-</section>
-<section id="fourier-basis" class="slide level2">
-<h2>Fourier basis</h2>
-<p>The <strong><em>Fourier basis</em></strong> is a basis for square-integrable functions on a closed interval; basis functions are harmonic.</p>
-<div class="fragment">
-<p>The Fourier basis can be used to approximate harmonic functions with a known period.</p>
-</div>
-<div class="fragment">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-13_f75ce8dbb138acc968865aa1a92e84b4">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-14_78a04c756504f0994ea4039948a2dd55">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-13-1.png" width="576"></p>
-<p></p><figcaption>4 Fourier basis functions on the interval [0, 1].</figcaption><p></p>
+<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-14-1.png" width="576"></p>
+<p></p><figcaption>Spline bases produce discontinuities</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p>The choice of basis must match problem context.</p>
+<ul>
+<li class="fragment"><p>here, need boundaries to meet</p></li>
+<li class="fragment"><p>in other words, need a <em>harmonic</em> function</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="fourier-basis" class="slide level2">
+<h2>Fourier basis</h2>
+<p>The <strong>Fourier basis</strong> is a basis for square-integrable functions on closed intervals consisting of sine-cosine pairs.</p>
+<div class="fragment">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-15_b7f7d28ae1df6f33c18cf58c4c0e3c2d">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure>
+<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-15-1.png" width="768"></p>
+<p></p><figcaption>4 Fourier basis functions on the interval [1, 365].</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -576,26 +630,31 @@ Y_{i, t} = \beta_0 + \sum_{j = 1}^J \beta_j f_j(t) + \epsilon_{i, t}
 </section>
 <section id="second-try" class="slide level2">
 <h2>Second try</h2>
-<div class="tabset-panel">
-<h3 id="seasonal-mean">Seasonal mean</h3>
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-14_b8717202a8d383a68d0121863f950dc7">
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Seasonal mean</a></li><li><a href="#tabset-2-2">Time plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-16_778d1b3c5462a206671c025be6419b41">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-14-1.png" width="576"></p>
+<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-16-1.png" width="576"></p>
 <p></p><figcaption>Seasonal mean approximation using 4 Fourier basis functions.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<h3 id="time-plot">Time plot</h3>
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-15_772f944d6c8e2ab50cfd5f13ba608ddd">
+</div>
+<div id="tabset-2-2">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-17_646aa0ec70918d9072820e196dd907b6">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-15-1.png" width="576"></p>
+<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-17-1.png" width="576"></p>
 <p></p><figcaption>Seasonal mean approxiamtion using 4 Fourier basis functions.</figcaption><p></p>
 </figure>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -605,20 +664,18 @@ Y_{i, t} = \beta_0 + \sum_{j = 1}^J \beta_j f_j(t) + \epsilon_{i, t}
 <h2>Forecasting</h2>
 <p>Does this forecast make sense? Why or why not?</p>
 
-<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-16-1.png" width="576" class="r-stretch"></section>
+<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-18-1.png" width="576" class="r-stretch"></section>
 <section id="next-time" class="slide level2">
 <h2>Next time</h2>
 <ol type="1">
-<li class="fragment">Fit a time series model to the <em>residuals</em></li>
-</ol>
+<li class="fragment"><p>Fit a time series model to the residuals</p>
 <p><span class="math display">\[
-e_{i, t} = Y_{i, t} - \left(\hat{\mu} + \hat{\beta}\text{elev}_i + \hat{f}(t)\right)
-\]</span></p>
-<ol start="2" type="1">
+e_{i, t} = Y_{i, t} - \underbrace{\left(\hat{\beta_0} + \hat{\beta_1}\text{elev}_i + \hat{f}(t)\right)}_{\text{mean function } \hat{\mu}(i, t)}
+\]</span></p></li>
 <li class="fragment"><p>Forecast <span class="math inline">\(\hat{e}_{i, t} = \mathbb{E}\left(e_{i, t}|e_{i, t - 1}\right)\)</span> using the residual model</p></li>
 <li class="fragment"><p>“Feed forward” residual forecasts to obtain temperature forecasts</p>
 <p><span class="math display">\[
-\hat{Y}_{i, t} = \hat{\mu} + \hat{\beta}\text{elev}_i + \hat{f}(t) + \hat{e}_{i, t}
+\hat{Y}_{i, t} = \hat{\mu}(i, t) + \hat{e}_{i, t}
 \]</span></p></li>
 </ol>
 

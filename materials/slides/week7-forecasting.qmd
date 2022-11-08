@@ -1,5 +1,5 @@
 ---
-title: "Forecasting soil temperatures"
+title: "Curve fitting using basis approximations"
 subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
 author: "Trevor Ruiz"
 institute: 'UCSB'
@@ -63,6 +63,7 @@ library(sf)
 library(ggspatial)
 library(ggmap)
 library(modelr)
+theme_set(theme(text = element_text(size = 24)))
 load('data/soiltemp-clean.RData')
 
 sites_df <- soil %>% 
@@ -117,6 +118,8 @@ soil %>%
 
 -   What is happening across depth?
 
+-   Any other observations?
+
 ## Comparing sites
 
 ```{r}
@@ -164,17 +167,21 @@ Here are the locations of the sites just compared.
 
 ## Goals
 
-Our overall goal this week is to ***build a forecasting model.***
+Our overall goal this week is to **build a forecasting model.**
 
 . . .
 
-To start, let's approximate the seasonal trend.
+Strategy:
+
+1.  To start, approximate the seasonal trend.
+2.  De-trend the data and model the correlation structure of deviations from seasonal trend.
+3.  Forecast as: $\text{trend} + \mathbb{E}(\text{future}| \text{present})$
 
 # Function approximation
 
 ## Annual cycles
 
-The seasonality is annual -- let's examine the *annual cycle* instead of the usual time course plot.
+The seasonality is annual -- let's examine the annual cycle instead of the usual time course plot.
 
 ::: columns
 ::: {.column width="60%"}
@@ -260,11 +267,11 @@ Where:
 
 . . .
 
-*But how do you estimate an arbitrary function?*
+But how do you estimate an arbitrary function?
 
 ## Basis functions
 
-A ***basis function*** is an element of a basis for a function space.
+A **basis function** is an element of a basis for a function space.
 
 . . .
 
@@ -282,31 +289,33 @@ $$
 f \approx \sum_{j = 1}^J c_j f_j
 $$
 
-## Basis function approximation
+## Basis approximation
 
-A nifty trick is to estimate $f$ using a suitable basis function approximation:
+A nifty trick is to estimate $f$ using a suitable [basis approximation]{style="color: maroon;"}:
 
 $$
-Y_{i, t} = \beta_0 + \sum_{j = 1}^J \beta_j f_j(t) + \epsilon_{i, t}
+Y_{i, t} = \beta_0 + \color{maroon}{\underbrace{\sum_{j = 1}^J \beta_j f_j(t)}_{\tilde{f}(t) \approx f(t)}} + \epsilon_{i, t}
 $$
 
 . . .
 
-This model can be fit using standard linear regression. (Think of $f_j(t)$ as $J$ 'new' predictors.)
+This model can be fit using standard linear regression. (Think of the $f_j(t)$'s as $J$ 'new' predictors.)
 
 ## Spline basis
 
-The *spline basis* is a basis for piecewise polynomials of a specified order.
+The spline basis is a basis for piecewise polynomials of a specified order.
 
 ```{r}
-#| fig-cap: Bases for piecewise polynomials of order 1 through 4 joined at six knot points.
+#| fig-cap: Bases for piecewise polynomials of order 1 through 4 joined at evenly-spaced knot points.
 #| fig-width: 10
 #| fig-height: 4
 #| fig-align: center
 library(splines)
 set.seed(110622)
-knot_pts <- runif(4)
-x = seq(from = 0, to = 1, length = 200)
+knot_pts <- seq_range(1:365, n = 4)
+x = seq(from = 1, 
+        to = 365, 
+        length = 200)
 spl_out <- lapply(1:4, function(deg){
   spl <- bs(x, 
             knots = knot_pts, 
@@ -336,29 +345,104 @@ tibble(degree = paste('order', 1:4),
   labs(x = 'x', y = expression(paste(f[j], '(x)')))
 ```
 
--   generated recursively based on 'knots' -- joining locations
--   knots are usually placed at data quantiles and boundaries
+. . .
 
-## First try
+Generated recursively based on 'knots' -- joining locations
 
-Model: $Y_{i,t} = \mu + \beta\text{elev}_i + \sum_{j = 1}^7 \gamma_j f_j(t) + \epsilon_{i, t}$
+## Knot spacing
 
-::: panel-tabset
-### Choosing knots
+Knot spacing will affect how densely basis functions are concentrated around particular regions of data.
+
+. . .
+
+Here are bases generated on some unevenly-spaced knots:
 
 ```{r}
-#| fig-cap: Knots placed at 0.2-spaced quantiles.
-knotpt <- quantile(soil_200cm_clean$day, 
-                   c(0.2, 0.4, 0.6, 0.8))
+#| fig-width: 6
+#| fig-height: 2
+#| fig-align: center
+library(splines)
+set.seed(110622)
+knot_pts <- sample(1:365, size = 4, replace = F)
+x = seq(from = 1, 
+        to = 365, 
+        length = 200)
+
+spl <- bs(x, 
+            knots = knot_pts, 
+            degree = 4) 
+  
+  mx <- spl[, ]
+  colnames(mx) <- paste('f', 1:ncol(mx), sep = '')
+  
+  spl_out <- as_tibble(mx) %>%
+    bind_cols(x = x)
+  
+
+tibble(data = spl_out) %>%
+  unnest(data) %>%
+  pivot_longer(cols = -x, 
+               names_to = 'basis',
+               values_to = 'value') %>%
+  ggplot(aes(x = x, 
+             y = value, 
+             color = basis)) +
+  geom_path() +
+  guides(color = guide_none()) +
+  labs(x = 'x', y = expression(paste(f[j], '(x)')))
+```
+
+. . .
+
+Check your understanding: where would this spline basis have the most flexible approximation capability?
+
+## Knot placement
+
+Appropriate placement of knots is essential for quality function approximation.
+
+-   default: place at data quantiles
+
+-   better: concentrated in regions with irregular trend
+
+. . .
+
+::: columns
+::: {.column width="60%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+fig_annual
+```
+:::
+
+::: {.column width="40%"}
+Where would you put them for our data?
+:::
+:::
+
+## A first attempt: spline basis
+
+Model: $Y_{i,t} = \beta_0 + \beta_1\cdot\text{elev}_i + \sum_{j = 1}^7 \gamma_j \cdot f_j(t) + \epsilon_{i, t}$
+
+::: panel-tabset
+### Knot placement
+
+```{r}
+#| fig-cap: Knots placed at vertical lines.
+#| fig-width: 6
+#| fig-height: 3.5
+knotpt <- c(100, 150, 200, 300)
 
 fig_annual +
-  geom_vline(xintercept = c(0, 365, knotpt))
+  geom_vline(xintercept = c(0, 365, knotpt), linetype = 'dashed')
 ```
 
 ### Fitted curve
 
 ```{r}
 #| fig-cap: Estimated mean with 95% prediction interval at median site elevation.
+#| fig-width: 6
+#| fig-height: 3.5
 fit <- lm(temp ~ elev + bs(day, 
                     knots = knotpt,
                     Boundary.knots = c(1, 365),
@@ -382,7 +466,8 @@ pred_df <- predict(fit,
             aes(y = fit, 
                 x = day),
             inherit.aes = F,
-            color = 'blue') +
+            color = 'blue',
+            size = 1.5) +
    geom_ribbon(data = pred_df,
                aes(ymin = lwr,
                    ymax = upr, 
@@ -392,12 +477,14 @@ pred_df <- predict(fit,
 ```
 :::
 
--   What do you think?
-
 ## A problem
 
+::: columns
+::: {.column width="50%"}
 ```{r}
 #| fig-cap: Spline bases produce discontinuities
+#| fig-width: 6
+#| fig-height: 4
 pred_grid_multiyear <- soil_200cm_clean %>%
   data_grid(date = seq_range(date, n = 500),
             elev = median(elev))
@@ -410,31 +497,36 @@ soil_200cm_clean %>%
   ungroup() %>%
   ggplot(aes(x = date, y = temp)) +
   geom_path(aes(group = site),
-            alpha = 0.1) +
+            alpha = 0.2) +
   geom_path(data = pred_df_multiyear,
             aes(y = pred, 
                 group = year(date)),
-            color = 'blue')
+            color = 'blue',
+            size = 1.5)
 ```
+:::
 
--   So what we really want is to approximate the seasonal mean by a *harmonic* function
+::: {.column width="50%"}
+The choice of basis must match problem context.
 
--   The choice of basis should be appropriate for the function being approximated!
+-   here, need boundaries to meet
+
+-   in other words, need a *harmonic* function
+:::
+:::
 
 ## Fourier basis
 
-The ***Fourier basis*** is a basis for square-integrable functions on a closed interval; basis functions are harmonic.
-
-. . .
-
-The Fourier basis can be used to approximate harmonic functions with a known period.
+The **Fourier basis** is a basis for square-integrable functions on closed intervals consisting of sine-cosine pairs.
 
 . . .
 
 ```{r}
-#| fig-cap: 4 Fourier basis functions on the interval [0, 1].
-x <- seq(0, 1, length = 100)
-fda::fourier(x, nbasis = 4, period = 1) %>%
+#| fig-cap: 4 Fourier basis functions on the interval [1, 365].
+#| fig-width: 8
+#| fig-height: 4
+x <- seq(1, 365, length = 100)
+fda::fourier(x, nbasis = 4, period = 365) %>%
   as_tibble() %>%
   dplyr::select(-const) %>%
   bind_cols(x = x) %>%
@@ -446,7 +538,7 @@ fda::fourier(x, nbasis = 4, period = 1) %>%
 
 ## Second try
 
-::: tabset-panel
+::: panel-tabset
 ### Seasonal mean
 
 ```{r}
@@ -468,12 +560,13 @@ fpred_df <- predict(fit_f,
             aes(y = fit, 
                 x = day),
             inherit.aes = F,
-            color = 'blue') +
+            color = 'blue',
+            size = 1.5) +
    geom_ribbon(data = fpred_df,
                aes(ymin = lwr,
                    ymax = upr, 
                    x = day),
-               alpha = 0.1,
+               alpha = 0.2,
                inherit.aes = F)
 ```
 
@@ -489,10 +582,11 @@ soil_200cm_clean %>%
   ungroup() %>%
   ggplot(aes(x = date, y = temp)) +
   geom_path(aes(group = site),
-            alpha = 0.1) +
+            alpha = 0.2) +
   geom_path(data = fpred_df_multiyear,
             aes(y = pred),
-            color = 'blue')
+            color = 'blue',
+            size = 1.5)
 ```
 :::
 
@@ -516,24 +610,25 @@ first_site %>%
   geom_path() +
   geom_path(data = first_site, 
             aes(y = pred),
-            color = 'blue') +
+            color = 'blue',
+            size = 1.5) +
   guides(linetype = guide_none()) +
   labs(x = '',
-       y = 'daily average temperature')
+       y = 'daily average temp')
 ```
 
 ## Next time
 
-1.  Fit a time series model to the *residuals*
+1.  Fit a time series model to the residuals
 
-$$
-e_{i, t} = Y_{i, t} - \left(\hat{\mu} + \hat{\beta}\text{elev}_i + \hat{f}(t)\right)
-$$
+    $$
+    e_{i, t} = Y_{i, t} - \underbrace{\left(\hat{\beta_0} + \hat{\beta_1}\text{elev}_i + \hat{f}(t)\right)}_{\text{mean function } \hat{\mu}(i, t)}
+    $$
 
 2.  Forecast $\hat{e}_{i, t} = \mathbb{E}\left(e_{i, t}|e_{i, t - 1}\right)$ using the residual model
 
 3.  "Feed forward" residual forecasts to obtain temperature forecasts
 
     $$
-    \hat{Y}_{i, t} = \hat{\mu} + \hat{\beta}\text{elev}_i + \hat{f}(t) + \hat{e}_{i, t}
+    \hat{Y}_{i, t} = \hat{\mu}(i, t) + \hat{e}_{i, t}
     $$

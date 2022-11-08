@@ -116,3 +116,15 @@ bibliography: slides/refs.bib
     -   @alzubaidi2021review
 
     -   @Goodfellow-et-al-2016 Ch. 6 (advanced)
+
+## Module 3: soil temperatures
+
+*Objectives: build a forecasting model; introduce concepts of spatial and temporal correlation structures; discuss function approximation and curve fitting with regression techniques; fit elementary time series and spatial models; interpolation.*
+
+### Week 7
+
+-   ***Tuesday meeting:*** data introduction; function approximation using basis expansions \[[slides](slides/week7-forecasting.qmd)\]
+
+-   ***Section meeting:*** curve fitting
+
+-   ***Thursday meeting:*** temporal correlation; a forecasting model
