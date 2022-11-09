@@ -125,6 +125,6 @@ bibliography: slides/refs.bib
 
 -   ***Tuesday meeting:*** data introduction; function approximation using basis expansions \[[slides](slides/week7-forecasting.qmd)\]
 
--   ***Section meeting:*** curve fitting
+-   ***Section meeting:*** curve fitting \[[activity](labs/lab7-curvefitting/lab7-curvefitting.qmd)\]
 
 -   ***Thursday meeting:*** temporal correlation; a forecasting model
