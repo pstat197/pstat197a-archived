@@ -1,0 +1,11 @@
+---
+title: "Curve fitting"
+editor: visual
+code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
+---
+
