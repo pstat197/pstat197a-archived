@@ -8,10 +8,6 @@ dplyr
 stringr
 forcats
 lubridate
-sf
-ggspatial
-ggmap
-modelr
 MASS
 pcaPP
 rainbow
@@ -19,3 +15,6 @@ RCurl
 fds
 deSolve
 fda
+modelr
+broom
+yardstick

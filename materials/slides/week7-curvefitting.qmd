@@ -1,0 +1,636 @@
+---
+title: "Curve fitting using basis approximations"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 6
+    fig-height: 4
+    fig-align: 'left'
+    slide-number: true
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---
+
+## Word clouds
+
+![From self-assessments: identify a helpful feature that improved groupwork.](img/helpful-feature-words.png){fig-align="center"}
+
+## Word clouds
+
+![From self-assessments: identify an area of improvement](img/improvement-words.png){fig-align="center"}
+
+# Soil temperature data
+
+## ABoVE
+
+The Arctic-Boreal Vulnerability Experiment (ABoVE) is a NASA Terrestrial Ecology Program field campaign in Alaska and western Canada from 2016 to 2021.
+
+. . .
+
+Research for ABoVE will link field-based, process-level studies with geospatial data products derived from airborne and satellite sensors, providing a foundation for improving the analysis, and modeling capabilities needed to understand and predict ecosystem responses and societal implications.
+
+. . .
+
+[Find ABoVE data here](https://daac.ornl.gov/cgi-bin/dataset_lister.pl?p=34).
+
+## ABoVE Soil Temperatures
+
+We'll work with soil temperatures.
+
+> Nicolsky, D.J., V.E. Romanovsky, A.L. Kholodov, K. Dolgikh, and N. Hasson. 2022. ABoVE: Soil Temperature Profiles, USArray Seismic Stations, 2016-2021. ORNL DAAC, Oak Ridge, Tennessee, USA. <https://doi.org/10.3334/ORNLDAAC/1680>
+
+-   Observations of soil temperatures (centigrade)
+
+-   Measured at 63 locations in Alaska
+
+-   Recorded four times daily at multiple depths
+
+## Site locations
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(sf)
+library(ggspatial)
+library(ggmap)
+library(modelr)
+theme_set(theme(text = element_text(size = 24)))
+load('data/soiltemp-clean.RData')
+
+sites_df <- soil %>% 
+  dplyr::select(site, latitude, longitude) %>%
+  distinct() 
+
+sites_sf <- sites_df %>%
+  st_as_sf(coords = c('longitude', 'latitude'))
+
+box <- st_bbox(sites_sf) + 0.5*c(-1, -1, 1, 1)
+names(box) <- c('left', 'bottom', 'right', 'top')
+
+map <- get_map(location = box, 
+        maptype = 'terrain',
+        source = 'stamen')
+```
+
+We'll use 57 of the 63 sites for now.
+
+```{r}
+#| fig-cap: Locations of selected monitoring stations.
+fig_sitemap <- ggmap(map) +
+  geom_point(data = sites_df, 
+             aes(x = longitude,
+                 y = latitude))
+
+fig_sitemap
+```
+
+## Example rows
+
+```{r}
+soil %>% head()
+```
+
+## Temperature profiles
+
+```{r}
+#| fig-cap: Observations for a single site at four depths (one path per depth).
+soil %>%
+  filter(site == unique(soil$site)[20]) %>%
+  ggplot(aes(x = date_time, y = temp)) +
+  geom_path(aes(group = depth), 
+            alpha = 0.6) +
+  labs(x = '', 
+       title = paste('site', 
+                     unique(soil$site)[20],
+                     sep = ' '))
+```
+
+-   What is happening over time?
+
+-   What is happening across depth?
+
+-   Any other observations?
+
+## Comparing sites
+
+```{r}
+#| fig-cap: Profiles at two sites.
+#| fig-width: 8
+soil %>%
+  filter(site == unique(soil$site)[c(20, 12)]) %>%
+  ggplot(aes(x = date_time, y = temp)) +
+  geom_path(aes(group = depth), 
+            alpha = 0.6) +
+  facet_wrap(~ site) +
+  labs(x = '') +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+-   How do the sites differ?
+
+-   How are they similar?
+
+## Comparing sites
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 6
+fig_sitemap +
+  geom_point(aes(x = longitude, 
+                 y = latitude),
+             data = filter(sites_df,
+                           site %in% unique(soil$site)[c(20, 12)]),
+             color = 'red',
+             size = 3) 
+```
+:::
+
+::: {.column width="50%"}
+Here are the locations of the sites just compared.
+
+-   what factors might account for some of the differences in temperature profiles between the sites?
+
+-   are any of them recorded in our data?
+:::
+:::
+
+## Goals
+
+Our overall goal this week is to **build a forecasting model.**
+
+. . .
+
+Strategy:
+
+1.  To start, approximate the seasonal trend.
+2.  De-trend the data and model the correlation structure of deviations from seasonal trend.
+3.  Forecast as: $\text{trend} + \mathbb{E}(\text{future}| \text{present})$
+
+# Function approximation
+
+## Annual cycles
+
+The seasonality is annual -- let's examine the annual cycle instead of the usual time course plot.
+
+::: columns
+::: {.column width="60%"}
+```{r}
+#| fig-cap: Annual cycle for site H17K-1 at 0.2m depth.
+site_data <- soil %>%
+  filter(site == unique(soil$site)[20]) %>%
+  mutate(day = yday(date_time),
+         year = year(date_time)) %>%
+  dplyr::select(day, year, depth, temp)
+  
+site_depths <- unique(site_data$depth)
+
+site_data %>%
+  filter(depth == site_depths[2]) %>%
+  ggplot(aes(x = day, y = temp)) +
+  geom_path(aes(group = year), 
+            alpha = 0.7) +
+  labs(x = 'day of year')
+```
+:::
+
+::: {.column width="40%"}
+-   Can you see the start and stop dates in the plot?
+-   Any other observations?
+:::
+:::
+
+## Pooling sites
+
+How would you estimate the annual cycle based on data at each site?
+
+```{r}
+#| fig-cap: Daily average temperatures at 0.2m depth for 37 sites, 2017-2019.
+soil_200cm <- soil %>% 
+  filter(depth == 0.2) %>%
+  mutate(year = year(date_time),
+         day = yday(date_time),
+         date = date(date_time)) %>%
+  group_by(site, year, day, date) %>%
+  summarize(elev = mean(elevation),
+            temp = mean(temp)) %>%
+  ungroup()
+
+exclude <- soil_200cm %>%
+  arrange(site, date) %>%
+  group_by(site) %>%
+  summarize(maxdiff = max(diff(day))) %>%
+  filter(maxdiff > 1) %>%
+  dplyr::select(site) %>%
+  ungroup()
+
+soil_200cm_clean <- anti_join(soil_200cm, exclude) %>% 
+  filter(elev > -100)
+
+fig_annual <- soil_200cm_clean %>%
+  ggplot(aes(x = day, y = temp)) +
+  geom_path(aes(group = interaction(site, year)),
+            alpha = 0.3) +
+  labs(x = 'day of year',
+       y = 'average temp')
+
+fig_annual
+```
+
+## As an estimation problem
+
+Modeling the trend can be formulated as estimating the model:
+
+$$
+Y_{i, t} = f(t) + \epsilon_{i, t}
+$$
+
+. . .
+
+Where:
+
+-   $Y_{i, t}$ is the temperature at site $i$ and time $t$
+
+-   $f(t)$ is the mean temperature at time $t$
+
+-   $\epsilon_{i, t}$ is a random error
+
+. . .
+
+But how do you estimate an arbitrary function?
+
+## Basis functions
+
+A **basis function** is an element of a basis for a function space.
+
+. . .
+
+If $\{f_j\}$ form a basis for a function space $C$ then
+
+$$
+f \in C \quad\Longleftrightarrow f = \sum_j c_j f_j
+$$
+
+. . .
+
+A finite subset of basis functions can be used to approximate functions in the space:
+
+$$
+f \approx \sum_{j = 1}^J c_j f_j
+$$
+
+## Basis approximation
+
+A nifty trick is to estimate $f$ using a suitable [basis approximation]{style="color: maroon;"}:
+
+$$
+Y_{i, t} = \beta_0 + \color{maroon}{\underbrace{\sum_{j = 1}^J \beta_j f_j(t)}_{\tilde{f}(t) \approx f(t)}} + \epsilon_{i, t}
+$$
+
+. . .
+
+This model can be fit using standard linear regression. (Think of the $f_j(t)$'s as $J$ 'new' predictors.)
+
+## Spline basis
+
+The spline basis is a basis for piecewise polynomials of a specified order.
+
+```{r}
+#| fig-cap: Bases for piecewise polynomials of order 1 through 4 joined at evenly-spaced knot points.
+#| fig-width: 10
+#| fig-height: 4
+#| fig-align: center
+library(splines)
+set.seed(110622)
+knot_pts <- seq_range(1:365, n = 4)
+x = seq(from = 1, 
+        to = 365, 
+        length = 200)
+spl_out <- lapply(1:4, function(deg){
+  spl <- bs(x, 
+            knots = knot_pts, 
+            degree = deg) 
+  
+  mx <- spl[, ]
+  colnames(mx) <- paste('f', 1:ncol(mx), sep = '')
+  
+  out <- as_tibble(mx) %>%
+    bind_cols(x = x)
+  
+  return(out)
+})
+
+tibble(degree = paste('order', 1:4),
+       data = spl_out) %>%
+  unnest(data) %>%
+  pivot_longer(cols = -c(x, degree), 
+               names_to = 'basis',
+               values_to = 'value') %>%
+  ggplot(aes(x = x, 
+             y = value, 
+             color = basis)) +
+  geom_path() +
+  facet_wrap(~degree) +
+  guides(color = guide_none()) +
+  labs(x = 'x', y = expression(paste(f[j], '(x)')))
+```
+
+. . .
+
+Generated recursively based on 'knots' -- joining locations
+
+## Knot spacing
+
+Knot spacing will affect how densely basis functions are concentrated around particular regions of data.
+
+. . .
+
+Here are bases generated on some unevenly-spaced knots:
+
+```{r}
+#| fig-width: 6
+#| fig-height: 2
+#| fig-align: center
+library(splines)
+set.seed(110622)
+knot_pts <- sample(1:365, size = 4, replace = F)
+x = seq(from = 1, 
+        to = 365, 
+        length = 200)
+
+spl <- bs(x, 
+            knots = knot_pts, 
+            degree = 4) 
+  
+  mx <- spl[, ]
+  colnames(mx) <- paste('f', 1:ncol(mx), sep = '')
+  
+  spl_out <- as_tibble(mx) %>%
+    bind_cols(x = x)
+  
+
+tibble(data = spl_out) %>%
+  unnest(data) %>%
+  pivot_longer(cols = -x, 
+               names_to = 'basis',
+               values_to = 'value') %>%
+  ggplot(aes(x = x, 
+             y = value, 
+             color = basis)) +
+  geom_path() +
+  guides(color = guide_none()) +
+  labs(x = 'x', y = expression(paste(f[j], '(x)'))) +
+  geom_vline(xintercept = c(0, 365, knot_pts), 
+             linetype = 'dashed')
+```
+
+. . .
+
+Check your understanding: where would this spline basis have the most flexible approximation capability?
+
+## Knot placement
+
+Appropriate placement of knots is essential for quality function approximation.
+
+-   default: place at data quantiles
+
+-   better: concentrated in regions with irregular trend
+
+. . .
+
+::: columns
+::: {.column width="60%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+fig_annual
+```
+:::
+
+::: {.column width="40%"}
+Where would you put them for our data?
+:::
+:::
+
+## A first attempt: spline basis
+
+Model: $Y_{i,t} = \beta_0 + \beta_1\cdot\text{elev}_i + \sum_{j = 1}^7 \gamma_j \cdot f_j(t) + \epsilon_{i, t}$
+
+::: panel-tabset
+### Knot placement
+
+```{r}
+#| fig-cap: Knots placed at vertical lines.
+#| fig-width: 6
+#| fig-height: 3.5
+knotpt <- c(100, 150, 200, 300)
+
+fig_annual +
+  geom_vline(xintercept = c(0, 365, knotpt), linetype = 'dashed')
+```
+
+### Fitted curve
+
+```{r}
+#| fig-cap: Estimated mean with 95% prediction interval at median site elevation.
+#| fig-width: 6
+#| fig-height: 3.5
+fit <- lm(temp ~ elev + bs(day, 
+                    knots = knotpt,
+                    Boundary.knots = c(1, 365),
+                    degree = 3,
+                    intercept = F),
+   data = soil_200cm_clean)
+
+pred_grid <- soil_200cm_clean %>%
+  ungroup() %>%
+  data_grid(day = seq_range(day, 200),
+            elev = median(elev)) 
+
+pred_df <- predict(fit, 
+                   pred_grid, 
+                   interval = 'prediction',
+                   level = 0.95) %>%
+  bind_cols(pred_grid)
+
+ fig_annual +
+  geom_path(data = pred_df, 
+            aes(y = fit, 
+                x = day),
+            inherit.aes = F,
+            color = 'blue',
+            size = 1.5) +
+   geom_ribbon(data = pred_df,
+               aes(ymin = lwr,
+                   ymax = upr, 
+                   x = day),
+               alpha = 0.1,
+               inherit.aes = F)
+```
+:::
+
+## A problem
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| fig-cap: Spline bases produce discontinuities
+#| fig-width: 6
+#| fig-height: 4
+pred_grid_multiyear <- soil_200cm_clean %>%
+  data_grid(date = seq_range(date, n = 500),
+            elev = median(elev))
+  
+pred_df_multiyear <- pred_grid_multiyear %>%
+  mutate(day = yday(date)) %>%
+  add_predictions(fit)
+
+soil_200cm_clean %>%
+  ungroup() %>%
+  ggplot(aes(x = date, y = temp)) +
+  geom_path(aes(group = site),
+            alpha = 0.2) +
+  geom_path(data = pred_df_multiyear,
+            aes(y = pred, 
+                group = year(date)),
+            color = 'blue',
+            size = 1.5)
+```
+:::
+
+::: {.column width="50%"}
+The choice of basis must match problem context.
+
+-   here, need boundaries to meet
+
+-   in other words, need a *harmonic* function
+:::
+:::
+
+## Fourier basis
+
+The **Fourier basis** is a basis for square-integrable functions on closed intervals consisting of sine-cosine pairs.
+
+. . .
+
+```{r}
+#| fig-cap: 4 Fourier basis functions on the interval [1, 365].
+#| fig-width: 8
+#| fig-height: 4
+x <- seq(1, 365, length = 100)
+fda::fourier(x, nbasis = 4, period = 365) %>%
+  as_tibble() %>%
+  dplyr::select(-const) %>%
+  bind_cols(x = x) %>%
+  pivot_longer(-x, names_to = 'basis') %>%
+  ggplot(aes(x = x, y = value)) +
+  geom_path(aes(color = basis)) +
+  labs(y = expr(paste(f[j], '(x)')))
+```
+
+## Second try
+
+::: panel-tabset
+### Seasonal mean
+
+```{r}
+#| fig-cap: Seasonal mean approximation using 4 Fourier basis functions.
+library(fda)
+fit_f <- lm(temp ~ elev + fourier(day, 
+                           nbasis = 4, 
+                           period = 365) - 1,
+            data = soil_200cm_clean)
+
+fpred_df <- predict(fit_f, 
+                   pred_grid, 
+                   interval = 'prediction',
+                   level = 0.95) %>%
+  bind_cols(pred_grid)
+
+ fig_annual +
+  geom_path(data = fpred_df, 
+            aes(y = fit, 
+                x = day),
+            inherit.aes = F,
+            color = 'blue',
+            size = 1.5) +
+   geom_ribbon(data = fpred_df,
+               aes(ymin = lwr,
+                   ymax = upr, 
+                   x = day),
+               alpha = 0.2,
+               inherit.aes = F)
+```
+
+### Time plot
+
+```{r}
+#| fig-cap: Seasonal mean approxiamtion using 4 Fourier basis functions.
+fpred_df_multiyear <- pred_grid_multiyear %>%
+  mutate(day = yday(date)) %>%
+  add_predictions(fit_f)
+
+soil_200cm_clean %>%
+  ungroup() %>%
+  ggplot(aes(x = date, y = temp)) +
+  geom_path(aes(group = site),
+            alpha = 0.2) +
+  geom_path(data = fpred_df_multiyear,
+            aes(y = pred),
+            color = 'blue',
+            size = 1.5)
+```
+:::
+
+## Forecasting
+
+Does this forecast make sense? Why or why not?
+
+```{r}
+first_site <- soil_200cm_clean %>%
+  filter(site == unique(soil_200cm_clean$site)[6]) %>%
+  slice_max(date, n = 110) %>%
+  add_predictions(fit_f) %>%
+  arrange(date) %>%
+  mutate(status = c(rep('obs', 100), rep('pred', 10)))
+
+first_site %>%
+  filter(status == 'obs') %>%
+  ggplot(aes(x = date, 
+             y = temp, 
+             linetype = status)) +
+  geom_path() +
+  geom_path(data = first_site, 
+            aes(y = pred),
+            color = 'blue',
+            size = 1.5) +
+  guides(linetype = guide_none()) +
+  labs(x = '',
+       y = 'daily average temp')
+```
+
+## Next time
+
+1.  Fit a time series model to the residuals
+
+    $$
+    e_{i, t} = Y_{i, t} - \underbrace{\left(\hat{\beta_0} + \hat{\beta_1}\text{elev}_i + \hat{f}(t)\right)}_{\text{mean function } \hat{\mu}(i, t)}
+    $$
+
+2.  Forecast $\hat{e}_{i, t} = \mathbb{E}\left(e_{i, t}|e_{i, t - 1}\right)$ using the residual model
+
+3.  "Feed forward" residual forecasts to obtain temperature forecasts
+
+    $$
+    \hat{Y}_{i, t} = \hat{\mu}(i, t) + \hat{e}_{i, t}
+    $$

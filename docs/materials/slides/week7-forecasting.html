@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.0.38">
 
   <meta name="author" content="Trevor Ruiz">
-  <title>Curve fitting using basis approximations</title>
+  <title>Building a forecasting model</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -23,6 +23,70 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -319,365 +383,541 @@
     <div class="slides">
 
 <section id="title-slide" class="center">
-  <h1 class="title">Curve fitting using basis approximations</h1>
+  <h1 class="title">Building a forecasting model</h1>
   <p class="subtitle">PSTAT197A/CMPSC190DD Fall 2022</p>
   <p class="author">Trevor Ruiz</p>
   <p class="institute">UCSB</p>
 </section>
 
-<section id="word-clouds" class="slide level2">
-<h2>Word clouds</h2>
-
-<img data-src="img/helpful-feature-words.png" class="r-stretch quarto-figure-center"><p class="caption">From self-assessments: identify a helpful feature that improved groupwork.</p></section>
-<section id="word-clouds-1" class="slide level2">
-<h2>Word clouds</h2>
-
-<img data-src="img/improvement-words.png" class="r-stretch quarto-figure-center"><p class="caption">From self-assessments: identify an area of improvement</p></section>
-<section>
-<section id="soil-temperature-data" class="title-slide slide level1 center">
-<h1>Soil temperature data</h1>
-
-</section>
-<section id="above" class="slide level2">
-<h2>ABoVE</h2>
-<p>The Arctic-Boreal Vulnerability Experiment (ABoVE) is a NASA Terrestrial Ecology Program field campaign in Alaska and western Canada from 2016 to 2021.</p>
-<div class="fragment">
-<p>Research for ABoVE will link field-based, process-level studies with geospatial data products derived from airborne and satellite sensors, providing a foundation for improving the analysis, and modeling capabilities needed to understand and predict ecosystem responses and societal implications.</p>
-</div>
-<div class="fragment">
-<p><a href="https://daac.ornl.gov/cgi-bin/dataset_lister.pl?p=34">Find ABoVE data here</a>.</p>
-</div>
-</section>
-<section id="above-soil-temperatures" class="slide level2">
-<h2>ABoVE Soil Temperatures</h2>
-<p>We’ll work with soil temperatures.</p>
-<blockquote>
-<p>Nicolsky, D.J., V.E. Romanovsky, A.L. Kholodov, K. Dolgikh, and N. Hasson. 2022. ABoVE: Soil Temperature Profiles, USArray Seismic Stations, 2016-2021. ORNL DAAC, Oak Ridge, Tennessee, USA. <a href="https://doi.org/10.3334/ORNLDAAC/1680" class="uri">https://doi.org/10.3334/ORNLDAAC/1680</a></p>
-</blockquote>
+<section id="from-last-time" class="slide level2">
+<h2>From last time</h2>
 <ul>
-<li class="fragment"><p>Observations of soil temperatures (centigrade)</p></li>
-<li class="fragment"><p>Measured at 63 locations in Alaska</p></li>
-<li class="fragment"><p>Recorded four times daily at multiple depths</p></li>
+<li class="fragment"><p>Pooled data from all sites with at least a year of continuous observation between 2017 and 2020 at 0.2m depth</p></li>
+<li class="fragment"><p>Modeled seasonal trend based on elevation and day of the year using curve fitting techniques</p></li>
 </ul>
 </section>
-<section id="site-locations" class="slide level2">
-<h2>Site locations</h2>
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-1_df0eb0dbfe40464d97e457417ba938e3">
+<section id="seasonal-trend-model" class="slide level2">
+<h2>Seasonal trend model</h2>
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-1_a538d77ae639c1118898ce07c92f65a3">
 
 </div>
-<p>We’ll use 57 of the 63 sites for now.</p>
+<p>From last time: using 4 Fourier bases and elevation.</p>
 
-<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-2-1.png" width="576" class="r-stretch quarto-figure-left"><p class="caption">Locations of selected monitoring stations.</p></section>
-<section id="example-rows" class="slide level2">
-<h2>Example rows</h2>
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-3_99780ffcf51282abdbe4e29a727dc468">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 7
-  site   latitude longitude elevation date_time           depth  temp
-  &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt;
-1 B21K-1     69.6     -155.        96 2017-08-14 12:00:00   0    3.46
-2 B21K-1     69.6     -155.        96 2017-08-14 12:00:00   0.2  3.48
-3 B21K-1     69.6     -155.        96 2017-08-14 12:00:00   1    3.38
-4 B21K-1     69.6     -155.        96 2017-08-14 12:00:00   1.5  3.31
-5 B21K-1     69.6     -155.        96 2017-08-14 18:00:00   0    3.92
-6 B21K-1     69.6     -155.        96 2017-08-14 18:00:00   0.2  4.16</code></pre>
-</div>
-</div>
-</section>
-<section id="temperature-profiles" class="slide level2">
-<h2>Temperature profiles</h2>
+<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-2-1.png" width="576" class="r-stretch quarto-figure-left"><p class="caption"><span class="math inline">\(Y_{i, t} = \beta_0 + \beta_1 \text{elev}_i + \sum_{j = 1}^4 \gamma_j \phi_j(t) + \epsilon_{i, t}\)</span></p></section>
+<section id="a-small-adjustment" class="slide level2">
+<h2>A small adjustment</h2>
+<p>Adding elevation x seasonality <span style="color: maroon;">interaction terms</span>.</p>
 
-<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-4-1.png" width="576" class="r-stretch quarto-figure-left"><p class="caption">Observations for a single site at four depths (one path per depth).</p><ul>
-<li class="fragment"><p>What is happening over time?</p></li>
-<li class="fragment"><p>What is happening across depth?</p></li>
-<li class="fragment"><p>Any other observations?</p></li>
-</ul>
-</section>
-<section id="comparing-sites" class="slide level2">
-<h2>Comparing sites</h2>
+<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-3-1.png" width="576" class="r-stretch quarto-figure-left"><p class="caption"><span class="math inline">\(Y_{i, t} = \beta_0 + \beta_1 \text{elev}_i + \sum_{j = 1}^4 \left(\gamma_j \phi_j(t) + \color{maroon}{\delta_j \text{elev}\times\phi_j(t)}\right) + \epsilon_{i, t}\)</span></p></section>
+<section id="seasonal-forecast" class="slide level2">
+<h2>Seasonal forecast</h2>
+<p>Seasonal forecasts ignore recent data.</p>
 
-<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-5-1.png" width="768" class="r-stretch quarto-figure-left"><p class="caption">Profiles at two sites.</p><ul>
-<li class="fragment"><p>How do the sites differ?</p></li>
-<li class="fragment"><p>How are they similar?</p></li>
-</ul>
-</section>
-<section id="comparing-sites-1" class="slide level2">
-<h2>Comparing sites</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-6_a3844fd18c1b5d48278e99fd91eb3039">
-<div class="cell-output-display">
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-6-1.png" width="576"></p>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<p>Here are the locations of the sites just compared.</p>
-<ul>
-<li class="fragment"><p>what factors might account for some of the differences in temperature profiles between the sites?</p></li>
-<li class="fragment"><p>are any of them recorded in our data?</p></li>
-</ul>
-</div>
-</div>
-</section>
-<section id="goals" class="slide level2">
-<h2>Goals</h2>
-<p>Our overall goal this week is to <strong>build a forecasting model.</strong></p>
+<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-4-1.png" width="576" class="r-stretch quarto-figure-left"><p class="caption">10-day forecast based on seasonal mean only.</p></section>
+<section id="forecasting-error" class="slide level2">
+<h2>Forecasting error</h2>
+<p>This leads to greater error.</p>
+
+<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-5-1.png" width="576" class="r-stretch quarto-figure-left"><p class="caption">Seasonal forecast vs.&nbsp;observed temperature.</p></section>
+<section id="a-better-forecast" class="slide level2">
+<h2>A better forecast</h2>
+<p>Idea: the present temperature at time <span class="math inline">\(t\)</span> contains useful information about the expected temperature at time <span class="math inline">\(t + 1\)</span>.</p>
 <div class="fragment">
-<p>Strategy:</p>
-<ol type="1">
-<li class="fragment">To start, approximate the seasonal trend.</li>
-<li class="fragment">De-trend the data and model the correlation structure of deviations from seasonal trend.</li>
-<li class="fragment">Forecast as: <span class="math inline">\(\text{trend} + \mathbb{E}(\text{future}| \text{present})\)</span></li>
-</ol>
+<p>Our model for site <span class="math inline">\(i\)</span> at time <span class="math inline">\(t\)</span> is:</p>
+<p><span class="math display">\[
+\underbrace{Y_{i, t}}_{\text{temperature}} = \underbrace{\mu(i, t)}_{\text{seasonal mean}} + \underbrace{\epsilon_{i, t}}_{\text{random deviation}}
+\]</span></p>
 </div>
-</section></section>
-<section>
-<section id="function-approximation" class="title-slide slide level1 center">
-<h1>Function approximation</h1>
-
+<div class="fragment">
+<p>The <strong><em>conditional mean forecast</em></strong> <span class="math inline">\(\mathbb{E}(Y_{i, t + 1}| Y_{i, t})\)</span> should be better than the seasonal forecast <span class="math inline">\(\mathbb{E}Y_{i, t + 1} = \mu(i, t + 1)\)</span>…</p>
+</div>
+<div class="fragment">
+<p>… because it incorporates information about the recent past.</p>
+</div>
 </section>
-<section id="annual-cycles" class="slide level2">
-<h2>Annual cycles</h2>
-<p>The seasonality is annual – let’s examine the annual cycle instead of the usual time course plot.</p>
+<section id="conditional-mean-forecast" class="slide level2">
+<h2>Conditional mean forecast</h2>
+<p>The conditional mean of the next temp given the present is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E}(Y_{i, t + 1}|Y_{i, t} = y_{i, t})
+&amp;= \mathbb{E}[\underbrace{\mu(i, t + 1)}_{\text{nonrandom}}|Y_{i, t} = y_{i, t}] + \mathbb{E}(\epsilon_{i, t + 1}|Y_{i, t} = y_{i, t}) \\\\
+&amp;= \mu(i, t + 1) + \mathbb{E}(\epsilon_{i, t + 1}|\epsilon_{i, t} = \underbrace{y_{i, t} - \mu(i, t)}_{\text{residual}}) \\\\
+&amp;= \underbrace{\mu(i, t + 1)}_{\text{seasonal forecast}} + \underbrace{\mathbb{E}(\epsilon_{i, t + 1}|\epsilon_{i, t} = e_{i, t})}_{\text{forecasted deviation}}
+\end{aligned}
+\]</span></p>
+</section>
+<section id="modeling-the-residuals" class="slide level2">
+<h2>Modeling the residuals</h2>
+<p>To forecast the deviation from the seasonal mean, we should model the residuals.</p>
+<p><span class="math display">\[
+e_{i, t} = Y_{i, t} - \hat{\mu}(i, t)
+\qquad\text{(residual)}
+\]</span></p>
+</section>
+<section id="residual-autocorrelation" class="slide level2">
+<h2>Residual autocorrelation</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-7_5a9a5592e06b74dfefb1852e31817669">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-6_286493e3a531a8425b5974295c048bcd">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-7-1.png" width="576"></p>
-<p></p><figcaption>Annual cycle for site H17K-1 at 0.2m depth.</figcaption><p></p>
+<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-6-1.png" width="576"></p>
+<p></p><figcaption>Residual vs.&nbsp;lagged residual.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:40%;">
-<ul>
-<li class="fragment">Can you see the start and stop dates in the plot?</li>
-<li class="fragment">Any other observations?</li>
-</ul>
+<p>Residuals are strongly correlated with their immediately previous value.</p>
+<p>This is called <strong><em>autocorrelation</em></strong> (think: self-correlation).</p>
 </div>
 </div>
 </section>
-<section id="pooling-sites" class="slide level2">
-<h2>Pooling sites</h2>
-<p>How would you estimate the annual cycle based on data at each site?</p>
+<section id="an-intuitive-approach-slr" class="slide level2">
+<h2>An intuitive approach: SLR</h2>
+<p>(1) Lag the residuals: <span class="math inline">\(\texttt{resid} = e_{i, t}\)</span> and <span class="math inline">\(\texttt{resid.lag} = e_{i, t - 1}\)</span></p>
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-7_ec332cbd1b4f94c841b30705445923c7">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+# Groups:   site [1]
+  site   date        temp resid resid.lag
+  &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+1 B21K-1 2017-08-15  3.72 -6.18     -6.14
+2 B21K-1 2017-08-16  3.31 -6.52     -6.18
+3 B21K-1 2017-08-17  4.95 -4.81     -6.52
+4 B21K-1 2017-08-18  5.46 -4.24     -4.81
+5 B21K-1 2017-08-19  5.80 -3.82     -4.24
+6 B21K-1 2017-08-20  5.68 -3.87     -3.82</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>(2) Fit SLR at one time lag: <span class="math inline">\(e_{i, t} = \beta_0 + \beta_1 e_{i, t - 1} + \xi_{i, t}\)</span>.</p>
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-8_2c059c0d0fe5df844dec4ccef31954ab">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>fit_resid <span class="ot">&lt;-</span> <span class="fu">lm</span>(resid <span class="sc">~</span> resid.lag <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> resid_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="computing-one-step-forecasts" class="slide level2">
+<h2>Computing one-step forecasts</h2>
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-9_1cf773a362d87435b7b471519c475909">
 
-<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-8-1.png" width="576" class="r-stretch quarto-figure-left"><p class="caption">Daily average temperatures at 0.2m depth for 37 sites, 2017-2019.</p></section>
-<section id="as-an-estimation-problem" class="slide level2">
-<h2>As an estimation problem</h2>
-<p>Modeling the trend can be formulated as estimating the model:</p>
-<p><span class="math display">\[
-Y_{i, t} = f(t) + \epsilon_{i, t}
-\]</span></p>
-<div class="fragment">
-<p>Where:</p>
-<ul>
-<li class="fragment"><p><span class="math inline">\(Y_{i, t}\)</span> is the temperature at site <span class="math inline">\(i\)</span> and time <span class="math inline">\(t\)</span></p></li>
-<li class="fragment"><p><span class="math inline">\(f(t)\)</span> is the mean temperature at time <span class="math inline">\(t\)</span></p></li>
-<li class="fragment"><p><span class="math inline">\(\epsilon_{i, t}\)</span> is a random error</p></li>
-</ul>
 </div>
-<div class="fragment">
-<p>But how do you estimate an arbitrary function?</p>
-</div>
-</section>
-<section id="basis-functions" class="slide level2">
-<h2>Basis functions</h2>
-<p>A <strong>basis function</strong> is an element of a basis for a function space.</p>
-<div class="fragment">
-<p>If <span class="math inline">\(\{f_j\}\)</span> form a basis for a function space <span class="math inline">\(C\)</span> then</p>
-<p><span class="math display">\[
-f \in C \quad\Longleftrightarrow f = \sum_j c_j f_j
-\]</span></p>
-</div>
-<div class="fragment">
-<p>A finite subset of basis functions can be used to approximate functions in the space:</p>
-<p><span class="math display">\[
-f \approx \sum_{j = 1}^J c_j f_j
-\]</span></p>
-</div>
-</section>
-<section id="basis-approximation" class="slide level2">
-<h2>Basis approximation</h2>
-<p>A nifty trick is to estimate <span class="math inline">\(f\)</span> using a suitable <span style="color: maroon;">basis approximation</span>:</p>
-<p><span class="math display">\[
-Y_{i, t} = \beta_0 + \color{maroon}{\underbrace{\sum_{j = 1}^J \beta_j f_j(t)}_{\tilde{f}(t) \approx f(t)}} + \epsilon_{i, t}
-\]</span></p>
-<div class="fragment">
-<p>This model can be fit using standard linear regression. (Think of the <span class="math inline">\(f_j(t)\)</span>’s as <span class="math inline">\(J\)</span> ‘new’ predictors.)</p>
-</div>
-</section>
-<section id="spline-basis" class="slide level2">
-<h2>Spline basis</h2>
-<p>The spline basis is a basis for piecewise polynomials of a specified order.</p>
-
-<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Bases for piecewise polynomials of order 1 through 4 joined at evenly-spaced knot points.</p><div class="fragment">
-<p>Generated recursively based on ‘knots’ – joining locations</p>
-</div>
-</section>
-<section id="knot-spacing" class="slide level2">
-<h2>Knot spacing</h2>
-<p>Knot spacing will affect how densely basis functions are concentrated around particular regions of data.</p>
-<div class="fragment">
-<p>Here are bases generated on some unevenly-spaced knots:</p>
-<div class="cell" data-layout-align="center" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-10_7d2a1738dcb51445e4c052558b642745">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-10-1.png" width="576"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>Check your understanding: where would this spline basis have the most flexible approximation capability?</p>
-</div>
-</section>
-<section id="knot-placement" class="slide level2">
-<h2>Knot placement</h2>
-<p>Appropriate placement of knots is essential for quality function approximation.</p>
-<ul>
-<li class="fragment"><p>default: place at data quantiles</p></li>
-<li class="fragment"><p>better: concentrated in regions with irregular trend</p></li>
-</ul>
-<div class="fragment">
-<div class="columns">
-<div class="column" style="width:60%;">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-11_8b7beab5807d5330ad77d4420d7d1a67">
-<div class="cell-output-display">
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-11-1.png" width="576"></p>
-</div>
-</div>
-</div><div class="column" style="width:40%;">
-<p>Where would you put them for our data?</p>
-</div>
-</div>
-</div>
-</section>
-<section id="a-first-attempt-spline-basis" class="slide level2">
-<h2>A first attempt: spline basis</h2>
-<p>Model: <span class="math inline">\(Y_{i,t} = \beta_0 + \beta_1\cdot\text{elev}_i + \sum_{j = 1}^7 \gamma_j \cdot f_j(t) + \epsilon_{i, t}\)</span></p>
 <div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Knot placement</a></li><li><a href="#tabset-1-2">Fitted curve</a></li></ul>
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Seasonal forecasts</a></li><li><a href="#tabset-1-2">Residual forecasts</a></li><li><a href="#tabset-1-3">Final forecasts</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-12_ae2b78bdb725b05737d98a76c9013c7a">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-left">
-<figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-12-1.png" width="576"></p>
-<p></p><figcaption>Knots placed at vertical lines.</figcaption><p></p>
-</figure>
-</div>
+<p><span class="math inline">\(\texttt{pred.mean} = \hat{\mu}(i, t)\)</span></p>
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-10_d976d0de8aba100fd557f1cd3f1084b9">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  date        elev  temp pred.mean
+  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+1 2019-03-12   396 -2.85     -6.83
+2 2019-03-13   396 -2.86     -6.76
+3 2019-03-14   396 -2.92     -6.69
+4 2019-03-15   396 -3.16     -6.62
+5 2019-03-16   396 -3.34     -6.55
+6 2019-03-17   396 -3.28     -6.47</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-1-2">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-13_4b818bc3c3f4b63d6e3d8f281308da9a">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-left">
-<figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-13-1.png" width="576"></p>
-<p></p><figcaption>Estimated mean with 95% prediction interval at median site elevation.</figcaption><p></p>
-</figure>
+<p><span class="math inline">\(\texttt{pred.resid} = \hat{e}_{i, t} = \mathbb{E}(e_{i, t}|e_{i, t - 1})\)</span></p>
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-11_3a5d665f379ddd3fb060ccc675c7cc5e">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  date        elev  temp pred.mean resid pred.resid
+  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+1 2019-03-12   396 -2.85     -6.83  3.98      NA   
+2 2019-03-13   396 -2.86     -6.76  3.90       3.90
+3 2019-03-14   396 -2.92     -6.69  3.77       3.83
+4 2019-03-15   396 -3.16     -6.62  3.46       3.69
+5 2019-03-16   396 -3.34     -6.55  3.20       3.39
+6 2019-03-17   396 -3.28     -6.47  3.18       3.14</code></pre>
 </div>
+</div>
+</div>
+<div id="tabset-1-3">
+<p><span class="math inline">\(\texttt{pred} = \texttt{pred.mean} + \texttt{pred.resid} = \hat{\mu}(i, t) + \hat{e}_{i, t}\)</span></p>
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-12_f6c1c159c39a859d6412a66dc143038e">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  date        elev  temp pred.mean resid pred.resid  pred
+  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+1 2019-03-12   396 -2.85     -6.83  3.98      NA    NA   
+2 2019-03-13   396 -2.86     -6.76  3.90       3.90 -2.86
+3 2019-03-14   396 -2.92     -6.69  3.77       3.83 -2.86
+4 2019-03-15   396 -3.16     -6.62  3.46       3.69 -2.93
+5 2019-03-16   396 -3.34     -6.55  3.20       3.39 -3.15
+6 2019-03-17   396 -3.28     -6.47  3.18       3.14 -3.33</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="a-problem" class="slide level2">
-<h2>A problem</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-14_78a04c756504f0994ea4039948a2dd55">
+<section id="one-step-forecasts" class="slide level2">
+<h2>One-step forecasts</h2>
+
+<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-13-1.png" width="576" class="r-stretch quarto-figure-left"><p class="caption">Seasonal forecast (blue curve), residual forecasts (red lines), one-step forecasts (dotted line), and observed temperatures (solid black line).</p></section>
+<section id="forecasting-error-1" class="slide level2">
+<h2>Forecasting error</h2>
+<p>One the site we’ve been examining, the one-step forecasting error is:</p>
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-14_1e1fceabc3678abac70aa61d7f177890">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-left">
-<figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-14-1.png" width="576"></p>
-<p></p><figcaption>Spline bases produce discontinuities</figcaption><p></p>
-</figure>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ccc</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">0.9981049</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">msd</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">0.0536997</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: left;">standard</td>
+<td style="text-align: right;">0.3494716</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
-</div><div class="column" style="width:50%;">
-<p>The choice of basis must match problem context.</p>
 <ul>
-<li class="fragment"><p>here, need boundaries to meet</p></li>
-<li class="fragment"><p>in other words, need a <em>harmonic</em> function</p></li>
+<li class="fragment"><p><code>ccc</code> is the <em>concordance correlation coefficient</em></p></li>
+<li class="fragment"><p><code>msd</code> is the <em>mean signed deviation</em></p></li>
+<li class="fragment"><p><code>rmse</code> is the <em>root mean squared error</em></p></li>
+</ul>
+</section>
+<section id="average-forecasting-error-across-sites" class="slide level2">
+<h2>Average forecasting error across sites</h2>
+<p>Means and standard deviations across all 29 sites of error metrics for one-step forecasts computed across entire observation window:</p>
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-15_3ee7d7a88e1f9a3a337e0111d3a374a3">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: right;">average</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ccc</td>
+<td style="text-align: right;">0.9949698</td>
+<td style="text-align: right;">0.0032392</td>
+<td style="text-align: right;">0.9869467</td>
+<td style="text-align: right;">0.9993684</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">msd</td>
+<td style="text-align: right;">-0.0062058</td>
+<td style="text-align: right;">0.0510766</td>
+<td style="text-align: right;">0.0005584</td>
+<td style="text-align: right;">0.1186212</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rmse</td>
+<td style="text-align: right;">0.6460647</td>
+<td style="text-align: right;">0.3593531</td>
+<td style="text-align: right;">0.1801040</td>
+<td style="text-align: right;">1.4875005</td>
+<td style="text-align: right;">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="one-step-forecasts-mathematically" class="slide level2">
+<h2>One-step forecasts (mathematically)</h2>
+<p>The one-step forecasts are the predicted conditional means at the next time step given the <span style="color:blue;">present</span> :</p>
+<p><span class="math display">\[
+\hat{Y}_{i, t} = \mathbb{E}(Y_{i, t + 1}|Y_{i, t} = \color{blue}{y_{i, t}})
+\]</span></p>
+<div class="fragment">
+<p>Conditional expectation gives optimal prediction under squared error loss (assuming the model is correct).</p>
+</div>
+<div class="fragment">
+<p>According to our model:</p>
+<p><span class="math display">\[
+\hat{Y}_{i, t + 1}
+=  \hat{\mu}(i, t + 1) + \hat{\alpha}_0 + \hat{\alpha}_1 \left(\color{blue}{y_{i, t}} - \hat{\mu}(i, t)\right)
+\]</span></p>
+</div>
+</section>
+<section id="multi-step-forecasts" class="slide level2">
+<h2>Multi-step forecasts</h2>
+<p>Multistep forecasts must be computed recursively:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\color{maroon}{\hat{Y}_{i, t + 1}}
+&amp;= \mathbb{E}(Y_{i, t + 1}|Y_{i, t} = y_{i, t}) \\
+\color{teal}{\hat{Y}_{i, t + 2}}
+&amp;= \mathbb{E}(Y_{i, t + 2}|Y_{i, t + 1} = \color{maroon}{\hat{Y}_{i, t + 1}}) \\
+\hat{Y}_{i, t + 3}
+&amp;= \mathbb{E}(Y_{i, t + 3}|Y_{i, t + 2} = \color{teal}{\hat{Y}_{i, t + 2}}) \\
+&amp;\vdots
+\end{aligned}
+\]</span></p>
+<div class="fragment">
+<p>What do you think will happen the farther out we forecast??</p>
+</div>
+</section>
+<section id="multistep-forecasts-on-one-site" class="slide level2">
+<h2>Multistep forecasts on one site</h2>
+
+<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-16-1.png" width="576" class="r-stretch"></section>
+<section id="comments" class="slide level2">
+<h2>Comments</h2>
+<p>This approach pooled data across sites to estimate model quantities.</p>
+<ul>
+<li class="fragment"><p>seasonal mean (using Fourier basis approximation)</p></li>
+<li class="fragment"><p>residual autocorrelation at one lag (using SLR)</p></li>
+</ul>
+<div class="fragment">
+<p>Works pretty well for one-step forecasts; not very well for longer-term forecasts.</p>
+</div>
+</section>
+<section>
+<section id="time-series-models" class="title-slide slide level1 center">
+<h1>Time series models</h1>
+
+</section>
+<section id="site-specific-approach" class="slide level2">
+<h2>Site-specific approach</h2>
+<p>An alternative to pooling data together to estimate the seasonal trend and residual autocorrelation is to do so <em>individually</em> for every site.</p>
+<ul>
+<li class="fragment"><p>upshot: more flexibility on approaches; can use time series techniques</p></li>
+<li class="fragment"><p>downside: many models <span class="math inline">\(\longrightarrow\)</span> more total uncertainty</p></li>
+</ul>
+<div class="fragment">
+<p>For now we’ll leave the seasonality alone and revise the residual autocorrelation approach.</p>
+</div>
+</section>
+<section id="autoregression" class="slide level2">
+<h2>Autoregression</h2>
+<p>An <em>autoregressive</em> model of order <span class="math inline">\(D\)</span> is</p>
+<p><span class="math display">\[
+X_t = \nu + \alpha_1 X_{t - 1} + \cdots + \alpha_D X_{t - D} + \epsilon_t
+\]</span></p>
+<ul>
+<li class="fragment"><p>‘innovations’ <span class="math inline">\(\epsilon_t\)</span> are <span class="math inline">\(iid\)</span> with mean zero</p></li>
+<li class="fragment"><p>process mean linear in <span class="math inline">\(D\)</span> lags</p></li>
+<li class="fragment"><p><span class="math inline">\(\mathbb{E}X_t\)</span> and <span class="math inline">\(\text{var}X_t\)</span> are constant in time (‘weak stationarity’)</p></li>
+</ul>
+</section>
+<section id="technical-asides" class="slide level2">
+<h2>Technical asides</h2>
+<p>About the AR parameters:</p>
+<ul>
+<li class="fragment"><p>constraints on <span class="math inline">\(\alpha_j\)</span>’s needed for a well-defined process in infinite time</p></li>
+<li class="fragment"><p>estimates <span class="math inline">\(\hat{\alpha}_j\)</span> found by:</p>
+<ul>
+<li class="fragment"><p>(moment estimator) solving a recursive system of equations (known as the <em>Yule-Walker</em> equations)</p></li>
+<li class="fragment"><p>(mle) maximum likelihood assuming <span class="math inline">\(\epsilon_{t} \sim N(0, \sigma^2)\)</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="site-specific-model" class="slide level2">
+<h2>Site-specific model</h2>
+<p>So let’s revise:</p>
+<p><span class="math display">\[
+\begin{aligned}
+Y_{i, t} &amp;= f_i (t) + \epsilon_{i, t} \quad\text{(nonlinear regression)} \\
+\epsilon_{i, t} &amp;= \sum_{d = 1}^D \alpha_{i,d}\epsilon_{i, t - d} + \xi_{i, t} \quad\text{(AR(D) errors)}
+\end{aligned}
+\]</span></p>
+<div class="fragment">
+<p><em>Note</em>:</p>
+<ul>
+<li class="fragment"><p>seasonal mean <span class="math inline">\(f_i(t)\)</span> is site-dependent (hence subscript)</p></li>
+<li class="fragment"><p>AR process is site-dependent (hence <span class="math inline">\(\alpha_{i, d}\)</span> subscript)</p></li>
+<li class="fragment"><p>no elevation included, since it is constant for each site</p></li>
 </ul>
 </div>
-</div>
 </section>
-<section id="fourier-basis" class="slide level2">
-<h2>Fourier basis</h2>
-<p>The <strong>Fourier basis</strong> is a basis for square-integrable functions on closed intervals consisting of sine-cosine pairs.</p>
-<div class="fragment">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-15_b7f7d28ae1df6f33c18cf58c4c0e3c2d">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-left">
-<figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-15-1.png" width="768"></p>
-<p></p><figcaption>4 Fourier basis functions on the interval [1, 365].</figcaption><p></p>
-</figure>
+<section id="fit-comparison" class="slide level2 scrollable">
+<h2>Fit comparison</h2>
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-17_7de1a2aa0d5bcb33f34500f40a14c9d3">
+
 </div>
-</div>
-</div>
-</div>
-</section>
-<section id="second-try" class="slide level2">
-<h2>Second try</h2>
 <div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Seasonal mean</a></li><li><a href="#tabset-2-2">Time plot</a></li></ul>
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">AR fit</a></li><li><a href="#tabset-2-2">Comparision of estimates</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-16_778d1b3c5462a206671c025be6419b41">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-18_a61d0047cfcb57f7b1a20143bf7b99ae">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>fit_ar2 <span class="ot">&lt;-</span> <span class="fu">arima</span>(y_train, </span>
+<span id="cb6-2"><a href="#cb6-2"></a>      <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
+<span id="cb6-3"><a href="#cb6-3"></a>      <span class="at">xreg =</span> x_train, </span>
+<span id="cb6-4"><a href="#cb6-4"></a>      <span class="at">include.mean =</span> T, </span>
+<span id="cb6-5"><a href="#cb6-5"></a>      <span class="at">method =</span> <span class="st">'ML'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="fu">tidy</span>(fit_ar2) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-left">
-<figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-16-1.png" width="576"></p>
-<p></p><figcaption>Seasonal mean approximation using 4 Fourier basis functions.</figcaption><p></p>
-</figure>
-</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ar1</td>
+<td style="text-align: right;">1.5389488</td>
+<td style="text-align: right;">0.0310331</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ar2</td>
+<td style="text-align: right;">-0.5872016</td>
+<td style="text-align: right;">0.0310424</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">intercept</td>
+<td style="text-align: right;">1.7120661</td>
+<td style="text-align: right;">0.2661139</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sin1</td>
+<td style="text-align: right;">-57.4478541</td>
+<td style="text-align: right;">4.9296869</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cos1</td>
+<td style="text-align: right;">-97.6093126</td>
+<td style="text-align: right;">5.1741646</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sin2</td>
+<td style="text-align: right;">9.5264551</td>
+<td style="text-align: right;">4.9135875</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cos2</td>
+<td style="text-align: right;">15.0945042</td>
+<td style="text-align: right;">5.0136827</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div id="tabset-2-2">
-<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-17_646aa0ec70918d9072820e196dd907b6">
+<div class="cell" data-hash="week7-forecasting_cache/revealjs/unnamed-chunk-19_3eac5ad0203f79c25aedb237819689d9">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-left">
-<figure>
-<p><img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-17-1.png" width="576"></p>
-<p></p><figcaption>Seasonal mean approxiamtion using 4 Fourier basis functions.</figcaption><p></p>
-</figure>
-</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate.ar</th>
+<th style="text-align: right;">estimate.pooled</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ar1</td>
+<td style="text-align: right;">1.5389488</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ar2</td>
+<td style="text-align: right;">-0.5872016</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">intercept</td>
+<td style="text-align: right;">1.7120661</td>
+<td style="text-align: right;">1.7428057</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sin1</td>
+<td style="text-align: right;">-57.4478541</td>
+<td style="text-align: right;">-60.4797059</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cos1</td>
+<td style="text-align: right;">-97.6093126</td>
+<td style="text-align: right;">-84.9711125</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sin2</td>
+<td style="text-align: right;">9.5264551</td>
+<td style="text-align: right;">7.0360375</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cos2</td>
+<td style="text-align: right;">15.0945042</td>
+<td style="text-align: right;">15.0271089</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elev</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-0.0038422</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">elevsin1</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.0094721</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevsin2</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.0063869</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">elevcos1</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-0.0627032</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">elevcos2</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-0.0032467</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">residlag</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.9804500</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="forecasting" class="slide level2">
-<h2>Forecasting</h2>
-<p>Does this forecast make sense? Why or why not?</p>
+<section id="forecast-comparison" class="slide level2">
+<h2>Forecast comparison</h2>
 
-<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-18-1.png" width="576" class="r-stretch"></section>
+<img data-src="week7-forecasting_files/figure-revealjs/unnamed-chunk-20-1.png" width="576" class="r-stretch"></section>
 <section id="next-time" class="slide level2">
 <h2>Next time</h2>
-<ol type="1">
-<li class="fragment"><p>Fit a time series model to the residuals</p>
-<p><span class="math display">\[
-e_{i, t} = Y_{i, t} - \underbrace{\left(\hat{\beta_0} + \hat{\beta_1}\text{elev}_i + \hat{f}(t)\right)}_{\text{mean function } \hat{\mu}(i, t)}
-\]</span></p></li>
-<li class="fragment"><p>Forecast <span class="math inline">\(\hat{e}_{i, t} = \mathbb{E}\left(e_{i, t}|e_{i, t - 1}\right)\)</span> using the residual model</p></li>
-<li class="fragment"><p>“Feed forward” residual forecasts to obtain temperature forecasts</p>
-<p><span class="math display">\[
-\hat{Y}_{i, t} = \hat{\mu}(i, t) + \hat{e}_{i, t}
-\]</span></p></li>
-</ol>
+<p>Spatial prediction…</p>
+<ul>
+<li class="fragment"><p>based on observations</p></li>
+<li class="fragment"><p>based on forecasts</p></li>
+</ul>
 
 <div class="footer footer-default">
 
