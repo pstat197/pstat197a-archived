@@ -22,11 +22,9 @@ execute:
 
 ## Announcements/reminders
 
--   I am away Thursday; will do an activity led by Megan, Josh, and Yan
+-   I am away Thursday; no class meeting due to strike
 
-    -   Compare predictions you submitted using the held-out labels
-
-    -   Come prepared to discuss your predictive models
+-   Students in the 4pm section should attend Josh or Erika's section this week
 
 -   Next week (Thanksgiving):
 

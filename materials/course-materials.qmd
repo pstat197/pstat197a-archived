@@ -138,6 +138,6 @@ bibliography: slides/refs.bib
 
 -   ***Tuesday meeting:*** spatial prediction \[[slides](slides/week8-spatial.qmd)\]
 
--   ***Section meeting:*** forecasting and spatial prediction \[activity\]
+-   ***Section meeting:*** forecasting and spatial prediction \[[activity](labs/lab8-forecasting/lab8-forecasting.qmd)\]
 
--   ***Thursday meeting:*** discussion of predictive models from last group assignment \[agenda\]
+-   ***Thursday meeting:*** NO CLASS
