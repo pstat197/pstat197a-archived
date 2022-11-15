@@ -221,7 +221,7 @@
     "href": "materials/course-materials.html#module-3-soil-temperatures",
     "title": "Course materials",
     "section": "Module 3: soil temperatures",
-    "text": "Module 3: soil temperatures\nObjectives: build a forecasting model; introduce concepts of spatial and temporal correlation structures; discuss function approximation and curve fitting with regression techniques; fit elementary time series and spatial models; interpolation.\n\nWeek 7\n\nTuesday meeting: data introduction; function approximation using basis expansions [slides]\nSection meeting: curve fitting [activity]\nThursday meeting: temporal correlation; a forecasting model [slides]"
+    "text": "Module 3: soil temperatures\nObjectives: build a forecasting model; introduce concepts of spatial and temporal correlation structures; discuss function approximation and curve fitting with regression techniques; fit elementary time series and spatial models; interpolation.\n\nWeek 7\n\nTuesday meeting: data introduction; function approximation using basis expansions [slides]\nSection meeting: curve fitting [activity]\nThursday meeting: temporal correlation; a forecasting model [slides]\nOptional further reading (available through UCSB library)\n\nSections 1.1, 1.2, and 2.3 in Shumway and Stoffer (2017)\nPerperoglou et al. (2019)\n\n\n\n\nWeek 8\n\nTuesday meeting: spatial prediction [slides]\nSection meeting: forecasting and spatial prediction [activity]\nThursday meeting: discussion of predictive models from last group assignment [agenda]"
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html",
@@ -2672,5 +2672,138 @@
     "title": "Building a forecasting model",
     "section": "Next time",
     "text": "Next time\nSpatial prediction…\n\nbased on observations\nbased on forecasts"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#announcementsreminders",
+    "href": "materials/slides/week8-spatial.html#announcementsreminders",
+    "title": "Spatial prediction",
+    "section": "Announcements/reminders",
+    "text": "Announcements/reminders\n\nI am away Thursday; will do an activity led by Megan, Josh, and Yan\n\nCompare predictions you submitted using the held-out labels\nCome prepared to discuss your predictive models\n\nNext week (Thanksgiving):\n\nwe are meeting Tuesday\nbut there are no Wednesday section meetings on 11/23\n\nYou should start working on your last group assignment before Thanksgiving"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#final-group-assignment",
+    "href": "materials/slides/week8-spatial.html#final-group-assignment",
+    "title": "Spatial prediction",
+    "section": "Final group assignment",
+    "text": "Final group assignment\n\ngroups posted [here]\ntask: create a method vignette on a data science topic or theme\n\ngoal: create a reference that you or someone else might use as a starting point next term\ndeliverable: public repository in the pstat197 workspace"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#possible-vignette-topics",
+    "href": "materials/slides/week8-spatial.html#possible-vignette-topics",
+    "title": "Spatial prediction",
+    "section": "Possible vignette topics",
+    "text": "Possible vignette topics\n\nclustering methods\nneural net architecture(s) for … [images, text, time series, spatial data]\nconfiguring a database and writing queries in R\nanalysis of network data\nnumerical optimization\nbootstrapping\ngeospatial data structures\nanomaly detection\nfunctional regression"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#outputs",
+    "href": "materials/slides/week8-spatial.html#outputs",
+    "title": "Spatial prediction",
+    "section": "Outputs",
+    "text": "Outputs\nYour repository should contain:\n\nA brief .README summarizing repo content and listing the best references on your topic for a user to consult after reviewing your vignette if they wish to learn more\nA primary vignette document that explains methods and walks through implementation line-by-line (similar to an in-class or lab activity)\nAt least one example dataset\nA script containing commented codes appearing in the vignette"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#timeline",
+    "href": "materials/slides/week8-spatial.html#timeline",
+    "title": "Spatial prediction",
+    "section": "Timeline",
+    "text": "Timeline\n\nlet me know your topic by end of day Thursday 11/17\nI will confirm by end of day Friday 11/18\nmake a start before Thanksgiving\npresent a draft in class Thursday 12/1\nfinalize repository by Thursday 12/8"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#expectations",
+    "href": "materials/slides/week8-spatial.html#expectations",
+    "title": "Spatial prediction",
+    "section": "Expectations",
+    "text": "Expectations\nYou’ll need to yourself learn about the topic and implementation by finding reference materials and code examples.\n\nIt is okay to borrow closely from other vignettes in creating your own, but you should:\n\ncite them\nuse different data\ndo something new\n\n\n\nIt is not okay to make a collage of reference materials by copying verbatim, or simply rewrite an existing vignette.\n\nthe best safeguard against this is to find your own data so you’re forced to translate codes/steps to apply in your particular case\nwe’ll do a brief search and skim your references to ensure sufficient originality"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#from-last-time",
+    "href": "materials/slides/week8-spatial.html#from-last-time",
+    "title": "Spatial prediction",
+    "section": "From last time",
+    "text": "From last time\n\n\n\nWe had fit the site-specific model:\n\\[\n\\begin{aligned}\nY_{i, t} &= f_i (t) + \\epsilon_{i, t} \\quad\\text{(nonlinear regression)} \\\\\n\\epsilon_{i, t} &= \\sum_{d = 1}^D \\alpha_{i,d}\\epsilon_{i, t - d} + \\xi_{i, t} \\quad\\text{(AR(D) errors)}\n\\end{aligned}\n\\]\n\nAnd computed forecasts \\(\\hat{Y}_{i, t+ 1} = \\mathbb{E}(Y_{i, t + 1}|Y_{i, t})\\)"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#fitting-and-forecasts-for-one-site",
+    "href": "materials/slides/week8-spatial.html#fitting-and-forecasts-for-one-site",
+    "title": "Spatial prediction",
+    "section": "Fitting and forecasts for one site",
+    "text": "Fitting and forecasts for one site\n\nPartitionsFittingForecastingVisualization\n\n\n\n# data partitioning\nsite15 <- soil %>% \n  dplyr::select(-year, -elev) %>%\n  filter(site == soil$site[15]) %>%\n  arrange(date)\n\ntrain <- site15 %>%\n  filter(date < ymd('2018-06-01'))\n\ntest <- site15 %>%\n  filter(date >= ymd('2018-06-01'))\n\ntrain %>% head()\n\n# A tibble: 6 × 7\n  site     day date        temp longitude latitude elevation\n  <chr>  <dbl> <date>     <dbl>     <dbl>    <dbl>     <dbl>\n1 B21K-1   226 2017-08-14  3.82     -155.     69.6        96\n2 B21K-1   227 2017-08-15  3.72     -155.     69.6        96\n3 B21K-1   228 2017-08-16  3.31     -155.     69.6        96\n4 B21K-1   229 2017-08-17  4.95     -155.     69.6        96\n5 B21K-1   230 2017-08-18  5.46     -155.     69.6        96\n6 B21K-1   231 2017-08-19  5.80     -155.     69.6        96\n\n\n\n\n\nx_train <- pull(train, day) %>% \n  fourier(nbasis = 4, period = 365)\ny_train <- pull(train, temp)\n\nfit <- Arima(y_train, \n      order = c(2, 0, 0), \n      xreg = x_train, \n      include.mean = F,\n      method = 'ML')\n\nfit\n\nSeries: y_train \nRegression with ARIMA(2,0,0) errors \n\nCoefficients:\n         ar1      ar2     const      sin1       cos1     sin2     cos2\n      1.4200  -0.5192  -97.0613  -88.1952  -113.2035  -8.7344   5.5794\ns.e.  0.0497   0.0497   11.5069    9.0469    13.2328   9.5149  12.0896\n\nsigma^2 = 0.7837:  log likelihood = -375.26\nAIC=766.52   AICc=767.03   BIC=795.9\n\n\n\n\n\nx_test <- pull(test, day) %>% \n  fourier(nbasis = 4, period = 365)\n\npreds <- forecast(fit, h = nrow(x_test), xreg = x_test)\n\nhead(preds$mean)\n\nTime Series:\nStart = 292 \nEnd = 297 \nFrequency = 1 \n[1] -0.2837326 -0.1614655 -0.0189233  0.1355583  0.2962263  0.4592358"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#now-for-many-sites",
+    "href": "materials/slides/week8-spatial.html#now-for-many-sites",
+    "title": "Spatial prediction",
+    "section": "Now for many sites",
+    "text": "Now for many sites\nRemember the functional programming iteration strategy?\n\nFittingFitPredictions\n\n\n\n\n# A tibble: 26 × 5\n   site   train              test               fit        pred      \n   <chr>  <list>             <list>             <list>     <list>    \n 1 C27K-1 <tibble [485 × 3]> <tibble [78 × 3]>  <fr_ARIMA> <forecast>\n 2 F24K-1 <tibble [485 × 3]> <tibble [54 × 3]>  <fr_ARIMA> <forecast>\n 3 G25K-2 <tibble [485 × 3]> <tibble [24 × 3]>  <fr_ARIMA> <forecast>\n 4 G26K-2 <tibble [485 × 3]> <tibble [69 × 3]>  <fr_ARIMA> <forecast>\n 5 G27K-3 <tibble [485 × 3]> <tibble [76 × 3]>  <fr_ARIMA> <forecast>\n 6 M17K-2 <tibble [358 × 3]> <tibble [338 × 3]> <fr_ARIMA> <forecast>\n 7 M18K-5 <tibble [357 × 3]> <tibble [382 × 3]> <fr_ARIMA> <forecast>\n 8 M16K-2 <tibble [354 × 3]> <tibble [323 × 3]> <fr_ARIMA> <forecast>\n 9 N17K-3 <tibble [353 × 3]> <tibble [357 × 3]> <fr_ARIMA> <forecast>\n10 L16K-1 <tibble [352 × 3]> <tibble [386 × 3]> <fr_ARIMA> <forecast>\n# … with 16 more rows"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#spatial-prediction",
+    "href": "materials/slides/week8-spatial.html#spatial-prediction",
+    "title": "Spatial prediction",
+    "section": "Spatial prediction",
+    "text": "Spatial prediction\nWe could consider our data to be more explicitly spatial:\n\\[\nY_{i, t} = Y_t(s_i)\n\\qquad\\text{where}\\qquad\ns_i = \\text{location of site }i\n\\]\n\nIn other words, our data at a given time are a realization of a spatial process \\(Y(s)\\) observed at locations \\(s_1, \\dots, s_n\\).\n\n\nCan we predict \\(Y(s_{n + 1})\\) based on \\(Y(s_1), \\dots, Y(s_n)\\)?"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#intuition",
+    "href": "materials/slides/week8-spatial.html#intuition",
+    "title": "Spatial prediction",
+    "section": "Intuition",
+    "text": "Intuition\nTobler’s first law of geography:\n\n“everything is related to everything else, but near things are more related than distant things”\n\n\nSo a weighted average of some kind makes sense for spatial prediction\n\\[\n\\hat{Y}(s) = \\sum_i w_i Y(s_i)\n\\]\nwhere the weights \\(w_i\\) are larger for \\(s_i\\) closer to \\(s\\)."
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#inverse-distance-weighting",
+    "href": "materials/slides/week8-spatial.html#inverse-distance-weighting",
+    "title": "Spatial prediction",
+    "section": "Inverse distance weighting",
+    "text": "Inverse distance weighting\nA simple and fully nonparametric method of spatial prediction is to set \\(w_i \\propto 1/d(s, s_i)\\) where \\(d\\) is a distance measure.\n\nInverse distance weighting does just that, for powers of distance:\n\\[\n\\hat{Y}(s) = \\sum_i c \\times d(s, s_i)^{-p} \\times Y(s_i)\n\\]\nWhere \\(c\\) is the normalizing constant \\(1/\\sum_i d(s, s_i)^{-p}\\)."
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#interpolation",
+    "href": "materials/slides/week8-spatial.html#interpolation",
+    "title": "Spatial prediction",
+    "section": "Interpolation",
+    "text": "Interpolation\nSpatial interpolation refers to ‘filling in’ values between observed locations.\n\nGenerate a spatial mesh of with centers \\(g_1, g_2, \\dots, g_m\\)\nPredict \\(\\hat{Y}(g_j)\\) for every center \\(g_j\\)\nMake a raster plot\n\n\n\n\n\n\n\n\nMesh\n\n\nFor spatial problems, a mesh is a mutually exclusive partitioning of an area into subregions. Subregions could be regular (e.g., squares, polygons) or irregular (try googling ‘Voronoi tesselation’)."
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#map-of-locations",
+    "href": "materials/slides/week8-spatial.html#map-of-locations",
+    "title": "Spatial prediction",
+    "section": "Map of locations",
+    "text": "Map of locations\nEarlier, I fit models and generated forecasts for 26 sites chosen largely based on having overlapping observation windows."
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#forecasts",
+    "href": "materials/slides/week8-spatial.html#forecasts",
+    "title": "Spatial prediction",
+    "section": "Forecasts",
+    "text": "Forecasts\nI also truncated the training data to stop on the same date (April 30, 2018). So we can plot point forecasts for May 1."
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#interpolations-using-idw",
+    "href": "materials/slides/week8-spatial.html#interpolations-using-idw",
+    "title": "Spatial prediction",
+    "section": "Interpolations using IDW",
+    "text": "Interpolations using IDW\nSo interpolating between forecasts yields spatial forecasts."
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#effect-of-idw-parameter-p",
+    "href": "materials/slides/week8-spatial.html#effect-of-idw-parameter-p",
+    "title": "Spatial prediction",
+    "section": "Effect of IDW parameter \\(p\\)",
+    "text": "Effect of IDW parameter \\(p\\)\nThe power parameter \\(p\\) controls the rate of decay of interpolation weight \\(w_i\\) with distance."
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#power-parameter",
+    "href": "materials/slides/week8-spatial.html#power-parameter",
+    "title": "Spatial prediction",
+    "section": "Power parameter",
+    "text": "Power parameter\n\n\nThe power parameter \\(p\\) controls the rate of weight decay with distance:\n\\[\nw_i \\propto \\frac{1}{d(s, s_i)^p}\n\\]"
+  },
+  {
+    "objectID": "materials/slides/week8-spatial.html#considerations",
+    "href": "materials/slides/week8-spatial.html#considerations",
+    "title": "Spatial prediction",
+    "section": "Considerations",
+    "text": "Considerations\n\nChoosing \\(p\\) can be done based on optimizing predictions or by hand.\nUncertainty quantification?\n\nusually, could use variance of weighted average\nbut also tricky in this case because we are interpolating forecasts, which themselves have some associated uncertainty"
   }
 ]

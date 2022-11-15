@@ -128,3 +128,16 @@ bibliography: slides/refs.bib
 -   ***Section meeting:*** curve fitting \[[activity](labs/lab7-curvefitting/lab7-curvefitting.qmd)\]
 
 -   ***Thursday meeting:*** temporal correlation; a forecasting model \[[slides](slides/week7-forecasting.qmd)\]
+
+-   Optional further reading (available through UCSB library)
+
+    -   Sections 1.1, 1.2, and 2.3 in @shumway2017time
+    -   @perperoglou2019review
+
+### Week 8
+
+-   ***Tuesday meeting:*** spatial prediction \[[slides](slides/week8-spatial.qmd)\]
+
+-   ***Section meeting:*** forecasting and spatial prediction \[activity\]
+
+-   ***Thursday meeting:*** discussion of predictive models from last group assignment \[agenda\]
