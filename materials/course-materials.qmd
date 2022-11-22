@@ -154,7 +154,7 @@ bibliography: slides/refs.bib
 
 ### Week 9
 
--   ***Tuesday meeting:*** discussion on results of claims module; vignette workshopping
+-   ***Tuesday meeting:*** discussion on results of claims module; vignette workshopping \[[slides](slides/week9-claimsresults.qmd)\]
 
 -   ***Section meeting:*** NO SECTION MEETING (Thanksgiving)
 

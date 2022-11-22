@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Vignette Guidelines</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Vignette Guidelines</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../" class="sidebar-logo-link">
+      <img src="../img/ucsbds_hex.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Data Science Capstone Preparation</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/pstat197" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://ucsbdscapstone.slack.com" title="" class="sidebar-tool px-1"><i class="bi bi-slack"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">About</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about/syllabus.html" class="sidebar-item-text sidebar-link">Course syllabus</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about/outcomes.html" class="sidebar-item-text sidebar-link">Learning outcomes</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about/schedule.html" class="sidebar-item-text sidebar-link">Course schedule</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about/technology.html" class="sidebar-item-text sidebar-link">Technology</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about/links.html" class="sidebar-item-text sidebar-link">Links</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/course-materials.html" class="sidebar-item-text sidebar-link">Course materials</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#configuring-your-repository" id="toc-configuring-your-repository" class="nav-link active" data-scroll-target="#configuring-your-repository">Configuring your repository</a></li>
+  <li><a href="#directory-organization" id="toc-directory-organization" class="nav-link" data-scroll-target="#directory-organization">Directory organization</a></li>
+  <li><a href="#readme-contents" id="toc-readme-contents" class="nav-link" data-scroll-target="#readme-contents">README contents</a></li>
+  <li><a href="#repository-contents" id="toc-repository-contents" class="nav-link" data-scroll-target="#repository-contents">Repository contents</a></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
+  <li><a href="#deadlines" id="toc-deadlines" class="nav-link" data-scroll-target="#deadlines">Deadlines</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Vignette Guidelines</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>A vignette is a simple example intended to help learn a method or tool.</p>
+<p>The overarching goal of creating vignettes is to provide starting points for learning about specialized topics in data science that students in the class can later consult to familiarize themselves with an unfamiliar topic during their project work.</p>
+<p>This document sets expectations for the organization and content of vignette repositories.</p>
+<section id="configuring-your-repository" class="level2">
+<h2 class="anchored" data-anchor-id="configuring-your-repository">Configuring your repository</h2>
+<p>Create a public repository in the PSTAT197 workspace and add your teammates as collaborators.</p>
+<p>Select options at the creation step to initialize the repository with:</p>
+<ul>
+<li><p>a .README file</p></li>
+<li><p>a .gitignore file</p></li>
+<li><p>a license</p></li>
+</ul>
+<p>Give the repository a descriptive name. Use the naming convention</p>
+<blockquote class="blockquote">
+<p><em>vignette-[keyword]</em></p>
+</blockquote>
+<p>for example, “vignette-lstm”, “vignette-kriging”, “vignette-cnn”, and the like. A single keyword is best if possible, but consider using two or three if needed to make your repo name sufficiently specific, <em>e.g.</em>, “vignette-database-configuration” or “vignette-distribution-based-clustering”. <strong><em>Do not use more than three keywords in your repository name.</em></strong></p>
+<p>Supply an optional description that contains a long title for your vignette topic, for instance:</p>
+<blockquote class="blockquote">
+<p>Distribution-based clustering in R and application to unsupervised cell type classification</p>
+</blockquote>
+<p>Lastly, once the repository is created, add a few topics to the “About” section on the far right of your repository homepage.</p>
+</section>
+<section id="directory-organization" class="level2">
+<h2 class="anchored" data-anchor-id="directory-organization">Directory organization</h2>
+<p>As a general guideline, all files except the README should be placed in appropriately-named subdirectories so that your repository homepage is free from file clutter.</p>
+<p>If your project has a single main file – in this case the vignette document – it is reasonable to place that in the root directory with the README. Everything else should go in a subfolder.</p>
+<p>The high-level directories should clearly differentiate the main project contents, and overall there should not be too many levels of subdirectory, especially for a simple project like a code vignette. Your directory structure might look something like this in the end:</p>
+<pre><code>root directory
+|-- data
+    |-- raw
+    |-- processed
+|-- scripts
+    |-- drafts
+    |-- vignette-script.R
+|-- img
+    |-- fig1.png
+    |-- fig2.png
+|-- vignette.qmd
+|-- vignette.html
+|-- README.md</code></pre>
+<p>As a guiding principle, each subdirectory should contain <em>either</em></p>
+<ul>
+<li><p>(a)a few primary files and one or more subdirectories</p>
+<pre><code>scripts
+|-- functions
+|-- drafts
+|-- exploratory-analysis.R
+|-- model-fitting.R
+|-- visualizations.R</code></pre></li>
+<li><p>(b) a single file type with an obvious naming convention</p>
+<pre><code>img
+|-- fig-autocorrelation.png
+|-- fig-forecasts.png
+|-- fig-rawseries.png
+|-- logo-ucsb.png</code></pre></li>
+</ul>
+<p>Try to organize your repository so that it is easy to navigate for the general coding public (and for your future self).</p>
+</section>
+<section id="readme-contents" class="level2">
+<h2 class="anchored" data-anchor-id="readme-contents">README contents</h2>
+<p>Your README file should contain five main pieces of information in the following order:</p>
+<ol type="1">
+<li><p>A one-sentence description at the very top before any (sub)headers:</p>
+<blockquote class="blockquote">
+<p><em>Vignette on implementing distribution-based clustering using cell type data; created as a class project for PSTAT197A in Fall 2022.</em></p>
+</blockquote></li>
+<li><p>Contributors</p></li>
+<li><p>Vignette abstract: a brief description in a few sentences of your vignette topic, example data, and outcomes.</p></li>
+<li><p>Repository contents: an explanation of the directory structure of the repository</p></li>
+<li><p>Reference list: 2 or more references to learn more about your topic.</p></li>
+</ol>
+<p>A typical README file would also contain instructions on use and instructions on contributing to the repository.</p>
+</section>
+<section id="repository-contents" class="level2">
+<h2 class="anchored" data-anchor-id="repository-contents">Repository contents</h2>
+<p>Your repository should contain at minimum the following:</p>
+<ol type="1">
+<li>an example dataset with which you illustrate the use of the method(s) or tool(s) of your topic</li>
+<li>a primary vignette document – either a notebook or rendered markdown file – that teaches your method(s) and/or tool(s). this document should integrate codes with step-by-step explanation and read much like a lab activity</li>
+<li>a script <em>with line annoations</em> that replicates all results shown in the primary vignette document end-to-end</li>
+</ol>
+</section>
+<section id="evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation">Evaluation</h2>
+<p>Your work will be evaluated on:</p>
+<ul>
+<li><p>how well the repository and contents conform to the expectations outlined above</p></li>
+<li><p>the clarity of the vignette, from the perspective of another student in the class</p></li>
+<li><p>the correctness of the data analysis and any other technical aspects of the vignette</p></li>
+</ul>
+</section>
+<section id="deadlines" class="level2">
+<h2 class="anchored" data-anchor-id="deadlines">Deadlines</h2>
+<p>There are two deadlines associated with this project, a draft deadline and a final deadline.</p>
+<ul>
+<li><p><em>draft deadline</em> <strong>Thursday, December 1, 2pm PST</strong> (in class) – be prepared to share a draft of your primary vignette document and explain it to a small group of other students</p></li>
+<li><p><em>final deadline</em> <strong>Thursday, December 8, 11:59pm PST</strong> – the repository and all contained files should be in final form ready for evaluation by course staff</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Site content created for PSTAT197A Fall 2022 by Trevor Ruiz using Quarto; hex logo by Priscilla Siow.</div>
+  </div>
+</footer>
+
+
+
+</body></html>
