@@ -83,7 +83,7 @@ accuracies %>% head(8) %>% knitr::kable()
 theme_set(theme(text = element_text(size = 20)))
 accuracies %>%
   ggplot(aes(x = factor(group), y = .estimate)) +
-  geom_point(aes(alpha = n), size = 2) +
+  geom_point(aes(alpha = n), size = 4) +
   facet_wrap(~class*.metric, nrow = 2) +
   labs(x = 'group', y = '')
 ```
