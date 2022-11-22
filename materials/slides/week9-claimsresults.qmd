@@ -1,0 +1,21 @@
+---
+title: "Spatial prediction"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 6
+    fig-height: 4
+    fig-align: 'left'
+    slide-number: true
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---

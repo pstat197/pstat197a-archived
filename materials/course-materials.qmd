@@ -119,7 +119,7 @@ bibliography: slides/refs.bib
 
 ## Module 3: soil temperatures
 
-*Objectives: build a forecasting model; introduce concepts of spatial and temporal correlation structures; discuss function approximation and curve fitting with regression techniques; fit elementary time series and spatial models; interpolation.*
+*Objectives: build a forecasting model; introduce concepts of spatial and temporal correlation; discuss function approximation and curve fitting with regression techniques; fit elementary time series models and regression with AR errors; spatial interpolation.*
 
 ### Week 7
 
@@ -138,6 +138,24 @@ bibliography: slides/refs.bib
 
 -   ***Tuesday meeting:*** spatial prediction \[[slides](slides/week8-spatial.qmd)\]
 
--   ***Section meeting:*** forecasting and spatial prediction \[[activity](labs/lab8-forecasting/lab8-forecasting.qmd)\]
+-   ***Section meeting:*** forecasting \[[activity](labs/lab8-forecasting/lab8-forecasting.qmd)\]
 
 -   ***Thursday meeting:*** NO CLASS
+
+-   Optional further reading:
+
+    -   8.1 -- 8.3 in @bivand2008applied
+
+    -   Ch. 12 in @dorman2022introduction [[link](http://132.72.155.230:3838/r/spatial-interpolation-of-point-data.html)]
+
+## Module 4: vignettes
+
+*Objectives: learn independently about a method of choice and prepare a teaching vignette illustrating its use; create shared reference material potentially useful for project work.*
+
+### Week 9
+
+-   ***Tuesday meeting:*** discussion on results of claims module; vignette workshopping
+
+-   ***Section meeting:*** NO SECTION MEETING (Thanksgiving)
+
+-   ***Thursday meeting:*** NO CLASS (Thanksgiving)
