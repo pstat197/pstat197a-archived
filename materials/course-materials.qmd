@@ -159,3 +159,9 @@ bibliography: slides/refs.bib
 -   ***Section meeting:*** NO SECTION MEETING (Thanksgiving)
 
 -   ***Thursday meeting:*** NO CLASS (Thanksgiving)
+
+-   ***Assignments:*** vignettes \[[guidelines](vignette-guidelines.qmd)\]
+
+    -   drafts due in class **Thursday, 12/1 2pm PST**
+
+    -   final version due **Thursday, 12/8 11:59pm PST**
