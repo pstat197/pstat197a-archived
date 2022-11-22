@@ -1,5 +1,5 @@
 ---
-title: "Spatial prediction"
+title: "Results from claims assignment"
 subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
 author: "Trevor Ruiz"
 institute: 'UCSB'
@@ -41,7 +41,7 @@ My goal is ***not*** to judge anyone based on results or having completed the as
 
 ## Accessing claims predictions
 
-Results from the last assignment are available online as an .RData file
+Results from the last assignment are now available online.
 
 ```{r}
 library(tidyverse)
@@ -61,7 +61,7 @@ evals %>%
   pull(eval)
 ```
 
-## Accuracies
+## Accuracies  {.scrollable}
 
 ```{r}
 accuracies <- evals %>%
@@ -77,13 +77,13 @@ accuracies %>% head(8) %>% knitr::kable()
 
 ```{r}
 #| echo: false
-#| fig-width: 8
+#| fig-width: 10
 #| fig-height: 6
 
 theme_set(theme(text = element_text(size = 20)))
 accuracies %>%
   ggplot(aes(x = factor(group), y = .estimate)) +
-  geom_point(aes(alpha = n)) +
+  geom_point(aes(alpha = n), size = 2) +
   facet_wrap(~class*.metric, nrow = 2) +
   labs(x = 'group', y = '')
 ```

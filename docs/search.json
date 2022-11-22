@@ -2823,49 +2823,49 @@
   {
     "objectID": "materials/slides/week9-claimsresults.html#todays-agenda",
     "href": "materials/slides/week9-claimsresults.html#todays-agenda",
-    "title": "Spatial prediction",
+    "title": "Results from claims assignment",
     "section": "Today’s agenda",
     "text": "Today’s agenda\n\nReview results of claims assignment\nDiscuss vignette guidelines\nRemaining time to organize in groups"
   },
   {
     "objectID": "materials/slides/week9-claimsresults.html#preface",
     "href": "materials/slides/week9-claimsresults.html#preface",
-    "title": "Spatial prediction",
+    "title": "Results from claims assignment",
     "section": "Preface",
     "text": "Preface\nMy goal here is to use the results of your work on the last assignment to learn as a group what worked well and what didn’t.\n\nAs a disclaimer, many groups did not successfully generate predictions according to instructions. This is okay.\n\n\nMy goal is not to judge anyone based on results or having completed the assignment."
   },
   {
     "objectID": "materials/slides/week9-claimsresults.html#accessing-claims-predictions",
     "href": "materials/slides/week9-claimsresults.html#accessing-claims-predictions",
-    "title": "Spatial prediction",
+    "title": "Results from claims assignment",
     "section": "Accessing claims predictions",
-    "text": "Accessing claims predictions\nResults from the last assignment are available online as an .RData file\n\nlibrary(tidyverse)\n\ngithub_url <- \"https://github.com/pstat197/pstat197a/raw/main/materials/slides/data/f22-claims-evals.RData\"\n\nload(url(github_url))\n\nevals %>% head()\n\n# A tibble: 6 × 2\n  group eval            \n  <int> <list>          \n1     1 <smplErrr>      \n2     2 <tibble [6 × 5]>\n3     3 <tibble [6 × 5]>\n4     4 <rlng_rrr>      \n5     5 <tibble [6 × 5]>\n6     6 <rlng_rrr>"
+    "text": "Accessing claims predictions\nResults from the last assignment are now available online.\n\nlibrary(tidyverse)\n\ngithub_url <- \"https://github.com/pstat197/pstat197a/raw/main/materials/slides/data/f22-claims-evals.RData\"\n\nload(url(github_url))\n\nevals %>% head()\n\n# A tibble: 6 × 2\n  group eval            \n  <int> <list>          \n1     1 <smplErrr>      \n2     2 <tibble [6 × 5]>\n3     3 <tibble [6 × 5]>\n4     4 <rlng_rrr>      \n5     5 <tibble [6 × 5]>\n6     6 <rlng_rrr>"
   },
   {
     "objectID": "materials/slides/week9-claimsresults.html#checking-errors-example",
     "href": "materials/slides/week9-claimsresults.html#checking-errors-example",
-    "title": "Spatial prediction",
+    "title": "Results from claims assignment",
     "section": "Checking errors: example",
     "text": "Checking errors: example\n\nevals %>%\n  filter(group == 4) %>%\n  pull(eval)\n\n[[1]]\n<error/rlang_error>\nError in `metric_set()`:\n! Failed to compute `sensitivity()`.\nCaused by error in `dplyr::summarise()`:\n! Problem while computing `.estimate = metric_fn(...)`.\n---\nBacktrace:\n  1. tibble(group = 1:15) %>% ...\n 15. yardstick (local) panel(., truth = mclass, estimate = mclass.pred, estimator = \"macro\")\n 16. base::mapply(...)\n 17. yardstick (local) `<fn>`(dots[[1L]][[1L]], dots[[2L]][[1L]])\nCaused by error in `multiclass_checks()`:\n! `truth` and `estimate` levels must be equivalent.\n`truth`: N/A: No relevant content., Physical Activity, Possible Fatality, Potentially unlawful activity, Other claim content\n`estimate`: N/A: No relevant content., Other claim content, Physical Activity, Possible Fatality, Potentially unlawful activity\n---\nBacktrace:\n  1. tibble(group = 1:15) %>% ...\n 34. yardstick (local) metric_fn(...)\n 35. yardstick::metric_vec_template(...)\n 36. yardstick:::validate_truth_estimate_checks(...)\n 38. yardstick:::validate_truth_estimate_types.factor(...)\n 40. yardstick:::multiclass_checks.factor(truth, estimate)"
   },
   {
     "objectID": "materials/slides/week9-claimsresults.html#accuracies",
     "href": "materials/slides/week9-claimsresults.html#accuracies",
-    "title": "Spatial prediction",
+    "title": "Results from claims assignment",
     "section": "Accuracies",
     "text": "Accuracies\n\naccuracies <- evals %>%\n  rowwise() %>%\n  filter(is_tibble(eval)) %>%\n  ungroup() %>%\n  unnest(eval)\n\naccuracies %>% head(8) %>% knitr::kable()\n\n\n\n\ngroup\n.metric\n.estimator\n.estimate\nclass\nn\n\n\n\n\n2\nsensitivity\nmacro\n0.8081203\nmulticlass\n99\n\n\n2\nspecificity\nmacro\n0.9370310\nmulticlass\n99\n\n\n2\naccuracy\nmulticlass\n0.8181818\nmulticlass\n99\n\n\n2\nsensitivity\nbinary\n0.8431373\nbinary\n99\n\n\n2\nspecificity\nbinary\n0.8750000\nbinary\n99\n\n\n2\naccuracy\nbinary\n0.8585859\nbinary\n99\n\n\n3\nsensitivity\nmacro\n0.2058975\nmulticlass\n828\n\n\n3\nspecificity\nmacro\n0.8035735\nmulticlass\n828"
   },
   {
     "objectID": "materials/slides/week9-claimsresults.html#comparisons",
     "href": "materials/slides/week9-claimsresults.html#comparisons",
-    "title": "Spatial prediction",
+    "title": "Results from claims assignment",
     "section": "Comparisons",
     "text": "Comparisons"
   },
   {
     "objectID": "materials/slides/week9-claimsresults.html#vignette-guidelines",
     "href": "materials/slides/week9-claimsresults.html#vignette-guidelines",
-    "title": "Spatial prediction",
+    "title": "Results from claims assignment",
     "section": "Vignette guidelines",
     "text": "Vignette guidelines\nLet’s review as a group."
   },
