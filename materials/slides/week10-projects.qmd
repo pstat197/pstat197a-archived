@@ -94,7 +94,7 @@ See [last year's project](https://shiny.calcofi.io/capstone/).
 
 ::: columns
 ::: {.column width="50%"}
-![Example closeup of bee eye.](img/bee-eye.png)
+![Example closeup of bee eye.](img/bee-eye.PNG)
 :::
 
 ::: {.column width="50%"}
