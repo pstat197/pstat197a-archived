@@ -61,7 +61,7 @@ evals %>%
   pull(eval)
 ```
 
-## Accuracies  {.scrollable}
+## Accuracies {.scrollable}
 
 ```{r}
 accuracies <- evals %>%

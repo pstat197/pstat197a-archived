@@ -228,7 +228,7 @@
     "href": "materials/course-materials.html#module-4-vignettes",
     "title": "Course materials",
     "section": "Module 4: vignettes",
-    "text": "Module 4: vignettes\nObjectives: learn independently about a method of choice and prepare a teaching vignette illustrating its use; create shared reference material potentially useful for project work.\n\nWeek 9\n\nTuesday meeting: discussion on results of claims module; vignette workshopping [slides]\nSection meeting: NO SECTION MEETING (Thanksgiving)\nThursday meeting: NO CLASS (Thanksgiving)\nAssignments: vignettes [guidelines]\n\ndrafts due in class Thursday, 12/1 2pm PST\nfinal version due Thursday, 12/8 11:59pm PST"
+    "text": "Module 4: vignettes\nObjectives: learn independently about a method of choice and prepare a teaching vignette illustrating its use; create shared reference material potentially useful for project work.\n\nWeek 9\n\nTuesday meeting: discussion on results of claims module; vignette workshopping [slides]\nSection meeting: NO SECTION MEETING (Thanksgiving)\nThursday meeting: NO CLASS (Thanksgiving)\nAssignments: vignettes [guidelines]\n\ndrafts due in class Thursday, 12/1 2pm PST\nfinal version due Thursday, 12/8 11:59pm PST\n\n\n\n\nWeek 10\n\nTuesday meeting: capstone project overviews [slides]\nSection meeting: office hours for vignette help\nThursday meeting: vignette presentation/exchange/feedback\nAssignments due by Friday, 12/2:\n\nread project abstracts\nfill out preference form (will be active end of day 11/29)"
   },
   {
     "objectID": "materials/labs/lab1-setup/lab1-setup.html",
@@ -2917,5 +2917,110 @@
     "title": "Vignette Guidelines",
     "section": "Deadlines",
     "text": "Deadlines\nThere are two deadlines associated with this project, a draft deadline and a final deadline.\n\ndraft deadline Thursday, December 1, 2pm PST (in class) – be prepared to share a draft of your primary vignette document and explain it to a small group of other students\nfinal deadline Thursday, December 8, 11:59pm PST – the repository and all contained files should be in final form ready for evaluation by course staff"
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#announcementsreminders",
+    "href": "materials/slides/week10-projects.html#announcementsreminders",
+    "title": "Capstone projects",
+    "section": "Announcements/reminders",
+    "text": "Announcements/reminders\n\ncome to class next time prepared to show a draft of your vignette\nafter class today look for abstracts on the course site\noffice hours in place of section meetings this Wednesday"
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#amgen",
+    "href": "materials/slides/week10-projects.html#amgen",
+    "title": "Capstone projects",
+    "section": "Amgen",
+    "text": "Amgen\nAmgen is an international biotechnology company.\n\nProject: evaluation of natural language processing algorithms used for knowledge graph generation\n\nNLP algorithms are used to recognize and link entities and identify relations based on text data\noutputs can be used to extract networks (‘knowledge graphs’) from text corpora\n\n\n\nGoals: generate a benchmarking dataset from PubMed database and evaluate performance of NLP-based methods for knowledge graph construction\n\n\nSee this example of related work."
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#appfolio",
+    "href": "materials/slides/week10-projects.html#appfolio",
+    "title": "Capstone projects",
+    "section": "Appfolio",
+    "text": "Appfolio\nAppfolio is a local property management software company. Among other things, clients use their software for accounting purposes.\n\nProject: anomaly detection from property management transaction histories\n\nclients would like to flag smaller/higher transactions than typical without having to inspect full transaction records each month\n\n\n\nGoals: determine applicable anomaly/outlier detection methods, evaluate performance, and develop dashboard based on best method(s)"
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#calcofi",
+    "href": "materials/slides/week10-projects.html#calcofi",
+    "title": "Capstone projects",
+    "section": "CalCOFI",
+    "text": "CalCOFI\nCalCOFI stands for California Cooperative Oceanic Fisheries Investigations. They run a long-term monitoring program of the California current ecosystem.\n\nProject: an eDNA window into larval fish habitat, ecosystem structure, and function\n\nCalCOFI collects physical data and environmental DNA (eDNA) across depth in the water column at multiple monitoring sites longitudinally\na major interest is on impacts of environmental conditions on fisheries\n\n\n\nGoals: develop dashboard for exploration of eDNA data and develop a model for prediction of fish larvae based on eDNA and physical data (or derived variables)\n\n\nSee last year’s project."
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#carpe-data",
+    "href": "materials/slides/week10-projects.html#carpe-data",
+    "title": "Capstone projects",
+    "section": "Carpe Data",
+    "text": "Carpe Data\nCarpe Data is a local company focusing on data-driven solutions for insurance carriers.\n\nProject: business characteristics classification models\n\ninsurance carriers use risk categorization as a factor in determining premiums for property loss and general liability insurance for businesses\n\n\n\nGoals: classify businesses according to characteristics and/or risk levels based on basic business information (name, description, hours, images, etc.) and develop software pipelines for preprocessing and prediction"
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#caves-visual-ecology-lab",
+    "href": "materials/slides/week10-projects.html#caves-visual-ecology-lab",
+    "title": "Capstone projects",
+    "section": "Caves visual ecology lab",
+    "text": "Caves visual ecology lab\n\n\n\n\n\nExample closeup of bee eye.\n\n\n\nThe Caves lab studies visual acuity and its evolutionary and ecological drivers in animals. Bees are great model organisms for studying the relationship between ecology and acuity due to wide variation in lifestyles and ecologies.\n\nProject: measuring visual acuity in bees from high-resolution images\n\nacuity quantification is derived from physical measurements that could potentially be inferred from photographs rather than measured directly\nspecifically, radius of curvature of the eye and width of ommatidia (compound eye facets)\n\nGoals: utilize computer vision techniques to infer acuity measurements from photographs and merge with ecological data to explore correlates"
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#ccber",
+    "href": "materials/slides/week10-projects.html#ccber",
+    "title": "Capstone projects",
+    "section": "CCBER",
+    "text": "CCBER\nThe Cheadle Center for Biodiversity and Ecological Restoration (CCBER) contributes to the Big Bee Project, aimed at creating >1M 2D and 3D high-resolution images of bees for the study of anatomical variation.\n\nProject: constructing three-dimensional bee models from high-resolution images\n\nseveral software tools for constructing 3D models from 2D images are available, but performance with bees specifically is not well understood\nseveral image sets of ~100 photographs each are available for construction of models\n\n\n\nGoals: after receiving training on 3D modeling tools, students will experiment with parameter tuning for optimal rendering of bee models; students will then derive physical measurements from the models."
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#climate-hazards-center",
+    "href": "materials/slides/week10-projects.html#climate-hazards-center",
+    "title": "Capstone projects",
+    "section": "Climate Hazards Center",
+    "text": "Climate Hazards Center\nThe Climate Hazards Center housed in the geography department is a multidisciplinary research center focusing on climate risk analysis and response.\n\nProject 1: identifying the drivers of food insecurity in the developing world\n\nprecipitation and potential evapotranspiration together can help identify deficits in available water and risk of food shortages\nexplore the relationship between precipitation and potential evapotranspiration globally over time and identify drivers after accounting for relationship\n\n\n\nProject 2: evaluating and validating station- and satellite-based daily precipitation datasets\n\nCHC supports precipitation datasets based on interpolating measurements from satellites and ground stations\nnew data releases go through an evaluation/validation process with benchmarking data prior to release\nstudents will carry out evaluation/validation of a new release based on prior strategies"
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#eembpatrick-green",
+    "href": "materials/slides/week10-projects.html#eembpatrick-green",
+    "title": "Capstone projects",
+    "section": "EEMB/Patrick Green",
+    "text": "EEMB/Patrick Green\n\n\n\n\nPatrick Green is a research scientist in EEMB studying animal behavior and competition, and is developing a pilot project studying contests among mantis shrimp.\n\nProject: how do mantis shrimp fight in a community of competitors?\n\nfeasible to carry out continuous video monitoring of small populations in tanks to capture interactions and other behavior\ntime-consuming to review footage\nnot obvious how to define/code interactions\n\nGoal: develop heuristic methodology for detecting time intervals in which interactions occur; generate tracking data summarizing movements of each individual."
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#evidation-health",
+    "href": "materials/slides/week10-projects.html#evidation-health",
+    "title": "Capstone projects",
+    "section": "Evidation Health",
+    "text": "Evidation Health\nEvidation is a California-based company focusing on health data analytics for individuals and for researchers.\n\nProject: Impact of case definition on early detection systems for COVID-19\n\nmodel-based early detection systems for infectious disease use inconsistent criteria for case onset\nthe definition of when a case starts may impact the efficacy and other features of early detection systems\n\n\n\nGoals: assess the impact of case onset definition on existing early detection models and find optimal case onset points."
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#inogen",
+    "href": "materials/slides/week10-projects.html#inogen",
+    "title": "Capstone projects",
+    "section": "Inogen",
+    "text": "Inogen\nInogen is a medical device company that builds portable oxygen concentrators.\n\nProject: analysis of portable oxygen concentrator patient use data\n\nInogen collects a variety of data on patient use of their POC devices and is interested in identifying areas of potential improvement\n\n\n\nGoals: identify patterns of device use from patient data with particular focus on adherence."
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#move-lab",
+    "href": "materials/slides/week10-projects.html#move-lab",
+    "title": "Capstone projects",
+    "section": "MOVE lab",
+    "text": "MOVE lab\nThe MOVE lab at UCSB focuses on movement data science in general and in particular human mobility in response to disruptions.\n\nProject: detecting changes in human mobility and movement patterns associated with wildfires in California\n\nmovement and mobility are often markers of behavior and changes in movement patterns may capture information about behavioral responses to events\nnatural disaster in general and wildfire in particular are likely to produce shifts in movement patterns\n\n\n\nGoals: assess suitability of several candidate datasets for studying behavioral responses to wildfires; identify movement patterns and explore the hypothesis that change points occur in connection with wildfire events; potentially explore demographic covariates."
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#peak-performance-project-p3",
+    "href": "materials/slides/week10-projects.html#peak-performance-project-p3",
+    "title": "Capstone projects",
+    "section": "Peak Performance Project (P3)",
+    "text": "Peak Performance Project (P3)\nP3 is a local company focusing on applied sports science and technology for biomechanical analysis of athletic performance.\n\nProject: understanding links between biomechanical data and on-court NBA production\n\nP3 collects biomechanical data – force plate and motion capture – on professional athletes and maintains a large proprietary database on NBA athletes\nhistorically, have focused on injury risk, but interested in finding biomechanical correlates of real performance\n\n\n\nGoals: scrape publicly available on-court data, merge with biomechanical data, and identify correlates of on-court production; develop visualization tools."
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#slac-national-accelerator-lab",
+    "href": "materials/slides/week10-projects.html#slac-national-accelerator-lab",
+    "title": "Capstone projects",
+    "section": "SLAC National Accelerator Lab",
+    "text": "SLAC National Accelerator Lab\nStanford Synchrotron Ratiation Lightsource (SSRL) is a DOE facility at Stanford supporting a wide range of fundamental research involving bright X-rays.\n\nProject: diffraction image selector\n\nX-ray diffraction data provides insight into the atomic and molecular structure of crystals; serial crystallography involves merging diffraction patterns from several crystals in order to analyze the material structure\nexperimenters tend to select diffraction images manually from serial experiments; this selection has an impact on experimental outputs\n\n\n\nGoals: build a regression model to label images during data collection in real time; develop model from simulated data and validate on real data."
+  },
+  {
+    "objectID": "materials/slides/week10-projects.html#project-preferences",
+    "href": "materials/slides/week10-projects.html#project-preferences",
+    "title": "Capstone projects",
+    "section": "Project Preferences",
+    "text": "Project Preferences\nPlease read abstracts first and then fill out the preference form by Friday 12/2.\n\n3 top lab choices\n3 top industry choices\n\n\nWe’ll try to accommodate preferences, but we can’t guarantee you’ll get your top choices.\n\n\nTarget date for assignments: Friday 12/9."
   }
 ]

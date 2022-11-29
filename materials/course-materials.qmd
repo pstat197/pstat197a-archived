@@ -165,3 +165,17 @@ bibliography: slides/refs.bib
     -   drafts due in class **Thursday, 12/1 2pm PST**
 
     -   final version due **Thursday, 12/8 11:59pm PST**
+
+### Week 10
+
+-   ***Tuesday meeting:*** capstone project overviews \[[slides](slides/week10-projects.qmd)\]
+
+-   ***Section meeting:*** office hours for vignette help
+
+-   ***Thursday meeting:*** vignette presentation/exchange/feedback
+
+-   ***Assignments*** due by Friday, 12/2***:***
+
+    -   read [project abstracts](https://drive.google.com/drive/folders/15hOlgQYZs5VLHBICqIo0yupJiTogd-4q?usp=share_link)
+
+    -   fill out [preference form](https://forms.gle/iYpHQKwREGJCQJcz5) (will be active end of day 11/29)
