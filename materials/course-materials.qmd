@@ -172,7 +172,7 @@ bibliography: slides/refs.bib
 
 -   ***Section meeting:*** office hours for vignette help
 
--   ***Thursday meeting:*** vignette presentation/exchange/feedback
+-   ***Thursday meeting:*** vignette presentation/exchange/feedback \[[feedback form](https://forms.gle/uxQUEJpJv6d6f3pD8)\]
 
 -   ***Assignments*** due by Friday, 12/2***:***
 
