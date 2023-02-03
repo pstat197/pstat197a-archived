@@ -1,0 +1,437 @@
+---
+title: "Multinomial logistic regression"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 4
+    fig-height: 2
+    fig-align: 'left'
+    slide-number: true
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---
+
+# Dimension reduction
+
+## From last time {.scrollable}
+
+```{r}
+# setup
+library(tidyverse)
+library(tidymodels)
+library(modelr)
+library(Matrix)
+library(sparsesvd)
+library(glmnet)
+library(knitr)
+load('data/claims-multi-tfidf.RData')
+load('data/claims-tfidf.RData')
+load('data/project-functions.RData')
+```
+
+Last time we ended having constructed a TF-IDF document term matrix for the claims data.
+
+-   $n = 552$ observations
+
+-   $p = 15,868$ variables (word tokens)
+
+-   binary (rather than multiclass) labels
+
+. . .
+
+```{r}
+claims
+```
+
+## High dimensionality, again
+
+Similar to the ASD data, we again have $p > n$: more predictors than observations.
+
+. . .
+
+But this time, model interpretation is not important.
+
+-   The goal is prediction, not explanation.
+
+-   Individual tokens aren't likely to be strongly associated with the labels, anyway.
+
+. . .
+
+So we have more options for tackling the dimensionality problem.
+
+## Sparsity
+
+Another way of saying we have 15,868 predictors is that the predictor is in 15,868-dimensional space.
+
+. . .
+
+***However,*** the document term matrix is extremely sparse:
+
+```{r}
+#| echo: true
+# coerce DTM to sparse matrix
+claims_dtm <- claims %>% 
+  select(-.id, -bclass) %>%
+  as.matrix() %>%
+  as('sparseMatrix') 
+
+# proportion of zero entries ('sparsity')
+1 - nnzero(claims_dtm)/length(claims_dtm)
+```
+
+## Projection
+
+Since \>99% of data values are zero, there is almost certainly a low(er)-dimensional representation that well-approximates the full \~16K-dimensional predictor.
+
+. . .
+
+So here's a strategy:
+
+-   project the predictor onto a subspace
+
+-   fit a logistic regression model using the projected data
+
+## Principal components
+
+The *principal components* of a data matrix $X$ are an orthogonal basis (*i.e.*, coordinate system) for its column space such that ***the variance of data projections is maximized along each direction.***
+
+-   subcollections of PC's span subspaces
+
+-   used to find a projection that preserves variance
+
+    -   choose the first $k$ PC's along which the projected data retain XX% of total variance
+
+## Illustration
+
+![Image from wikipedia.](img/pcs-wiki.png){fig-align="left"}
+
+## Computation
+
+The principal components can be computed by singular value decomposition (SVD):
+
+$$
+X = UDV'
+$$
+
+-   columns of $V$ give the projections
+
+-   diagonals of $D$ give the standard deviations on each direction
+
+## Selecting components
+
+1.  Find the smallest number of components such that the proportion of variance retained exceeds a specified value:
+
+    $$
+    n_{pc} = \min \left\{i: \frac{\sum_{j = 1}^i d_{jj}^2}{\sum_i d_{ii}^2} > q\right\}
+    $$
+
+2.  Select the corresponding projections and project the data:
+
+    $$
+    \tilde{X} = XV_{1:n_{pc}} \quad\text{where}\quad 
+    V_{1:n_{pc}} = \left( v_1 \;\cdots\; v_{n_{pc}}\right)
+    $$
+
+. . .
+
+Projected data are referred to as 'scores'.
+
+## Implementation
+
+Usually `prcomp()` does the trick, and has a `broom::tidy` method available, but it's slow for large matrices.
+
+. . .
+
+Better to use SVD implemented with sparse matrix computations.
+
+```{r}
+#| echo: true
+start <- Sys.time()
+svd_out <- sparsesvd(claims_dtm)
+end <- Sys.time()
+time_ssvd <- end - start
+
+start <- Sys.time()
+prcomp_out <- prcomp(claims_dtm, center = T)
+end <- Sys.time()
+time_prcomp <- end - start
+
+time_prcomp - time_ssvd
+```
+
+## Obtaining projections
+
+```{r}
+load('data/project-functions.RData')
+```
+
+For today, we'll use a function I've written to obtain principal components. It's basically a wrapper around `sparsesvd()`.
+
+. . .
+
+The following will return the data projected onto a subspace in which it retains at least `.prop` percent of the total variance.
+
+```{r}
+#| echo: true
+proj_out <- projection_fn(claims_dtm, .prop = 0.7)
+
+proj_out$data
+```
+
+## Activity 1 (10 min)
+
+1.  Partition the claims data into training and test sets.
+2.  *Using the training data,* find principal components that preserve at least 80% of the total variance and project the data onto those PCs.
+3.  Fit a logistic regression model to the training data with binary class labels.
+
+```{r}
+claims <- claims_multi
+
+# partition data
+set.seed(102722)
+partitions <- claims %>% initial_split(prop = 0.8)
+
+# separate DTM from labels
+test_dtm <- testing(partitions) %>%
+  select(-.id, -bclass, -mclass)
+test_labels <- testing(partitions) %>%
+  select(.id, bclass, mclass)
+
+# same, training set
+train_dtm <- training(partitions) %>%
+  select(-.id, -bclass, -mclass)
+train_labels <- training(partitions) %>%
+  select(.id, bclass, mclass)
+
+# find projections based on training data
+proj_out <- projection_fn(.dtm = train_dtm, .prop = 0.7)
+train_dtm_projected <- proj_out$data
+
+# bind labels
+train <- train_labels %>%
+  transmute(bclass = factor(bclass)) %>%
+  bind_cols(train_dtm_projected)
+```
+
+## Overfitting
+
+You should have observed a *warning* that numerically 0 or 1 fitted probabilities occurred.
+
+-   that means the model fit some data points exactly
+
+. . .
+
+***Overfitting*** occurs when a model is fit *too closely* to the training data.
+
+-   measures of fit suggest high quality
+
+-   but predicts poorly out of sample
+
+. . .
+
+The curious can verify this using the model you just fit.
+
+## Another use of regularization
+
+Last week we spoke about using LASSO regularization for variable selection.
+
+. . .
+
+Regularization can also be used to reduce overfitting.
+
+-   LASSO penalty $\|\beta\|_1 < t$ works
+
+-   'ridge' penalty $\|\beta\|_2 < t$ also works (but won't shrink parameters to zero)
+
+-   or the 'elastic net' penalty $\|\beta\|_1 < t$ AND $\|\beta\|_2 < s$
+
+## Activity 2 (10 min)
+
+1.  Follow activity instructions to fit a logistic regression model with an elastic net penalty to the training data.
+2.  Quantify classification accuracy on the test data using sensitivity, specificity, and AUROC.
+
+```{r}
+# store predictors and response as matrix and vector
+x_train <- train %>% select(-bclass) %>% as.matrix()
+y_train <- train_labels %>% pull(bclass)
+
+# fit enet model
+alpha_enet <- 0.3
+fit_reg <- glmnet(x = x_train, 
+                  y = y_train, 
+                  family = 'binomial',
+                  alpha = alpha_enet)
+
+# choose a strength by cross-validation
+set.seed(102722)
+cvout <- cv.glmnet(x = x_train, 
+                y = y_train, 
+                family = 'binomial',
+                alpha = alpha_enet)
+
+# store optimal strength
+lambda_opt <- cvout$lambda.min
+
+# project test data onto PCs
+test_dtm_projected <- reproject_fn(.dtm = test_dtm, proj_out)
+
+# coerce to matrix
+x_test <- as.matrix(test_dtm_projected)
+
+# compute predicted probabilities
+preds <- predict(fit_reg, 
+                 s = lambda_opt, 
+                 newx = x_test,
+                 type = 'response')
+
+# store predictions in a data frame with true labels
+pred_df <- test_labels %>%
+  transmute(bclass = factor(bclass)) %>%
+  bind_cols(pred = as.numeric(preds)) %>%
+  mutate(bclass.pred = factor(pred > 0.5, 
+                              labels = levels(bclass)))
+
+# define classification metric panel 
+panel <- metric_set(sensitivity, 
+                    specificity, 
+                    accuracy, 
+                    roc_auc)
+
+# compute test set accuracy
+pred_df %>% panel(truth = bclass, 
+                  estimate = bclass.pred, 
+                  pred, 
+                  event_level = 'second')
+```
+
+# Multinomial regression
+
+## Quick refresher
+
+The logistic regression model is
+
+$$
+\log\left(\frac{P(Y_i = 1)}{P(Y_i = 0)}\right) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}
+$$
+
+. . .
+
+This is for a binary outcome $Y_i \in \{0, 1\}$.
+
+## Multinomial response
+
+If the response is instead $Y \in \{1, 2, \dots, K\}$, its probability distribution can be described by the *multinomial* distribution (with 1 trial):
+
+$$
+P(Y = k) = p_k \quad\text{for}\quad k = 1, \dots, k \quad\text{with}\quad \sum_k p_k = 1
+$$
+
+## Multinomial regression
+
+Multinomial regression fits the following model:
+
+$$
+\begin{aligned}
+\log\left(\frac{p_1}{p_K}\right) &= \beta_0^{(1)} + x_i^T \beta^{(1)} \\
+\log\left(\frac{p_2}{p_K}\right) &= \beta_0^{(2)}  + x_i^T \beta^{(2)} \\
+&\vdots \\
+\log\left(\frac{p_{K - 1}}{p_K}\right) &= \beta_0^{(K - 1)} +  x_i^T \beta^{(K - 1)} \\
+\end{aligned}
+$$
+
+. . .
+
+So the number of parameters is $(p + 1)\times (K - 1)$.
+
+## Prediction
+
+With some manipulation, one can obtain expressions for each $p_k$, and thus estimates of the probabilities $\hat{p}_k$ for each class $k$.
+
+. . .
+
+A natural prediction to use is whichever class is most probable:
+
+$$
+\hat{Y}_i = \arg\max_k \hat{p}_k
+$$
+
+## Activity 3 (10 min)
+
+1.  Follow instructions to fit a multinomial model to the claims data.
+
+2.  Compute predictions and evaluate accuracy.
+
+```{r}
+# get multiclass labels
+y_train_multi <- train_labels %>% pull(mclass)
+
+# fit enet model
+alpha_enet <- 0.2
+fit_reg_multi <- glmnet(x = x_train, 
+                  y = y_train_multi, 
+                  family = 'multinomial',
+                  alpha = alpha_enet)
+
+# choose a strength by cross-validation
+set.seed(102722)
+cvout_multi <- cv.glmnet(x = x_train, 
+                   y = y_train_multi, 
+                   family = 'multinomial',
+                   alpha = alpha_enet)
+
+preds_multi <- predict(fit_reg_multi, 
+        s = cvout_multi$lambda.min, 
+        newx = x_test,
+        type = 'response')
+
+pred_class <- as_tibble(preds_multi[, , 1]) %>% 
+  mutate(row = row_number()) %>%
+  pivot_longer(-row, 
+               names_to = 'label',
+               values_to = 'probability') %>%
+  group_by(row) %>%
+  slice_max(probability, n = 1) %>%
+  pull(label)
+
+pred_tbl <- table(as.character(pull(test_labels, mclass)), pred_class)
+```
+
+## Results
+
+::: panel-tabset
+### Probabilities
+
+```{r}
+as_tibble(preds_multi[, , 1])
+```
+
+### Cross-tabulation
+
+```{r}
+kable(pred_tbl)
+```
+
+### Some error metrics
+
+```{r}
+#| echo: true
+
+# overall accuracy
+sum(diag(pred_tbl))/sum(pred_tbl)
+
+# classwise error rates
+diag(pred_tbl)/rowSums(pred_tbl)
+
+# predictionwise error rates
+diag(pred_tbl)/colSums(pred_tbl)
+```
+:::

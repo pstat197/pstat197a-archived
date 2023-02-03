@@ -1,0 +1,16 @@
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+tidytext
+tokenizers
+sylly
+koRpus
+koRpus.lang.en
+textstem
+stopwords

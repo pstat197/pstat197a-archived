@@ -1,0 +1,105 @@
+---
+title: "Group assignment workshops"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 4
+    fig-height: 2
+    fig-align: 'left'
+    slide-number: true
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---
+
+## Today
+
+-   finish discussing results from last time
+
+-   setup for first group assignment due next Friday
+
+    -   assignment objectives and instructions
+
+    -   review repository
+
+-   workshop ideas and plan tasks in groups
+
+## Assignment objective
+
+***Your task:*** prepare and present a descriptive analysis of the survey responses addressing 2-3 questions or goals of your choosing.
+
+-   questions or goals should be of moderate complexity; easy to state and understand but should require a little work to answer
+
+    -   too simple: *what proportion of students have research experience?*
+
+    -   better: *are students with research experience more confident/comfortable with technical skills than students without, considering coursework history?*
+
+## Outcomes
+
+The learning outcomes for this assignment are less focused on methodology:
+
+-   formulate questions and plan a simple analysis
+
+-   practice using a GitHub repo in a team project setting
+
+-   prepare a report
+
+-   learn one or more new-to-you data manipulation techniques
+
+## Assignment set-up
+
+1.  accept GH classroom assignment [here](https://classroom.github.com/a/d-4iOFtd); this will create/add your team repo
+2.  clone repo to local
+3.  review repo contents:
+    -   `data` with survey responses and metadata
+
+    -   `scripts` with preprocessing and in-class analysis
+
+    -   `results` with report template for preparing write-up
+
+    -   `README.md` with assignment instructions
+
+## Deliverable
+
+Your 'submission' will be in the form of commits to the group repository, in particular:
+
+-   an updated `results/report.qmd` file containing your write-up source
+
+-   a rendered `results/report.html` file
+
+. . .
+
+Please make final commits by ***Friday, October 14, 11:59pm PST.***
+
+. . .
+
+Recall there is a 24-hour grace period; any commits submitted after Saturday 11:59pm may not receive review.
+
+## Resources
+
+-   lab 2 and in-class analysis `scripts/week2-surveys.R`
+
+-   slack and course staff OH
+
+-   [MDSR ch. 4](https://mdsr-book.github.io/mdsr2e/ch-dataI.html) on data wrangling
+
+-   [RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/) and [tidyverse documentation](https://www.tidyverse.org/), esp. dplyr, tidyr, ggplot2
+
+## Workshopping today
+
+Try to accomplish three goals:
+
+1.  pool ideas for questions or themes to explore in the data
+2.  pair up, divide work, and assign tasks
+3.  agree on a communication plan for finishing work
+    -   slack groupchat or similar
+
+    -   meeting outside of class sometime next week

@@ -1,0 +1,266 @@
+---
+title: "GitHub basics"
+editor: visual
+code-copy: true
+---
+
+This activity introduces GitHub repositories and basic Git actions; students will be expected to use these skills to access materials and complete assignments.
+
+**Objectives:**
+
+-   use basic git actions to commit repository changes;
+
+-   create branches and pull requests;
+
+-   resolve simple merge conflicts.
+
+**Prerequisites:** completion of lab 1, particularly cloning the group sandbox repository.
+
+::: callout-important
+## Action
+
+**Preparations**
+
+-   log into your github account and open your github client and the group sandbox repository in the browser
+
+-   open RStudio and navigate to the group sandbox project
+:::
+
+# Background
+
+## Why are we using Git and GitHub?
+
+Version control has many benefits, including the ability to track changes and contributions precisely, work in parallel with other contributors, revert to prior versions of files, keep track of issues, quickly share and disseminate work, and solicit user contributions from the coding public. Arguably, for all of these reasons and because of its widespread use, Git/GitHub is a must for data scientists.
+
+In this class you'll learn and practice some basics that will allow you to easily access course files, collaborate with each other, and efficiently submit your coursework. This should equip you to utilize a repository for efficient collaboration with your peers on your capstone project.
+
+## Basic workflow
+
+If I am working out of a repository and want to alter a file and make those changes available to anyone else accessing my repository, most of the time I need to:
+
+-   create/update local copies of repository files on my laptop;
+
+-   make the desired change(s) locally;
+
+-   send the changes back to the remote repository.
+
+Typically these steps are performed iteratively as work progresses -- they are a basic workflow.
+
+Workflow can be understood as a sequence of **Git actions**: actions that modify the repository files and/or metadata. The most basic sequence that accomplishes the above steps is:
+
+-   `git pull` update the local repository (technically, fetch changes + merge changes from the remote repository);
+
+-   `git add` stage file changes to be committed to the local repository;
+
+-   `git commit` commit staged changes to the local repository;
+
+-   `git push` send committed changes back to the remote repository.
+
+Sometimes contributors take different or additional actions; the complexity of the Git actions required to make a change depends largely on repository settings, permissions, and agreements among collaborators about how workflow should be structured.
+
+# In-class activity
+
+Open your GitHub client and RStudio. In RStudio, open the project associated with your clone of the group sandbox repository.
+
+<!--# INSTRUCTOR ACTION: upload this activity .qmd file into a directory called class-activity on each group's repository -->
+
+## Basic Git actions
+
+Here you'll make a local change and then push that change to the remote repository.
+
+### Pull
+
+The first step to making a change is ensuring you have the most up-to-date version of the repository files.
+
+::: callout-important
+## Action (individual)
+
+**Pull changes from the remote repository.**
+
+-   In your GitHub client, open the group sandbox repository and then look for a 'Pull' menu item.
+
+-   If you are using GitHub desktop, you can alternatively 'fetch origin' first via a toolbar button. This will retrieve changes but without modifying local files, and if changes are detected, a button will appear in the main screen of the client to pull changes.
+
+-   In the terminal: navigate to the root directory of the repository and `git pull`
+:::
+
+Now check the repository history to see what changes you just pulled. In GitHub Desktop, there is a history tab on the left-hand side that lists commits chronologically. Select a commit to view line-by-line differences for every file that was altered.
+
+You should see two changes: that there is now a `class-activity` folder containing a copy of this activity; and the README file has been updated. Look at the differences on the readme file.
+
+::: callout-note
+## Remark
+
+**Fetching vs. pulling**
+
+Fetching allows you to retrieve changes from the remote repository without merging them into your local repository. If there are commits that you haven't merged, you can examine them before doing so in one of two ways:
+
+-   in the terminal, `git diff main origin/main`
+
+-   open the remote repository on github.com and check the commit history (look for a clock icon with the number of commits in the upper right corner of the file navigator in the code menu); open any commit to see a line-by-line comparison of differences.
+:::
+
+### Make changes
+
+Now that you have the most up-to-date version of all files, create a new markdown file in the class activity folder with a fun fact about you (or anything else if you'd rather) that you'll upload to the repository.
+
+::: callout-important
+## Action (individual)
+
+**Create a markdown file:**
+
+1.  In RStudio, select File \> New File \> Markdown File
+2.  Add an 'About Me' or similar header (use one or more hashes `#` before the header text)
+3.  Write a fun fact about yourself
+4.  Save the file as `YOURGITHUBUSERNAME-about.md` in the class activity folder
+:::
+
+### Stage and commit changes
+
+Now that your new file is ready to go you can stage the changes to be committed to the repository and create a commit.
+
+A *commit* is a bundle of changes that will be submitted to the repository along with a message briefly explaining the changes made. Your GitHub client will often fill in a default message such as 'update FILENAME.EXT'.
+
+::: callout-important
+## Action (individual)
+
+**Stage and commit:**
+
+-   In your client, look for a menu item to add or stage changes. By default any changes made to any file will be included. In GitHub Desktop, look for the 'Changes' menu next to 'History'; you can stage changes by simply selecting or unselecting the checkbox next to each file that was altered.
+
+    -   Or in the terminal: `git add FILENAME`
+
+-   Once you have staged changes, look for a menu item to commit changes. Add a message and commit the changes. In GitHub Desktop, this appears at the bottom of the 'Changes' menu.
+
+    -   Or in the terminal: `git add -m "your message here"`
+:::
+
+Often these actions are performed together. However, in some workflows it may make sense to stage changes incrementally and create commits that bundle several changes at once. For example, if you need to make an update that requires modifying files A, B, and C, it may make sense to edit and stage changes to A first, followed by B, followed by C, and create the commit only once the full update has been implemented.
+
+### Push
+
+The last step is to push your commit to the remote repository. However, as you will see in a moment, too many people trying to push changes at once can create some problems.
+
+::: callout-important
+## Action (group)
+
+1.  Choose one person at your table to push their changes. The very first person to do this will have no problems, since their local repository is up to date with the remote.
+2.  Then choose someone else to try -- use the main screen at your workstation if possible so everyone at the table can see. Since the first person modified the remote repository, the next person to push changes will no longer be up to date. Git will detect this and the push won't go through.
+3.  Have the second person update their local repository by pulling changes, and then try the push again. It should go through once their local is up to date with the remote.
+4.  Have everyone at your table pull changes but do not push any additional commits.
+:::
+
+So far everyone is working on independent files and there's no overlap between changes, so although it would be a bit of a hassle to have everyone check for changes every time they push, in principle it could be done. However, there is a more efficient way to work in parallel: by creating *branches*.
+
+## Branching
+
+Inspect your GitHub client closely, and note that you are currently on the 'main' branch of the repository. Think of this as the primary version of the repository. Branches allow contributors to create parallel versions of the repository that they can modify for development purposes while leaving the primary version unaffected.
+
+### Create a branch
+
+Here you'll use branches to avoid stepping on each others' toes while pushing your table's remaining commits. The strategy will be to create a personal branch, push your commit to that branch, and then merge the branch back into the main branch of the repository.
+
+::: callout-important
+## Action (individual)
+
+**Create a branch and push your previous commit:**
+
+1.  In your GitHub client, look for a menu item to create and switch to a new branch.
+2.  Name your branch your GitHub username.
+3.  Check to see that you are currently on your personal branch.
+4.  Push your previous commit. You shouldn't have to repeat any of the previous steps, but you can if need be.
+
+*If you were one of the two who pushed their commit to main, make some small change to your file to push to your personal branch.*
+:::
+
+### Access your neighbor's branch
+
+While often the main purpose of branching is to create a version of the repository that only you will modify, contributors can inspect any branch of the repository. This can be useful for sharing ideas or getting input or help.
+
+::: callout-important
+## Action (in pairs)
+
+**Make a commit to your neighbor's branch**
+
+1.  Find out your neighbor's username and switch to their branch in your GitHub client.
+2.  In RStudio, verify that you are on their branch by executing `git status` in the terminal.
+3.  Open their markdown file, ask them a simple question about themselves (nothing too personal, please), and add the information to their markdown file.
+4.  Stage, commit, and push the change.
+5.  When your neighbor has done the same with you, switch back to your own branch in your GitHub client and pull changes.
+:::
+
+## Pull requests
+
+Once you are ready to integrate changes you've developed on a branch you can open a *pull request* to merge the development branch with the main branch. (Technically, pull requests can be opened between any two branches, so could also be used, for example, to update your branch if the main branch has new commits.)
+
+'Pull request' is a bit of an odd term; think of it as you making a *request* that your collaborators *pull* your changes for review.
+
+::: callout-important
+## Action (in pairs)
+
+**Open a pull request:**
+
+-   In your GitHub client, find a menu item for opening a pull request. GitHub Desktop will simply redirect you to github.com to open the request.
+
+-   Specify the pull request from your branch to the main branch and submit.
+:::
+
+Once a pull request is opened, usually a collaborator with maintain privileges must be the one to merge changes and close the request. However, the rules for this depend on repository settings. For this repository, all contributors can merge and close pull requests.
+
+::: callout-important
+## Action (in pairs)
+
+-   Open the repository in the browser. Navigate to pull requests.
+
+-   Find your neighbor's pull request; merge their changes and close the request. Then delete the branch.
+:::
+
+Once everyone at the table is finished, examine the repository on the main screen and verify that everyone's markdown file is present on the main branch. Then have each contributor pull changes and check that they see the same.
+
+## Merge conflicts
+
+Git is pretty clever at merging changes when you pull, push, or merge branches via pull request. However, occasionally commits will conflict in such a way that can't be resolved automatically. These are known as *merge conflicts.*
+
+Merge conflicts happen when:
+
+-   two commits differ on the same line of the same file;
+
+-   files are moved or deleted in conflicting ways.
+
+Here you'll create an artificial merge conflict to see what this looks like and how to fix it.
+
+::: callout-important
+## Action (group)
+
+**Create a merge conflict**
+
+Ensure the workstation at your table is up to date with the remote repository. Then:
+
+1.  Have someone at your table open the README file and add the group members' names in a list on one line, *e.g.*,
+
+    group: trevor ruiz, yan lashchev
+
+2.  Commit and push changes
+
+3.  Then on the main screen, without pulling new changes, create a commit with the names shown differently somehow, such as last, first, or initials, or spanning multiple lines with one name per line.
+
+4.  Attempt to push the commit. Your client will detect 'upstream' changes on the remote repository and prompt you to pull changes.
+
+5.  Attempt to pull the changes. The client will then report a merge conflict and prompt you to resolve the conflict and commit changes. GitHub Desktop in particular will prompt you to open RStudio to resolve the conflict. Go ahead and follow the prompt.
+
+**Resolve a merge conflict**
+
+You will see a version of the file with the conflict that shows `<<<<HEAD … >>>>` followed by a long alphanumeric string. Within the angle brackets the two conflicting versions of the file will be shown, separated by `=====` .
+
+1.  Agree with your table on one version of the README file (or another representation of your names).
+2.  Commit and push the change.
+:::
+
+When detected, merge conflicts must be resolved with a commit that takes precedence over the conflicting commits. [You can read more about resolving merge conflicts here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts).
+
+## Checklist
+
+1.  On github.com, your group-sandbox repository has a directory called `class-activity` containing a copy of this activity and one markdown file for each group member with two fun facts about them.
+2.  The repository has only one open branch.
+3.  The README file lists each group member's name.
+4.  Each group member has an up-to-date local copy of the repository.

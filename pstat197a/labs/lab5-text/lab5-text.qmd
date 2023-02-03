@@ -1,0 +1,250 @@
+---
+title: "Text processing"
+editor: visual
+code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
+---
+
+In this lab you'll learn some basic text processing following what was presented in class and do a little exploratory analysis using token frequency measures.
+
+**Objectives**
+
+-   use `stringr` functions for pattern matching to clean up raw text
+
+-   use `tidytext` , `stopwords` , and `textstem` for tokenization, stopword removal, and lemmatization
+
+-   compute descriptive summaries of texts based on frequency measures: TF, IDF, and TF-IDF
+
+::: callout-important
+## Action
+
+**Setup for lab**
+
+Open RStudio.
+
+1.  We'll need a few additional packages that weren't installed in the first lab. In the console, execute the following commands:
+
+```{r}
+#| eval: false
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/scripts/package-installs.R'
+
+source(url)
+```
+
+2.  Create a new script in your lab directory and copy-paste the code chunk below. Execute once.
+:::
+
+```{r}
+# setup
+library(tidyverse)
+library(tidytext)
+library(tokenizers)
+library(textstem)
+library(stopwords)
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab5-text/data/drseuss.txt'
+
+# read data
+seuss_lines <- read_lines(url, skip_empty_rows = T)
+```
+
+The text we'll work with comprises four Dr. Seuss books. The raw data are read in line-by-line, so that `seuss_lines` is a vector in which each element is a line from one of the four books. Lines are rendered in order.
+
+```{r}
+
+seuss_lines %>% head()
+```
+
+## Text preprocessing
+
+For us, 'preprocessing' operations will refer to coercing a document into one long uniformly-formatted string.
+
+### Distinguishing documents
+
+To start, we have all four books lumped together. A quick visual scan of the text file will confirm that each book is set off by the title on one line followed by 'By Dr. Seuss' on the next line.
+
+We can leverage this structure to distinguish the books: the chunk below
+
+-   creates a 'flag' by pattern-matching each line with `Dr. Seuss`,
+
+-   then shifts the lines down by one so that the flag matches the title line instead of the author line
+
+-   then assigns a document ID to each line by computing the total number of flags in all preceding lines.
+
+The last two commands correct for having 'lagged' the lines.
+
+```{r}
+# flag lines with a document id
+seuss_lines_df <- tibble(line_lag = c(seuss_lines, NA)) %>%
+  mutate(flag = str_detect(line_lag, 'Dr. Seuss'),
+         line = lag(line_lag, n = 1),
+         doc = cumsum(flag)) %>% 
+  select(doc, line) %>%
+  slice(-1) %>%
+  fill(doc)
+```
+
+We may as well assign labels to the document IDs.
+
+```{r}
+# grab titles
+titles <- seuss_lines_df %>% 
+  group_by(doc) %>%
+  slice_head() %>%
+  pull(line) %>%
+  tolower()
+
+# label docs
+seuss_lines_df <- seuss_lines_df %>%
+  mutate(doc = factor(doc, labels = titles))
+```
+
+Finally, we'll strip the title and author information, because all books are by the same author and the title is now recorded in the document ID.
+
+The chunk below adds a document-specific line number and removes the first two lines from every document. Since each row is a line, this amounts to a simple row numbering and filtering.
+
+```{r}
+# remove header lines (title/author)
+seuss_lines_clean <- seuss_lines_df %>%
+  group_by(doc) %>%
+  mutate(line_num = row_number() - 2) %>%
+  filter(line_num > 0)
+```
+
+::: callout-important
+## Action
+
+**Line summaries**
+
+See if you can answer the following questions:
+
+1.  How many lines are in each book?
+2.  How many lines in each book contain the word 'bump'?
+
+Work with a neighbor. *Hint*: you might find it handy to use `str_detect()` , and grouped operations and/or summaries.
+:::
+
+### Collapsing lines and cleaning text
+
+First, concatenate all the lines using `str_c()` .
+
+```{r}
+# collapse lines into one long string
+seuss_text <- seuss_lines_clean %>% 
+  summarize(text = str_c(line, collapse = ' '))
+```
+
+In this case the resulting text strings for each document don't contain too many elements in need of removal: just punctuation and capital letters.
+
+```{r}
+cat_in_hat <- seuss_text %>% slice(1) %>% pull(text)
+```
+
+To strip these elements, we can exclude matching patterns from the collection of punctuation marks and then use `tolower()` to replace upper-case letters with lower-case letters. Shorthand for punctuation in `stringr` is `'[[:punct:]]'` .
+
+```{r}
+cat_in_hat %>%
+  str_remove_all('[[:punct:]]') %>%
+  tolower()
+```
+
+To apply this to all four texts, simply create a function wrapper for the processing commands and then use `dplyr` to pass the text through the processing function.
+
+```{r}
+clean_fn <- function(.text){
+  str_remove_all(.text, '[[:punct:]]') %>% tolower()
+}
+
+seuss_text_clean <- seuss_text %>%
+  mutate(text = clean_fn(text))
+```
+
+You could also create a manual list of punctuation to remove.
+
+::: callout-important
+## Action
+
+The regular expression for matching `a` or `b` is `a | b` . Write an alternative to the previous code chunk that lists the punctuation to remove explicitly and *does not* use `'[[:punct:]]'` .
+:::
+
+## Basic NLP
+
+As you saw in class, once we have a string of clean text for each document, tokenization and lemmatization are largely automated.
+
+### Tokenization
+
+`unnest_tokens()` will tokenize and return the result in tidy format; `lemmatize_words()` can be applied to the resulting column of tokens using `dplyr` commands.
+
+```{r}
+stpwrd <- stop_words %>%
+  pull(word) %>%
+  str_remove_all('[[:punct:]]')
+
+seuss_tokens_long <- seuss_text_clean %>%
+  unnest_tokens(output = token, # specifies new column name
+                input = text, # specifies column containing text
+                token = 'words', # how to tokenize
+                stopwords = stpwrd) %>% # optional stopword removal
+  mutate(token = lemmatize_words(token)) 
+```
+
+::: callout-important
+## Action
+
+Based on the data frame above, use row counting (`count()` ) to answer the following questions:
+
+1.  What's the most frequently used word in each book?
+2.  What's the most frequently used word in all books?
+
+Compare with your neighbor to check your answers.
+
+***If there's time:*** refer to the documentation `?unnest_tokens` to determine how to tokenize as bigrams. Find the most frequent bigrams in each book.
+:::
+
+### Frequency measures
+
+The frequency measures discussed in class -- term frequency (TF), inverse document frequency (IDF), and their product (TF-IDF) -- can be computed from token counts using `tidytext::bind_tf_idf()` .
+
+```{r}
+seuss_tfidf <- seuss_tokens_long %>%
+  count(doc, token) %>%
+  bind_tf_idf(term = token,
+              document = doc,
+              n = n) 
+
+seuss_df <- seuss_tfidf %>%
+  pivot_wider(id_cols = doc, 
+              names_from = token,
+              values_from = tf_idf,
+              values_fill = 0)
+
+seuss_df
+```
+
+We can use this data to compute a variety of summaries of the text. For example, the two words that distinguish each book most from the other books are, by book:
+
+```{r}
+seuss_tfidf %>%
+  group_by(doc) %>%
+  slice_max(tf_idf, n = 2)
+```
+
+But the two most common words in each book are:
+
+```{r}
+seuss_tfidf %>%
+  group_by(doc) %>%
+  slice_max(tf, n = 2)
+```
+
+::: callout-important
+## Action
+
+Discuss with your neighbor how you might determine how 'different' any two books are using an appropriate frequency measure and comparison between rows.
+
+1.  Compute your difference measure for all pairs of books. Which pair is most distinct?
+2.  Use the same idea to compute difference from the 'average' Dr. Seuss book. Which book is most different from the rest?
+:::

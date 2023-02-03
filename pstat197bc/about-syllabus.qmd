@@ -1,0 +1,180 @@
+---
+title: "Course syllabus"
+subtitle: "Data science capstone"
+author: "PSTAT197B-C/CMPSC190DE-DF"
+author-title: "Course listing"
+date: "01/06/2023"
+date-format: "MMMM YYYY"
+published-title: "Updated"
+editor: visual
+---
+
+Students will devote the vast majority of their time and effort in this course to project work and are expected to engage fully with their projects. Class meetings will be conducted as seminars with rotating presentations by project teams. Students will meet weekly with their project teams and regular progress is expected. Each team will prepare one written project summary at the end of winter quarter and one poster presentation at the end of spring quarter.
+
+***Concurrent course listing:*** PSTAT197B-C and CMPSC190DE-DF are held concurrently; enrollment is by instructor consent and admitted students may enroll under either listing. The course content, expectations, assessments, and course policies are identical for students enrolled in either course.
+
+***Catalog description:*** Research opportunities for undergraduate students. Students practice their data science and applied statistics skills by completing a hands-on team project on a practical problem proposed by a project sponsor. Students are expected to give regular oral presentations and prepare at least one written report on their research. *Prerequisite: PSTAT197A.*
+
+## Learning outcomes
+
+Through their project work and participation in class meetings, students can expect to:
+
+-   make original contributions on a methodological or applied research topic involving statistics, data science, and computational science;
+
+-   develop domain expertise in the area(s) of application relevant to their project topic;
+
+-   develop and practice effective strategies for communicating research outcomes with clarity and confidence;
+
+-   improve collaboration and teamwork skills;
+
+-   deepen their understanding of careers in data science;
+
+-   produce a strong work sample for inclusion in a professional portfolio.
+
+## Meetings
+
+### Winter 2023
+
+Class meetings are held ***once weekly*** 2pm -- 3:15pm Mondays in Phelps 3505.
+
+Project meetings are held once weekly in teams at a time of their choosing either via Zoom, on campus, or on site with the project sponsor.
+
+We will not meet regularly at other officially scheduled times but we will use the Wednesday slot as an alternate class meeting time. Please note that ***we will meet on Wednesdays twice during winter term*** due to the following Monday holidays:
+
+-   Week 2 (MLK Jr. day)
+
+-   Week 7 (President's day)
+
+Students are encouraged to block off section times in their schedule to facilitate convenient scheduling of project work. Section rooms are available during those times as workspaces.
+
+## People
+
+#### ***Instructor***
+
+*Trevor Ruiz,* Visiting Assistant Professor, Statistics.
+
+#### ***Academic Coordinator***
+
+*Tim Robinson,* Academic Coordinator, Computer Science
+
+#### ***Project advisors***
+
+(In alphabetical order by last name)
+
+-   *Gia Anh,* MS Student, Statistics
+
+-   *Joshua Bang,* PhD Student, Statistics
+
+-   *Laura Baracaldo,* Visiting Assistant Professor, Statistics
+
+-   *Meghan Elcheikhali,* PhD Student, Statistics
+
+-   *Alex Franks,* Assistant Professor, Statistics
+
+-   *Yan Lashchev,* ULA, BS Student, Statistics and Mathematics
+
+-   *Robin Liu,* PhD Student, Statistics
+
+-   *Erika McPhillips,* PhD Student, Statistics
+
+-   *Adam Waterbury,* Visiting Assistant Professor, Statistics
+
+-   *Enbo Zhou,* PhD Student, Geography
+
+#### ***Project sponsors***
+
+(In alphabetical order by organization)
+
+-   *Max Ivanov,* Amgen
+
+-   *Ari Fernandez,* Appfolio
+
+-   *Erin Satterthwaite,* CalCOFI
+
+-   *Andy Chen,* Carpe Data
+
+-   *Eleanor Caves,* Caves visual ecology lab
+
+-   *Katja Seltmann,* CCBER
+
+-   *Greg Husak,* Climate Hazards Center
+
+-   *Shraddhanand Shukla,* Climate Hazards Center
+
+-   *Patrick Green,* EEMB
+
+-   *Arinbjorn Kolbeinsson,* Evidation Health
+
+-   *Akshay Mani,* Inogen
+
+-   *Somayeh Dodge,* MOVE lab
+
+-   *Eric Leidersdorf,* P3
+
+-   *Derek Mendez,* SLAC National Accelerator Laboratory
+
+## Expectations
+
+***Time commitment.*** The course carries a time commitment of 12 hours per week (3 hours per credit unit). Class and project meetings account for roughly 2 hours per week, and class assignments are kept to a minimum to facilitate project work; thus, students should anticipate dedicating 8-10 hours outside of the classroom to project work each week. Students are strongly encouraged to establish a secondary meeting without their advisors each week to help ensure effective time and task management among the group.
+
+***Team contracts.*** Each team will develop a contract articulating their goals as a group, basic agreements about communication and collaboration, and steps that will be taken in the event of failure to uphold those agreements.
+
+***Team roles.*** Each student will take on one of the following roles per term by mutual agreement with their team:
+
+-   a *spokesperson* who is responsible for communicating with advisors and course staff on behalf of the team;
+
+-   a *meeting organizer* who is responsible for arranging project meetings and keeping time during meetings;
+
+-   a *note-taker* who is responsible for maintaining a written record of each meeting;
+
+-   a *repository/data/document manager* who is responsible for coordinating access to project files and keeping them organized;
+
+-   for five-person teams, an *equity manager* who is responsible for ensuring a fair distribution of work among the team members.
+
+***Peer review.*** Teams will conduct an anonymized peer review each quarter in which each student rates their teammates on:
+
+-   cooperation with the group;
+
+-   communication;
+
+-   adherence to with agreements established by the group contract;
+
+-   fulfillment of their assigned role;
+
+-   the extent to which they contributed their fair share to project work.
+
+Aggregated results will be used to provide individual feedback and identify any necessary interventions to improve quality of collaboration.
+
+***Class presentations.*** Each team is expected to present some of their work once per term to the class. In-class presentations should be informal and allow time for intermittent discussion and questions. Teams should prepare about 10 slides and a 1-2 page handout. It is strongly recommended that just one team member give each presentation.
+
+***Poster presentation.*** A public showcase of project work will be held on campus at the end of the Spring quarter. Each team is expected to prepare a poster to present at the showcase.
+
+***Non-disclosure agreements.*** Some projects are subject to non-disclosure agreements (NDAs) between the university and the sponsoring organization. If so, project advisors will notify students of the terms and share copies of the NDA; students are expected to uphold any such NDAs but *should not directly sign any agreements*.
+
+## Assessments
+
+Students will be evaluated based on the following:
+
+-   attendance record and class assignments;
+
+-   end-of-term advisor assessments of individual participation and contributions;
+
+-   instructor assessments of in-class presentations and poster;
+
+-   peer reviews and end-of-term individual reflections.
+
+## Policies
+
+***Attendance.*** Regular attendance at class meetings is expected. Each student can miss one class meeting without notice; further absences may impact course grades. Students are responsible for material discussed in their absence and should review notes and consult a classmate.
+
+***Deadlines.*** Students are expected to meet assignment deadlines in a timely manner. All deadlines have a 24-hour grace period. Late or amended work may or may not be accepted at the instructor's discretion.
+
+***Email.*** Course staff will make their best effort to reply to email within 48 weekday hours. However, due to high volume, staff cannot guarantee that all messages will receive replies.
+
+***Illness.*** Students who are ill are required to stay home. Students ill with COVID-19 must comply with university policy regarding reporting and isolation. Accommodations will be made to ensure that students absent due to illness do not fall behind.
+
+***Accommodations.*** Reasonable accommodations will be made for any student with a qualifying disability. Such requests should be made through the Disabled Students Program (DSP). More information, instructions on how to access accommodations, and information on related resources can be found on the [DSP website](https://dsp.sa.ucsb.edu/). *Note: in this class there are no timed assessments.*
+
+***Letter grades.*** Letter grades are assigned based only on the assessments identified above and according to [university guidelines](https://my.sa.ucsb.edu/catalog/Current/AcademicPoliciesProcedures/GradingSystem.aspx), with the relative weighting of assessments determined at the discretion of the instructor. While grade calculations will not be disclosed, students are entitled to an explanation of the criteria used to determine their grades if desired. Grades will not be changed except in the case of clerical errors. If students feel their grade has been unfairly assigned, they are entitled to contest it following [UCSB procedure for contesting grades](https://my.sa.ucsb.edu/catalog/Current/AcademicPoliciesProcedures/ContestedGrades.aspx).
+
+***Conduct.*** All course participants are expected to maintain respectful and honorable conduct consistent with [UCSB ethical standards](https://www.compliance.ucsb.edu/ethics). Students uncomfortable with the behavior of another course participant for any reason should notify the instructor, course staff, or, if the complaint relates to course staff conduct, an administrative or departmental officer. Evidence of [academic dishonesty](https://studentconduct.sa.ucsb.edu/academic-integrity) will be reported to the Office of Student Conduct (OSC); evidence of problematic behavior will be addressed on a case-by-case basis in accord with university policies.

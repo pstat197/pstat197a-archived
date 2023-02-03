@@ -1,0 +1,593 @@
+---
+title: "Building a forecasting model"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 6
+    fig-height: 4
+    fig-align: 'left'
+    slide-number: true
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---
+
+## From last time
+
+-   Pooled data from all sites with at least a year of continuous observation between 2017 and 2020 at 0.2m depth
+
+-   Modeled seasonal trend based on elevation and day of the year using curve fitting techniques
+
+## Seasonal trend model
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(fda)
+library(modelr)
+library(broom)
+library(yardstick)
+soil <- read_csv('data/soiltemp-200cm.csv')
+theme_set(theme(text = element_text(size = 20)))
+```
+
+From last time: using 4 Fourier bases and elevation.
+
+```{r}
+#| fig-cap: $Y_{i, t} = \beta_0 + \beta_1 \text{elev}_i + \sum_{j = 1}^4 \gamma_j \phi_j(t) + \epsilon_{i, t}$
+
+soil_fbasis <- fourier(soil$day, 
+                  nbasis = 4,
+                  period = 365) %>%
+             as_tibble() %>%
+  bind_cols(soil)
+
+fit_prev <- lm(temp ~ elev + sin1 + sin2 + cos1 + cos2,
+          data = soil_fbasis)
+
+pred_grid <- soil_fbasis %>%
+  data_grid(date = seq_range(date, n = 200),
+            elev = quantile(elev, c(0.1, 0.5, 0.9))) %>%
+  mutate(day = yday(date)) 
+
+pred_df <- as_tibble(fourier(pred_grid$day,
+                  nbasis = 4, 
+                  period = 365)) %>%
+  bind_cols(pred_grid) %>%
+  add_predictions(fit_prev, 'pred_prev')
+
+soil %>%
+  ggplot(aes(x = date)) +
+  geom_path(aes(y = temp, 
+                group = site),
+            alpha = 0.1) +
+  geom_path(data = pred_df, 
+            aes(y = pred_prev,
+                group = elev,
+                color = elev),
+            size = 1.2, alpha = 0.7)
+```
+
+## A small adjustment
+
+Adding elevation x seasonality [interaction terms]{style="color: maroon;"}.
+
+```{r}
+#| fig-cap: $Y_{i, t} = \beta_0 + \beta_1 \text{elev}_i + \sum_{j = 1}^4 \left(\gamma_j \phi_j(t) + \color{maroon}{\delta_j \text{elev}\times\phi_j(t)}\right) + \epsilon_{i, t}$
+
+fit <- lm(temp ~ elev*(sin1 + sin2 + cos1 + cos2),
+          data = soil_fbasis)
+
+pred_df <- as_tibble(fourier(pred_grid$day,
+                  nbasis = 4, 
+                  period = 365)) %>%
+  bind_cols(pred_grid) %>%
+  add_predictions(fit)
+
+soil %>%
+  ggplot(aes(x = date)) +
+  geom_path(aes(y = temp, 
+                group = site),
+            alpha = 0.1) +
+  geom_path(data = pred_df, 
+            aes(y = pred,
+                group = elev,
+                color = elev),
+            size = 1.2, alpha = 0.7)
+```
+
+## Seasonal forecast
+
+Seasonal forecasts ignore recent data.
+
+```{r}
+#| fig-cap: 10-day forecast based on seasonal mean only.
+first_site <- soil_fbasis %>%
+  filter(site == unique(soil$site)[15]) %>%
+  slice_max(date, n = 110) %>%
+  add_predictions(fit) %>%
+  arrange(date) %>%
+  mutate(status = c(rep('obs', 100), rep('pred', 10)))
+
+first_site %>%
+  filter(status == 'obs') %>%
+  ggplot(aes(x = date, 
+             y = temp, 
+             linetype = status)) +
+  geom_path() +
+  geom_path(data = first_site, 
+            aes(y = pred),
+            color = 'blue',
+            size = 1.5) +
+  guides(linetype = guide_none()) +
+  labs(x = '',
+       y = 'daily average temp')
+```
+
+## Forecasting error
+
+This leads to greater error.
+
+```{r}
+#| fig-cap: Seasonal forecast vs. observed temperature.
+first_site %>%
+  ggplot(aes(x = date, 
+             y = temp, 
+             linetype = status)) +
+  geom_path() +
+  geom_path(data = first_site, 
+            aes(y = pred),
+            color = 'blue',
+            size = 1.5) +
+  guides(linetype = guide_none()) +
+  labs(x = '',
+       y = 'daily average temp')
+```
+
+## A better forecast
+
+Idea: the present temperature at time $t$ contains useful information about the expected temperature at time $t + 1$.
+
+. . .
+
+Our model for site $i$ at time $t$ is:
+
+$$
+\underbrace{Y_{i, t}}_{\text{temperature}} = \underbrace{\mu(i, t)}_{\text{seasonal mean}} + \underbrace{\epsilon_{i, t}}_{\text{random deviation}}
+$$
+
+. . .
+
+The ***conditional mean forecast*** $\mathbb{E}(Y_{i, t + 1}| Y_{i, t})$ should be better than the seasonal forecast $\mathbb{E}Y_{i, t + 1} = \mu(i, t + 1)$...
+
+. . .
+
+... because it incorporates information about the recent past.
+
+## Conditional mean forecast
+
+The conditional mean of the next temp given the present is:
+
+$$
+\begin{aligned}
+\mathbb{E}(Y_{i, t + 1}|Y_{i, t} = y_{i, t}) 
+&= \mathbb{E}[\underbrace{\mu(i, t + 1)}_{\text{nonrandom}}|Y_{i, t} = y_{i, t}] + \mathbb{E}(\epsilon_{i, t + 1}|Y_{i, t} = y_{i, t}) \\\\
+&= \mu(i, t + 1) + \mathbb{E}(\epsilon_{i, t + 1}|\epsilon_{i, t} = \underbrace{y_{i, t} - \mu(i, t)}_{\text{residual}}) \\\\
+&= \underbrace{\mu(i, t + 1)}_{\text{seasonal forecast}} + \underbrace{\mathbb{E}(\epsilon_{i, t + 1}|\epsilon_{i, t} = e_{i, t})}_{\text{forecasted deviation}}
+\end{aligned}
+$$
+
+## Modeling the residuals
+
+To forecast the deviation from the seasonal mean, we should model the residuals.
+
+$$
+e_{i, t} = Y_{i, t} - \hat{\mu}(i, t) 
+\qquad\text{(residual)}
+$$
+
+## Residual autocorrelation
+
+::: columns
+::: {.column width="60%"}
+```{r}
+#| fig-cap: Residual vs. lagged residual.
+soil_fbasis %>%
+  add_residuals(fit) %>%
+  arrange(site, date) %>%
+  mutate(resid.lag = lag(resid, n = 1)) %>%
+  ggplot(aes(x = resid.lag, y = resid)) +
+  geom_point(alpha = 0.2) +
+  labs(x = expr(e['i, t - 1']),
+       y = expr(e['i, t']))
+```
+:::
+
+::: {.column width="40%"}
+Residuals are strongly correlated with their immediately previous value.
+
+This is called ***autocorrelation*** (think: self-correlation).
+:::
+:::
+
+## An intuitive approach: SLR
+
+\(1\) Lag the residuals: $\texttt{resid} = e_{i, t}$ and $\texttt{resid.lag} = e_{i, t - 1}$
+
+```{r}
+resid_df <- soil_fbasis %>%
+  arrange(site, date) %>%
+  add_residuals(fit) %>%
+  mutate(resid.lag = lag(resid, n = 1)) %>%
+  group_by(site) %>%
+  mutate(n = row_number()) %>%
+  filter(n > 1)
+
+resid_df %>% 
+  dplyr::select(date, temp, resid, resid.lag) %>%
+  head()
+```
+
+. . .
+
+\(2\) Fit SLR at one time lag: $e_{i, t} = \beta_0 + \beta_1 e_{i, t - 1} + \xi_{i, t}$.
+
+```{r}
+#| echo: true
+fit_resid <- lm(resid ~ resid.lag - 1, data = resid_df)
+```
+
+## Computing one-step forecasts
+
+```{r}
+a_site <- soil_fbasis %>%
+  filter(site == unique(soil$site)[15]) %>%
+  slice_max(date, n = 110) %>%
+  arrange(date) %>%
+  add_predictions(fit, 'pred.mean') %>%
+  add_residuals(fit) %>%
+  mutate(resid.lag = lag(resid, n = 1)) %>%
+  add_predictions(fit_resid, 'pred.resid') %>%
+  mutate(pred = pred.mean + pred.resid) 
+```
+
+::: panel-tabset
+### Seasonal forecasts
+
+$\texttt{pred.mean} = \hat{\mu}(i, t)$
+
+```{r}
+a_site %>%
+  dplyr::select(date, elev, temp, pred.mean) %>%
+  head()
+```
+
+### Residual forecasts
+
+$\texttt{pred.resid} = \hat{e}_{i, t} = \mathbb{E}(e_{i, t}|e_{i, t - 1})$
+
+```{r}
+a_site %>%
+  dplyr::select(date, elev, temp, pred.mean, resid, pred.resid) %>%
+  head()
+```
+
+### Final forecasts
+
+$\texttt{pred} = \texttt{pred.mean} + \texttt{pred.resid} = \hat{\mu}(i, t) + \hat{e}_{i, t}$
+
+```{r}
+a_site %>%
+  dplyr::select(date, elev, temp, pred.mean, resid, pred.resid, pred) %>%
+  head()
+```
+:::
+
+## One-step forecasts
+
+```{r}
+#| fig-cap: Seasonal forecast (blue curve), residual forecasts (red lines), one-step forecasts (dotted line), and observed temperatures (solid black line).
+a_site %>%
+  ggplot(aes(x = date, 
+             y = temp)) +
+  geom_path() +
+  geom_path(data = a_site, 
+            aes(y = pred.mean),
+            color = 'blue',
+            alpha = 0.4) +
+  geom_segment(aes(x = date, 
+                   xend = date, 
+                   y = pred.mean, 
+                   yend = pred),
+               color = 'red',
+               alpha = 0.4) +
+  geom_path(aes(y = pred),
+            linetype = 'dotted') +
+  labs(x = '',
+       y = 'daily average temp')
+```
+
+## Forecasting error
+
+One the site we've been examining, the one-step forecasting error is:
+
+```{r}
+panel <- metric_set(rmse, msd, ccc)
+a_site %>%
+  panel(truth = temp,
+        estimate = pred) %>%
+  arrange(.metric) %>%
+  knitr::kable()
+```
+
+-   `ccc` is the *concordance correlation coefficient*
+
+-   `msd` is the *mean signed deviation*
+
+-   `rmse` is the *root mean squared error*
+
+## Average forecasting error across sites
+
+Means and standard deviations across all 29 sites of error metrics for one-step forecasts computed across entire observation window:
+
+```{r}
+soil_fbasis %>%
+  group_by(site) %>%
+  arrange(site, date) %>%
+  add_predictions(fit, 'pred.mean') %>%
+  add_residuals(fit) %>%
+  mutate(resid.lag = lag(resid, n = 1)) %>%
+  add_predictions(fit_resid, 'pred.resid') %>%
+  mutate(pred = pred.mean + pred.resid)  %>%
+  dplyr::select(site, date, temp, pred.mean, pred.resid, pred) %>%
+  panel(truth = temp, estimate = pred) %>%
+  ungroup() %>%
+  group_by(.metric) %>%
+  summarize(average = mean(.estimate),
+            sd = sd(.estimate),
+            min = min(abs(.estimate)),
+            max = max(abs(.estimate)),
+            n = n()) %>%
+  arrange(.metric) %>%
+  knitr::kable()
+```
+
+## One-step forecasts (mathematically)
+
+The one-step forecasts are the predicted conditional means at the next time step given the [present]{style="color:blue;"} :
+
+$$
+\hat{Y}_{i, t} = \mathbb{E}(Y_{i, t + 1}|Y_{i, t} = \color{blue}{y_{i, t}})
+$$
+
+. . .
+
+Conditional expectation gives optimal prediction under squared error loss (assuming the model is correct).
+
+. . .
+
+According to our model:
+
+$$
+\hat{Y}_{i, t + 1} 
+=  \hat{\mu}(i, t + 1) + \hat{\alpha}_0 + \hat{\alpha}_1 \left(\color{blue}{y_{i, t}} - \hat{\mu}(i, t)\right) 
+$$
+
+## Multi-step forecasts
+
+Multistep forecasts must be computed recursively:
+
+$$
+\begin{aligned}
+\color{maroon}{\hat{Y}_{i, t + 1}} 
+&= \mathbb{E}(Y_{i, t + 1}|Y_{i, t} = y_{i, t}) \\
+\color{teal}{\hat{Y}_{i, t + 2}} 
+&= \mathbb{E}(Y_{i, t + 2}|Y_{i, t + 1} = \color{maroon}{\hat{Y}_{i, t + 1}}) \\
+\hat{Y}_{i, t + 3} 
+&= \mathbb{E}(Y_{i, t + 3}|Y_{i, t + 2} = \color{teal}{\hat{Y}_{i, t + 2}}) \\
+&\vdots
+\end{aligned}
+$$
+
+. . .
+
+What do you think will happen the farther out we forecast??
+
+## Multistep forecasts on one site
+
+```{r}
+site_full <- soil_fbasis %>%
+  filter(site == unique(soil$site)[15]) %>%
+  slice_max(date, n = 110) %>%
+  arrange(date) 
+
+site_train <- site_full %>%
+  slice_head(n = 70) %>%
+  add_predictions(fit)
+
+site_test <- site_full %>%
+  slice_tail(n = 41)
+
+pred_fn <- function(yprev, muprev, mupres){
+  respres <- predict(fit_resid, data.frame(resid.lag = yprev - muprev)) %>% as.numeric()
+  pred <- mupres + respres
+  return(pred)
+}
+
+pred_df <- site_test %>%
+  add_predictions(fit, 'pred.mean') %>%
+  dplyr::select(date, temp, pred.mean) %>%
+  mutate(pred = NA)
+
+pred_df$pred[2] <- pred_fn(pred_df$temp[1], 
+                           pred_df$pred.mean[1], 
+                           pred_df$pred.mean[2])
+for(i in 2:40){
+  pred_df$pred[i + 1] <- pred_fn(pred_df$pred[i], 
+                             pred_df$pred.mean[i], 
+                             pred_df$pred.mean[i + 1])
+}  
+  
+
+site_train %>%
+  ggplot(aes(x = date, y = temp)) +
+  geom_path() +
+  geom_path(data = pred_df, linetype = 'dashed') +
+  geom_path(data = pred_df, aes(y = pred.mean), color = 'blue', alpha = 0.5) +
+  geom_path(data = pred_df, aes(y = pred), color = 'blue', linetype = "dotted") +
+  geom_path(aes(y = pred), color = 'blue', alpha = 0.5)
+
+```
+
+## Comments
+
+This approach pooled data across sites to estimate model quantities.
+
+-   seasonal mean (using Fourier basis approximation)
+
+-   residual autocorrelation at one lag (using SLR)
+
+. . .
+
+Works pretty well for one-step forecasts; not very well for longer-term forecasts.
+
+# Time series models
+
+## Site-specific approach
+
+An alternative to pooling data together to estimate the seasonal trend and residual autocorrelation is to do so *individually* for every site.
+
+-   upshot: more flexibility on approaches; can use time series techniques
+
+-   downside: many models $\longrightarrow$ more total uncertainty
+
+. . .
+
+For now we'll leave the seasonality alone and revise the residual autocorrelation approach.
+
+## Autoregression
+
+An *autoregressive* model of order $D$ is
+
+$$
+X_t = \nu + \alpha_1 X_{t - 1} + \cdots + \alpha_D X_{t - D} + \epsilon_t
+$$
+
+-   'innovations' $\epsilon_t$ are $iid$ with mean zero
+
+-   process mean linear in $D$ lags
+
+-   $\mathbb{E}X_t$ and $\text{var}X_t$ are constant in time ('weak stationarity')
+
+## Technical asides
+
+About the AR parameters:
+
+-   constraints on $\alpha_j$'s needed for a well-defined process in infinite time
+
+-   estimates $\hat{\alpha}_j$ found by:
+
+    -   (moment estimator) solving a recursive system of equations (known as the *Yule-Walker* equations)
+
+    -   (mle) maximum likelihood assuming $\epsilon_{t} \sim N(0, \sigma^2)$
+
+## Site-specific model
+
+So let's revise:
+
+$$
+\begin{aligned}
+Y_{i, t} &= f_i (t) + \epsilon_{i, t} \quad\text{(nonlinear regression)} \\
+\epsilon_{i, t} &= \sum_{d = 1}^D \alpha_{i,d}\epsilon_{i, t - d} + \xi_{i, t} \quad\text{(AR(D) errors)}
+\end{aligned}
+$$
+
+. . .
+
+*Note*:
+
+-   seasonal mean $f_i(t)$ is site-dependent (hence subscript)
+
+-   AR process is site-dependent (hence $\alpha_{i, d}$ subscript)
+
+-   no elevation included, since it is constant for each site
+
+## Fit comparison {.scrollable}
+
+```{r}
+site_data <- soil_fbasis %>%
+  filter(site == unique(soil_fbasis$site)[15]) %>%
+  arrange(date)
+
+xreg <- site_data %>% 
+  dplyr::select(sin1, cos1, sin2, cos2) %>%
+  as.matrix()
+
+y <- site_data %>% pull(temp)
+
+y_train <- y[1:679]
+x_train <- xreg[1:679, ]
+y_test <- y[680:719]
+x_test <- xreg[680:719, ]
+```
+
+::: panel-tabset
+### AR fit
+
+```{r}
+#| echo = T
+fit_ar2 <- arima(y_train, 
+      order = c(2, 0, 0), 
+      xreg = x_train, 
+      include.mean = T, 
+      method = 'ML')
+
+tidy(fit_ar2) %>% knitr::kable()
+```
+
+### Comparision of estimates
+
+```{r}
+ar_sum <- tidy(fit_ar2) %>% dplyr::select(1:2)
+
+pooled_sum <- tidy(fit) %>%
+  bind_rows(tidy(fit_resid)) %>%
+  dplyr::select(1:2) %>%
+  mutate(term = str_remove_all(term, '[[:punct:]]') %>% tolower())
+
+full_join(ar_sum, pooled_sum, by = 'term', suffix = c('.ar', '.pooled')) %>%
+  knitr::kable()
+```
+:::
+
+## Forecast comparison
+
+```{r}
+site_preds <- predict(fit_ar2, newxreg = xreg)$pred
+
+site_data %>% 
+  bind_cols(status = c(rep('obs', 679), rep('pred', 40)),
+            pred = site_preds) %>%
+  slice_tail(n = 110) %>%
+  ggplot(aes(x = date, y = temp)) +
+  geom_path() +
+  geom_path(aes(y = pred,  linetype = status), color = 'blue') +
+  geom_path(data = pred_df, aes(y = pred), color = 'red', alpha = 0.5, linetype = 'dotted') 
+
+```
+
+## Next time
+
+Spatial prediction...
+
+-   based on observations
+
+-   based on forecasts

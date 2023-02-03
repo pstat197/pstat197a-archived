@@ -1,0 +1,543 @@
+---
+title: "Tidyverse basics"
+editor: visual
+code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
+---
+
+Read through the R Basics section and then complete all actions in the Tidyverse basics section. This lab is for your own benefit and no submission is expected.
+
+**Objectives:**
+
+-   Review R basics (data types and object classes);
+
+-   introduce core tidyverse libraries (dplyr, tidyr, and ggplot);
+
+-   replicate portions of in-class analysis of class survey data
+
+# R basics for total beginners
+
+Here we'll cover some bare essentials in R. You can find a more thorough introduction in [MSDR Appendix B](https://mdsr-book.github.io/mdsr2e/ch-R.html#ch:R).
+
+## Data types
+
+There are five main data types in R.
+
+***Numeric*** (double- or single-precision floating point) data represent real numbers. Numeric data are abbreviated `num` and by default are stored as double-precision floating point.
+
+```{r}
+# a number
+4.5
+
+# check structure
+str(4.5)
+
+# stored as double
+is.double(4.5)
+```
+
+***Integer*** data are integers. For the most part they behave like numeric data, except occupy less memory, which can in some cases be convenient. To distinguish integers from doubles, R uses a trailing `L` after values; the data type is abbreviated `int`.
+
+```{r}
+# an integer
+4L
+
+# check structure
+str(4L)
+```
+
+***Logical*** data are binary and represented in R as having values `TRUE` and `FALSE`. They are abbreviated `logi` in R. Often they are automatically coerced to integer data with values 0 (false) and 1 (true) to perform arithmetic and other operations.
+
+```{r}
+# logical value
+TRUE
+
+# check structure
+str(TRUE)
+
+# arithmetic
+TRUE + FALSE
+
+# check structure
+str(FALSE + FALSE)
+```
+
+***Character*** data represent strings of text and are sometimes called 'strings'. They are abbreviated `chr` in R and values are surrounded by quotation marks; this distinguishes, for example, the *character* 4 from the *number* 4. Single quotations can be used to input strings as well as double quotations. Arithmetic is not possible with strings for obvious reasons.
+
+```{r}
+#| error: true
+
+# a character string
+'yay'
+
+# check structure
+str('yay')
+
+# string arithmetic won't work
+'4' + '1'
+
+# but can be performed after coercing character to string
+as.numeric('4') + as.numeric('1')
+```
+
+***Factor*** data represent categorical variables. In R these are encoded numerically according to the number of 'levels' of the factor, which represent the unique values of the categorical variable, and each level is labeled. R will print the labels, not the levels, of factors; the data type is abbreviated `fct`.
+
+```{r}
+# a factor
+factor(1, levels = c(1, 2), labels = c('blue', 'red'))
+
+# less verbose definition
+factor('blue', levels = c('blue', 'red'))
+
+# check structure
+str(factor('blue', levels = c('blue', 'red')))
+```
+
+Usually factors won't be defined explicitly, but instead *interpreted* from character data. The levels and labels of factors can be manipulated using a variety of helper functions.
+
+## Object classes
+
+The most basic type of object in R is a ***vector**.* Vectors are concatenations of data values of the same type. They are defined using the concatenation operator `c()` and are indexed by consecutive integers; subvectors can be retrieved by specifying the indices between square brackets.
+
+```{r}
+# numeric vector
+c(1, 4, 7)
+
+# character vector
+c('blue', 'red')
+
+# indexing
+c(1, 4, 7)[1]
+c(1, 4, 7)[2]
+c(1, 4, 7)[3]
+c(1, 4, 7)[2:3]
+c(1, 4, 7)[c(1, 3)]
+```
+
+Usually objects are assigned names for easy retrieval. Vectors will not show any special object class if the structure is examined; `str()` will simply return the data type, index range, and the values.
+
+```{r}
+# assign a name
+my_vec <- c(1, 4, 7)
+
+# check structure
+str(my_vec)
+```
+
+Next up in complexity are ***arrays***. These are blocks of data values of the same type indexed along two or more dimensions. For arrays, `str()` will return the data type, index structure, and data values; when printed directly, data values are arranged according to the indexing.
+
+```{r}
+# an array
+my_ary <- array(data = c(1, 2, 3, 4, 5, 6, 7, 8), 
+           dim = c(2, 4))
+
+my_ary
+
+str(my_ary)
+
+# another array
+my_oth_ary <- array(data = c(1, 2, 3, 4, 5, 6, 7, 8), 
+           dim = c(2, 2, 2))
+
+my_oth_ary
+
+str(my_oth_ary)
+```
+
+For arrays, elements can be retrieved by index coordinates, and slices can be retrieved by leaving index positions blank, which will return all elements along the corresponding indices.
+
+```{r}
+# one element
+my_ary[1, 2]
+
+# one element
+my_oth_ary[1, 2, 1]
+
+# a slice (second row)
+my_ary[2, ]
+
+# a slice (first layer)
+my_oth_ary[ , , 1]
+```
+
+Next there are ***lists***, which are perhaps the most flexible data structure. A list is an indexed collection of any objects.
+
+```{r}
+# a list
+list('cat', c(1, 4, 7), TRUE)
+
+# a named list
+list(animal = 'cat',
+     numbers = c(1, 4, 7),
+     short = TRUE)
+```
+
+List elements can be retrieved by index in double square brackets, or by name.
+
+```{r}
+# assign a name
+my_lst <- list(animal = 'cat',
+               numbers = c(1, 4, 7),
+               short = TRUE)
+
+# check structure
+str(my_lst)
+
+# retrieve an element
+my_lst[[1]]
+
+# equivalent
+my_lst$animal
+```
+
+Finally, ***data frames*** are type-heterogeneous lists of vectors of equal length. More informally, they are 2D arrays with columns of differing data types. `str()` will essentially show the list structure; but when printed, data frames will appear arranged in a table.
+
+```{r}
+# a data frame
+my_df <- data.frame(animal = c('cat', 'hare', 'tortoise'),
+                    has.fur = c(TRUE, TRUE, FALSE),
+                    weight.lbs = c(9.1, 8.2, 22.7))
+
+str(my_df)
+
+my_df
+```
+
+The data frame is the standard object type for representing datasets in R. For the most part, modern computing in R is designed around the data frame.
+
+## Packages
+
+R packages are add-ons that can include special functions, datasets, object classes, and the like. They are published software and can be installed using `install.packages('PACKAGE NAME')` and, once installed, loaded via `library('PACKAGE NAME')` or `require('PACKAGE NAME')`.
+
+# Tidyverse basics
+
+We will illustrate the use of tidyverse functions to reproduce the analysis shown in class of the survey data.
+
+::: callout-important
+## Action
+
+**Load class survey data**
+
+1.  Create a 'labs' project in your course directory on your local computer.
+2.  Open a new script in RStudio.
+3.  Copy-paste the code chunk below at the top of the script and execute.
+:::
+
+```{r}
+library(tidyverse)
+
+# retrieve class survey data
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab2-tidyverse/data/'
+
+background <- paste(url, 'background-clean.csv', sep = '') %>%
+    read_csv()
+
+interest <- paste(url, 'interest-clean.csv', sep = '') %>%
+    read_csv()
+
+metadata <- paste(url, 'survey-metadata.csv', sep = '') %>%
+    read_csv()
+```
+
+You can view the data in one of two ways:
+
+```{r}
+# print the data frame for inspection in the console
+background
+
+# open as a spreadsheet in a separate viewer
+view(background)
+```
+
+Open the metadata in the viewer and have a look. Take a moment to inspect the datasets.
+
+## Concepts
+
+The tidyverse is a collection of packages for data manipulation, visualization, and statistical modeling. Some are specialized, such as `forcats` or `lubridate`, which contain functions for manipulating factors and dates and times, respectively. The packages share some common underyling principles.
+
+1.  Packages are built around the data frame
+2.  Functions are designed to work with the pipe operator `%>%`
+3.  Packages facilitate readable code
+
+The tidyverse facilitates programming in readable sequences of steps that are performed on dataframe. For example:
+
+```{r}
+#| eval: false
+
+my_df %>% STEP1() %>% STEP2() %>% STEP3()
+```
+
+If it helps, imagine that step 1 is defining a new variable, step 2 is selecting a subset of columns, and step 3 is fitting a model of some kind.
+
+## Tibbles
+
+tidyverse packages leverage a slight generalization of the data frame called a ***tibble***. For the most part, tibbles behave as data frames do, but they are slightly more flexible in ways you'll encounter later.
+
+For now, think of a tibble as just another name for a data frame.
+
+## The pipe operator `%>%`
+
+In short, `x %>% f(y)` is equivalent to `f(x, y)` .
+
+In other words, the pipe operator 'pipes' the result of the left-hand operation into the first argument of the right-hand function.
+
+```{r}
+# a familiar example
+my_vec <- c(1, 2, 5) 
+str(my_vec)
+
+# use the pipe operator instead
+my_vec %>% str()
+```
+
+## dplyr verbs
+
+The `dplyr` package contains functions for manipulating data frames (tibbles). The functions are named with verbs that describe common operations.
+
+### Core verbs
+
+::: callout-important
+## Action
+
+For each verb listed below, copy the code chunk into your script and execute.
+
+Go through the list with your neighbor and check your understanding by describing what the code example accomplishes.
+:::
+
+***filter*** -- filter the rows of a data frame according to a condition and return a subset of rows meeting that condition
+
+```{r}
+# filter rows
+background %>%
+  filter(math.comf > 3)
+```
+
+***select*** -- select a subset of columns from a data frame
+
+```{r}
+# select a column
+background %>%
+  select(math.comf)
+```
+
+***pull*** -- extract a single column from a data frame
+
+```{r}
+# pull a column
+background %>%
+  pull(rsrch)
+```
+
+***mutate*** -- define a new column as a function of existing columns
+
+```{r}
+# define a new variable
+background %>%
+  mutate(avg.comf = (math.comf + prog.comf + stat.comf)/3)
+```
+
+These operations can be chained together, for example:
+
+```{r}
+# sequence of verbs
+background %>%
+  filter(stat.prof == 'Adv') %>%
+  mutate(avg.comf = (math.comf + prog.comf + stat.comf)/3) %>%
+  select(avg.comf, rsrch) 
+```
+
+<!--# TA COMMENT: take a moment to describe what this sequence did. the goal is for students to get the concept of chaining together operations to find a subset of data and/or compute new quantities -->
+
+::: callout-important
+## Action
+
+1.  Write a chain of verbs in order to find the proficiency ratings of all respondents with research experience and 6-8 upper division courses.
+2.  Write a chain of verbs in order to find the proficiency ratings of all respondents without research experience and the same number of upper division courses
+3.  Compare results and discuss with your neighbor: do these suggest any patterns?
+:::
+
+### Summaries
+
+***Summaries*** are easily computed across rows using `summarize()` . So if for example we want to use the filtering and selection from before to find the proportion of advanced students in statistics with research experience, use:
+
+```{r}
+# a summary
+background %>%
+  filter(stat.prof == 'Adv') %>%
+  mutate(avg.comf = (math.comf + prog.comf + stat.comf)/3) %>%
+  select(avg.comf, rsrch) %>%
+  summarize(prop.rsrch = mean(rsrch))
+
+# equivalent
+background %>%
+  filter(stat.prof == 'Adv') %>%
+  mutate(avg.comf = (math.comf + prog.comf + stat.comf)/3) %>%
+  select(avg.comf, rsrch) %>%
+  pull(rsrch) %>%
+  mean()
+```
+
+The advantage of `summarize` , however, is that multiple summaries can be computed at once:
+
+```{r}
+background %>%
+  filter(stat.prof == 'Adv') %>%
+  mutate(avg.comf = (math.comf + prog.comf + stat.comf)/3) %>%
+  select(avg.comf, rsrch) %>%
+  summarize(prop.rsrch = mean(rsrch),
+            med.comf = median(avg.comf))
+```
+
+The variant `summarize_all` computes the same summary across all columns. (Notice the use of the helper verb `contains()` to select all columns containing a particular string.)
+
+```{r}
+# average comfort levels across all students
+background %>%
+  select(contains('comf')) %>%
+  summarise_all(.funs = mean)
+```
+
+***Grouped summaries*** are summaries computed separately among subsets of observations. To define a grouping structure using an existing column, use `group_by()` . Notice the 'groups' attribute printed with the output.
+
+```{r}
+# create a grouping
+background %>%
+  group_by(stat.prof)
+```
+
+Sometimes it can be helpful to simply count the observations in each group:
+
+```{r}
+# count observations
+background %>%
+  group_by(stat.prof) %>%
+  count()
+```
+
+To compute a grouped summary, first group the data frame and then specify the summary of interest:
+
+```{r}
+# a grouped summary
+background %>%
+  group_by(stat.prof) %>%
+  select(contains('.comf')) %>%
+  summarize_all(.funs = mean)
+```
+
+::: callout-important
+## Action
+
+**Grouped summaries**
+
+1.  Compute the median comfort level of all students in each subject area.
+2.  Compute the median comfort level of all students in each subject area after grouping by number of upper division classes taken.
+3.  Compare and discuss with your neighbor: do you notice any interesting patterns?
+:::
+
+## tidyr verbs
+
+In general, tidyr verbs *reshape* data frames in various ways. For now, we'll just cover two tidyr verbs.
+
+Suppose we want to calculate multiple summaries of multiple variables using the techniques above. By default, the output is one row with one column for each summary/variable combination:
+
+```{r}
+# many variables, many summaries
+comf_sum <- background %>%
+  select(contains('comf')) %>%
+  summarise_all(.funs = list(mean = mean, 
+                             median = median,
+                             min = min, 
+                             max = max))
+
+comf_sum
+```
+
+It would be much better to reshape this into a table. ***gather*** will reshape the data frame from wide format to long format by 'gathering' the columns together.
+
+```{r}
+# gather columns into long format
+comf_sum %>% gather(stat, val) 
+```
+
+This is a little better, but it would be more legible in a 2x2 table. We can ***separate*** the 'stat' variable that has the column names into two columns:
+
+```{r}
+# separate into rows and columns
+comf_sum %>%
+  gather(stat, val) %>%
+  separate(stat, into = c('variable', 'stat'), sep = '_') 
+```
+
+And then ***spread*** the stat column over a few rows, resulting in a table where the rows are the variables and the columns are the summaries:
+
+```{r}
+# spread into table
+comf_sum %>%
+  gather(stat, val) %>%
+  separate(stat, into = c('variable', 'stat'), sep = '_') %>%
+  spread(stat, val)
+```
+
+## ggplot
+
+The ggplot package is for data visualization. The syntax takes some getting used to if you haven't seen it before. We'll just look at one example.
+
+Suppose we want to summarize the prior coursework in the class.
+
+```{r}
+# summary of classes taken
+classes <- background %>%
+  select(11:29) %>%
+  mutate_all(~factor(.x, levels = c('no', 'yes'))) %>%
+  mutate_all(~as.numeric(.x) - 1) %>%
+  summarize_all(mean) %>%
+  gather(class, proportion)
+
+classes
+```
+
+We could report the results in a table, in which case perhaps arranging in descending order may be helpful:
+
+```{r}
+classes %>% arrange(desc(proportion))
+```
+
+Let's say we'd rather plot this data. We'll put the course number on one axis and the proportion of students who took it on the other.
+
+```{r}
+# plot it
+classes %>%
+  ggplot(aes(x = proportion, y = class)) +
+  geom_point()
+```
+
+These commands work by defining plot layers. In the chunk above, the first argument to `ggplot()` is the data. Then, `aes()` defines an 'aesthetic mapping' of the columns of the input data frame to graphical elements. This defines a set of axes. Then, a layer of points is added to the plot with `geom_point()` ; no arguments are needed because the geometric object ('geom') inherits attributes (x and y coordinates) from the aesthetic mapping.
+
+Again we might prefer to arrange the classes by descending order in proportion.
+
+```{r}
+fig <- classes %>%
+  ggplot(aes(x = proportion, y = reorder(class, proportion))) +
+  geom_point()
+
+fig
+```
+
+And perhaps fix the plot labels:
+
+```{r}
+# adjust labels
+fig + labs(x = 'proportion of class', y = '')
+```
+
+Notice that ggplot allows for a plot to be stored by name and then further modified with additional layers.
+
+## Checklist
+
+1.  All actions were completed.
+2.  All code chunks were copied into your script.
+3.  Your script is saved in a lab subfolder of your class directory with an associated project.

@@ -1,0 +1,512 @@
+---
+title: "Spatial prediction"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 6
+    fig-height: 4
+    fig-align: 'left'
+    slide-number: true
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---
+
+## Announcements/reminders
+
+-   I am away Thursday; no class meeting due to strike
+
+-   Students in the 4pm section should attend Josh or Erika's section this week
+
+-   Next week (Thanksgiving):
+
+    -   we ***are*** meeting Tuesday
+
+    -   but there are ***no Wednesday section meetings*** on 11/23
+
+-   You should start working on your last group assignment before Thanksgiving
+
+## Final group assignment
+
+-   groups posted \[[here](https://docs.google.com/spreadsheets/d/1AnhWHMwqDo4Z9Myx1BNThc3yhiG7zw9GD_2EzsN-5w4/edit?usp=sharing)\]
+
+-   task: create a *method vignette* on a data science topic or theme
+
+    -   goal: create a reference that you or someone else might use as a starting point next term
+
+    -   deliverable: public repository in the `pstat197` workspace
+
+## Possible vignette topics {.smaller}
+
+-   clustering methods
+
+-   neural net architecture(s) for ... \[images, text, time series, spatial data\]
+
+-   configuring a database and writing queries in R
+
+-   analysis of network data
+
+-   numerical optimization
+
+-   bootstrapping
+
+-   geospatial data structures
+
+-   anomaly detection
+
+-   functional regression
+
+## Outputs
+
+Your repository should contain:
+
+1.  A brief .README summarizing repo content and listing the best references on your topic for a user to consult after reviewing your vignette if they wish to learn more
+2.  A primary vignette document that explains methods and walks through implementation line-by-line (similar to an in-class or lab activity)
+3.  At least one example dataset
+4.  A script containing commented codes appearing in the vignette
+
+## Timeline
+
+-   let me know your topic by end of day Thursday 11/17
+
+-   I will confirm by end of day Friday 11/18
+
+-   make a start before Thanksgiving
+
+-   present a draft in class Thursday 12/1
+
+-   finalize repository by Thursday 12/8
+
+## Expectations {.smaller}
+
+You'll need to yourself learn about the topic and implementation by finding reference materials and code examples.
+
+. . .
+
+It ***is okay*** to borrow closely from other vignettes in creating your own, but you should:
+
+-   cite them
+
+-   use different data
+
+-   do something new
+
+. . .
+
+It ***is not okay*** to make a collage of reference materials by copying verbatim, or simply rewrite an existing vignette.
+
+-   the best safeguard against this is to find your own data so you're forced to translate codes/steps to apply in your particular case
+
+-   we'll do a brief search and skim your references to ensure sufficient originality
+
+# Wrapping up soil temp forecasting
+
+## From last time
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(forecast)
+library(sf)
+library(sp)
+library(gstat)
+library(fda)
+library(ggspatial)
+library(ggmap)
+theme_set(theme(text = element_text(size = 20)))
+setwd("~/pstat197/pstat197a/materials/slides")
+sites <- read_csv(unz("data/soil-temp-data.zip", 
+                      "data/USArray_Sites.csv"))
+
+site_df <- sites %>%
+  dplyr::select(site, longitude, latitude, elevation)
+
+soil <- read_csv('data/soiltemp-200cm.csv') %>%
+  left_join(site_df, by = 'site')
+```
+
+We had fit the *site-specific* model:
+
+$$
+\begin{aligned}
+Y_{i, t} &= f_i (t) + \epsilon_{i, t} \quad\text{(nonlinear regression)} \\
+\epsilon_{i, t} &= \sum_{d = 1}^D \alpha_{i,d}\epsilon_{i, t - d} + \xi_{i, t} \quad\text{(AR(D) errors)}
+\end{aligned}
+$$
+
+. . .
+
+And computed forecasts $\hat{Y}_{i, t+ 1} = \mathbb{E}(Y_{i, t + 1}|Y_{i, t})$
+
+## Fitting and forecasts for one site {.scrollable}
+
+::: panel-tabset
+### Partitions
+
+```{r}
+#| echo: true
+# data partitioning
+site15 <- soil %>% 
+  dplyr::select(-year, -elev) %>%
+  filter(site == soil$site[15]) %>%
+  arrange(date)
+
+train <- site15 %>%
+  filter(date < ymd('2018-06-01'))
+
+test <- site15 %>%
+  filter(date >= ymd('2018-06-01'))
+
+train %>% head()
+```
+
+### Fitting
+
+```{r}
+#| echo: true
+x_train <- pull(train, day) %>% 
+  fourier(nbasis = 4, period = 365)
+y_train <- pull(train, temp)
+
+fit <- Arima(y_train, 
+      order = c(2, 0, 0), 
+      xreg = x_train, 
+      include.mean = F,
+      method = 'ML')
+
+fit
+```
+
+### Forecasting
+
+```{r}
+#| echo: true
+x_test <- pull(test, day) %>% 
+  fourier(nbasis = 4, period = 365)
+
+preds <- forecast(fit, h = nrow(x_test), xreg = x_test)
+
+head(preds$mean)
+```
+
+### Visualization
+
+```{r}
+train %>%
+  bind_cols(fitted = fit$fitted) %>%
+  ggplot(aes(x = date, y = temp)) +
+  geom_path() +
+  geom_path(aes(y = fitted), 
+            color = 'blue',
+            alpha = 0.5) +
+  geom_path(data = test, linetype = 'dotted') +
+  geom_path(data = bind_cols(test, pred = preds$mean),
+            aes(y = pred),
+            color = 'blue',
+            alpha = 0.5)
+```
+:::
+
+## Now for many sites {.scrollable}
+
+Remember the functional programming iteration strategy?
+
+::: panel-tabset
+### Fitting
+
+```{r}
+fit_fn <- function(.x, .y){
+  out <- forecast::Arima(y = .y, 
+               order = c(2, 0, 0), 
+               xreg = .x, 
+               include.mean = F, 
+               method = 'ML')
+  return(out)
+}
+
+pred_fn <- function(.fit, .reg){
+  out <- forecast::forecast(.fit, h = nrow(.reg), xreg = .reg)
+  return(out)
+}
+
+fit_df <- soil %>% 
+  dplyr::select(-year, -elev) %>%
+  filter(!str_starts(site, 'SHA')) %>%
+  arrange(date) %>%
+  nest(data = c(day, date, temp)) %>%
+  mutate(train = map(data, ~filter(.x, date < ymd('2018-05-01'))),
+         test = map(data, ~filter(.x, date >= ymd('2018-05-01'))),
+         x = map(train, ~fourier(.x$day, nbasis = 4, period = 365)),
+         y = map(train, ~pull(.x, temp)),
+         fit = map2(x, y, fit_fn),
+         xtest = map(test, ~fourier(.x$day, nbasis = 4, period = 365)),
+         pred = map2(fit, xtest, pred_fn))
+
+fit_df %>% 
+  dplyr::select(site, train, test, fit, pred)
+```
+
+### Fit
+
+```{r}
+#| fig-width: 12
+#| fig-height: 10
+
+fit_df %>%
+  mutate(fitted = map(fit, ~.x$fitted)) %>%
+  dplyr::select(site, train, fitted) %>%
+  unnest(everything()) %>%
+  ggplot(aes(x = date, y = temp)) +
+  geom_path() +
+  geom_path(aes(y = fitted), color = 'blue', alpha = 0.5) +
+  facet_wrap(~site) +
+  labs(x =  '', y = '') +
+  theme(axis.text.x = element_text(angle = 90))
+
+```
+
+### Predictions
+
+```{r}
+#| fig-width: 12
+#| fig-height: 10
+pred_df <- fit_df %>%
+  mutate(y.pred = map(pred, ~.x$mean)) %>%
+  dplyr::select(site, y.pred, test) %>%
+  unnest(everything()) %>%
+  left_join(site_df, by = 'site')
+
+pred_df %>%
+  ggplot(aes(x = date, y = temp, group = site)) +
+  geom_path() +
+  geom_path(aes(y = y.pred), color = 'blue') +
+  facet_wrap(~site) +
+  labs(x =  '', y = '') +
+  theme(axis.text.x = element_text(angle = 90))
+```
+:::
+
+## Spatial prediction
+
+We could consider our data to be more explicitly spatial:
+
+$$
+Y_{i, t} = Y_t(s_i)
+\qquad\text{where}\qquad
+s_i = \text{location of site }i
+$$
+
+. . .
+
+In other words, our data at a given time are a realization of a spatial process $Y(s)$ observed at locations $s_1, \dots, s_n$.
+
+. . .
+
+Can we predict $Y(s_{n + 1})$ based on $Y(s_1), \dots, Y(s_n)$?
+
+## Intuition
+
+Tobler's first law of geography:
+
+> *"everything is related to everything else, but near things are more related than distant things"*
+
+. . .
+
+So a weighted average of some kind makes sense for spatial prediction
+
+$$
+\hat{Y}(s) = \sum_i w_i Y(s_i)
+$$
+
+where the *weights* $w_i$ are larger for $s_i$ closer to $s$.
+
+## Inverse distance weighting
+
+A simple and fully nonparametric method of spatial prediction is to set $w_i \propto 1/d(s, s_i)$ where $d$ is a distance measure.
+
+. . .
+
+***Inverse distance weighting*** does just that, for *powers* of distance:
+
+$$
+\hat{Y}(s) = \sum_i c \times d(s, s_i)^{-p} \times Y(s_i)
+$$
+
+Where $c$ is the normalizing constant $1/\sum_i d(s, s_i)^{-p}$.
+
+## Power parameter
+
+::: columns
+::: {.column width="35%"}
+The power parameter $p$ controls the rate of weight decay with distance:
+
+$$
+w_i \propto \frac{1}{d(s, s_i)^p}
+$$
+:::
+
+::: {.column width="65%"}
+```{r}
+#| fig-width: 6
+#| fig-height: 5
+#| fig-align: center
+tibble(d = seq(from = 1, to = 10, length = 100)) %>%
+  mutate(`0.1` = 1/d^(0.1), 
+         `0.5` = 1/sqrt(d), 
+         `1` = 1/d, 
+         `2` = 1/d^2) %>%
+  pivot_longer(-d, values_to = 'w', names_to = 'power') %>%
+  ggplot(aes(x = d, y = w, color = power, linetype = power)) +
+  geom_path()
+```
+:::
+:::
+
+## Interpolation
+
+Spatial ***interpolation*** refers to 'filling in' values between observed locations.
+
+1.  Generate a spatial mesh of with centers $g_1, g_2, \dots, g_m$
+2.  Predict $\hat{Y}(g_j)$ for every center $g_j$
+3.  Make a raster plot
+
+. . .
+
+::: callout-tip
+## Mesh
+
+For spatial problems, a ***mesh*** is a mutually exclusive partitioning of an area into subregions. Subregions could be regular (*e.g.*, squares, polygons) or irregular (try googling 'Voronoi tesselation').
+:::
+
+## Map of locations
+
+Earlier, I fit models and generated forecasts for 26 sites chosen largely based on having overlapping observation windows.
+
+```{r}
+#| fig-width: 6
+#| fig-height: 6
+preds_sf <- st_as_sf(pred_df, 
+                       coords = c('longitude', 'latitude'),
+                       crs = st_crs(4326)) 
+
+box <- st_bbox(preds_sf) + 0.5*c(-1, -1, 1, 1)
+names(box) <- c('left', 'bottom', 'right', 'top')
+map <- get_map(location = box, 
+               maptype = 'terrain',
+               source = 'stamen')
+
+fig_sitemap <- ggmap(map) +
+  geom_point(data = pred_df, 
+             aes(x = longitude,
+                 y = latitude),
+             size = 4)
+
+fig_sitemap
+```
+
+## Forecasts
+
+I also truncated the training data to stop on the same date (April 30, 2018). So we can plot point forecasts for May 1.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 6
+ggmap(map) +
+  geom_point(data = filter(pred_df, 
+                           date == ymd('2018-05-01')), 
+             aes(x = longitude,
+                 y = latitude,
+                 color = y.pred),
+             size = 4) +
+  scale_color_distiller(palette = 'RdYlBu') +
+  guides(color = guide_colorbar('forecast')) 
+```
+
+## Interpolations using IDW
+
+So interpolating between forecasts yields spatial forecasts.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 6
+#| results: hide
+preds_1step <- preds_sf %>% 
+  filter(date == ymd('2018-05-01'))
+
+grid_fn <- function(sf, w, h){
+  
+  # determine boundary (convex hull of sampled locations)
+  boundary <- sf %>% 
+    distinct(site, .keep_all = T) %>%
+    st_combine() %>% 
+    st_convex_hull()
+  
+  # partition region within boundary into boxes
+  grid_geo <- boundary %>%
+    st_make_grid(n = c(w, h),
+                 what = 'polygons',
+                 crs = 4326) %>%
+    st_intersection(boundary)
+  
+  # add box id (modelr::map fails otherwise due to length attribute)
+  out <- st_sf(tibble(.id = 1:length(grid_geo)), grid_geo)
+  
+  return(out)
+}
+
+grid <- grid_fn(preds_sf, 25, 25)
+
+spatial_pred_df <- idw(y.pred ~ 1, 
+                       preds_1step, 
+                       grid, idp = 0.8)
+
+fig_sitemap +
+  layer_spatial(spatial_pred_df, 
+                aes(fill = var1.pred),
+                alpha = 0.8) +
+  scale_fill_distiller(palette = 'RdYlBu') +
+  guides(fill = guide_colorbar('forecast'))
+```
+
+## Effect of IDW parameter $p$
+
+The power parameter $p$ controls the rate of decay of interpolation weight $w_i$ with distance.
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| results: hide
+spatial_preds <- lapply(c(0.8, 1, 1.5),
+                        function(pwr){
+                          idw(y.pred ~ 1, preds_1step, grid, idp = pwr) %>%
+                            mutate(idw.power = paste('power ', pwr, sep = ''))
+})
+
+spatial_pred_df_power <- Reduce(bind_rows, spatial_preds)
+
+fig_sitemap + 
+  layer_spatial(spatial_pred_df_power, 
+                aes(fill = var1.pred),
+                alpha = 0.8) +
+  facet_wrap(~idw.power, nrow = 1) +
+  scale_fill_distiller(palette = 'RdYlBu') +
+  guides(fill = guide_colorbar('forecast'))
+```
+
+## Considerations
+
+-   Choosing $p$ can be done based on optimizing predictions or by hand.
+
+-   Uncertainty quantification?
+
+    -   usually, could use variance of weighted average
+
+    -   but also tricky in this case because we are interpolating *forecasts*, which themselves have some associated uncertainty

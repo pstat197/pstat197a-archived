@@ -1,0 +1,47 @@
+variable.name,survey.section,variable.description,variable.type,question.text
+p.time,personal,submission time of response,datetime,Timestamp
+p.user,personal,ucsb username,character,Username
+p.name,personal,first and last name,character,Your name
+p.perm,personal,ucsb perm number,numeric,Please enter your perm number
+p.major1,personal,first major,character,What is your current major?
+p.major2,personal,second major,character,"What is your second major, if any?"
+p.minor,personal,minor,character,"What is your current minor, if any?"
+p.standing,personal,class standing,factor,What is your current class standing?
+p.gender,personal,gender identity,factor,What is your current gender identity?
+p.race,personal,race,factor,Which of the following best describes your race?
+b.prog.prof,background,Self-rated programming proficiency,"ordinal, character","How would you describe your proficiency with programming, relative to a typical undergraduate student?
+
+Consider a 'typical' student to mean a current UCSB undergraduate from any major and any class standing."
+b.prog.comf,background,comfort with programming,"ordinal, numeric","Regardless of your skill level, how would you describe your comfort level with programming?"
+b.math.prof,background,Self-rated mathematical proficiency,"ordinal, character","How would you describe your proficiency with mathematics, relative to a typical undergraduate student?
+
+Consider a 'typical' student to mean a current UCSB undergraduate from any major and any class standing."
+b.math.comf,background,comfort with mathematics,"ordinal, numeric","Regardless of your skill level, how would you describe your comfort with mathematics?"
+b.stat.prof,background,Self-rated statistical proficiency,"ordinal, character","How would you describe your proficiency with statistics and probability, relative to a typical undergraduate student?
+
+Consider a 'typical' student to mean a current UCSB undergraduate from any major and any class standing."
+b.stat.comf,background,comfort with statistics,"ordinal, numeric","Regardless of your skill level, how would you describe your comfort with statistics and probability?"
+b.updv.num,background,approximate number of upper division courses in math/stat/programming,numeric,"All together, about how many upper-division UCSB courses (or transferrable equivalents) have you taken in one of the above areas (statistics and probability, mathematics, and programming)?"
+b.updv.clas,background,"specific courses taken, selected from prespecified list",character,"Which of the following classes have you completed? Please select all that apply.
+
+For series (e.g. PSTAT120A-B), select the option if you have taken any course in the series. 
+
+Please do not include courses in progress."
+b.dom,background,"domain specialization, yes/no",binary,"Do you have any domain specialization (e.g., biology, linguistics, environmental science, physics, etc.)?
+
+Consider specialization to mean upper-division coursework or equivalent experience in any field."
+b.dom.txt,background,comment on domain specialization,long text,"If yes, in what domain?"
+b.dsrsrch,background,"research experience in data science, yes/no",binary,"Not including class projects or personal projects, do you have any experience doing supervised research activity involving data science?"
+b.dsrsrch.txt,background,comment on research experience in data science,long text,"If yes, please elaborate in a few words....22"
+b.othrsrch,background,"other research experience, yes/no",binary,"Not including class projects or personal projects, do you have any experience doing supervised research activity not involving data science?"
+b.othrsrch.txt,background,comment on other research experience,long text,"If yes, please elaborate in a few words....24"
+b.consent,background,consent to share responses on preparation and experience,binary,"Are you okay with your responses in this section being shared, separate from your identity and personal information, to other students enrolled in PSTAT197A?"
+pr.projtype,project interests,preference for industry or lab project,factor,Do you have any preference regarding working on an industry project or lab project?
+pr.lang,project interests,preference for python or r,factor,Would you prefer to work in a specific programming language for the project?
+pr.dom,project interests,preference for application domain,factor,Which of the following domains interest you? Check all that apply.
+pr.area,project interests,areas of interest in data science,factor,Which of the following areas of data science interest you? Check all that apply.
+pr.goals.txt,project interests,goals for the project,long text,What do you most hope to get out of the capstone project?
+pr.comment.txt,project interests,miscellaneous comments,long text,Is there anything else you'd like taken into account in your project team placement?
+pr.consent,project interests,consent to share responses on project preferences,binary,"Are you okay with your responses in this section being shared, separately from your identity and personal information, with other students in PSTAT197A?"
+,,,,
+b.rsrch,background,"prior research experience, yes/no",binary,derived from b.dsrsrch and b.othrsrch

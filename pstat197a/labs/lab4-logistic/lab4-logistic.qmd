@@ -1,0 +1,455 @@
+---
+title: "Measuring classification accuracy"
+editor: visual
+code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
+---
+
+In class you saw how to fit a logistic regression model using `glm()` and some basic classification accuracy measures.
+
+**Objectives**
+
+In this lab you'll carry out a more rigorous quantification of predictive accuracy by data partitioning. You'll learn to use:
+
+-   functions from the `rsample` package to partition data and retrieve partitions
+
+-   functions from the `modelr` package to compute predictions
+
+-   functions from the `yardstick` package for classification metrics
+
+**Prerequisites**
+
+Follow the action item below to get set up for the lab. You may need to install one or more packages if the `library()` calls return an error.
+
+::: callout-important
+## Action
+
+**Setup**
+
+1.  Create a new script for this lab in your labs directory.
+2.  Copy-paste the code chunk below at the top of your script to load required packages and data.
+:::
+
+```{r}
+# load packages
+library(tidyverse)
+library(tidymodels)
+library(modelr)
+library(rsample)
+library(yardstick)
+
+# read data
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab4-logistic/data/biomarker_clean.csv'
+
+s_star <- c("DERM", "RELT", "IgD", "PTN", "FSTL1")
+biomarker <- read_csv(url) %>%
+  # subset to proteins of interest and group
+  select(group, any_of(s_star)) %>%
+  # convert group (chr) to binary (lgl)
+  mutate(class = (group == 'ASD')) %>%
+  select(-group)
+```
+
+## Data partitioning
+
+In class we fit a logistic regression model to the data and evaluated classification accuracy on the very same data.
+
+Because the parameter estimates optimize errors on the data used to fit the model, evaluating accuracy on the same data gives an overly optimistic assessment, because the errors have been made as small as possible.
+
+***Data partitioning*** consists in setting aside a random subset of observations that will be used *only* to assess predictive accuracy and *not* to fit any models. The held out data is treated as a 'test' set of observations to try to predict. This provides a more realistic assessment of predictive accuracy that is closer to what can be expected if genuinely new data is collected.
+
+Partitioning is easy to do using `rsample::initial_split` and specifying the proportion of data that should be retained for model fitting (the 'training' set).
+
+Partitions are computed at random, so for reproducibility it is necessary to set the RNG seed at a fixed value.
+
+::: callout-important
+## Action
+
+**Partition the biomarker data into training and test sets**
+
+Copy-paste the code chunk below into your script and execute once.
+
+*Remarks:*
+
+-   `set.seed()` needs to be executed *together* with the lines that follow to ensure the same result is rendered every time
+
+-   the output simply summarizes the partitions
+
+```{r}
+# for reproducibility
+set.seed(102022)
+
+# partition data
+partitions <- biomarker %>%
+  initial_split(prop = 0.8)
+
+# examine
+partitions
+```
+:::
+
+To retrieve the data partitions, one needs to use the helper functions `training()` and `testing()` :
+
+```{r}
+# training set
+training(partitions) %>% head(4)
+
+# testing set
+testing(partitions) %>% head(4)
+```
+
+## Model fitting
+
+Fitting a logistic regression model is, as you saw in class, a one-line affair:
+
+```{r}
+# fit glm
+fit <- glm(class ~ ., 
+           data = biomarker, 
+           family = binomial(link = "logit"))
+```
+
+The `glm()` function can fit many kinds of *generalized linear models*. Logistic regression is just one of this class of models in which:
+
+-   the response follows a *binomial* distribution (the Bernoulli distribution is the binomial with $n = 1$)
+
+-   the log-odds or *logit* transformation of the event/class probability $p_i$ is linear in the predictors
+
+The parameter estimates reported in tabular form are:
+
+```{r}
+tidy(fit)
+```
+
+::: callout-important
+## Action
+
+**Fit the model and interpret a parameter**
+
+1.  Copy-paste the code above in your script and execute to fit the logistic regression model.
+2.  Confer with your neighbor and interpret one of the parameters of your choosing.
+
+*By interpret, we mean: what is the estimated change in P(ASD) associated with a +1SD change in log protein level?*
+:::
+
+## Predictions
+
+The `modelr` package makes it relatively easy to compute predictions for a wide range of model objects in R. Its pipe-friendly `add_predictions(.df, .mdl, type)` function will add a column of predictions of type `type` using model `.mdl` to data frame `.df` .
+
+```{r}
+# compute predictions on the test set
+testing(partitions) %>%
+  add_predictions(fit)
+```
+
+Inspect the `pred` column. Notice that the predictions are not classes or probabilities. The default type of predictions are log-odds. One could back-transform:
+
+```{r}
+# manually transform to probabilities
+testing(partitions) %>%
+  add_predictions(fit) %>%
+  mutate(probs = 1/(1 + exp(-pred))) %>%
+  select(class, pred, probs) %>%
+  head(5)
+```
+
+Or simply change the `type` of predictions to `response` in order to obtain predicted probabilities:
+
+```{r}
+# predict on scale of response
+testing(partitions) %>%
+  add_predictions(fit, type = 'response') %>%
+  select(class, pred) %>%
+  head(5)
+```
+
+If we want to convert these predicted class probabilities into predicted classes, we can simply define a new variable based on whether the probabilities exceed 0.5 (or any other threshold):
+
+```{r}
+# predict classes
+testing(partitions) %>%
+  add_predictions(fit, type = 'response') %>%
+  mutate(pred.class = (pred > 0.5)) %>%
+  select(class, pred, pred.class) %>%
+  head(5)
+```
+
+## Accuracy measures
+
+The classification accuracy measures we discussed in class are based on tabulating observation counts when grouping by predicted and observed classes.
+
+This tabulation can be done in a base-R way by piping a data frame of the predicted and observed classes into `table()` :
+
+```{r}
+# tabulate
+testing(partitions) %>%
+  add_predictions(fit, type = 'response') %>%
+  mutate(pred.class = (pred > 0.5)) %>%
+  select(class, pred.class) %>%
+  table()
+```
+
+However, the metrics discussed in class are somewhat painful to compute from the output above. Luckily, `yardstick` makes that process easier: the package has specialized functions that compute each metric. One need only:
+
+-   provide the predicted and true labels as factors
+
+-   indicate which factor is the truth and which is the prediction
+
+-   indicate which factor level is considered a 'positive'
+
+```{r}
+# store predictions as factors
+pred_df <- testing(partitions) %>%
+  add_predictions(fit, type = 'response') %>%
+  mutate(pred.class = (pred > 0.5),
+         group = factor(class, labels = c('TD', 'ASD')),
+         pred.group = factor(pred.class, labels = c('TD', 'ASD'))) 
+
+# check order of factor levels
+pred_df %>% pull(group) %>% levels()
+
+# compute specificity
+pred_df %>%
+  specificity(truth = group, 
+              estimate = pred.group,
+              event_level = 'second')
+```
+
+The second level is ASD, which in this context is a positive. We knew since we supplied the labels in defining the factors, and the order of levels will match the order of labels. However, we can also check as above using `levels()` . Hence, `event_level = 'second'` .
+
+Sensitivity, accuracy, and other metrics can be computed similarly:
+
+```{r}
+# sensitivity
+pred_df %>%
+  sensitivity(truth = group,
+              estimate = pred.group,
+              event_level = 'second')
+```
+
+You can [check the package documentation](https://yardstick.tidymodels.org/reference/index.html#classification-metrics) for a complete list of available metrics.
+
+::: callout-important
+## Action
+
+**Compute the accuracy**
+
+Find the appropriate function from the package documentation (link immediately above) and use it to compute the accuracy.
+
+*Remark:* from the table, you know the result should be $\frac{10 + 12}{10 + 12 + 6 + 3} \approx 0.7097$ .
+:::
+
+The package also has a helper function that allows you to define a panel of metrics so that you can compute several simultaneously. If we want a panel of specificity and sensitivity, the following will do the trick:
+
+```{r}
+# define panel (arguments must be yardstick metric function names)
+panel_fn <- metric_set(sensitivity, specificity)
+
+# compute
+pred_df %>%
+  panel_fn(truth = group,
+           estimate = pred.group,
+           event_level = 'second')
+```
+
+::: callout-important
+## Action
+
+**Compute a panel of precision, recall, and F1 score**
+
+1.  Find the appropriate yardstick functions and define a metric panel
+2.  Compute on the test data
+:::
+
+As a final comment, the table of classifications can be obtained in `yardstick` using the `conf_mat()` function. (The cross-classification table of predicted versus actual classes is called a *confusion matrix*.)
+
+```{r}
+pred_df %>% conf_mat(truth = group, estimate = pred.group)
+```
+
+## Checklist
+
+1.  You partitioned the data into training and test sets
+2.  You fit a logistic regression model using the training set
+3.  You evaluated accuracy on the test set
+
+------------------------------------------------------------------------
+
+## Extras
+
+If there is extra time, or you're interested in exploring a bit further on your own, read on.
+
+### ROC curves
+
+The `yardstick` package also supplies functions for computing [class probability metrics](https://yardstick.tidymodels.org/reference/index.html#class-probability-metrics) based on the estimated class probabilities rather than the estimated classes. ROC curves and AUROC are examples.
+
+`roc_curve()` will find all unique probability thresholds and, for each threshold, calculate sensitivity and specificity:
+
+```{r}
+pred_df %>%
+  roc_curve(truth = group, estimate = pred)
+```
+
+This can be used to plot the ROC curve:
+
+```{r}
+pred_df %>%
+  roc_curve(truth = group, 
+            estimate = pred,
+            event_level = 'second') %>%
+  ggplot(aes(y = sensitivity, x = 1 - specificity)) +
+  geom_path() +
+  geom_abline(slope = 1, intercept = 0)
+```
+
+In this case the ROC curve is so choppy because the test set only includes 31 observations. In general, for a collection of $n$ observations there are at most $n + 1$ unique thresholds and usually considerably fewer.
+
+The area under the ROC curve is also easy to compute:
+
+```{r}
+pred_df %>% roc_auc(truth = group, 
+                    estimate = pred,
+                    event_level = 'second')
+```
+
+### Combined metric types
+
+If you wish to compute *both* classification metrics based on a class prediction *and* class probability metrics based on a probability prediction in a metric panel, the classification should be provided as the argument to `estimate = ...` and class probability column can be provided as an unnamed argument following the `estimate` argument.
+
+For example:
+
+```{r}
+panel <- metric_set(roc_auc, accuracy) 
+
+pred_df %>% panel(truth = group,
+                  estimate = pred.group,
+                  pred,
+                  event_level = 'second')
+```
+
+### Exploring partitions
+
+Review this section if you want a deeper understanding of data partitioning.
+
+The rationale for partitioning is that held out data will give a more honest assessment. Conversely, evaluating accuracy on data used to fit a model will provide an overly optimistic assessment.
+
+We can experimentally confirm this intuition by:
+
+-   repeatedly partitioning the data at random
+-   evaluating accuracy on both partitions
+-   averaging across partitions
+
+This procedure will reveal that *on average* the accuracy is better on training data. Don't worry too much about the computations; focus on the output and the concepts.
+
+We'll use the tidyverse iteration strategy from lab 3. First we'll need some helper functions that are basically wrappers around each step we went through in this lab:
+
+-   fitting a model
+-   adding predictions
+-   evaluating metrics
+
+```{r}
+# define some helper functions
+fit_fn <- function(.df){
+  glm(class ~ ., family = 'binomial', data = .df)
+}
+
+pred_fn <- function(.df, .mdl){
+  .df %>% add_predictions(.mdl, type = 'response')
+}
+
+panel <- metric_set(sensitivity, specificity, accuracy, roc_auc)
+
+eval_fn <- function(.df){
+  .df %>%
+    mutate(group = factor(class, labels = c('TD', 'ASD')),
+           pred.group = factor(pred > 0.5, labels = c('TD', 'ASD'))) %>%
+    panel(truth = group,
+          estimate = pred.group,
+          pred,
+          event_level = 'second')
+  
+}
+```
+
+Now let's create 400 random partitions of the data and perform the steps in this lab for every partition. In addition, we'll compute predictions and evaluate accuracy on the training set, which we did not do above and is generally not done.
+
+```{r}
+set.seed(101922)
+n_splits <- 400
+out <- tibble(partition = 1:n_splits,
+       split = map(partition, ~ initial_split(biomarker, prop = 0.8)),
+       train = map(split, training),
+       test = map(split, testing),
+       fit = map(train, fit_fn),
+       pred_test = map2(test, fit, pred_fn),
+       pred_train = map2(train, fit, pred_fn),
+       eval_test = map(pred_test, eval_fn),
+       eval_train = map(pred_train, eval_fn))
+
+out %>% head(4)
+```
+
+We can extract the accuracy of predictions on each of the training and test sets as follows:
+
+```{r}
+test_accuracy <- out %>% 
+  select(partition, contains('eval')) %>%
+  unnest(eval_test) %>%
+  select(partition, .metric, .estimate) %>%
+  pivot_wider(names_from = .metric, values_from = .estimate)
+
+train_accuracy <- out %>% 
+  select(partition, contains('eval')) %>%
+  unnest(eval_train) %>%
+  select(partition, .metric, .estimate) %>%
+  pivot_wider(names_from = .metric, values_from = .estimate)
+
+test_accuracy %>% head(4)
+train_accuracy %>% head(4)
+```
+
+Lastly, we can average the metrics over all partitions and also check the variability across partitions. We'll start with the training set:
+
+```{r}
+train_summaries <- train_accuracy %>%
+  rename(roc.auc = roc_auc) %>%
+  select(-partition) %>%
+  summarize_all(.funs = list(mean = mean, sd = sd)) %>%
+  gather() %>%
+  separate(key, into = c('metric', 'stat'), sep = '_') %>%
+  spread(stat, value)
+```
+
+Now compute the average and variability on the test set:
+
+```{r}
+test_summaries <- test_accuracy %>%
+  rename(roc.auc = roc_auc) %>%
+  select(-partition) %>%
+  summarize_all(.funs = list(mean = mean, sd = sd)) %>%
+  gather() %>%
+  separate(key, into = c('metric', 'stat'), sep = '_') %>%
+  spread(stat, value)
+```
+
+Now let's put them side-by-side:
+
+```{r}
+left_join(train_summaries, 
+          test_summaries,
+          by = 'metric',
+          suffix = c('.train', '.test')) %>%
+  select(metric, contains('mean'), contains('sd')) %>%
+  knitr::kable()
+```
+
+Notice that:
+
+1.  The apparent accuracy according to all metrics is higher on average on the training data across partitionings
+2.  The accuracy metrics on the test data are more variable across partitionings
+
+This behavior is the justification for data partitioning: evaluating predictions on the same data that was used to fit the model *overestimates* the accuracy compared with data that was not used in fitting.

@@ -1,0 +1,559 @@
+---
+title: "Variable selection with the LASSO"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 5
+    fig-height: 4
+    fig-align: 'center'
+    slide-number: true
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---
+
+## Announcements/reminders
+
+-   Office hours follow all class and section meetings in building 434 room 122.
+
+    -   Enter through courtyard, not on Storke side
+
+# Design assessment
+
+## 10 Minute Activity
+
+With your table, share your diagrams.
+
+-   identify common elements/aspects
+
+-   pick one or a blend that you like best and sketch it on the whiteboard
+
+## Design assessment
+
+How would you score the proteomics analysis along the following dimensions?
+
+-   ***reproducibility:*** how easy is it to reproduce the results exactly?
+
+-   ***transparency:*** how widely distributed is potential variability in results across the elements of the data analysis?
+
+-   ***replicability:*** how likely is it that if the study were conducted with new subjects, the same panel would be obtained?
+
+# An alternative analysis
+
+## Two steps
+
+At a very high level, the analysis we've covered is a 'two-step' procedure:
+
+1.  (selection step) select variables
+2.  (estimation step) train a classifier using selected variables
+
+. . .
+
+A likely reason for this approach is that one cannot fit a regression model with 1317 predictors based on only 154 data points ($p > n$).
+
+## A schematic
+
+Here's a representation of the design of the analysis procedure.
+
+```{dot}
+digraph G {
+    layout = dot
+    rankdir = LR
+    fontname = "sans-serif"
+    fontsize = "20pt"
+    
+    node [style = filled, 
+            fillcolor = lightgrey, 
+            shape = rect, 
+            fontname = "sans-serif"]
+    
+    data
+
+    subgraph cluster1{
+        node [shape = "ellipse"]
+    selec [label = "ensemble \n selection"]
+    fit [label = "logistic \n regression"]
+    s1 [label = "multiple \n testing"]
+    s2 [label = "correlation \n analysis"]
+    s3 [label = "random \n forest"]
+    
+    {s1 s2 s3} -> selec
+    color = "white"
+    label = "statistical modeling"
+    }
+    
+    subgraph cluster2{
+    sel [label = "selected \n variables"]
+    pred [label = "accuracy \n quantification"]
+    label = "outputs"
+    color = "white"
+    }
+    
+    join [shape=point,width=0.01,height=0.01]
+    
+    data -> {s1 s2 s3}
+    {data selec} -> fit
+    fit -> sel
+    fit -> join [dir = "none"]
+    data -> join [dir = "none" label = "multiple partitioning"]
+    join -> pred
+
+}
+```
+
+-   lots of failure modes
+
+-   repeated use of the same data for different sub-analyses
+
+## What about one step?
+
+If we did *simultaneous* selection and estimation, our schematic might look like this:
+
+```{dot}
+digraph G {
+    layout = dot
+    rankdir = LR
+    fontname = "sans-serif"
+    fontsize = "20pt"
+    
+    node [style = filled, 
+            fillcolor = lightgrey, 
+            shape = rect, 
+            fontname = "sans-serif"]
+    
+    data
+    subgraph cluster1 {
+    train [label = "training \n set"]
+    test [label = "test \n set"]
+    label = "data partitioning"
+    color = "white"
+    }
+    
+    subgraph cluster2{
+    fit [label = "selection and \n estimation", shape = "ellipse"]
+    color = "white"
+    label = "statistical modeling"
+    }
+    
+    subgraph cluster3{
+    sel [label = "selected \n variables"]
+    pred [label = "accuracy \n quantification"]
+    label = "outputs"
+    color = "white"
+    }
+    
+    join [shape=point,width=0.01,height=0.01]
+    
+    data -> {train test}
+    train -> fit -> sel
+    fit -> join [dir = "none"]
+    test -> join [dir = "none"]
+    join -> pred
+    
+
+}
+```
+
+## Sparse estimation
+
+Imagine a logistic regression model with all 1317 predictors:
+
+$$
+\log\left(\frac{p_i}{1 - p_i}\right) = \beta_0 + \sum_{j = 1}^{1317} \beta_j x_{ij}
+$$
+
+. . .
+
+Suppose we also assume ***sparsity constraint***: a condition that most of them must be zero.
+
+. . .
+
+As long as the constraint is strong enough so that the number of nonzero coefficients is $n$ or fewer (*i.e.*, $\|\beta\|_0 < n$), one can compute estimates.
+
+## The LASSO
+
+The **L**east **A**bsolute **S**hrinkage and **S**election **O**perator (LASSO) (@tibshirani1996regression ) is the most widely-used sparse regression estimator.
+
+. . .
+
+Mathematically, the LASSO is the $L_1$-constrained MLE, *i.e.,* the solution to the optimization problem:
+
+$$
+\begin{aligned}
+\text{maximize}\quad &\mathcal{L}(\beta; x, y) \\
+\text{subject to}\quad &\|\beta\|_1 < t
+\end{aligned}
+$$
+
+## Lagrangian form
+
+The solution to the constrained problem
+
+$$
+\begin{aligned}
+\text{maximize}\quad &\mathcal{L}(\beta; x, y) \\
+\text{subject to}\quad &\|\beta\|_1 < t
+\end{aligned}
+$$
+
+can be expressed as the unconstrained optimization
+
+$$
+\hat{\beta} = \arg\min_\beta \left\{-\mathcal{L}(\beta; x, y) + \lambda\|\beta\|_1\right\}
+$$
+
+where $\lambda$ is a *Lagrange multiplier.*
+
+## Toy example {.scrollable}
+
+::: columns
+::: {.column width="55%"}
+I simulated 250 observations according to a logistic regression model with 13 predictors, all but 3 of which had zero coefficients:
+
+$$
+\beta = \left[ 0\; 3\; 0\; 0\; 0\; 0\; 0\; 0\; 0\; 0\; 0\; 2\; 2\right]^T
+$$
+
+And computed LASSO estimates for a few values of $\lambda$.
+:::
+
+::: {.column width="45%"}
+```{r}
+library(tidyverse)
+library(glmnet)
+
+set.seed(102022)
+beta_true <- c(2, 3, 2, rep(0, 10)) %>% sample()
+n <- 250
+x <- mvtnorm::rmvnorm(n = 300, mean = rep(0, 13)) 
+p <- 1/(1 + exp(-x %*% beta_true + 0.5))
+y <- rbinom(n = length(p), size = 1, prob = p) 
+
+fit <- glmnet(x, y, family = 'binomial')
+cvout <- cv.glmnet(x, y, family = 'binomial', 
+                   type.measure = 'deviance')
+
+estimates <- coef(fit, s = c(cvout$lambda.1se, 
+                cvout$lambda.min)) %>%
+  cbind(truth = c(-0.5, beta_true))
+
+colnames(estimates) <- c('lambda1', 'lambda2', 'truth')
+term_labels <- c('Int', paste('V', 1:13, sep = ''))
+
+estimates %>%
+  as.matrix() %>%
+  round(3) %>%
+  as_tibble() %>%
+  bind_cols(term = term_labels) %>%
+  select(term, truth, lambda1, lambda2) 
+```
+:::
+:::
+
+## Constraint strength
+
+In practice, $\lambda$ controls the strength of the constraint and thus the sparsity:
+
+-   Larger $\lambda$ ➜ stronger constraint ➜ more sparse
+
+-   Smaller $\lambda$ ➜ weaker constraint ➜ less sparse
+
+## Selecting $\lambda$
+
+How to choose the strength of constraint?
+
+1.  Compute estimates for a "path" $\lambda_1 > \lambda_2 > \cdots > \lambda_K$
+2.  Choose $\lambda^*$ that minimizes an error metric.
+
+. . .
+
+Typically prediction error is used as the metric, and estimated by:
+
+-   partitioning the data many times
+
+-   averaging test set predictive accuracy across partitions
+
+## Regularization profile: estimates
+
+```{r}
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: Value of coefficient estimates as a function of regularization strength for the toy example. Each path corresponds to one model coefficient. Vertical line indicates optimal strength.
+library(ggrepel)
+library(broom)
+
+fit_df <- tidy(fit) %>%
+  filter(term != '(Intercept)')
+
+label_df <- fit_df %>% group_by(term) %>%
+  summarize(appears = min(step),
+            estimate = median(estimate),
+            lambda = median(lambda)) %>%
+  arrange(appears) %>%
+  mutate(order = row_number())
+
+intercept <- tidy(fit) %>%
+    filter(term == '(Intercept)')
+
+p <- fit_df %>%
+  ggplot(aes(x = -log(lambda), y = estimate)) +
+  geom_path(aes(group = term)) +
+  geom_hline(yintercept = 0, linetype = 'dotdash') +
+  geom_text_repel(data = filter(label_df, order < 4),
+            aes(label = term),
+            seed = 102022) +
+  geom_path(data = intercept, 
+            color = 'red', 
+            linetype = 'dashed') +
+  geom_text_repel(data = slice_min(intercept, step),
+                  aes(label = term), color = 'red') 
+
+p
+```
+
+## Regularization profile: error
+
+```{r}
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: Prediction error metric ('deviance', similar to RMSE) as a function of regularization strength. Two plausible choices shown -- one more conservative, one less conservative.
+
+cvout_df <- tidy(cvout) 
+opt_lam <- cvout_df %>%
+  filter(lambda == cvout$lambda.1se | 
+           lambda == cvout$lambda.min) %>%
+  mutate(label = c('sparser', 'denser'))
+
+cvout_df %>%
+  ggplot(aes(x = -log(lambda), y = estimate)) +
+  geom_path() +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high),
+              alpha = 0.2) +
+  geom_point(data = opt_lam) +
+  geom_text_repel(data = opt_lam,
+                  aes(label = label)) +
+  labs(y = 'error metric')
+```
+
+## $\lambda$ selection
+
+```{r}
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: Estimate profile with optimal choice indicated by vertical line.
+p + geom_vline(xintercept = -log(cvout$lambda.1se),
+             alpha = 0.4)
+```
+
+## Coefficient estimates
+
+```{r}
+final_estimates <- tidy(fit) %>%
+  filter(lambda == cvout$lambda.1se) %>%
+  select(term, estimate) %>%
+  bind_cols(truth = c(-0.5, beta_true[beta_true != 0]))
+
+final_estimates %>% knitr::kable()
+```
+
+## Recomputing estimates
+
+Notice that the estimate magnitudes are off by a considerable amount. If we recompute estimates without the constraint:
+
+```{r}
+terms <- final_estimates %>% slice(-1) %>% pull(term)
+
+data_sub <- as_tibble(x) %>%
+  mutate(y = y) %>%
+  select(any_of(terms), y)
+
+fit_final <- glm(y ~ ., data = data_sub, family = 'binomial')
+
+tidy(fit_final) %>% knitr::kable()
+```
+
+## Errors
+
+Now if I simulate some new observations:
+
+```{r}
+library(modelr)
+library(yardstick)
+panel <- metric_set(sensitivity, specificity, roc_auc)
+
+set.seed(102022)
+x_new <- mvtnorm::rmvnorm(n = 100, mean = rep(0, 13)) 
+p_new <- 1/(1 + exp(-x_new %*% beta_true + 0.5))
+y_new <- rbinom(n = length(p_new), size = 1, prob = p_new)
+
+as_tibble(x_new) %>%
+  bind_cols(y = y_new) %>%
+  add_predictions(fit_final, type = 'response') %>%
+  mutate(pred.y = as.numeric(pred > 0.5),
+         class = factor(y),
+         pred.class = factor(pred.y)) %>%
+  panel(truth = 'class',
+        estimate = 'pred.class',
+        pred,
+        event_level = 'second') %>%
+  knitr::kable()
+```
+
+## Alternative analysis {.scrollable}
+
+::: panel-tabset
+### Preprocessing
+
+Log-transform, center and scale, but don't trim outliers.
+
+```{r}
+#| echo: true
+library(tidymodels)
+
+# read in data
+biomarker <- read_csv('data/biomarker-clean.csv') %>%
+  select(-ados) %>%
+  mutate(across(-group, ~scale(log(.x))[,1]),
+         class = as.numeric(group == 'ASD'))
+
+# partition
+set.seed(101622)
+partitions <- biomarker %>%
+  initial_split(prop = 0.8)
+
+x_train <- training(partitions) %>%
+  select(-group, -class) %>%
+  as.matrix()
+y_train <- training(partitions) %>%
+  pull(class)
+```
+
+### $\lambda$ selection
+
+#### Estimated error
+
+```{r}
+#| echo: true
+# reproducibility
+set.seed(102022)
+
+# multiple partitioning for lambda selection
+cv_out <- cv.glmnet(x_train, 
+                    y_train, 
+                    family = 'binomial', 
+                    nfolds = 5, 
+                    type.measure = 'deviance')
+
+cvout_df <- tidy(cv_out) 
+```
+
+```{r}
+#| fig-align: center
+#| fig-width: 6
+cvout_df %>%
+  ggplot(aes(x = -log(lambda), y = estimate)) +
+  geom_path() +
+  geom_ribbon(aes(ymin = conf.low, 
+                  ymax = conf.high),
+              alpha = 0.2) +
+  geom_point(data = filter(cvout_df, 
+                           lambda == cv_out$lambda.1se)) +
+  labs(y = 'estimated error')
+```
+
+#### Coefficient paths
+
+```{r}
+#| echo: true
+# LASSO estimates
+fit <- glmnet(x_train, y_train, family = 'binomial')
+fit_df <- tidy(fit)
+```
+
+```{r}
+#| fig-align: center
+#| fig-width: 6
+fit_df <- tidy(fit) %>%
+  filter(term != '(Intercept)', step < 30) 
+
+intercept <- tidy(fit) %>%
+  filter(term == '(Intercept)', step < 30)
+
+labels <- fit_df %>%
+  filter(lambda == cv_out$lambda.1se)
+
+fit_df %>%
+  ggplot(aes(x = -log(lambda), y = estimate)) +
+  geom_path(aes(group = term)) +
+  geom_path(data = intercept, color = 'red', linetype = 'dashed') +
+  geom_hline(yintercept = 0, linetype = 'dotdash') +
+  geom_vline(xintercept = -log(cv_out$lambda.1se)) +
+  geom_text_repel(data = labels, aes(label = term))
+```
+
+### Refitting
+
+After dropping the penalty and recomputing estimates, the final model is:
+
+```{r}
+# retrieve columns
+terms <- fit_df %>% filter(lambda == cv_out$lambda.1se) %>% pull(term)
+train_final <- training(partitions) %>% select(class, any_of(terms))
+
+# refit without penalty
+fit_final <- glm(class ~ ., data = train_final, family = 'binomial')
+
+tidy(fit_final) %>% knitr::kable()
+```
+
+### Accuracy
+
+```{r}
+panel <- metric_set(sensitivity, specificity, roc_auc)
+
+testing(partitions) %>%
+  select(class, any_of(terms)) %>%
+  add_predictions(fit_final, type = 'response') %>%
+  mutate(pred.class = as.numeric(pred > 0.5),
+         group = factor(class, labels = c('TD', 'ASD')),
+         pred.group = factor(pred.class, labels = c('TD', 'ASD'))) %>%
+  panel(truth = 'group',
+        estimate = 'pred.group',
+        pred,
+        event_level = 'second') %>%
+  knitr::kable()
+```
+:::
+
+## Some final thoughts
+
+1.  Regardless of method, classification based on serum levels seems to achieve 70-80% accuracy out of sample.
+2.  Not specific enough to be used as a diagnostic tool, but may be helpful in early detection.
+3.  Published analysis seems a little over-complicated; computationally intensive methods are less transparent and more difficult to reproduce.
+
+## Concepts discussed
+
+-   multiple hypothesis testing, FWER and FDR control
+
+-   classification using logistic regression, random forests
+
+-   variable selection using LASSO regularization
+
+-   data partitioning and accuracy quantification
+
+## Transferrable skills
+
+-   iterative computations in R, three ways
+
+-   fitting a logistic regression model with `glm()`
+
+-   use of `yardstick` and `rsample` for quantifying classification accuracy

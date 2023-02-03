@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Activity: multinomial logistic regression</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Activity: multinomial logistic regression</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../" class="sidebar-logo-link">
+      <img src="../../img/ucsbds_hex.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Data Science Capstone</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/pstat197" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://ucsbdscapstone.slack.com" title="" class="sidebar-tool px-1"><i class="bi bi-slack"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">About</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Projects</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">PSTAT197A</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pstat197a/about-syllabus.html" class="sidebar-item-text sidebar-link">Course syllabus</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pstat197a/about-outcomes.html" class="sidebar-item-text sidebar-link">Learning outcomes</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pstat197a/about-schedule.html" class="sidebar-item-text sidebar-link">Course schedule</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pstat197a/about-technology.html" class="sidebar-item-text sidebar-link">Technology</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pstat197a/about-links.html" class="sidebar-item-text sidebar-link">Links</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pstat197a/index-course-materials.html" class="sidebar-item-text sidebar-link">Course materials</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">PSTAT197B-C</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pstat197bc/about-syllabus.html" class="sidebar-item-text sidebar-link">Course syllabus</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pstat197bc/about-schedule.html" class="sidebar-item-text sidebar-link">Schedule</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../pstat197bc/index-class-meetings.html" class="sidebar-item-text sidebar-link">Class meetings</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#activity-1-10-min" id="toc-activity-1-10-min" class="nav-link" data-scroll-target="#activity-1-10-min">Activity 1 (10 min)</a>
+  <ul class="collapse">
+  <li><a href="#step-1-partitioning" id="toc-step-1-partitioning" class="nav-link" data-scroll-target="#step-1-partitioning">Step 1: partitioning</a></li>
+  <li><a href="#step-2-projection" id="toc-step-2-projection" class="nav-link" data-scroll-target="#step-2-projection">Step 2: projection</a></li>
+  <li><a href="#step-3-regression" id="toc-step-3-regression" class="nav-link" data-scroll-target="#step-3-regression">Step 3: regression</a></li>
+  </ul></li>
+  <li><a href="#activity-2-10-min" id="toc-activity-2-10-min" class="nav-link" data-scroll-target="#activity-2-10-min">Activity 2 (10 min)</a>
+  <ul class="collapse">
+  <li><a href="#step-1-fit-a-regularized-logistic-regression" id="toc-step-1-fit-a-regularized-logistic-regression" class="nav-link" data-scroll-target="#step-1-fit-a-regularized-logistic-regression">Step 1: fit a regularized logistic regression</a></li>
+  <li><a href="#step-2-prediction" id="toc-step-2-prediction" class="nav-link" data-scroll-target="#step-2-prediction">Step 2: prediction</a></li>
+  </ul></li>
+  <li><a href="#activity-3-10-min" id="toc-activity-3-10-min" class="nav-link" data-scroll-target="#activity-3-10-min">Activity 3 (10 min)</a>
+  <ul class="collapse">
+  <li><a href="#step-1-multinomial-regression" id="toc-step-1-multinomial-regression" class="nav-link" data-scroll-target="#step-1-multinomial-regression">Step 1: multinomial regression</a></li>
+  <li><a href="#step-2-predictions" id="toc-step-2-predictions" class="nav-link" data-scroll-target="#step-2-predictions">Step 2: predictions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Activity: multinomial logistic regression</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>While we are getting started, on your table’s workstation open RStudio and execute the following command:</p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-1_7eb5e6e93d0c69ae9b2342b8f066cd4b">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/scripts/package-installs.R'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then open a new script, copy-paste the code chunk below, and execute once.</p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-2_578d5dad94c3f49f7bba31bff2100c7e">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Matrix)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sparsesvd)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># path to activity files on repo</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/activities/data/'</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># load a few functions for the activity</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">paste</span>(url, <span class="st">'projection-functions.R'</span>, <span class="at">sep =</span> <span class="st">''</span>))</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># read in data</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>claims <span class="ot">&lt;-</span> <span class="fu">paste</span>(url, <span class="st">'claims-multi-tfidf.csv'</span>, <span class="at">sep =</span> <span class="st">''</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>()</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># preview</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>claims</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 552 × 15,871
+   mclass    .id   bclass  adams afternoon  agent android    app arkansas arrest
+   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+ 1 unlawful  url1  relev… 0.0692    0.0300 0.0365  0.0450 0.0330   0.0390 0.0140
+ 2 irreleva… url3  irrel… 0         0      0       0      0        0      0     
+ 3 other     url4  relev… 0         0      0       0      0        0      0     
+ 4 fatality  url5  relev… 0         0      0       0      0        0      0     
+ 5 irreleva… url7  irrel… 0         0      0       0      0        0      0.0107
+ 6 fatality  url8  relev… 0         0      0       0      0        0      0     
+ 7 irreleva… url9  irrel… 0         0      0       0      0        0      0     
+ 8 irreleva… url10 irrel… 0         0      0       0      0        0      0     
+ 9 unlawful  url11 relev… 0         0      0       0      0        0      0.0716
+10 unlawful  url12 relev… 0         0      0       0      0        0      0.0161
+# … with 542 more rows, and 15,861 more variables: arrive &lt;dbl&gt;, assist &lt;dbl&gt;,
+#   attic &lt;dbl&gt;, barricade &lt;dbl&gt;, block &lt;dbl&gt;, blytheville &lt;dbl&gt;, burn &lt;dbl&gt;,
+#   captain &lt;dbl&gt;, catch &lt;dbl&gt;, check &lt;dbl&gt;, chemical &lt;dbl&gt;, copyright &lt;dbl&gt;,
+#   county &lt;dbl&gt;, custody &lt;dbl&gt;, dehydration &lt;dbl&gt;, demand &lt;dbl&gt;,
+#   department &lt;dbl&gt;, desktop &lt;dbl&gt;, device &lt;dbl&gt;, dispute &lt;dbl&gt;,
+#   division &lt;dbl&gt;, drug &lt;dbl&gt;, enter &lt;dbl&gt;, exit &lt;dbl&gt;, family &lt;dbl&gt;,
+#   federal &lt;dbl&gt;, fire &lt;dbl&gt;, force &lt;dbl&gt;, gas &lt;dbl&gt;, gray &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</section>
+<section id="activity-1-10-min" class="level2">
+<h2 class="anchored" data-anchor-id="activity-1-10-min">Activity 1 (10 min)</h2>
+<p>You’ll be given about ten minutes to do the following on your group’s workstation.</p>
+<ol type="1">
+<li>Partition the data into training and test sets.</li>
+<li><em>Using the training data,</em> find principal components that preserve at least 80% of the total variance and project the data onto those PCs.</li>
+<li>Fit a logistic regression model to the training data.</li>
+</ol>
+<section id="step-1-partitioning" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-partitioning">Step 1: partitioning</h3>
+<p>This should be familiar from last week’s lab. Use the code chunk below to partition the data. <em>Do not change the RNG seed or split proportion!</em></p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-3_7940540960d62c4b27566f0260fa4400">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># partition data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">102722</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>partitions <span class="ot">&lt;-</span> claims <span class="sc">%&gt;%</span> <span class="fu">initial_split</span>(<span class="at">prop =</span> <span class="fl">0.8</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># separate DTM from labels</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>test_dtm <span class="ot">&lt;-</span> <span class="fu">testing</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.id, <span class="sc">-</span>bclass, <span class="sc">-</span>mclass)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>test_labels <span class="ot">&lt;-</span> <span class="fu">testing</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.id, bclass, mclass)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># same, training set</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>train_dtm <span class="ot">&lt;-</span> <span class="fu">training</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.id, <span class="sc">-</span>bclass, <span class="sc">-</span>mclass)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>train_labels <span class="ot">&lt;-</span> <span class="fu">training</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.id, bclass, mclass)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that we have separated the document term matrix (DTM) from the labels for both partitions. When we project the data onto a subspace, we <em>only</em> want to project the DTM and not the labels.</p>
+</section>
+<section id="step-2-projection" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-projection">Step 2: projection</h3>
+<p>Now find the number of principal components that capture at least 70% of variation and project the document term matrix (DTM) onto those components. Use the custom function <code>projection_fn(.dtm, .prop)</code> .</p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-4_f9a497a080d5eaf212a35c5e3b6038a3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find projections based on training data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>proj_out <span class="ot">&lt;-</span> <span class="fu">projection_fn</span>(<span class="at">.dtm =</span> train_dtm, <span class="at">.prop =</span> <span class="fl">0.7</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>train_dtm_projected <span class="ot">&lt;-</span> proj_out<span class="sc">$</span>data</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># how many components were used?</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>proj_out<span class="sc">$</span>n_pc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong><em>Note:</em></strong> projections were found using the <strong><em>training data only</em></strong>. The test data will ultimately be projected onto the same components, as if it were new information we were feeding into a predictive model developed entirely using the training data.</p>
+</section>
+<section id="step-3-regression" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-regression">Step 3: regression</h3>
+<p>Bind the binary labels to the projected document term matrix and fit a logistic regression model.</p>
+<p>The code chunk below gives you the input data frame you need to use <code>glm()</code>. It’s up to you to specify the other arguments needed to fit the model.</p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-5_de50516c48583d89dedfef19df3e78a7">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> train_labels <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">bclass =</span> <span class="fu">factor</span>(bclass)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(train_dtm_projected)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(..., <span class="at">data =</span> train, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You will most likely get a warning of some kind – that’s expected. Take note of what the warning says and stop here.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Briefly discuss with your table: what do you think the warning means?</p>
+</div>
+</div>
+</section>
+</section>
+<section id="activity-2-10-min" class="level2">
+<h2 class="anchored" data-anchor-id="activity-2-10-min">Activity 2 (10 min)</h2>
+<p>This part will guide you through the following steps.</p>
+<ol type="1">
+<li>Fit a logistic regression model with an elastic net penalty to the training data.</li>
+<li>Quantify classification accuracy on the test data using sensitivity, specificity, and AUROC.</li>
+</ol>
+<section id="step-1-fit-a-regularized-logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-fit-a-regularized-logistic-regression">Step 1: fit a regularized logistic regression</h3>
+<p><code>glmnet</code> implements the elastic net penalty when a parameter <code>alpha</code> is provided. In the function call, a predictor matrix and response vector are used to specify the model instead of a formula.</p>
+<p>Use the code chunk below to fit the model for a path of regularization strengths, select a strength, and extract the fitted model corresponding to that strength. <em>Do not adjust the RNG seed.</em></p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-6_2de5fb87238c3bf26a00edad90d53a59">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store predictors and response as matrix and vector</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x_train <span class="ot">&lt;-</span> train <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>bclass) <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>y_train <span class="ot">&lt;-</span> train_labels <span class="sc">%&gt;%</span> <span class="fu">pull</span>(bclass)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit enet model</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>alpha_enet <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>fit_reg <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(<span class="at">x =</span> x_train, </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> y_train, </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">'binomial'</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">alpha =</span> alpha_enet)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># choose a strength by cross-validation</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">102722</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>cvout <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(<span class="at">x =</span> x_train, </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y_train, </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">family =</span> <span class="st">'binomial'</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">alpha =</span> alpha_enet)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># store optimal strength</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>lambda_opt <span class="ot">&lt;-</span> cvout<span class="sc">$</span>lambda.min</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># view results</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>cvout</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>Comment.</em> The elastic net parameter <code>alpha</code> controls the balance between ridge and LASSO penalties: <code>alpha = 0</code> corresponds to ridge regression, <code>alpha = 1</code> corresponds to LASSO, and all other values specify a mixture. When the parameter is closer to 1, the LASSO penalty is stronger relative to ridge; and vice-versa when it’s closer to 0.</p>
+</div>
+</div>
+</section>
+<section id="step-2-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-prediction">Step 2: prediction</h3>
+<p>To compute predictions, we’ll need to project the test data onto the same directions used to transform the training data.</p>
+<p>Once that’s done, we can simply feed the projected test data, the fitted model <code>fit_reg</code>, and the optimal strength <code>lambda_opt</code> to a <code>predict()</code> call.</p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-7_1c179317b5ca19efef648a5f2a6f1e03">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># project test data onto PCs</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>test_dtm_projected <span class="ot">&lt;-</span> <span class="fu">reproject_fn</span>(<span class="at">.dtm =</span> test_dtm, proj_out)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># coerce to matrix</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>x_test <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(test_dtm_projected)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compute predicted probabilities</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_reg, </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">s =</span> lambda_opt, </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">newx =</span> x_test,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">type =</span> <span class="st">'response'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next bind the test labels to the predictions:</p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-8_722cc8284d6b432ee617079344ff89af">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store predictions in a data frame with true labels</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pred_df <span class="ot">&lt;-</span> test_labels <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">bclass =</span> <span class="fu">factor</span>(bclass)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="at">pred =</span> <span class="fu">as.numeric</span>(preds)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bclass.pred =</span> <span class="fu">factor</span>(pred <span class="sc">&gt;</span> <span class="fl">0.5</span>, </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">levels</span>(bclass)))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># define classification metric panel </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>panel <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(sensitivity, </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                    specificity, </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                    accuracy, </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                    roc_auc)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># compute test set accuracy</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>pred_df <span class="sc">%&gt;%</span> <span class="fu">panel</span>(<span class="at">truth =</span> bclass, </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">estimate =</span> bclass.pred, </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                  pred, </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">event_level =</span> <span class="st">'second'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Briefly discuss with your table:</p>
+<ol type="1">
+<li>How satisfied are you with the predictive performance?</li>
+<li>Does the classifier do a better job picking out relevant pages or irrelevant pages?</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="activity-3-10-min" class="level2">
+<h2 class="anchored" data-anchor-id="activity-3-10-min">Activity 3 (10 min)</h2>
+<p>Now we’ll fit a multinomial logistic regression model using the <em>multiclass</em> labels rather than the binary ones, still using regularization to prevent overfitting.</p>
+<section id="step-1-multinomial-regression" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-multinomial-regression">Step 1: multinomial regression</h3>
+<p>Use the code chunk below to do the fitting. Notice that it’s as simple as supplying the multiclass labels and changing the <code>family = 'binomial'</code> to <code>family = 'multinomial'</code> , but the number of non-intercept parameters is now</p>
+<p><span class="math display">\[
+\text{number of predictors} \times (\text{number of classes} - 1)
+\]</span></p>
+<p>So in our case, the logistic regression model had <span class="math inline">\(p = 55\)</span> , but when we fit a multinomial model to the data using labels with <span class="math inline">\(k = 5\)</span> classes, we have <span class="math inline">\(p(k - 1) = 220\)</span> parameters!</p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-9_4e644467c1b72bc414a1c22fe8bce77c">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get multiclass labels</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>y_train_multi <span class="ot">&lt;-</span> train_labels <span class="sc">%&gt;%</span> <span class="fu">pull</span>(mclass)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># fit enet model</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>alpha_enet <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>fit_reg_multi <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(<span class="at">x =</span> x_train, </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> y_train_multi, </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">'multinomial'</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">alpha =</span> alpha_enet)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># choose a strength by cross-validation</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">102722</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>cvout_multi <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(<span class="at">x =</span> x_train, </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> y_train_multi, </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                   <span class="at">family =</span> <span class="st">'multinomial'</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">alpha =</span> alpha_enet)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># view results</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>cvout</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-2-predictions" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-predictions">Step 2: predictions</h3>
+<p>The predictions from this model are a set of proabilities, one per class:</p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-10_86ccee3dc939120428479316add9a574">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>preds_multi <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_reg_multi, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">s =</span> cvout_multi<span class="sc">$</span>lambda.min, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">newx =</span> x_test,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">'response'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(preds_multi[, , <span class="dv">1</span>]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If we choose the most probable class as the prediction and cross-tabulate with the actual label, we end up with the following table:</p>
+<div class="cell" data-hash="multinomial-logit_cache/html/unnamed-chunk-11_ebae199b9855841b4965349b49e5338c">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pred_class <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(preds_multi[, , <span class="dv">1</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">row =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>row, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">'label'</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">'probability'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(row) <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(probability, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(label)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>pred_tbl <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">pull</span>(test_labels, mclass), pred_class)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>pred_tbl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If time, take a moment to discuss:</p>
+<ol type="1">
+<li>What do you think of the overall accuracy?</li>
+<li>Which classes are well-predicted and which are not?</li>
+<li>Do you prefer the logistic or multinomial regression and why?</li>
+</ol>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Site content created by Trevor Ruiz using Quarto; hex logo by Priscilla Siow.</div>
+  </div>
+</footer>
+
+
+
+</body></html>

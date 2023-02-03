@@ -1,0 +1,121 @@
+---
+title: 'Vignette Guidelines'
+editor: visual
+---
+
+A vignette is a simple example intended to help learn a method or tool.
+
+The overarching goal of creating vignettes is to provide starting points for learning about specialized topics in data science that students in the class can later consult to familiarize themselves with an unfamiliar topic during their project work.
+
+This document sets expectations for the organization and content of vignette repositories.
+
+## Configuring your repository
+
+Create a public repository in the PSTAT197 workspace and add your teammates as collaborators.
+
+Select options at the creation step to initialize the repository with:
+
+-   a .README file
+
+-   a .gitignore file
+
+-   a license
+
+Give the repository a descriptive name. Use the naming convention
+
+> *vignette-\[keyword\]*
+
+for example, "vignette-lstm", "vignette-kriging", "vignette-cnn", and the like. A single keyword is best if possible, but consider using two or three if needed to make your repo name sufficiently specific, *e.g.*, "vignette-database-configuration" or "vignette-distribution-based-clustering". ***Do not use more than three keywords in your repository name.***
+
+Supply an optional description that contains a long title for your vignette topic, for instance:
+
+> Distribution-based clustering in R and application to unsupervised cell type classification
+
+Lastly, once the repository is created, add a few topics to the "About" section on the far right of your repository homepage.
+
+## Directory organization
+
+As a general guideline, all files except the README should be placed in appropriately-named subdirectories so that your repository homepage is free from file clutter.
+
+If your project has a single main file -- in this case the vignette document -- it is reasonable to place that in the root directory with the README. Everything else should go in a subfolder.
+
+The high-level directories should clearly differentiate the main project contents, and overall there should not be too many levels of subdirectory, especially for a simple project like a code vignette. Your directory structure might look something like this in the end:
+
+    root directory
+    |-- data
+        |-- raw
+        |-- processed
+    |-- scripts
+        |-- drafts
+        |-- vignette-script.R
+    |-- img
+        |-- fig1.png
+        |-- fig2.png
+    |-- vignette.qmd
+    |-- vignette.html
+    |-- README.md
+
+As a guiding principle, each subdirectory should contain *either*
+
+-   (a)a few primary files and one or more subdirectories
+
+        scripts
+        |-- functions
+        |-- drafts
+        |-- exploratory-analysis.R
+        |-- model-fitting.R
+        |-- visualizations.R
+
+-   \(b\) a single file type with an obvious naming convention
+
+        img
+        |-- fig-autocorrelation.png
+        |-- fig-forecasts.png
+        |-- fig-rawseries.png
+        |-- logo-ucsb.png
+
+Try to organize your repository so that it is easy to navigate for the general coding public (and for your future self).
+
+## README contents
+
+Your README file should contain five main pieces of information in the following order:
+
+1.  A one-sentence description at the very top before any (sub)headers:
+
+    > *Vignette on implementing distribution-based clustering using cell type data; created as a class project for PSTAT197A in Fall 2022.*
+
+2.  Contributors
+
+3.  Vignette abstract: a brief description in a few sentences of your vignette topic, example data, and outcomes.
+
+4.  Repository contents: an explanation of the directory structure of the repository
+
+5.  Reference list: 2 or more references to learn more about your topic.
+
+A typical README file would also contain instructions on use and instructions on contributing to the repository.
+
+## Repository contents
+
+Your repository should contain at minimum the following:
+
+1.  an example dataset with which you illustrate the use of the method(s) or tool(s) of your topic
+2.  a primary vignette document -- either a notebook or rendered markdown file -- that teaches your method(s) and/or tool(s). this document should integrate codes with step-by-step explanation and read much like a lab activity
+3.  a script *with line annoations* that replicates all results shown in the primary vignette document end-to-end
+
+## Evaluation
+
+Your work will be evaluated on:
+
+-   how well the repository and contents conform to the expectations outlined above
+
+-   the clarity of the vignette, from the perspective of another student in the class
+
+-   the correctness of the data analysis and any other technical aspects of the vignette
+
+## Deadlines
+
+There are two deadlines associated with this project, a draft deadline and a final deadline.
+
+-   *draft deadline* **Thursday, December 1, 2pm PST** (in class) -- be prepared to share a draft of your primary vignette document and explain it to a small group of other students
+
+-   *final deadline* **Thursday, December 8, 11:59pm PST** -- the repository and all contained files should be in final form ready for evaluation by course staff

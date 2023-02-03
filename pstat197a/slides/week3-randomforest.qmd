@@ -1,0 +1,425 @@
+---
+title: "Random forests"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 4
+    fig-height: 2
+    fig-align: 'left'
+    slide-number: true
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---
+
+## Announcements/reminders
+
+Make your final commits for the first group assignment by ***Friday 10/14 11:59pm PST***
+
+-   should include an updated `report.qmd` and `report.html` with your write-up
+
+. . .
+
+Next group assignment to be distributed Tuesday 10/18.
+
+-   Groups will be randomly assigned
+
+-   Task: replicate and redesign proteomic analysis
+
+## Last time
+
+-   introduced ASD proteomic dataset
+
+-   used multiple testing corrections to identify proteins whose serum levels differ significantly between ASD/TD groups
+
+-   discussed the difference between controlling familywise error vs. false discovery
+
+## Today
+
+We'll talk about two more approaches to identifying proteins of interest:
+
+-   correlation-based identification of proteins
+
+-   random forest classifier
+
+# Correlation with ADOS
+
+## ADOS score
+
+```{r}
+library(tidyverse)
+asd <- read_csv('data/biomarker-clean.csv')
+
+# same preprocessing as before
+trim_fn <- function(x){
+  x[x > 3] <- 3
+  x[x < -3] <- -3
+  
+  return(x)
+}
+
+asd_clean <- asd %>% 
+  # log transform
+  mutate(across(.cols = -group, log10)) %>%
+  # center and scale
+  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
+  # trim outliers (affects results??)
+  mutate(across(.cols = -group, trim_fn)) %>%
+  # ados only for ASD group
+  filter(group == 'ASD') %>%
+  select(-group)
+```
+
+Autism Diagnostic Observation Schedule (ADOS) scores are determined by psychological assessment and measure ASD severity.
+
+```{r}
+#| echo: true
+asd %>% 
+  select(group, ados) %>% 
+  group_by(group) %>% 
+  sample_n(size = 2)
+```
+
+-   `ados` is only measured for the ASD group
+
+-   numerical score between 6 and 23 (at least in this sample)
+
+## Correlation approach
+
+So here's an idea:
+
+-   compute correlations of each protein with ADOS;
+
+-   pick the 10 proteins with the strongest correlation
+
+## Computation
+
+This is a simple aggregation operation and can be executed in R with `summarize()` :
+
+```{r}
+#| echo: true
+# compute correlations
+asd_clean %>%
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  group_by(protein) %>%
+  summarize(correlation = cor(ados, level))
+```
+
+## Visual assessment
+
+```{r}
+#| fig-width: 5
+#| fig-height: 4
+#| fig-align: center
+ados_cors <- asd_clean %>%
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  group_by(protein) %>%
+  summarize(correlation = cor(ados, level)) %>%
+  arrange(correlation) %>%
+  mutate(abs.corr = abs(correlation),
+         rank = row_number()) 
+
+# plot correlations
+ados_cors %>%
+  ggplot(aes(x = rank,
+             y = correlation)) +
+  geom_path() +
+  geom_point(data = slice_max(ados_cors, abs.corr, n = 10)) +
+  geom_text(data = slice_max(ados_cors, abs.corr, n = 10),
+            aes(label = protein, hjust = 'inward'),
+            check_overlap = T,
+            size = 3)
+```
+
+## Sort and slice
+
+::: panel-tabset
+### List
+
+```{r}
+# top 10
+ados_cors %>% slice_max(abs.corr, n = 10)
+```
+
+### Visual
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+## visualize
+selected_proteins <- ados_cors %>% 
+  slice_max(abs.corr, n = 10) %>%
+  pull(protein)
+
+asd_clean %>%
+  select(c(ados, any_of(selected_proteins))) %>%
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  ggplot(aes(x = level, y = ados)) +
+  geom_point() +
+  geom_smooth(formula = 'y ~ x', method = 'lm', se = F) +
+  facet_wrap(~ protein, nrow = 2)
+```
+:::
+
+## SLR coefficients instead?
+
+*Fact:* the simple linear regression coefficient estimate is proportional to the correlation coefficient.
+
+. . .
+
+So it should give similar results to sort the SLR coefficients by significance.
+
+. . .
+
+```{r}
+# regression approach (equivalent)
+fit_fn <- function(.df){
+  lm(ados ~ level, data = .df)
+}
+
+ados_slr <- asd_clean %>%
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  nest(data = c(ados, level)) %>%
+  mutate(fit = map(data, fit_fn),
+         fit_tidy = map(fit, broom::tidy)) %>%
+  unnest(fit_tidy) %>%
+  filter(term == 'level') %>%
+  select(protein, estimate, p.value) 
+
+ados_slr %>% arrange(p.value)
+```
+
+## FDR control
+
+If we do the correlation analysis this way, do the identified proteins pass multiple testing significance thresholds?
+
+```{r}
+# do these pass multiple testing?
+m <- ncol(asd_clean) - 1
+hm <- log(m) + 1/(2*m) - digamma(1)
+
+ados_slr %>%
+  mutate(rank = row_number(),
+         p.adj = p.value*m*hm/rank) %>%
+  slice_min(p.value, n = 10) %>%
+  select(protein, p.value, p.adj)
+```
+
+-   probably just introducing selection noise
+
+-   but also, this result diverges considerably from the paper (?)
+
+## Aside: correlation test {.scrollable}
+
+The SLR approach is equivalent to sorting the correlations. (Take a moment to check the results.)
+
+. . .
+
+We could use inference on the population correlation to obtain a $p$-value associated with each sample correlation coefficient. These match the ones from SLR.
+
+```{r}
+#| echo: true
+cor_test <- function(x, y){
+  cor_out <- cor.test(x, y)
+  tibble(estimate = cor_out$estimate,
+         p.value = cor_out$p.value)
+}
+
+asd_clean %>%
+  pivot_longer(cols = -ados,
+               names_to = 'protein',
+               values_to = 'level') %>%
+  group_by(protein) %>%
+  summarize(correlation = cor_test(ados, level)) %>%
+  unnest(correlation) %>%
+  arrange(p.value)
+```
+
+# Random forest activity
+
+## Background
+
+A ***binary tree*** is a directed graph in which:
+
+-   there is at most one path between any two nodes
+
+-   each node has at most two outward-directed edges
+
+![](img/binary-tree.png)
+
+## Classification tree
+
+A ***classification tree*** is a binary tree in which the paths represent classification rules.
+
+![A goofy classification tree.](img/silly-tree.png)
+
+## Example: classifying high earners {.scrollable}
+
+Say we want to predict income based on captial gains and education level using census data.
+
+```{r}
+library(rpart)
+library(partykit)
+library(tidymodels)
+library(tidyverse)
+
+# data location
+url <- "http://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data"
+
+# import
+census <- read_csv(url,
+                   col_names = c("age", 
+                                 "workclass", 
+                                 "fnlwgt", 
+                                 "education",
+                                 "education_1",
+                                 "marital_status",
+                                 "occupation",
+                                 "relationship",
+                                 "race",
+                                 "sex",
+                                 "capital_gain",
+                                 "capital_loss",
+                                 "hours_per_week",
+                                 "native_country",
+                                 "income")) %>%
+  mutate(income = factor(income)) %>%
+  select(-fnlwgt, -education_1) %>%
+  mutate(educ = fct_collapse(education,
+                             advanced = c('Doctorate', 
+                                          'Masters',
+                                          'Prof-school'),
+                             college = c('Some-college',
+                                         'Assoc-acdm',
+                                         'Assoc-voc',
+                                         'Bachelors'),
+                             other_level = 'hs')) 
+
+set.seed(101322)
+census %>% 
+  select(income, educ, capital_gain) %>% 
+  group_by(income) %>%
+  sample_n(3)
+```
+
+. . .
+
+We could construct a classification tree by 'splitting' based on the values of predictor variables.
+
+```{r}
+#| fig-height: 5
+#| fig-width: 6
+#| fig-align: center
+set.seed(101322)
+train <- census %>%
+  sample_n(size = 1000, replace = F)
+
+tree <- rpart(income ~ capital_gain + educ, 
+              method = 'class',
+              data = train)
+
+plot(as.party(tree))
+```
+
+## Activity: building trees
+
+To get a sense of the process of tree construction, we'll do an activity in groups: each group will build a tree 'by hand'.
+
+-   first let's look at the instructions together
+
+-   then take about 15-20 minutes to do it
+
+## Random forests
+
+A random forest is a classifier based on many trees. It is constructed by:
+
+-   building some large number of $T$ trees using bootstrap samples and random subsets of predictors (what you just did, repeated many times)
+
+-   taking a majority vote across all trees to determine the classification
+
+. . .
+
+So let's take a vote using your trees!
+
+## Variable importance scores
+
+If the number of trees $T$ is large (as it should be):
+
+-   trees are built using lots of random subsets of predictors
+
+-   can keep track of which ones are used most often to define splits
+
+. . .
+
+***Variable importance scores*** provide a measure of how influential each predictor is in a random forest.
+
+## Results {.scrollable}
+
+Back to the proteomics data, the variable importance scores from a random forest provide another means of identifying proteins.
+
+```{r}
+library(randomForest)
+asd_clean <- asd %>% 
+  select(-ados) %>%
+  # log transform
+  mutate(across(.cols = -group, log10)) %>%
+  # center and scale
+  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
+  # trim outliers (affects results??)
+  mutate(across(.cols = -group, trim_fn))
+
+# store predictors and response separately
+asd_preds <- asd_clean %>% select(-group)
+asd_resp <- asd_clean %>% pull(group) %>% factor()
+```
+
+```{r}
+#| echo: true
+# grow RF
+set.seed(101222)
+rf_out <- randomForest(x = asd_preds, y = asd_resp,
+                       mtry = 100, ntree = 1000, 
+                       importance = T)
+
+# variable importance
+rf_out$importance %>% 
+  as_tibble() %>%
+  mutate(protein = rownames(rf_out$importance)) %>%
+  slice_max(MeanDecreaseGini, n = 10) %>%
+  select(protein)
+```
+
+## Errors
+
+But how accurate is the predictor?
+
+```{r}
+# errors
+rf_out$confusion %>%
+  knitr::kable()
+```
+
+## Next week
+
+-   logistic regression
+
+-   variable selection
+
+-   a design view of the proteomic analysis

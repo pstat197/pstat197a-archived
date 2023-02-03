@@ -1,0 +1,261 @@
+---
+title: "Curve fitting"
+editor: visual
+code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
+---
+
+The ***objective*** of this lab is to:
+
+-   replicate the estimation of seasonal trend in the soil data as shown in class;
+
+-   explore curve-fitting methods in greater depth.
+
+::: callout-important
+## Action
+
+Setup: open RStudio, create a new script for this lab, and copy-paste the code chunk below into the first several lines of the script. Execute once to load and preview the data.
+:::
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(modelr)
+library(fda)
+
+url <- 'https://raw.githubusercontent.com/pstat197/pstat197a/main/materials/labs/lab7-curvefitting/data/soiltemp.csv'
+
+soil <- read_csv(url)
+soil %>% head()
+```
+
+Our overall objective is to model `temp` as a function of `day`. As discussed in class, this amounts to estimating an unknown function $f(\text{day})$ in the model:
+
+$$
+\text{temp}_i = f(\text{day}_i) + \text{error}_i
+$$
+
+(Here we're using $i$ to index observations and not sites -- so we will use 16,799 observations to estimate $f$. Note that there are only 57 unique sites.)
+
+Although visually it makes more sense to plot paths by site, since we're pooling all the observations together to estimate $f$ we're essentially treating the data as a collection of unrelated points. We'll make use of the following visualization throughout to underscore this point.
+
+```{r}
+# scatterplot of temperatures against day of year
+temp_pts <- soil %>%
+  ggplot(aes(x = day, y = temp)) +
+  geom_point(alpha = 0.1)
+
+temp_pts
+```
+
+### LOESS curves
+
+It's worth being aware that `ggplot` has a built-in ability to compute local nonparametric conditional mean estimates using LOESS (**LO**cally **E**stimated **S**catterplot **S**moothing). This can often be a quick-and-dirty strategy for visualizing trends; it is less often (but sometimes!) used as a model for prediction and the like.
+
+```{r}
+temp_pts + 
+  geom_smooth(formula = 'y ~ x',
+              method = 'loess',
+              span = 0.5,
+              se = F)
+```
+
+This technique consists in computing a weighted average `temp` for every value of `day` that up-weights nearby points.
+
+The `span` parameter controls the size of the neighborhood that contributes meaningfully to the weighted average -- a smaller span, and thus a smaller neighborhood, produces a more erratic curve.
+
+::: callout-important
+## Action
+
+Try changing the smoothing span. Note that the units for `span` are standard deviations, *e.g.*, `span = 1` says adjust the smoothing neighborhood in proportion to $\pm 1 \text{SD}$ .
+
+1.  Pick a larger value.
+2.  Pick a smaller value.
+3.  Find a value that you think captures the trend best.
+:::
+
+The LOESS curve is fully nonparametric, meaning no assumptions are made about the form of $f$.
+
+This is an advantage in some senses -- it's a model-free method -- but a disadvantage in others -- it doesn't provide any meaningful data reduction since the curve is just a bunch of averages.
+
+### Polynomial regression
+
+If we want an estimate that *does* yield some data reduction, a straightforward approach might be to fit a polynomial in `day` .
+
+This can *also* be done through ggplot using a regression smooth (`geom_smooth(..., method = 'lm', ...)`). The following superimposes a quadratic fit (order 2 polynomial) to the data:
+
+```{r}
+# quadratic fit
+temp_pts + 
+  geom_smooth(formula = 'y ~ poly(x, 2)',
+              method = 'lm')
+```
+
+As an aside, `poly` is a handy R function that will compute polynomial terms in is argument, as illustrated below. (The argument `raw = T` ensures that 'raw' polynomials are returned rather than orthogonal polynomials. Orthogonal polynomials are the Gram-Schmidt orthognalization of the matrix of raw polynomials.)
+
+```{r}
+poly(1:5, degree = 3, raw = T, simple = T)
+```
+
+So the quadratic model is:
+
+$$
+\text{temp}_i = \beta_0 + \beta_1 \text{day}_i + \beta_1 \text{day}^2_i + \epsilon_i
+$$
+
+This could be fit explicitly as a regression model:
+
+```{r}
+# fit a polynomial model
+fit_poly <- lm(temp ~ poly(day, degree = 2, raw = T),
+               data = soil)
+
+# compute predictions
+pred_df <- tibble(day = 1:365) %>%
+  add_predictions(fit_poly)
+
+# visualize
+temp_pts + 
+  geom_path(data = pred_df, 
+            aes(y = pred),
+            color = 'blue')
+```
+
+::: callout-important
+## Action
+
+Experiment with the polynomial degree and fit a model that you think best approximates the curve.
+
+*Suggestion:* see what happens if you overfit by choosing a polynomial of unrealistically large order, *e.g.*, a polynomial of degree 25.
+:::
+
+### Spline regression
+
+Spline regression refers to fitting piecewise models constrained to join together at the "knot" points that divide the pieces.
+
+This can be accomplished by some creative manipulation of the model formula with indicator variables. An example is shown below of a *linear* spline with one knot at day 200. It's not so important that you understand the formula manipulation as much as the idea.
+
+```{r}
+# linear spline with a knot at day 200
+fit_spline <- lm(temp ~ day + I((day - 200)*(day > 200)) - 1,
+                 data = soil)
+
+# compute predictions
+pred_df <- tibble(day = 1:365) %>%
+  add_predictions(fit_spline)
+
+# plot it
+temp_pts + 
+  geom_path(data = pred_df, 
+            aes(y = pred),
+            color = 'blue')
+```
+
+The formulae would get a little more complicated, but the principle would be the same for (a) introducing additional knots and/or (b) fitting polynomials to each segment.
+
+### Spline basis (a.k.a. *"b-spline"*)
+
+A better solution than working out the formula each time is to use a basis expansion for the set of all possible regression splines of a given order.
+
+This is what we discussed in class, and is illustrated in the code chunk below. The `bs()` function works similarly to `poly()` in the sense that it returns a matrix of values of the basis functions (cf. polynomial functions) for each value of an input vector.
+
+```{r}
+# define knot points
+knotpts <- c(100, 200, 300)
+
+# fit an order 3 regression spline with three internal knots
+fit_bs <- lm(temp ~ bs(day, degree = 1, knots = knotpts),
+             data = soil) 
+
+# compute predictions
+pred_df <- tibble(day = 1:365) %>%
+  add_predictions(fit_bs)
+
+# plot it
+temp_pts + 
+  geom_path(data = pred_df, 
+            aes(y = pred),
+            color = 'blue') +
+  geom_vline(xintercept = knotpts, 
+             linetype = 'dashed')
+```
+
+::: callout-important
+## Action
+
+1.  Experiment with the polynomial order and the placement of knot points.
+2.  Find a fitted curve that you feel captures the pattern well.
+3.  Compare with your neighbor. What did you choose similarly? What did you choose differently?
+:::
+
+For the curious: you can also inspect the basis functions used to generate the regression spline and their dependence on the knot placement using the code chunk below.
+
+```{r}
+#| eval: false
+
+# define knots
+knotpts <- c(100, 200, 300)
+
+# input variable
+x <- 1:365
+
+# calculate basis expansion and plot it
+bs(x, knots = knotpts, degree = 3) %>%
+  as_tibble() %>%
+  bind_cols(x = x) %>%
+  pivot_longer(-x, names_to = 'basis') %>%
+  ggplot(aes(x = x, y = value)) +
+  geom_path(aes(group = basis, color = basis)) +
+  geom_vline(xintercept = knotpts, linetype = 'dashed')
+```
+
+### Fourier basis
+
+Lastly, it was noted in class that spline regression does not produce a harmonic function and so is not well-suited to approximating a cyclical trend. Using a Fourier basis solves this problem.
+
+The Fourier basis functions (expressed as real-valued functions) are the sequence of sine and cosine pairs characterized by
+
+$$
+\phi_{2n}(x) = k\cos\left(\frac{2\pi nx}{\lambda}\right) 
+\quad\text{and}\quad
+\phi_{2n + 1}(x) = k\sin\left(\frac{2 \pi n x}{\lambda}\right) \qquad
+n = 1, 2, \dots
+$$
+
+where $k$ is a scaling factor. The first basis function is a constant $\phi_1 (x) = c$.
+
+This basis can be used to approximate *any* continuous function. One need only choose a number of pairs to employ; by default, the initial wavelength $\lambda$ is set to the span of the data.
+
+A nice consequence for us in the current context is that the resulting estimate, as a linear combination of harmonic functions, is itself harmonic.
+
+```{r}
+# fit the model with the fourier basis expansion
+fit_fbs <- lm(temp ~ fourier(day, nbasis = 4, period = 365) - 1,
+              data = soil)
+
+# compute predictions
+pred_df <- tibble(day = 1:365) %>%
+  add_predictions(fit_fbs)
+
+# plot it
+temp_pts + 
+  geom_path(data = pred_df, 
+            aes(y = pred),
+            color = 'blue')
+```
+
+The model is fit without an intercept (`temp ~ ... - 1` ) because `fourier(...)` returns a constant term.
+
+Notice also that there is no need to specify knots in this case. The Fourier basis is generated using the period specified -- each additional pair of sine and cosine basis functions simply halves the frequency of the previous pair.
+
+::: callout-important
+## Action
+
+1.  Experiment with the number of bases (note `nbasis` must be an even number).
+2.  Using a single pair of basis functions, plot estimates of the mean temperature over a period of 2 years. What happens when the input variable is outside the interval \[1, 365\]?
+3.  Make a time course plot of the temperature data with the estimated mean from the fit using the Fourier basis expansion overlaid.
+:::

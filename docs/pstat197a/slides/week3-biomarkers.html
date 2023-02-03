@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.0.38">
+
+  <meta name="author" content="Trevor Ruiz">
+  <title>Multiple testing corrections</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="center">
+  <h1 class="title">Multiple testing corrections</h1>
+  <p class="subtitle">PSTAT197A/CMPSC190DD Fall 2022</p>
+  <p class="author">Trevor Ruiz</p>
+  <p class="institute">UCSB</p>
+</section>
+
+<section id="announcementsreminders" class="slide level2">
+<h2>Announcements/reminders</h2>
+<ul>
+<li class="fragment"><p>don’t forget to fill out attendance form for each class meeting</p>
+<ul>
+<li class="fragment">but don’t fill it out if you don’t come to class</li>
+</ul></li>
+<li class="fragment"><p>first group assignment due Friday 10/14 11:59pm PST</p>
+<ul>
+<li class="fragment">please add your lab scripts from labs 1, 2</li>
+<li class="fragment"><code>labs/labN-TITLE-USERNAME.R</code></li>
+</ul></li>
+<li class="fragment"><p>section attendance is expected</p></li>
+</ul>
+</section>
+<section>
+<section id="module-introduction" class="title-slide slide level1 center">
+<h1>Module introduction</h1>
+
+</section>
+<section id="background" class="slide level2">
+<h2>Background</h2>
+<p>Levels of proteins in plasma/serum are altered in autism spectrum disorder (ASD).</p>
+<div class="fragment">
+<p><strong><em>Goal:</em></strong> identify a panel of proteins useful as a blood biomarker for early detection of ASD.</p>
+<ul>
+<li class="fragment"><p>a ‘panel’ is a handful of tests that help distinguish between conditions</p></li>
+<li class="fragment"><p>so in other words, find proteins whose serum levels are predictive of ASD</p></li>
+</ul>
+</div>
+</section>
+<section id="dataset" class="slide level2">
+<h2>Dataset</h2>
+<p>Data from <span class="citation" data-cites="hewitson2021blood">Hewitson et al. (<a href="#/ref-hewitson2021blood" role="doc-biblioref" onclick="return false;">2021</a>)</span></p>
+<ul>
+<li class="fragment"><p>Serum samples from 76 boys with ASD and 78 typically developing (TD) boys, 18 months-8 years of age</p></li>
+<li class="fragment"><p>A total of 1,125 proteins were analyzed from each sample</p>
+<ul>
+<li class="fragment"><p>1,317 measured, 192 failed quality control</p></li>
+<li class="fragment"><p>(we don’t know which ones failed QC so will use all)</p></li>
+</ul></li>
+</ul>
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-1_55936ced663e4cd3a8fbedc6195ffdad">
+
+</div>
+</section>
+<section id="sample-characteristics" class="slide level2 scrollable">
+<h2>Sample characteristics</h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Age</a></li><li><a href="#tabset-1-2">Demographics</a></li><li><a href="#tabset-1-3">Comorbidities</a></li><li><a href="#tabset-1-4">Medications</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-2_09708360b62eb59c563a4dabd973c8fe">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">ASD (n = 76)</th>
+<th style="text-align: left;">TD (n = 78)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Age: mean (SD) years</td>
+<td style="text-align: left;">5.6 (1.7)</td>
+<td style="text-align: left;">5.7 (2.0)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-3_66cb425621e62d8af90464c4750616a6">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">ASD (n = 76)</th>
+<th style="text-align: left;">TD (n = 78)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">White/Caucasian</td>
+<td style="text-align: left;">33 (45.2%)</td>
+<td style="text-align: left;">40 (51.9%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hispanic/Latino</td>
+<td style="text-align: left;">26 (35.6%)</td>
+<td style="text-align: left;">6 (7.8%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">African American/Black</td>
+<td style="text-align: left;">3 (4.1%)</td>
+<td style="text-align: left;">14 (18.2%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Asian or Pacific Islander</td>
+<td style="text-align: left;">2 (2.6%)</td>
+<td style="text-align: left;">3 (3.9%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Multiple ethnicities or Other</td>
+<td style="text-align: left;">9 (12.3%)</td>
+<td style="text-align: left;">14 (18.2%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not reported</td>
+<td style="text-align: left;">3 (4.1%)</td>
+<td style="text-align: left;">1 (1.2%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-1-3">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-4_1fc662b7bd504b9fef342b4e0f831050">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">ASD (n = 76)</th>
+<th style="text-align: left;">TD (n = 78)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">38 (52.8%)</td>
+<td style="text-align: left;">58 (75.3%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ADHD</td>
+<td style="text-align: left;">2 (2.8%)</td>
+<td style="text-align: left;">1 (1.3%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Seasonal Allergies</td>
+<td style="text-align: left;">30 (41.7%)</td>
+<td style="text-align: left;">17 (22.4%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Asthma</td>
+<td style="text-align: left;">2 (2.8%)</td>
+<td style="text-align: left;">0 (0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Celiac Disease</td>
+<td style="text-align: left;">1 (1.4%)</td>
+<td style="text-align: left;">0 (0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GERD</td>
+<td style="text-align: left;">1 (1.4%)</td>
+<td style="text-align: left;">0 (0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PTSD</td>
+<td style="text-align: left;">0 (0%)</td>
+<td style="text-align: left;">1 (1.3%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sleep Apnea</td>
+<td style="text-align: left;">2 (2.8%)</td>
+<td style="text-align: left;">0 (0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Not reported</td>
+<td style="text-align: left;">4 (5.6%)</td>
+<td style="text-align: left;">1 (1.3%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-1-4">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-5_d3867363b83dd15c7be49cf2b867f7fb">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">ASD (n = 76)</th>
+<th style="text-align: left;">TD (n = 78)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">69 (92%)</td>
+<td style="text-align: left;">75 (97.4%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Anti-depressant</td>
+<td style="text-align: left;">2 (2.7%)</td>
+<td style="text-align: left;">0 (0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Anti-psychotic</td>
+<td style="text-align: left;">0 (0%)</td>
+<td style="text-align: left;">1 (1.3%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sedative</td>
+<td style="text-align: left;">1 (1.3%)</td>
+<td style="text-align: left;">0 (0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SSRI</td>
+<td style="text-align: left;">2 (2.27%)</td>
+<td style="text-align: left;">0 (0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stimulant</td>
+<td style="text-align: left;">1 (1.3%)</td>
+<td style="text-align: left;">1 (1.3%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Not reported</td>
+<td style="text-align: left;">1 (1.3%)</td>
+<td style="text-align: left;">1 (1.3%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-glimpse" class="slide level2 scrollable">
+<h2>Data glimpse</h2>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Example rows</a></li><li><a href="#tabset-2-2">Group sizes</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-6_fc3b2fa9a7d338850bc16c4ba298969d">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>asd_clean <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 1,318
+  group    CHIP  CEBPB     NSE   PIAS4 `IL-10 Ra`  STAT3   IRF1 `c-Jun` `Mcl-1`
+  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 ASD    0.335   0.520 -0.554   0.650      -0.358  0.305 -0.484   0.309  1.57  
+2 ASD   -0.0715  1.01   3       1.28       -0.133  1.13   0.253   0.408  0.0643
+3 ASD   -0.406  -0.531 -0.0592  1.13        0.554 -0.334  0.287  -0.845  1.42  
+4 ASD   -0.102  -0.251  1.47    0.0773     -0.705  0.893  2.61   -0.372 -0.467 
+5 ASD   -0.395  -0.536  0.0410 -0.299      -0.830  0.899  1.01   -0.843 -1.15  
+# … with 1,308 more variables: OAS1 &lt;dbl&gt;, `c-Myc` &lt;dbl&gt;, SMAD3 &lt;dbl&gt;,
+#   SMAD2 &lt;dbl&gt;, `IL-23` &lt;dbl&gt;, PDGFRA &lt;dbl&gt;, `IL-12` &lt;dbl&gt;, STAT1 &lt;dbl&gt;,
+#   STAT6 &lt;dbl&gt;, LRRK2 &lt;dbl&gt;, Osteocalcin &lt;dbl&gt;, `IL-5` &lt;dbl&gt;, GPDA &lt;dbl&gt;,
+#   IgA &lt;dbl&gt;, LPPL &lt;dbl&gt;, HEMK2 &lt;dbl&gt;, PDXK &lt;dbl&gt;, TLR4 &lt;dbl&gt;, REG4 &lt;dbl&gt;,
+#   `HSP 27` &lt;dbl&gt;, `YKL-40` &lt;dbl&gt;, `Alpha enolase` &lt;dbl&gt;, `Apo L1` &lt;dbl&gt;,
+#   CD38 &lt;dbl&gt;, CD59 &lt;dbl&gt;, FABPL &lt;dbl&gt;, `GDF-11` &lt;dbl&gt;, BTC &lt;dbl&gt;,
+#   `HIF-1a` &lt;dbl&gt;, S100A6 &lt;dbl&gt;, SECTM1 &lt;dbl&gt;, RSPO3 &lt;dbl&gt;, PSP &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-7_98c0cdb274f43aaa23fb43c41e2bcfa1">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  group     n
+  &lt;chr&gt; &lt;int&gt;
+1 ASD      76
+2 TD       78</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="module-objectives" class="slide level2">
+<h2>Module objectives</h2>
+<p><strong><em>Methodology</em></strong></p>
+<ul>
+<li class="fragment"><p>multiple testing</p></li>
+<li class="fragment"><p>classification: logistic regression; random forests</p></li>
+<li class="fragment"><p>variable selection: LASSO regularization</p></li>
+<li class="fragment"><p>classification accuracy measures</p></li>
+</ul>
+<div class="fragment">
+<p><strong><em>Concepts</em></strong></p>
+<ul>
+<li class="fragment"><p>data partitioning for predictive modeling</p></li>
+<li class="fragment"><p>model interpretability</p></li>
+<li class="fragment"><p>high dimensional data <span class="math inline">\(n &lt; p\)</span></p></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="multiple-testing" class="title-slide slide level1 center">
+<h1>Multiple testing</h1>
+
+</section>
+<section id="marginal-differences" class="slide level2">
+<h2>Marginal differences</h2>
+<p><strong><em>Idea</em></strong>: test for a significant difference in serum levels between groups for a given protein, say protein <span class="math inline">\(i\)</span>.</p>
+<div class="fragment">
+<p>Notation:</p>
+<ul>
+<li class="fragment"><p><span class="math inline">\(\mu^i_{ASD}\)</span>: mean serum level of protein <span class="math inline">\(i\)</span> in the ASD group</p></li>
+<li class="fragment"><p><span class="math inline">\(\mu^i_{TD}\)</span>: mean serum level of protein <span class="math inline">\(i\)</span> in the TD group</p></li>
+<li class="fragment"><p><span class="math inline">\(\delta_i\)</span>: difference in means <span class="math inline">\(\mu^i_{ASD} - \mu^i_{TD}\)</span></p></li>
+<li class="fragment"><p>hats indicate sample estimates (<em>e.g.</em> <span class="math inline">\(\hat{\delta}_i\)</span>)</p></li>
+</ul>
+</div>
+</section>
+<section id="review-t-test" class="slide level2">
+<h2>Review: <span class="math inline">\(t\)</span>-test</h2>
+<p>The <span class="math inline">\(t\)</span>-test tests <span class="math inline">\(H_{0i}: \delta_i = 0\)</span> against its negation <span class="math inline">\(\neg H_{0i}: \delta_i \neq 0\)</span> using the rule</p>
+<p><span class="math display">\[
+\text{reject $H_{0i}$ if}\qquad \left|\frac{\hat{\delta}_i}{SE(\hat{\delta}_i)}\right| &gt; t_\alpha
+\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(SE(\hat{\delta}_i)\)</span> is a <em>standard error</em> for the difference estimate; quantifies variability of the estimate</li>
+<li class="fragment">procedure controls type I error at <span class="math inline">\(\alpha\)</span>, ensuring <span class="math inline">\(P\left(\text{reject}_i|H_i\right) \leq 0.05\)</span></li>
+</ul>
+</section>
+<section id="review-p-values" class="slide level2">
+<h2>Review: <span class="math inline">\(p\)</span>-values</h2>
+<p>The <span class="math inline">\(p\)</span>-value for a test is the probability of obtaining a sample at least as contrary to <span class="math inline">\(H_{0i}\)</span> as the sample in hand, assuming <span class="math inline">\(H_{0i}\)</span> is true.</p>
+<div class="fragment">
+<p>By construction, <span class="math inline">\(p &lt; \alpha\)</span> just in case the test rejects with type I error controlled at <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+<div class="fragment">
+<p>So a common heuristic is:</p>
+<p><span class="math display">\[
+\text{reject $H_{0i}$ if} \qquad p_i \leq \alpha
+\]</span></p>
+</div>
+</section>
+<section id="one-test" class="slide level2">
+<h2>One test</h2>
+<p>Here is R output for one test.</p>
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-8_68a586478ce34392a642f0e03d886bab">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>asd <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">t_test</span>(<span class="at">formula =</span> CHIP <span class="sc">~</span> group,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>         <span class="at">order =</span> <span class="fu">c</span>(<span class="st">'ASD'</span>, <span class="st">'TD'</span>),</span>
+<span id="cb4-4"><a href="#cb4-4"></a>         <span class="at">alternative =</span> <span class="st">'two-sided'</span>,</span>
+<span id="cb4-5"><a href="#cb4-5"></a>         <span class="at">var.equal =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  statistic  t_df p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1     0.927  75.7   0.357 two.sided       384.    -441.    1210.</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Questions:</p>
+<ol type="1">
+<li class="fragment">What are the hypotheses in words?</li>
+<li class="fragment">What are the test assumptions?</li>
+<li class="fragment">What is the conclusion of the test?</li>
+</ol>
+</div>
+</section>
+<section id="many-tests" class="slide level2">
+<h2>Many tests</h2>
+<p>A plausible approach for identifying a protein panel, then, is to select all those proteins for which the <span class="math inline">\(t\)</span>-test indicates a significant difference.</p>
+<ul>
+<li class="fragment"><p>1,317 tests</p></li>
+<li class="fragment"><p>easy to compute</p></li>
+<li class="fragment"><p>conceptually straightforward</p></li>
+</ul>
+<div class="fragment">
+<p>How likely are mistakes?</p>
+</div>
+</section>
+<section id="test-outcomes" class="slide level2 scrollable">
+<h2>Test outcomes</h2>
+<p>Let <span class="math inline">\(H_i\)</span> denote the <span class="math inline">\(i\)</span>th null hypothesis and <span class="math inline">\(R_i\)</span> denote the event that <span class="math inline">\(H_i\)</span> is rejected.</p>
+<div class="smaller">
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(H_i\)</span></th>
+<th><span class="math inline">\(\neg H_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(R_i\)</span></td>
+<td><span class="math inline">\(V\)</span> false rejections</td>
+<td><span class="math inline">\(S\)</span> correct</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\neg R_i\)</span></td>
+<td><span class="math inline">\(T\)</span> correct</td>
+<td><span class="math inline">\(W\)</span> false non-rejections</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment">
+<p>The <strong><em>multiple testing problem</em></strong> is that individual error rates compound over multiple tests.</p>
+</div>
+</section>
+<section id="familywise-error" class="slide level2">
+<h2>Familywise error</h2>
+<p><strong><em>Familywise error rate (FWER)</em></strong> is the probability of one or more type I errors: <span class="math inline">\(P(V \geq 1)\)</span>.</p>
+<div class="fragment">
+<p>Suppose there are <span class="math inline">\(m\)</span> true hypotheses <span class="math inline">\(\mathcal{H}: \{H_i: i \in C\}\)</span>.</p>
+</div>
+<div class="fragment">
+<p>If the tests are independent and exact then:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(V \geq 1)
+&amp;= P\left[ \bigcup_{i \in C} R_i | \mathcal{H} \right] \\
+&amp;= 1 - \prod_{i \in C} \left( 1- P(R_i|H_i) \right) \\
+&amp;= 1 - (1 - \alpha)^m
+\end{aligned}
+\]</span></p>
+</div>
+</section>
+<section id="fwer-example" class="slide level2">
+<h2>FWER Example</h2>
+<p>If individual tests are exactly controlled at <span class="math inline">\(\alpha = 0.05\)</span> and independent, at least one error is nearly certain by 100 tests.</p>
+
+<img data-src="week3-biomarkers_files/figure-revealjs/unnamed-chunk-9-1.png" width="480" class="r-stretch quarto-figure-center"><p class="caption">Familywise error rate as a function of the number of tests, assuming tests are independent with exact type I error 0.05.</p></section>
+<section id="bonferroni-correction" class="slide level2">
+<h2>Bonferroni correction</h2>
+<p>The simplest <strong><em>multiple testing correction</em></strong> is based on the Bonferroni inequality:</p>
+<p><span class="math display">\[
+P\left[ \bigcup_{i \in C} R_i | \mathcal{H} \right] \leq \sum_{i \in C} P(R_i|\mathcal{H})
+\]</span></p>
+<div class="fragment">
+<p>If the individual tests are controlled at level <span class="math inline">\(\alpha\)</span>, then <span class="math inline">\(FWER \leq m\alpha\)</span>.</p>
+</div>
+<div class="fragment">
+<p>So a simple solution is to test at level <span class="math inline">\(\alpha^* = \frac{\alpha}{m}\)</span>.</p>
+</div>
+<div class="fragment">
+<p>In other words, reject if <span class="math inline">\(p_i &lt; \frac{\alpha}{m}\)</span>.</p>
+</div>
+</section>
+<section id="false-discovery-rate" class="slide level2">
+<h2>False discovery rate</h2>
+<p>FWER control will limit false rejections, but at the cost of power; controlling the probability of one type I error is a conservative approach.</p>
+<div class="fragment">
+<p>More common in modern applications are procedures to control <strong><em>false discovery rate</em></strong>: the expected proportion of rejections that are false.</p>
+<p><span class="math display">\[
+\text{FDR} = \mathbb{E}\left[\frac{\text{false rejections}}{\text{total rejections}}\right]
+\]</span></p>
+</div>
+<div class="fragment">
+<p>Conceptually, if say FDR is controlled at <span class="math inline">\(0.05\)</span>, then one would expect 5% of rejections to be false.</p>
+</div>
+</section>
+<section id="benjamini-hochberg-correction" class="slide level2">
+<h2>Benjamini-Hochberg correction</h2>
+<p><span class="citation" data-cites="benjamini1995controlling">Benjamini and Hochberg (<a href="#/ref-benjamini1995controlling" role="doc-biblioref" onclick="return false;">1995</a>)</span> conceived a procedure based on sorting <span class="math inline">\(p\)</span>-values.</p>
+<div class="fragment">
+<p>Supposing <span class="math inline">\(m\)</span> independent tests are performed:</p>
+<ol type="1">
+<li class="fragment">Sort the <span class="math inline">\(p\)</span>-values in increasing order <span class="math inline">\(p_{(1)}, p_{(2)}, \dots, p_{(m)}\)</span></li>
+<li class="fragment">Reject whenever <span class="math inline">\(p_{(i)} &lt; \frac{i\alpha}{m}\)</span></li>
+</ol>
+</div>
+<div class="fragment">
+<p>They proved that this controls FDR at <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+</section>
+<section id="benjamini-yekutieli-correction" class="slide level2">
+<h2>Benjamini-Yekutieli correction</h2>
+<p>The Benjamini-Hochberg assumes tests are independent, which is obviously not true in most situations. (Why?)</p>
+<div class="fragment">
+<p><span class="citation" data-cites="benjamini2001control">Benjamini and Yekutieli (<a href="#/ref-benjamini2001control" role="doc-biblioref" onclick="return false;">2001</a>)</span> modified the correction to hold without the independence assumption:</p>
+<ol type="1">
+<li class="fragment">Sort the <span class="math inline">\(p\)</span>-values in increasing order <span class="math inline">\(p_{(1)}, p_{(2)}, \dots, p_{(m)}\)</span></li>
+<li class="fragment">Reject whenever <span class="math inline">\(p_{(i)} &lt; \frac{i\alpha}{m H_m}\)</span></li>
+</ol>
+</div>
+<div class="fragment">
+<p>Above, <span class="math inline">\(H_m = \sum_{i = 1}^m \frac{1}{i}\)</span> .</p>
+</div>
+</section>
+<section id="implementing-corrections" class="slide level2">
+<h2>Implementing corrections</h2>
+<p>The easiest way to implement these corrections is to adjust the <span class="math inline">\(p\)</span>-values with a multiplier:</p>
+<ul>
+<li class="fragment">(Bonferroni) <span class="math inline">\(p^b_i = m\times p_i\)</span></li>
+<li class="fragment">(Benjamini-Hochberg) <span class="math inline">\(p^{bh}_{(i)} = \frac{m}{i} p_{(i)}\)</span></li>
+<li class="fragment">(Benjamini-Yekuteili) <span class="math inline">\(p^{bh}_{(i)} = \frac{m H_m}{i} p_{(i)}\)</span></li>
+</ul>
+</section>
+<section id="computations" class="slide level2 scrollable">
+<h2>Computations</h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Preprocessing</a></li><li><a href="#tabset-3-2">Assumptions</a></li><li><a href="#tabset-3-3">Tests</a></li><li><a href="#tabset-3-4">Corrections</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-10_76a87d9783a7b19f6c1892f2e2d11b8b">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>trim_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  x[x <span class="sc">&gt;</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  x[x <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">3</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  </span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb6-6"><a href="#cb6-6"></a>}</span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>asd_clean <span class="ot">&lt;-</span> asd <span class="sc">%&gt;%</span> </span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">select</span>(<span class="sc">-</span>ados) <span class="sc">%&gt;%</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="co"># log transform</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, log10)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="co"># center and scale</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, <span class="sc">~</span> <span class="fu">scale</span>(.x)[, <span class="dv">1</span>])) <span class="sc">%&gt;%</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="co"># trim outliers (affects results??)</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="sc">-</span>group, trim_fn))</span>
+<span id="cb6-16"><a href="#cb6-16"></a></span>
+<span id="cb6-17"><a href="#cb6-17"></a>asd_nested <span class="ot">&lt;-</span> asd_clean <span class="sc">%&gt;%</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>group, </span>
+<span id="cb6-19"><a href="#cb6-19"></a>               <span class="at">names_to =</span> <span class="st">'protein'</span>, </span>
+<span id="cb6-20"><a href="#cb6-20"></a>               <span class="at">values_to =</span> <span class="st">'level'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a>  <span class="fu">nest</span>(<span class="at">data =</span> <span class="fu">c</span>(level, group))</span>
+<span id="cb6-22"><a href="#cb6-22"></a></span>
+<span id="cb6-23"><a href="#cb6-23"></a>asd_nested <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  protein data              
+  &lt;chr&gt;   &lt;list&gt;            
+1 CHIP    &lt;tibble [154 × 2]&gt;
+2 CEBPB   &lt;tibble [154 × 2]&gt;
+3 NSE     &lt;tibble [154 × 2]&gt;
+4 PIAS4   &lt;tibble [154 × 2]&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell" data-layout-align="center" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-11_60451fa4acd72bf309cb441d644faa89">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="week3-biomarkers_files/figure-revealjs/unnamed-chunk-11-1.png" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-3">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-12_3260bbe2b6deac2c8fbdcf1015d22221">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># compute for several groups</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>test_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(.df){</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">t_test</span>(.df, </span>
+<span id="cb8-4"><a href="#cb8-4"></a>         <span class="at">formula =</span> level <span class="sc">~</span> group,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>         <span class="at">order =</span> <span class="fu">c</span>(<span class="st">'ASD'</span>, <span class="st">'TD'</span>),</span>
+<span id="cb8-6"><a href="#cb8-6"></a>         <span class="at">alternative =</span> <span class="st">'two-sided'</span>,</span>
+<span id="cb8-7"><a href="#cb8-7"></a>         <span class="at">var.equal =</span> F)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>}</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a>tt_out <span class="ot">&lt;-</span> asd_nested <span class="sc">%&gt;%</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>  <span class="fu">mutate</span>(<span class="at">ttest =</span> <span class="fu">map</span>(data, test_fn)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>  <span class="fu">unnest</span>(ttest) <span class="sc">%&gt;%</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a>  <span class="fu">arrange</span>(p_value)</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>tt_out <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 9
+  protein     data     statistic  t_df     p_value alternative estimate lower_ci
+  &lt;chr&gt;       &lt;list&gt;       &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+1 DERM        &lt;tibble&gt;     -6.10  151.     8.27e-9 two.sided     -0.885    -1.17
+2 RELT        &lt;tibble&gt;     -5.65  152.     7.82e-8 two.sided     -0.775    -1.05
+3 FSTL1       &lt;tibble&gt;     -5.27  152.     4.66e-7 two.sided     -0.783    -1.08
+4 C1QR1       &lt;tibble&gt;     -5.26  152.     4.79e-7 two.sided     -0.782    -1.08
+5 Calcineurin &lt;tibble&gt;     -5.24  151.     5.37e-7 two.sided     -0.734    -1.01
+# … with 1 more variable: upper_ci &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-4">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-13_c86f00e229005a58128b1388ac6d7e86">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># multiple testing corrections</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>m <span class="ot">&lt;-</span> <span class="fu">nrow</span>(tt_out)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>hm <span class="ot">&lt;-</span> <span class="fu">log</span>(m) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>m) <span class="sc">-</span> <span class="fu">digamma</span>(<span class="dv">1</span>)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  </span>
+<span id="cb10-5"><a href="#cb10-5"></a>tt_corrected <span class="ot">&lt;-</span> tt_out <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="fu">select</span>(data, protein, p_value) <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="fu">mutate</span>(<span class="at">p_bh =</span> p_value<span class="sc">*</span>m<span class="sc">/</span>rank,</span>
+<span id="cb10-9"><a href="#cb10-9"></a>         <span class="at">p_by =</span> p_value<span class="sc">*</span>m<span class="sc">*</span>hm<span class="sc">/</span>rank,</span>
+<span id="cb10-10"><a href="#cb10-10"></a>         <span class="at">p_bonf =</span> p_value<span class="sc">*</span>m)</span>
+<span id="cb10-11"><a href="#cb10-11"></a></span>
+<span id="cb10-12"><a href="#cb10-12"></a>tt_corrected <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 7
+  data               protein           p_value  rank      p_bh      p_by  p_bonf
+  &lt;list&gt;             &lt;chr&gt;               &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 &lt;tibble [154 × 2]&gt; DERM        0.00000000827     1 0.0000109 0.0000845 1.09e-5
+2 &lt;tibble [154 × 2]&gt; RELT        0.0000000782      2 0.0000515 0.000400  1.03e-4
+3 &lt;tibble [154 × 2]&gt; FSTL1       0.000000466       3 0.000205  0.00159   6.14e-4
+4 &lt;tibble [154 × 2]&gt; C1QR1       0.000000479       4 0.000158  0.00122   6.31e-4
+5 &lt;tibble [154 × 2]&gt; Calcineurin 0.000000537       5 0.000141  0.00110   7.07e-4</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="results" class="slide level2">
+<h2>Results</h2>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Comparing methods</a></li><li><a href="#tabset-4-2">Top 10 proteins</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<div class="cell" data-layout-align="center" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-14_41187a796375630f05bfbe95d4b26809">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="week3-biomarkers_files/figure-revealjs/unnamed-chunk-14-1.png" width="576"></p>
+<p></p><figcaption>Adjusted vs.&nbsp;raw p-values for each multiple correction method.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-2">
+<div class="cell" data-hash="week3-biomarkers_cache/revealjs/unnamed-chunk-15_8664fccaa7abd98bb8f00161001014af">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># top 10</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>tt_corrected <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">select</span>(protein, p_by) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">slice_min</span>(<span class="at">order_by =</span> p_by, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+   protein              p_by
+   &lt;chr&gt;               &lt;dbl&gt;
+ 1 DERM            0.0000845
+ 2 RELT            0.000400 
+ 3 Calcineurin     0.00110  
+ 4 C1QR1           0.00122  
+ 5 MRC2            0.00132  
+ 6 IgD             0.00136  
+ 7 CXCL16, soluble 0.00149  
+ 8 PTN             0.00154  
+ 9 FSTL1           0.00159  
+10 Cadherin-5      0.00179  </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="neat-graphic-volcano-plot" class="slide level2">
+<h2>Neat graphic: volcano plot</h2>
+
+<img data-src="week3-biomarkers_files/figure-revealjs/unnamed-chunk-16-1.png" width="288" class="r-stretch quarto-figure-center"><p class="caption">Upregulation and downregulation of serum levels of proteins analyzed – p-values against number of doublings (positive) or halvings (negative) of serum level in ASD group relative to TD group.</p></section>
+<section id="next-time" class="slide level2">
+<h2>Next time</h2>
+<p>Other approaches to the same problem:</p>
+<ul>
+<li class="fragment"><p>correlation with ADOS (severity diagnostic score)</p></li>
+<li class="fragment"><p>variable importance in random forest classifier</p></li>
+</ul>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
+
+<div class="footer footer-default">
+
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-benjamini1995controlling" class="csl-entry" role="doc-biblioentry">
+Benjamini, Yoav, and Yosef Hochberg. 1995. <span>“Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 57 (1): 289–300.
+</div>
+<div id="ref-benjamini2001control" class="csl-entry" role="doc-biblioentry">
+Benjamini, Yoav, and Daniel Yekutieli. 2001. <span>“The Control of the False Discovery Rate in Multiple Testing Under Dependency.”</span> <em>Annals of Statistics</em>, 1165–88.
+</div>
+<div id="ref-hewitson2021blood" class="csl-entry" role="doc-biblioentry">
+Hewitson, Laura, Jeremy A Mathews, Morgan Devlin, Claire Schutte, Jeon Lee, and Dwight C German. 2021. <span>“Blood Biomarker Discovery for Autism Spectrum Disorder: A Proteomic Analysis.”</span> <em>PLoS One</em> 16 (2): e0246581.
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        setTimeout(function() {
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          let href = ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    });
+    </script>
+    
+
+</body></html>

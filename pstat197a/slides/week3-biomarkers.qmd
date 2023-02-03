@@ -1,0 +1,557 @@
+---
+title: "Multiple testing corrections"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 4
+    fig-height: 2
+    fig-align: 'left'
+    slide-number: true
+execute:
+  message: false
+  warning: false
+  echo: false
+  cache: true
+---
+
+## Announcements/reminders
+
+-   don't forget to fill out attendance form for each class meeting
+
+    -   but don't fill it out if you don't come to class
+
+-   first group assignment due Friday 10/14 11:59pm PST
+
+    -   please add your lab scripts from labs 1, 2
+    -   `labs/labN-TITLE-USERNAME.R`
+
+-   section attendance is expected
+
+# Module introduction
+
+## Background
+
+Levels of proteins in plasma/serum are altered in autism spectrum disorder (ASD).
+
+. . .
+
+***Goal:*** identify a panel of proteins useful as a blood biomarker for early detection of ASD.
+
+-   a 'panel' is a handful of tests that help distinguish between conditions
+
+-   so in other words, find proteins whose serum levels are predictive of ASD
+
+## Dataset
+
+Data from @hewitson2021blood
+
+-   Serum samples from 76 boys with ASD and 78 typically developing (TD) boys, 18 months-8 years of age
+
+-   A total of 1,125 proteins were analyzed from each sample
+
+    -   1,317 measured, 192 failed quality control
+
+    -   (we don't know which ones failed QC so will use all)
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(infer)
+
+# data import
+sample_info <- read_csv('data/biomarker-sample-info.csv')
+asd <- read_csv('data/biomarker-clean.csv')
+
+# data preprocessing
+trim_fn <- function(x){
+  x[x > 3] <- 3
+  x[x < -3] <- -3
+  
+  return(x)
+}
+
+asd_clean <- asd %>% 
+  select(-ados) %>%
+  # log transform
+  mutate(across(.cols = -group, log10)) %>%
+  # center and scale
+  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
+  # trim outliers (affects results??)
+  mutate(across(.cols = -group, trim_fn))
+```
+
+## Sample characteristics {.scrollable}
+
+::: panel-tabset
+### Age
+
+```{r}
+sample_info %>% 
+  filter(section == 'age') %>%
+  select(-section) %>%
+  kable()
+```
+
+### Demographics
+
+```{r}
+sample_info %>% 
+  filter(section == 'demographics') %>%
+  select(-section) %>%
+  kable()
+```
+
+### Comorbidities
+
+```{r}
+sample_info %>% 
+  filter(section == 'comorbidities') %>%
+  select(-section) %>%
+  kable()
+```
+
+### Medications
+
+```{r}
+sample_info %>% 
+  filter(section == 'medication') %>%
+  select(-section) %>%
+  kable()
+```
+:::
+
+## Data glimpse {.scrollable}
+
+::: panel-tabset
+### Example rows
+
+```{r}
+#| echo: true
+asd_clean %>% head(5)
+```
+
+### Group sizes
+
+```{r}
+asd_clean %>% count(group)
+```
+:::
+
+## Module objectives
+
+***Methodology***
+
+-   multiple testing
+
+-   classification: logistic regression; random forests
+
+-   variable selection: LASSO regularization
+
+-   classification accuracy measures
+
+. . .
+
+***Concepts***
+
+-   data partitioning for predictive modeling
+
+-   model interpretability
+
+-   high dimensional data $n < p$
+
+# Multiple testing
+
+## Marginal differences
+
+***Idea***: test for a significant difference in serum levels between groups for a given protein, say protein $i$.
+
+. . .
+
+Notation:
+
+-   $\mu^i_{ASD}$: mean serum level of protein $i$ in the ASD group
+
+-   $\mu^i_{TD}$: mean serum level of protein $i$ in the TD group
+
+-   $\delta_i$: difference in means $\mu^i_{ASD} - \mu^i_{TD}$
+
+-   hats indicate sample estimates (*e.g.* $\hat{\delta}_i$)
+
+## Review: $t$-test
+
+The $t$-test tests $H_{0i}: \delta_i = 0$ against its negation $\neg H_{0i}: \delta_i \neq 0$ using the rule
+
+$$
+\text{reject $H_{0i}$ if}\qquad \left|\frac{\hat{\delta}_i}{SE(\hat{\delta}_i)}\right| > t_\alpha
+$$
+
+-   $SE(\hat{\delta}_i)$ is a *standard error* for the difference estimate; quantifies variability of the estimate
+-   procedure controls type I error at $\alpha$, ensuring $P\left(\text{reject}_i|H_i\right) \leq 0.05$
+
+## Review: $p$-values
+
+The $p$-value for a test is the probability of obtaining a sample at least as contrary to $H_{0i}$ as the sample in hand, assuming $H_{0i}$ is true.
+
+. . .
+
+By construction, $p < \alpha$ just in case the test rejects with type I error controlled at $\alpha$.
+
+. . .
+
+So a common heuristic is:
+
+$$
+\text{reject $H_{0i}$ if} \qquad p_i \leq \alpha
+$$
+
+## One test
+
+Here is R output for one test.
+
+```{r}
+#| echo: true
+asd %>%
+  t_test(formula = CHIP ~ group,
+         order = c('ASD', 'TD'),
+         alternative = 'two-sided',
+         var.equal = F)
+```
+
+. . .
+
+Questions:
+
+1.  What are the hypotheses in words?
+2.  What are the test assumptions?
+3.  What is the conclusion of the test?
+
+## Many tests
+
+A plausible approach for identifying a protein panel, then, is to select all those proteins for which the $t$-test indicates a significant difference.
+
+-   1,317 tests
+
+-   easy to compute
+
+-   conceptually straightforward
+
+. . .
+
+How likely are mistakes?
+
+## Test outcomes {.scrollable}
+
+Let $H_i$ denote the $i$th null hypothesis and $R_i$ denote the event that $H_i$ is rejected.
+
+::: smaller
+|            | $H_i$                | $\neg H_i$               |
+|------------|----------------------|--------------------------|
+| $R_i$      | $V$ false rejections | $S$ correct              |
+| $\neg R_i$ | $T$ correct          | $W$ false non-rejections |
+:::
+
+. . .
+
+The ***multiple testing problem*** is that individual error rates compound over multiple tests.
+
+## Familywise error
+
+***Familywise error rate (FWER)*** is the probability of one or more type I errors: $P(V \geq 1)$.
+
+. . .
+
+Suppose there are $m$ true hypotheses $\mathcal{H}: \{H_i: i \in C\}$.
+
+. . .
+
+If the tests are independent and exact then:
+
+$$
+\begin{aligned}
+P(V \geq 1) 
+&= P\left[ \bigcup_{i \in C} R_i | \mathcal{H} \right] \\
+&= 1 - \prod_{i \in C} \left( 1- P(R_i|H_i) \right) \\
+&= 1 - (1 - \alpha)^m
+\end{aligned} 
+$$
+
+## FWER Example
+
+If individual tests are exactly controlled at $\alpha = 0.05$ and independent, at least one error is nearly certain by 100 tests.
+
+```{r}
+#| fig-cap: Familywise error rate as a function of the number of tests, assuming tests are independent with exact type I error 0.05.
+#| fig-height: 4
+#| fig-width: 5
+#| fig-align: center
+fx <- function(m, alpha){1 - (1 - alpha)^m}
+curve(fx(x, 0.05), from = 0, to = 100,
+      xlab = 'number of true hypotheses', 
+      ylab = 'FWER')
+```
+
+## Bonferroni correction
+
+The simplest ***multiple testing correction*** is based on the Bonferroni inequality:
+
+$$
+P\left[ \bigcup_{i \in C} R_i | \mathcal{H} \right] \leq \sum_{i \in C} P(R_i|\mathcal{H})
+$$
+
+. . .
+
+If the individual tests are controlled at level $\alpha$, then $FWER \leq m\alpha$.
+
+. . .
+
+So a simple solution is to test at level $\alpha^* = \frac{\alpha}{m}$.
+
+. . .
+
+In other words, reject if $p_i < \frac{\alpha}{m}$.
+
+## False discovery rate
+
+FWER control will limit false rejections, but at the cost of power; controlling the probability of one type I error is a conservative approach.
+
+. . .
+
+More common in modern applications are procedures to control ***false discovery rate***: the expected proportion of rejections that are false.
+
+$$
+\text{FDR} = \mathbb{E}\left[\frac{\text{false rejections}}{\text{total rejections}}\right]
+$$
+
+. . .
+
+Conceptually, if say FDR is controlled at $0.05$, then one would expect 5% of rejections to be false.
+
+## Benjamini-Hochberg correction
+
+@benjamini1995controlling conceived a procedure based on sorting $p$-values.
+
+. . .
+
+Supposing $m$ independent tests are performed:
+
+1.  Sort the $p$-values in increasing order $p_{(1)}, p_{(2)}, \dots, p_{(m)}$
+2.  Reject whenever $p_{(i)} < \frac{i\alpha}{m}$
+
+. . .
+
+They proved that this controls FDR at $\alpha$.
+
+## Benjamini-Yekutieli correction
+
+The Benjamini-Hochberg assumes tests are independent, which is obviously not true in most situations. (Why?)
+
+. . .
+
+@benjamini2001control modified the correction to hold without the independence assumption:
+
+1.  Sort the $p$-values in increasing order $p_{(1)}, p_{(2)}, \dots, p_{(m)}$
+2.  Reject whenever $p_{(i)} < \frac{i\alpha}{m H_m}$
+
+. . .
+
+Above, $H_m = \sum_{i = 1}^m \frac{1}{i}$ .
+
+## Implementing corrections
+
+The easiest way to implement these corrections is to adjust the $p$-values with a multiplier:
+
+-   (Bonferroni) $p^b_i = m\times p_i$
+-   (Benjamini-Hochberg) $p^{bh}_{(i)} = \frac{m}{i} p_{(i)}$
+-   (Benjamini-Yekuteili) $p^{bh}_{(i)} = \frac{m H_m}{i} p_{(i)}$
+
+## Computations {.scrollable}
+
+::: panel-tabset
+### Preprocessing
+
+```{r}
+#| echo: true
+trim_fn <- function(x){
+  x[x > 3] <- 3
+  x[x < -3] <- -3
+  
+  return(x)
+}
+
+asd_clean <- asd %>% 
+  select(-ados) %>%
+  # log transform
+  mutate(across(.cols = -group, log10)) %>%
+  # center and scale
+  mutate(across(.cols = -group, ~ scale(.x)[, 1])) %>%
+  # trim outliers (affects results??)
+  mutate(across(.cols = -group, trim_fn))
+
+asd_nested <- asd_clean %>%
+  pivot_longer(-group, 
+               names_to = 'protein', 
+               values_to = 'level') %>%
+  nest(data = c(level, group))
+
+asd_nested %>% head(4)
+```
+
+### Assumptions
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| fig-align: center
+# check variance ratios
+asd_clean %>% 
+  pivot_longer(-group, 
+               names_to = "protein", 
+               values_to = "level") %>%
+  group_by(protein, group) %>%
+  summarize(level.var = var(level), .groups = 'drop') %>%
+  pivot_wider(id_cols = protein, 
+              names_from = 'group', 
+              values_from = 'level.var') %>%
+  mutate(var.ratio = ASD/TD) %>%
+  ggplot(aes(x = var.ratio)) +
+  geom_histogram(bins = 50) +
+  scale_x_log10() +
+  labs(x = 'var(ASD)/var(TD)')
+```
+
+### Tests
+
+```{r}
+#| echo: true
+# compute for several groups
+test_fn <- function(.df){
+  t_test(.df, 
+         formula = level ~ group,
+         order = c('ASD', 'TD'),
+         alternative = 'two-sided',
+         var.equal = F)
+}
+
+tt_out <- asd_nested %>%
+  mutate(ttest = map(data, test_fn)) %>%
+  unnest(ttest) %>%
+  arrange(p_value)
+
+tt_out %>% head(5)
+```
+
+### Corrections
+
+```{r}
+#| echo: true
+# multiple testing corrections
+m <- nrow(tt_out)
+hm <- log(m) + 1/(2*m) - digamma(1)
+  
+tt_corrected <- tt_out %>%
+  select(data, protein, p_value) %>%
+  mutate(rank = row_number()) %>%
+  mutate(p_bh = p_value*m/rank,
+         p_by = p_value*m*hm/rank,
+         p_bonf = p_value*m)
+
+tt_corrected %>% head(5)
+```
+:::
+
+## Results
+
+::: panel-tabset
+### Comparing methods
+
+```{r}
+#| fig-align: center
+#| fig-width: 6
+#| fig-height: 4
+#| fig-cap: Adjusted vs. raw p-values for each multiple correction method.
+tt_corrected %>%
+  rename(bh.adj = p_bh,
+         by.adj = p_by,
+         bonf.adj = p_bonf,
+         p.value = p_value) %>%
+  mutate(p.raw = p.value) %>%
+  pivot_longer(cols = c(contains('.adj'), p.raw), 
+               names_to = 'correction',
+               values_to = 'p.adj') %>%
+  ggplot(aes(x = p.value, 
+             y = p.adj, 
+             color = correction,
+             linetype = correction)) +
+  geom_path() +
+  scale_y_log10() +
+  scale_x_sqrt() +
+  labs(x = 'p value', y = 'adjusted p value')
+```
+
+### Top 10 proteins
+
+```{r}
+#| echo: true
+# top 10
+tt_corrected %>%
+  select(protein, p_by) %>%
+  slice_min(order_by = p_by, n = 10)
+```
+:::
+
+## Neat graphic: volcano plot
+
+```{r}
+#| fig-width: 3
+#| fig-height: 3
+#| fig-cap: Upregulation and downregulation of serum levels of proteins analyzed -- p-values against number of doublings (positive) or halvings (negative) of serum level in ASD group relative to TD group.
+#| fig-align: center
+## 'volcano' plot
+ratio_fn <- function(.df){
+  .df %>%
+    group_by(group) %>%
+    summarize(diff = mean(level_raw)) %>%
+    spread(group, diff) %>%
+    mutate(ratio = ASD/TD) %>%
+    pull(ratio)
+}
+
+ratios <- asd %>%
+  select(-ados) %>%
+  pivot_longer(cols = -group,
+               names_to = 'protein',
+               values_to = 'level_raw') %>%
+  nest(data = c(group, level_raw)) %>%
+  mutate(ratio = map(data, ratio_fn)) %>%
+  select(protein, ratio) %>%
+  unnest(cols = ratio)
+
+plot_df <- tt_corrected %>%
+  select(p_by, protein) %>%
+  left_join(ratios, by = 'protein')
+
+plot_df %>%
+  ggplot(aes(x = log2(ratio), y = -log10(p_by))) +
+  geom_point(aes(color = factor(sign(log2(ratio))),
+                 alpha = p_by < 0.05)) +
+  geom_hline(yintercept = -log10(0.05), linetype = 'dotdash') +
+  geom_vline(xintercept = 0, linetype = 'dotdash') +
+  guides(color = guide_none(), alpha = guide_none()) +
+  labs(y = '-log10(p)')
+```
+
+## Next time
+
+Other approaches to the same problem:
+
+-   correlation with ADOS (severity diagnostic score)
+
+-   variable importance in random forest classifier
+
+## References

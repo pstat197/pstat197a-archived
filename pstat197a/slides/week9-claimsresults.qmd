@@ -1,0 +1,93 @@
+---
+title: "Results from claims assignment"
+subtitle: "PSTAT197A/CMPSC190DD Fall 2022"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+bibliography: refs.bib
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    fig-width: 6
+    fig-height: 4
+    fig-align: 'left'
+    slide-number: true
+code-copy: true
+execute:
+  message: false
+  warning: false
+  echo: true
+  cache: true
+---
+
+## Today's agenda
+
+1.  Review results of claims assignment
+2.  Discuss vignette guidelines
+3.  Remaining time to organize in groups
+
+## Preface
+
+My goal here is to use the results of your work on the last assignment to learn as a group what worked well and what didn't.
+
+. . .
+
+As a disclaimer, many groups did not successfully generate predictions according to instructions. This is okay.
+
+. . .
+
+My goal is ***not*** to judge anyone based on results or having completed the assignment.
+
+## Accessing claims predictions
+
+Results from the last assignment are now available online.
+
+```{r}
+library(tidyverse)
+
+github_url <- "https://github.com/pstat197/pstat197a/raw/main/materials/slides/data/f22-claims-evals.RData"
+
+load(url(github_url))
+
+evals %>% head()
+```
+
+## Checking errors: example
+
+```{r}
+evals %>%
+  filter(group == 4) %>%
+  pull(eval)
+```
+
+## Accuracies {.scrollable}
+
+```{r}
+accuracies <- evals %>%
+  rowwise() %>%
+  filter(is_tibble(eval)) %>%
+  ungroup() %>%
+  unnest(eval)
+
+accuracies %>% head(8) %>% knitr::kable()
+```
+
+## Comparisons
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 6
+
+theme_set(theme(text = element_text(size = 20)))
+accuracies %>%
+  ggplot(aes(x = factor(group), y = .estimate)) +
+  geom_point(aes(alpha = n), size = 4) +
+  facet_wrap(~class*.metric, nrow = 2) +
+  labs(x = 'group', y = '')
+```
+
+## Vignette guidelines
+
+Let's review as a group.

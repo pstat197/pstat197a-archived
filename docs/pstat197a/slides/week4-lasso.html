@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.0.38">
+
+  <meta name="author" content="Trevor Ruiz">
+  <title>Variable selection with the LASSO</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="center">
+  <h1 class="title">Variable selection with the LASSO</h1>
+  <p class="subtitle">PSTAT197A/CMPSC190DD Fall 2022</p>
+  <p class="author">Trevor Ruiz</p>
+  <p class="institute">UCSB</p>
+</section>
+
+<section id="announcementsreminders" class="slide level2">
+<h2>Announcements/reminders</h2>
+<ul>
+<li class="fragment"><p>Office hours follow all class and section meetings in building 434 room 122.</p>
+<ul>
+<li class="fragment">Enter through courtyard, not on Storke side</li>
+</ul></li>
+</ul>
+</section>
+<section>
+<section id="design-assessment" class="title-slide slide level1 center">
+<h1>Design assessment</h1>
+
+</section>
+<section id="minute-activity" class="slide level2">
+<h2>10 Minute Activity</h2>
+<p>With your table, share your diagrams.</p>
+<ul>
+<li class="fragment"><p>identify common elements/aspects</p></li>
+<li class="fragment"><p>pick one or a blend that you like best and sketch it on the whiteboard</p></li>
+</ul>
+</section>
+<section id="design-assessment-1" class="slide level2">
+<h2>Design assessment</h2>
+<p>How would you score the proteomics analysis along the following dimensions?</p>
+<ul>
+<li class="fragment"><p><strong><em>reproducibility:</em></strong> how easy is it to reproduce the results exactly?</p></li>
+<li class="fragment"><p><strong><em>transparency:</em></strong> how widely distributed is potential variability in results across the elements of the data analysis?</p></li>
+<li class="fragment"><p><strong><em>replicability:</em></strong> how likely is it that if the study were conducted with new subjects, the same panel would be obtained?</p></li>
+</ul>
+</section></section>
+<section>
+<section id="an-alternative-analysis" class="title-slide slide level1 center">
+<h1>An alternative analysis</h1>
+
+</section>
+<section id="two-steps" class="slide level2">
+<h2>Two steps</h2>
+<p>At a very high level, the analysis we’ve covered is a ‘two-step’ procedure:</p>
+<ol type="1">
+<li class="fragment">(selection step) select variables</li>
+<li class="fragment">(estimation step) train a classifier using selected variables</li>
+</ol>
+<div class="fragment">
+<p>A likely reason for this approach is that one cannot fit a regression model with 1317 predictors based on only 154 data points (<span class="math inline">\(p &gt; n\)</span>).</p>
+</div>
+</section>
+<section id="a-schematic" class="slide level2">
+<h2>A schematic</h2>
+<p>Here’s a representation of the design of the analysis procedure.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="699" height="341" viewbox="0.00 0.00 699.01 341.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 337)">
+<title>
+G
+</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-337 695.01,-337 695.01,4 -4,4"></polygon> <g id="clust1" class="cluster">
+<title>
+cluster1
+</title>
+<polygon fill="none" stroke="white" points="83,-65 83,-325 510.76,-325 510.76,-65 83,-65"></polygon> <text text-anchor="middle" x="296.88" y="-303" font-family="sans-serif" font-size="20.00">statistical modeling</text> </g> <g id="clust3" class="cluster">
+<title>
+cluster2
+</title>
+<polygon fill="none" stroke="white" points="569.76,-13 569.76,-163 683.01,-163 683.01,-13 569.76,-13"></polygon> <text text-anchor="middle" x="626.39" y="-141" font-family="sans-serif" font-size="20.00">outputs</text> </g> <!-- data --> <g id="node1" class="node">
+<title>
+data
+</title>
+<polygon fill="lightgrey" stroke="black" points="54,-120 0,-120 0,-84 54,-84 54,-120"></polygon> <text text-anchor="middle" x="27" y="-97.8" font-family="sans-serif" font-size="14.00">data</text> </g> <!-- fit --> <g id="node3" class="node">
+<title>
+fit
+</title>
+<ellipse fill="lightgrey" stroke="black" cx="448.29" cy="-102" rx="54.45" ry="29.33"></ellipse> <text text-anchor="middle" x="448.29" y="-106.2" font-family="sans-serif" font-size="14.00">logistic </text> <text text-anchor="middle" x="448.29" y="-89.4" font-family="sans-serif" font-size="14.00"> regression</text> </g> <!-- data&#45;&gt;fit --> <g id="edge7" class="edge">
+<title>
+data-&gt;fit
+</title>
+<path fill="none" stroke="black" d="M47.82,-83.93C57.65,-76.19 70.15,-68.01 83,-64 189.1,-30.91 320.13,-60.72 392.59,-82.96"></path> <polygon fill="black" stroke="black" points="391.83,-86.39 402.42,-86.04 393.92,-79.71 391.83,-86.39"></polygon> </g> <!-- s1 --> <g id="node4" class="node">
+<title>
+s1
+</title>
+<ellipse fill="lightgrey" stroke="black" cx="147.66" cy="-256" rx="46.57" ry="29.33"></ellipse> <text text-anchor="middle" x="147.66" y="-260.2" font-family="sans-serif" font-size="14.00">multiple </text> <text text-anchor="middle" x="147.66" y="-243.4" font-family="sans-serif" font-size="14.00"> testing</text> </g> <!-- data&#45;&gt;s1 --> <g id="edge4" class="edge">
+<title>
+data-&gt;s1
+</title>
+<path fill="none" stroke="black" d="M33.12,-120.2C40.7,-144.56 56.92,-188.07 83,-217 88.31,-222.89 94.72,-228.19 101.39,-232.85"></path> <polygon fill="black" stroke="black" points="99.64,-235.88 109.93,-238.4 103.46,-230.02 99.64,-235.88"></polygon> </g> <!-- s2 --> <g id="node5" class="node">
+<title>
+s2
+</title>
+<ellipse fill="lightgrey" stroke="black" cx="147.66" cy="-179" rx="56.83" ry="29.33"></ellipse> <text text-anchor="middle" x="147.66" y="-183.2" font-family="sans-serif" font-size="14.00">correlation </text> <text text-anchor="middle" x="147.66" y="-166.4" font-family="sans-serif" font-size="14.00"> analysis</text> </g> <!-- data&#45;&gt;s2 --> <g id="edge5" class="edge">
+<title>
+data-&gt;s2
+</title>
+<path fill="none" stroke="black" d="M53.54,-120.08C62.75,-126.48 73.27,-133.67 83,-140 88.77,-143.75 94.88,-147.63 100.94,-151.41"></path> <polygon fill="black" stroke="black" points="99.41,-154.58 109.75,-156.86 103.09,-148.62 99.41,-154.58"></polygon> </g> <!-- s3 --> <g id="node6" class="node">
+<title>
+s3
+</title>
+<ellipse fill="lightgrey" stroke="black" cx="147.66" cy="-102" rx="44.06" ry="29.33"></ellipse> <text text-anchor="middle" x="147.66" y="-106.2" font-family="sans-serif" font-size="14.00">random </text> <text text-anchor="middle" x="147.66" y="-89.4" font-family="sans-serif" font-size="14.00"> forest</text> </g> <!-- data&#45;&gt;s3 --> <g id="edge6" class="edge">
+<title>
+data-&gt;s3
+</title>
+<path fill="none" stroke="black" d="M54.04,-102C65.57,-102 79.57,-102 93.16,-102"></path> <polygon fill="black" stroke="black" points="93.43,-105.5 103.43,-102 93.43,-98.5 93.43,-105.5"></polygon> </g> <!-- join --> <g id="node9" class="node">
+<title>
+join
+</title>
+<ellipse fill="lightgrey" stroke="black" cx="540.26" cy="-42" rx="0.36" ry="0.36"></ellipse> </g> <!-- data&#45;&gt;join --> <g id="edge11" class="edge">
+<title>
+data-&gt;join
+</title>
+<path fill="none" stroke="black" d="M38.14,-83.76C55.96,-54.43 95.86,0 146.66,0 146.66,0 146.66,0 449.29,0 492.24,0 536.88,-39.42 539.63,-41.88"></path> <text text-anchor="middle" x="299.07" y="-4.2" font-family="Times,serif" font-size="14.00">multiple partitioning</text> </g> <!-- selec --> <g id="node2" class="node">
+<title>
+selec
+</title>
+<ellipse fill="lightgrey" stroke="black" cx="299.07" cy="-151" rx="51.35" ry="29.33"></ellipse> <text text-anchor="middle" x="299.07" y="-155.2" font-family="sans-serif" font-size="14.00">ensemble </text> <text text-anchor="middle" x="299.07" y="-138.4" font-family="sans-serif" font-size="14.00"> selection</text> </g> <!-- selec&#45;&gt;fit --> <g id="edge8" class="edge">
+<title>
+selec-&gt;fit
+</title>
+<path fill="none" stroke="black" d="M343.84,-136.43C358.93,-131.41 376.04,-125.72 391.93,-120.43"></path> <polygon fill="black" stroke="black" points="393.26,-123.67 401.64,-117.19 391.05,-117.03 393.26,-123.67"></polygon> </g> <!-- sel --> <g id="node7" class="node">
+<title>
+sel
+</title>
+<polygon fill="lightgrey" stroke="black" points="661.42,-122.6 591.36,-122.6 591.36,-81.4 661.42,-81.4 661.42,-122.6"></polygon> <text text-anchor="middle" x="626.39" y="-106.2" font-family="sans-serif" font-size="14.00">selected </text> <text text-anchor="middle" x="626.39" y="-89.4" font-family="sans-serif" font-size="14.00"> variables</text> </g> <!-- fit&#45;&gt;sel --> <g id="edge9" class="edge">
+<title>
+fit-&gt;sel
+</title>
+<path fill="none" stroke="black" d="M503.08,-102C528.1,-102 557.5,-102 581.2,-102"></path> <polygon fill="black" stroke="black" points="581.32,-105.5 591.32,-102 581.32,-98.5 581.32,-105.5"></polygon> </g> <!-- fit&#45;&gt;join --> <g id="edge10" class="edge">
+<title>
+fit-&gt;join
+</title>
+<path fill="none" stroke="black" d="M483.49,-79.32C508.31,-62.86 537.85,-43.27 539.67,-42.06"></path> </g> <!-- s1&#45;&gt;selec --> <g id="edge1" class="edge">
+<title>
+s1-&gt;selec
+</title>
+<path fill="none" stroke="black" d="M179.59,-234.35C187.64,-228.71 196.31,-222.63 204.33,-217 221.8,-204.73 241.1,-191.15 257.62,-179.51"></path> <polygon fill="black" stroke="black" points="259.82,-182.24 265.98,-173.62 255.79,-176.52 259.82,-182.24"></polygon> </g> <!-- s2&#45;&gt;selec --> <g id="edge2" class="edge">
+<title>
+s2-&gt;selec
+</title>
+<path fill="none" stroke="black" d="M201.34,-169.13C213.8,-166.79 227.16,-164.29 239.86,-161.91"></path> <polygon fill="black" stroke="black" points="240.68,-165.32 249.86,-160.03 239.39,-158.44 240.68,-165.32"></polygon> </g> <!-- s3&#45;&gt;selec --> <g id="edge3" class="edge">
+<title>
+s3-&gt;selec
+</title>
+<path fill="none" stroke="black" d="M187.53,-114.75C204.9,-120.45 225.67,-127.26 244.49,-133.43"></path> <polygon fill="black" stroke="black" points="243.53,-136.8 254.12,-136.59 245.71,-130.15 243.53,-136.8"></polygon> </g> <!-- pred --> <g id="node8" class="node">
+<title>
+pred
+</title>
+<polygon fill="lightgrey" stroke="black" points="675.14,-62.6 577.64,-62.6 577.64,-21.4 675.14,-21.4 675.14,-62.6"></polygon> <text text-anchor="middle" x="626.39" y="-46.2" font-family="sans-serif" font-size="14.00">accuracy </text> <text text-anchor="middle" x="626.39" y="-29.4" font-family="sans-serif" font-size="14.00"> quantification</text> </g> <!-- join&#45;&gt;pred --> <g id="edge12" class="edge">
+<title>
+join-&gt;pred
+</title>
+<path fill="none" stroke="black" d="M540.82,-42C541.76,-42 553.28,-42 567.53,-42"></path> <polygon fill="black" stroke="black" points="567.73,-45.5 577.73,-42 567.73,-38.5 567.73,-45.5"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment"><p>lots of failure modes</p></li>
+<li class="fragment"><p>repeated use of the same data for different sub-analyses</p></li>
+</ul>
+</section>
+<section id="what-about-one-step" class="slide level2">
+<h2>What about one step?</h2>
+<p>If we did <em>simultaneous</em> selection and estimation, our schematic might look like this:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<p>
+<svg width="607" height="182" viewbox="0.00 0.00 606.78 182.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style=" display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 178)">
+<title>
+G
+</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-178 602.78,-178 602.78,4 -4,4"></polygon> <g id="clust1" class="cluster">
+<title>
+cluster1
+</title>
+<polygon fill="none" stroke="white" points="82,-8 82,-158 229.04,-158 229.04,-8 82,-8"></polygon> <text text-anchor="middle" x="155.52" y="-136" font-family="sans-serif" font-size="20.00">data partitioning</text> </g> <g id="clust2" class="cluster">
+<title>
+cluster2
+</title>
+<polygon fill="none" stroke="white" points="249.04,-60 249.04,-166 420.53,-166 420.53,-60 249.04,-60"></polygon> <text text-anchor="middle" x="334.79" y="-144" font-family="sans-serif" font-size="20.00">statistical modeling</text> </g> <g id="clust3" class="cluster">
+<title>
+cluster3
+</title>
+<polygon fill="none" stroke="white" points="477.53,-8 477.53,-158 590.78,-158 590.78,-8 477.53,-8"></polygon> <text text-anchor="middle" x="534.15" y="-136" font-family="sans-serif" font-size="20.00">outputs</text> </g> <!-- data --> <g id="node1" class="node">
+<title>
+data
+</title>
+<polygon fill="lightgrey" stroke="black" points="54,-85 0,-85 0,-49 54,-49 54,-85"></polygon> <text text-anchor="middle" x="27" y="-62.8" font-family="sans-serif" font-size="14.00">data</text> </g> <!-- train --> <g id="node2" class="node">
+<title>
+train
+</title>
+<polygon fill="lightgrey" stroke="black" points="187.07,-117.6 123.98,-117.6 123.98,-76.4 187.07,-76.4 187.07,-117.6"></polygon> <text text-anchor="middle" x="155.52" y="-101.2" font-family="sans-serif" font-size="14.00">training </text> <text text-anchor="middle" x="155.52" y="-84.4" font-family="sans-serif" font-size="14.00"> set</text> </g> <!-- data&#45;&gt;train --> <g id="edge1" class="edge">
+<title>
+data-&gt;train
+</title>
+<path fill="none" stroke="black" d="M54.22,-73.22C71.47,-77.31 94.41,-82.75 114,-87.39"></path> <polygon fill="black" stroke="black" points="113.35,-90.83 123.88,-89.74 114.96,-84.02 113.35,-90.83"></polygon> </g> <!-- test --> <g id="node3" class="node">
+<title>
+test
+</title>
+<polygon fill="lightgrey" stroke="black" points="182.52,-57.6 128.52,-57.6 128.52,-16.4 182.52,-16.4 182.52,-57.6"></polygon> <text text-anchor="middle" x="155.52" y="-41.2" font-family="sans-serif" font-size="14.00">test </text> <text text-anchor="middle" x="155.52" y="-24.4" font-family="sans-serif" font-size="14.00"> set</text> </g> <!-- data&#45;&gt;test --> <g id="edge2" class="edge">
+<title>
+data-&gt;test
+</title>
+<path fill="none" stroke="black" d="M54.22,-60.78C72.79,-56.38 97.95,-50.41 118.42,-45.56"></path> <polygon fill="black" stroke="black" points="119.42,-48.92 128.34,-43.21 117.8,-42.11 119.42,-48.92"></polygon> </g> <!-- fit --> <g id="node4" class="node">
+<title>
+fit
+</title>
+<ellipse fill="lightgrey" stroke="black" cx="334.79" cy="-97" rx="65.98" ry="29.33"></ellipse> <text text-anchor="middle" x="334.79" y="-101.2" font-family="sans-serif" font-size="14.00">selection and </text> <text text-anchor="middle" x="334.79" y="-84.4" font-family="sans-serif" font-size="14.00"> estimation</text> </g> <!-- train&#45;&gt;fit --> <g id="edge3" class="edge">
+<title>
+train-&gt;fit
+</title>
+<path fill="none" stroke="black" d="M187.4,-97C207.1,-97 233.55,-97 258.54,-97"></path> <polygon fill="black" stroke="black" points="258.77,-100.5 268.77,-97 258.77,-93.5 258.77,-100.5"></polygon> </g> <!-- join --> <g id="node7" class="node">
+<title>
+join
+</title>
+<ellipse fill="lightgrey" stroke="black" cx="449.03" cy="-37" rx="0.36" ry="0.36"></ellipse> </g> <!-- test&#45;&gt;join --> <g id="edge6" class="edge">
+<title>
+test-&gt;join
+</title>
+<path fill="none" stroke="black" d="M182.69,-37C253.25,-37 442.49,-37 448.39,-37"></path> </g> <!-- sel --> <g id="node5" class="node">
+<title>
+sel
+</title>
+<polygon fill="lightgrey" stroke="black" points="569.19,-117.6 499.12,-117.6 499.12,-76.4 569.19,-76.4 569.19,-117.6"></polygon> <text text-anchor="middle" x="534.15" y="-101.2" font-family="sans-serif" font-size="14.00">selected </text> <text text-anchor="middle" x="534.15" y="-84.4" font-family="sans-serif" font-size="14.00"> variables</text> </g> <!-- fit&#45;&gt;sel --> <g id="edge4" class="edge">
+<title>
+fit-&gt;sel
+</title>
+<path fill="none" stroke="black" d="M400.69,-97C429.52,-97 462.73,-97 488.69,-97"></path> <polygon fill="black" stroke="black" points="488.97,-100.5 498.97,-97 488.97,-93.5 488.97,-100.5"></polygon> </g> <!-- fit&#45;&gt;join --> <g id="edge5" class="edge">
+<title>
+fit-&gt;join
+</title>
+<path fill="none" stroke="black" d="M377.77,-74.66C408.82,-58.13 446.12,-38.28 448.42,-37.06"></path> </g> <!-- pred --> <g id="node6" class="node">
+<title>
+pred
+</title>
+<polygon fill="lightgrey" stroke="black" points="582.91,-57.6 485.4,-57.6 485.4,-16.4 582.91,-16.4 582.91,-57.6"></polygon> <text text-anchor="middle" x="534.15" y="-41.2" font-family="sans-serif" font-size="14.00">accuracy </text> <text text-anchor="middle" x="534.15" y="-24.4" font-family="sans-serif" font-size="14.00"> quantification</text> </g> <!-- join&#45;&gt;pred --> <g id="edge7" class="edge">
+<title>
+join-&gt;pred
+</title>
+<path fill="none" stroke="black" d="M449.59,-37C450.49,-37 461.29,-37 474.85,-37"></path> <polygon fill="black" stroke="black" points="475.11,-40.5 485.11,-37 475.11,-33.5 475.11,-40.5"></polygon> </g> </g>
+</svg>
+</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sparse-estimation" class="slide level2">
+<h2>Sparse estimation</h2>
+<p>Imagine a logistic regression model with all 1317 predictors:</p>
+<p><span class="math display">\[
+\log\left(\frac{p_i}{1 - p_i}\right) = \beta_0 + \sum_{j = 1}^{1317} \beta_j x_{ij}
+\]</span></p>
+<div class="fragment">
+<p>Suppose we also assume <strong><em>sparsity constraint</em></strong>: a condition that most of them must be zero.</p>
+</div>
+<div class="fragment">
+<p>As long as the constraint is strong enough so that the number of nonzero coefficients is <span class="math inline">\(n\)</span> or fewer (<em>i.e.</em>, <span class="math inline">\(\|\beta\|_0 &lt; n\)</span>), one can compute estimates.</p>
+</div>
+</section>
+<section id="the-lasso" class="slide level2">
+<h2>The LASSO</h2>
+<p>The <strong>L</strong>east <strong>A</strong>bsolute <strong>S</strong>hrinkage and <strong>S</strong>election <strong>O</strong>perator (LASSO) (<span class="citation" data-cites="tibshirani1996regression">Tibshirani (<a href="#/ref-tibshirani1996regression" role="doc-biblioref" onclick="return false;">1996</a>)</span> ) is the most widely-used sparse regression estimator.</p>
+<div class="fragment">
+<p>Mathematically, the LASSO is the <span class="math inline">\(L_1\)</span>-constrained MLE, <em>i.e.,</em> the solution to the optimization problem:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{maximize}\quad &amp;\mathcal{L}(\beta; x, y) \\
+\text{subject to}\quad &amp;\|\beta\|_1 &lt; t
+\end{aligned}
+\]</span></p>
+</div>
+</section>
+<section id="lagrangian-form" class="slide level2">
+<h2>Lagrangian form</h2>
+<p>The solution to the constrained problem</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{maximize}\quad &amp;\mathcal{L}(\beta; x, y) \\
+\text{subject to}\quad &amp;\|\beta\|_1 &lt; t
+\end{aligned}
+\]</span></p>
+<p>can be expressed as the unconstrained optimization</p>
+<p><span class="math display">\[
+\hat{\beta} = \arg\min_\beta \left\{-\mathcal{L}(\beta; x, y) + \lambda\|\beta\|_1\right\}
+\]</span></p>
+<p>where <span class="math inline">\(\lambda\)</span> is a <em>Lagrange multiplier.</em></p>
+</section>
+<section id="toy-example" class="slide level2 scrollable">
+<h2>Toy example</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>I simulated 250 observations according to a logistic regression model with 13 predictors, all but 3 of which had zero coefficients:</p>
+<p><span class="math display">\[
+\beta = \left[ 0\; 3\; 0\; 0\; 0\; 0\; 0\; 0\; 0\; 0\; 0\; 2\; 2\right]^T
+\]</span></p>
+<p>And computed LASSO estimates for a few values of <span class="math inline">\(\lambda\)</span>.</p>
+</div><div class="column" style="width:45%;">
+<div class="cell" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-3_5415f75907b977d0e7603bb150890bc3">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 14 × 4
+   term  truth lambda1 lambda2
+   &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Int    -0.5  -0.171  -0.206
+ 2 V1      0     0       0    
+ 3 V2      3     1.49    1.96 
+ 4 V3      0     0       0    
+ 5 V4      0     0       0    
+ 6 V5      0     0       0    
+ 7 V6      0     0       0    
+ 8 V7      0     0       0    
+ 9 V8      0     0       0.084
+10 V9      0     0       0    
+11 V10     0     0       0    
+12 V11     0     0      -0.069
+13 V12     2     0.892   1.29 
+14 V13     2     1.01    1.40 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="constraint-strength" class="slide level2">
+<h2>Constraint strength</h2>
+<p>In practice, <span class="math inline">\(\lambda\)</span> controls the strength of the constraint and thus the sparsity:</p>
+<ul>
+<li class="fragment"><p>Larger <span class="math inline">\(\lambda\)</span> ➜ stronger constraint ➜ more sparse</p></li>
+<li class="fragment"><p>Smaller <span class="math inline">\(\lambda\)</span> ➜ weaker constraint ➜ less sparse</p></li>
+</ul>
+</section>
+<section id="selecting-lambda" class="slide level2">
+<h2>Selecting <span class="math inline">\(\lambda\)</span></h2>
+<p>How to choose the strength of constraint?</p>
+<ol type="1">
+<li class="fragment">Compute estimates for a “path” <span class="math inline">\(\lambda_1 &gt; \lambda_2 &gt; \cdots &gt; \lambda_K\)</span></li>
+<li class="fragment">Choose <span class="math inline">\(\lambda^*\)</span> that minimizes an error metric.</li>
+</ol>
+<div class="fragment">
+<p>Typically prediction error is used as the metric, and estimated by:</p>
+<ul>
+<li class="fragment"><p>partitioning the data many times</p></li>
+<li class="fragment"><p>averaging test set predictive accuracy across partitions</p></li>
+</ul>
+</div>
+</section>
+<section id="regularization-profile-estimates" class="slide level2">
+<h2>Regularization profile: estimates</h2>
+
+<img data-src="week4-lasso_files/figure-revealjs/unnamed-chunk-4-1.png" width="480" class="r-stretch quarto-figure-center"><p class="caption">Value of coefficient estimates as a function of regularization strength for the toy example. Each path corresponds to one model coefficient. Vertical line indicates optimal strength.</p></section>
+<section id="regularization-profile-error" class="slide level2">
+<h2>Regularization profile: error</h2>
+
+<img data-src="week4-lasso_files/figure-revealjs/unnamed-chunk-5-1.png" width="480" class="r-stretch quarto-figure-center"><p class="caption">Prediction error metric (‘deviance’, similar to RMSE) as a function of regularization strength. Two plausible choices shown – one more conservative, one less conservative.</p></section>
+<section id="lambda-selection" class="slide level2">
+<h2><span class="math inline">\(\lambda\)</span> selection</h2>
+
+<img data-src="week4-lasso_files/figure-revealjs/unnamed-chunk-6-1.png" width="480" class="r-stretch quarto-figure-center"><p class="caption">Estimate profile with optimal choice indicated by vertical line.</p></section>
+<section id="coefficient-estimates" class="slide level2">
+<h2>Coefficient estimates</h2>
+<div class="cell" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-7_c92bd83e0a51b7f40fd2a7f6dce6dd0f">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">truth</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.1712466</td>
+<td style="text-align: right;">-0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">V2</td>
+<td style="text-align: right;">1.4867846</td>
+<td style="text-align: right;">3.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">V12</td>
+<td style="text-align: right;">0.8922530</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">V13</td>
+<td style="text-align: right;">1.0142979</td>
+<td style="text-align: right;">2.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="recomputing-estimates" class="slide level2">
+<h2>Recomputing estimates</h2>
+<p>Notice that the estimate magnitudes are off by a considerable amount. If we recompute estimates without the constraint:</p>
+<div class="cell" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-8_0e0fefb08c73c4f16b8b8d66c7ca72f2">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.2620012</td>
+<td style="text-align: right;">0.1894367</td>
+<td style="text-align: right;">-1.383054</td>
+<td style="text-align: right;">0.1666482</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">V2</td>
+<td style="text-align: right;">2.5653900</td>
+<td style="text-align: right;">0.3313415</td>
+<td style="text-align: right;">7.742434</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">V12</td>
+<td style="text-align: right;">1.7554670</td>
+<td style="text-align: right;">0.2786778</td>
+<td style="text-align: right;">6.299271</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">V13</td>
+<td style="text-align: right;">1.8323539</td>
+<td style="text-align: right;">0.2632716</td>
+<td style="text-align: right;">6.959937</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="errors" class="slide level2">
+<h2>Errors</h2>
+<p>Now if I simulate some new observations:</p>
+<div class="cell" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-9_e34600ed6f0d6794a265c63b016257be">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sensitivity</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.8500000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">specificity</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.9000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">roc_auc</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.9508333</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="alternative-analysis" class="slide level2 scrollable">
+<h2>Alternative analysis</h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Preprocessing</a></li><li><a href="#tabset-1-2"><span class="math inline">\(\lambda\)</span> selection</a></li><li><a href="#tabset-1-3">Refitting</a></li><li><a href="#tabset-1-4">Accuracy</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>Log-transform, center and scale, but don’t trim outliers.</p>
+<div class="cell" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-10_303e87a86c12089f8b60fa22bfbc7f1d">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># read in data</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>biomarker <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/biomarker-clean.csv'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="fu">select</span>(<span class="sc">-</span>ados) <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>group, <span class="sc">~</span><span class="fu">scale</span>(<span class="fu">log</span>(.x))[,<span class="dv">1</span>]),</span>
+<span id="cb2-7"><a href="#cb2-7"></a>         <span class="at">class =</span> <span class="fu">as.numeric</span>(group <span class="sc">==</span> <span class="st">'ASD'</span>))</span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co"># partition</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="fu">set.seed</span>(<span class="dv">101622</span>)</span>
+<span id="cb2-11"><a href="#cb2-11"></a>partitions <span class="ot">&lt;-</span> biomarker <span class="sc">%&gt;%</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>  <span class="fu">initial_split</span>(<span class="at">prop =</span> <span class="fl">0.8</span>)</span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a>x_train <span class="ot">&lt;-</span> <span class="fu">training</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>  <span class="fu">select</span>(<span class="sc">-</span>group, <span class="sc">-</span>class) <span class="sc">%&gt;%</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb2-17"><a href="#cb2-17"></a>y_train <span class="ot">&lt;-</span> <span class="fu">training</span>(partitions) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>  <span class="fu">pull</span>(class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-1-2">
+<h4 id="estimated-error">Estimated error</h4>
+<div class="cell" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-11_080c149d6c5b1f41610fcfd978c0c3a6">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># reproducibility</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">set.seed</span>(<span class="dv">102022</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># multiple partitioning for lambda selection</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>cv_out <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x_train, </span>
+<span id="cb3-6"><a href="#cb3-6"></a>                    y_train, </span>
+<span id="cb3-7"><a href="#cb3-7"></a>                    <span class="at">family =</span> <span class="st">'binomial'</span>, </span>
+<span id="cb3-8"><a href="#cb3-8"></a>                    <span class="at">nfolds =</span> <span class="dv">5</span>, </span>
+<span id="cb3-9"><a href="#cb3-9"></a>                    <span class="at">type.measure =</span> <span class="st">'deviance'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a>cvout_df <span class="ot">&lt;-</span> <span class="fu">tidy</span>(cv_out) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-12_16fd3f139d085ca130d3f9ef03b7ddf2">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="week4-lasso_files/figure-revealjs/unnamed-chunk-12-1.png" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<h4 id="coefficient-paths">Coefficient paths</h4>
+<div class="cell" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-13_f9b81418c51f767807915ffbfe1319f5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># LASSO estimates</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>fit <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x_train, y_train, <span class="at">family =</span> <span class="st">'binomial'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>fit_df <span class="ot">&lt;-</span> <span class="fu">tidy</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-14_a0c8d771d46977a6f2d3ba92b77781e7">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="week4-lasso_files/figure-revealjs/unnamed-chunk-14-1.png" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3">
+<p>After dropping the penalty and recomputing estimates, the final model is:</p>
+<div class="cell" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-15_628b2b6647a692712790372db21eaa5a">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.0404465</td>
+<td style="text-align: right;">0.2312305</td>
+<td style="text-align: right;">-0.1749184</td>
+<td style="text-align: right;">0.8611438</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MAPK2</td>
+<td style="text-align: right;">-0.9896079</td>
+<td style="text-align: right;">0.2831955</td>
+<td style="text-align: right;">-3.4944340</td>
+<td style="text-align: right;">0.0004751</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IgD</td>
+<td style="text-align: right;">-0.8264133</td>
+<td style="text-align: right;">0.2471363</td>
+<td style="text-align: right;">-3.3439569</td>
+<td style="text-align: right;">0.0008259</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DERM</td>
+<td style="text-align: right;">-0.9971069</td>
+<td style="text-align: right;">0.2758803</td>
+<td style="text-align: right;">-3.6142740</td>
+<td style="text-align: right;">0.0003012</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-1-4">
+<div class="cell" data-hash="week4-lasso_cache/revealjs/unnamed-chunk-16_f9fbf5d6c9151c5615b0bed58bfe7f7b">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.metric</th>
+<th style="text-align: left;">.estimator</th>
+<th style="text-align: right;">.estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sensitivity</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.8125000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">specificity</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.7333333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">roc_auc</td>
+<td style="text-align: left;">binary</td>
+<td style="text-align: right;">0.8375000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="some-final-thoughts" class="slide level2">
+<h2>Some final thoughts</h2>
+<ol type="1">
+<li class="fragment">Regardless of method, classification based on serum levels seems to achieve 70-80% accuracy out of sample.</li>
+<li class="fragment">Not specific enough to be used as a diagnostic tool, but may be helpful in early detection.</li>
+<li class="fragment">Published analysis seems a little over-complicated; computationally intensive methods are less transparent and more difficult to reproduce.</li>
+</ol>
+</section>
+<section id="concepts-discussed" class="slide level2">
+<h2>Concepts discussed</h2>
+<ul>
+<li class="fragment"><p>multiple hypothesis testing, FWER and FDR control</p></li>
+<li class="fragment"><p>classification using logistic regression, random forests</p></li>
+<li class="fragment"><p>variable selection using LASSO regularization</p></li>
+<li class="fragment"><p>data partitioning and accuracy quantification</p></li>
+</ul>
+</section>
+<section id="transferrable-skills" class="slide level2 smaller scrollable">
+<h2>Transferrable skills</h2>
+<ul>
+<li class="fragment"><p>iterative computations in R, three ways</p></li>
+<li class="fragment"><p>fitting a logistic regression model with <code>glm()</code></p></li>
+<li class="fragment"><p>use of <code>yardstick</code> and <code>rsample</code> for quantifying classification accuracy</p></li>
+</ul>
+
+<div class="footer footer-default">
+
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-tibshirani1996regression" class="csl-entry" role="doc-biblioentry">
+Tibshirani, Robert. 1996. <span>“Regression Shrinkage and Selection via the Lasso.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 58 (1): 267–88.
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        setTimeout(function() {
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          let href = ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    });
+    </script>
+    
+
+</body></html>

@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.0.38">
+
+  <meta name="author" content="Trevor Ruiz">
+  <title>Text to data: basic NLP</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="center">
+  <h1 class="title">Text to data: basic NLP</h1>
+  <p class="subtitle">PSTAT197A/CMPSC190DD Fall 2022</p>
+  <p class="author">Trevor Ruiz</p>
+  <p class="institute">UCSB</p>
+</section>
+
+<section id="announcementsreminders" class="slide level2">
+<h2>Announcements/reminders</h2>
+<p>Feedback posted for first group assignment. Check feedback PR on repo.</p>
+<div class="fragment">
+<p>Comments for next time:</p>
+<ul>
+<li class="fragment"><p>check your rendered html file to ensure it opens properly</p></li>
+<li class="fragment"><p>be mindful of length, reports should be around 3-5 pages</p>
+<ul>
+<li class="fragment">focus on results that answer questions; no need to summarize everything attempted</li>
+</ul></li>
+<li class="fragment"><p>don’t close the feedback pull requests</p></li>
+<li class="fragment"><p>label and caption figures clearly</p></li>
+</ul>
+</div>
+</section>
+<section>
+<section id="data-introduction" class="title-slide slide level1 center">
+<h1>Data introduction</h1>
+
+</section>
+<section id="objectives" class="slide level2">
+<h2>Objectives</h2>
+<p>The data we’ll use for this module comes from a 2021-2022 capstone project.</p>
+<div class="fragment">
+<p><strong><em>Goal:</em></strong> use a predictive model to flag webpages that may contain evidence related to fraud claims.</p>
+<ul>
+<li class="fragment"><p>data are a sample of pages</p></li>
+<li class="fragment"><p>classification problem</p>
+<ul>
+<li class="fragment">given a webpage, want to predict whether contents include potential evidence</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="about-the-data" class="slide level2">
+<h2>About the data</h2>
+<p>Data available to develop a model are a collection of labeled webpages.</p>
+<ul>
+<li class="fragment"><p>~ 3K webpages</p></li>
+<li class="fragment"><p>manually assigned labels specify type of content</p>
+<ul>
+<li class="fragment">multiple classes</li>
+</ul></li>
+<li class="fragment"><p>sampling method unclear/unknown</p>
+<ul>
+<li class="fragment">predictive model fit to this data may not work well in general for an arbitrary webpage</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-rows" class="slide level2">
+<h2>Example rows</h2>
+<p>We will work with a random subsample of 618 observations (pages).</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-1_ac6876859a3a29a88c61f0cfcdf213df">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">load</span>(<span class="st">'data/carpe-raw-subsample.RData'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>rawdata <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  original_url                                         text_tmp internal_feedba…
+  &lt;chr&gt;                                                &lt;chr&gt;    &lt;chr&gt;           
+1 https://www.kait8.com/story/32310666/one-arrested-a… "&lt;!DOCT… Potentially unl…
+2 https://www.newsbreak.com/connecticut/meriden/safety "&lt;!DOCT… N/A: No relevan…
+3 https://www.doctor.com/Dr-Garry-Brody                "&lt;!DOCT… N/A: No relevan…
+4 https://thecounty.me/2020/08/13/news/motorcycle-cra… "&lt;!-- B… Information rel…
+5 https://obits.dallasnews.com/obituaries/dallasmorni… "&lt;!DOCT… Possible Fatali…
+6 https://www.athletic.net/CrossCountry/Athlete.aspx?… "\n\r\n… Physical Activi…</code></pre>
+</div>
+</div>
+</section>
+<section id="data-semantics" class="slide level2">
+<h2>Data semantics</h2>
+<p>At face value:</p>
+<ul>
+<li class="fragment"><p>The <em>observational units</em> are webpages</p>
+<ul>
+<li class="fragment">one observation per page sampled</li>
+</ul></li>
+<li class="fragment"><p>The <em>variables</em> are claim labels and … ???</p></li>
+</ul>
+<div class="fragment">
+<p>How do we obtain useable data from HTML?</p>
+</div>
+</section>
+<section id="labels" class="slide level2 scrollable">
+<h2>Labels</h2>
+<p>It’ll be hard to classify labels ocurring &lt;1% of the time.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-2_f4a05691960c1fba78f4837baf7b9f63">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">internal_feedback</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">prop</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">N/A: No relevant content.</td>
+<td style="text-align: right;">318</td>
+<td style="text-align: right;">0.5145631</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Possible Fatality</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">0.1877023</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Potentially unlawful activity</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">0.1423948</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Physical Activity</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.1084142</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Information related to the claim</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0.0275081</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Potentially relevant information</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.0177994</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pain, illness, or other medical issue</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0016181</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="lumping" class="slide level2 scrollable">
+<h2>Lumping</h2>
+<p>We can <strong><em>lump</em></strong> infrequent labels together (see <code>forcats</code> [<a href="https://forcats.tidyverse.org/">docs</a>]).</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-3_733227872bf4ea6a168e86990958fa57">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">class</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">N/A: No relevant content.</td>
+<td style="text-align: right;">318</td>
+<td style="text-align: right;">0.5145631</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Possible Fatality</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">0.1877023</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Potentially unlawful activity</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">0.1423948</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Physical Activity</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0.1084142</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0.0469256</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li class="fragment">half of pages contain no relevant information</li>
+</ul>
+</section>
+<section id="binary-classification" class="slide level2">
+<h2>Binary classification</h2>
+<p>This is a <em>multi-class classification</em> problem.</p>
+<div class="fragment">
+<p><strong><em>BUT</em></strong> if we can’t do well with binary classification, there’s not much hope for the multi-class setting. So let’s start there.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-4_a7665af3d829e8e9fc88769c5c47bd8c">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  .id   bclass     text_tmp                                                     
+  &lt;chr&gt; &lt;fct&gt;      &lt;chr&gt;                                                        
+1 url1  relevant   "&lt;!DOCTYPE html&gt; &lt;html lang=\"en-US\"&gt; &lt;head&gt; &lt;script&gt;var pb…
+2 url2  irrelevant "&lt;!DOCTYPE html&gt;&lt;html lang=\"en\"&gt;&lt;head&gt;&lt;meta name=\"ahrefs-…
+3 url3  irrelevant "&lt;!DOCTYPE html&gt;\n&lt;!--[if lt IE 7]&gt;      &lt;html class=\"no-js…
+4 url4  relevant   "&lt;!-- Base Template: base.twig --&gt;\n&lt;!-- This Template: sing…
+5 url5  relevant   "&lt;!DOCTYPE html&gt;\n&lt;html amp lang=\"en\"&gt;\n\n&lt;head&gt;\n  &lt;meta …
+6 url6  relevant   "\n\r\n&lt;!DOCTYPE html&gt;\r\n&lt;html id=\"html\" lang=\"en\" xmln…</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><strong><em>First task:</em></strong> HTML ➜ data.</p>
+</div>
+</section></section>
+<section>
+<section id="scraping-and-preprocessing" class="title-slide slide level1 center">
+<h1>Scraping and preprocessing</h1>
+
+</section>
+<section id="raw-html" class="slide level2">
+<h2>Raw HTML</h2>
+<p>Here’s what a page looks like.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-5_63cb0355bb0af7c8d919bd44217698cb">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "&lt;!DOCTYPE html&gt; &lt;html lang=\"en-US\"&gt; &lt;head&gt; &lt;script&gt;var pb_global={pageName:\"article-template\",pageId:\"rHJ9vP1Xz0ktKr\",contextPath:\"/pb\",isAdmin:false,layoutEngineName:\"\",environment:\"prod\",resourceToken:\"\",_website:\"kait\"};&lt;/script&gt; &lt;script&gt;window.serviceCallbacks=[];window.pageBuilder=window.pageBuilder||{};window.pageBuilder.featureLoaded=function(el){if(window.services.asyncFeatureCallback)window.services.asyncFeatureCallback(el);else window.serviceCallbacks.push(function(){window.services.asyncFeatureCallback(el)})};&lt;/script&gt; &lt;script&gt;(function(){if(window.BOOMR&amp;&amp;window.BOOMR.version)return;var dom,doc,where,iframe=document.createElement(\"iframe\"),win=window;function boomerangSaveLoadTime(e){win.BOOMR_onload=e&amp;&amp;e.timeStamp||(new Date).getTime()}if(win.addEventListener)win.addEventListener(\"load\",boomerangSaveLoadTime,false);else if(win.attachEvent)win.attachEvent(\"onload\",boomerangSaveLoadTime);iframe.src=\"javascript:false\";iframe.title=\"\";iframe.role=\"presentation\";(iframe.frameElement||iframe).style.cssText=\"width:0;height:0;border:0;display:none;\";\nwhere=document.getElementsByTagName(\"script\")[0];where.parentNode.insertBefore(iframe,where);try{doc=iframe.contentWindow.document}catch(e){dom=document.domain;iframe.src=\"javascript:var d\\x3ddocument.open();d.domain\\x3d'\"+dom+\"';void(0);\";doc=iframe.contentWindow.document}doc.open()._l=function(){var js=this.createElement(\"script\");if(dom)this.domain=dom;js.id=\"boomr-if-as\";js.src=\"https://c.go-mpulse.net/boomerang/\"+\"XPXCW-DAMJV-5VCNY-NSGAA-ZZ4G2\";BOOMR_lstart=(new Date).getTime();this.body.appendChild(js)};\ndoc.write('\\x3cbody onload\\x3d\"document._l();\"\\x3e');doc.close()})();&lt;/script&gt; &lt;script&gt;\n  const addZeroPad = function(num) {\n    num = Math.abs(num)\n    num = num.toString()\n    if (num.length === 1) {\n      num = '0' + num\n    }\n    return num\n  }\n\n  const getTimezoneOffset = function() {\n    const offset = -new Date().getTimezoneOffset() / 60\n    const sign = offset &lt; 0 ? '-' : '+'\n    return sign + addZeroPad(offset) + ':00'\n  }\n&lt;/script&gt; &lt;script&gt;\n  var RCdataLayer = [{\n    \"adTarget\": \"kait/web/news\",\n    \"authors\": [\n                  \n                    {\n                      \"_id\": \"\",\n                      \"name\": \"Region 8 Newsdesk\",\n                      \"type\": \"author\"\n                    },\n                  \n                ],\n    \"canonicalUrl\": \"/story/32310666/one-arrested-after-police-standoff-in-blytheville\",\n    \"contentId\": \"QK3SPA45DZEFPGOOKT6HIFCSGQ\",\n    \"contentName\": \"One arrested after police standoff in Blytheville\",\n    \"contentOwner\": \"kait\",\n    \"contentTags\":  [\n                  \n                ],\n    \"contentType\": \"story\",\n    \"datePublished\": \"2016-06-27T01:53:12Z\",\n    \"description\": \"One man is in custody after a 4-hour police standoff in Blytheville Sunday afternoon.\",\n    \"distributorCategory\": \"\",\n    \"distributorMode\": \"\",\n    \"distributorName\": \"\",\n    \"distributorReferenceId\": \"\",\n    \"distributorSubCategory\": \"\",\n    \"hasVideo\": false,\n    \"metaDescription\": \"One man is in custody after a 4-hour police standoff in Blytheville Sunday afternoon.\",\n    \"platformName\": \"Arc Feature Pack\",\n    \"primarySection\": \n                        \n                        \n                          \n                          {\n                            \"name\": \"News\",\n                            \"_id\": \"/news\",\n                            \"path\": \"/news\",\n                          }\n                        \n                      ,\n    \"publishedDay\": \"26\",\n    \"publishedMonth\": \"06\",\n    \"publishedYear\": \"2016\",\n    \"stationName\": \"kait\",\n    \"timezoneOffset\": getTimezoneOffset(),\n    \"userAgent\": navigator.userAgent,\n    \"userId\": \"\",\n    \"userTimezone\": Intl.DateTimeFormat().resolvedOptions().timeZone,\n    \"userTimezoneTimestamp\": new Date()\n  }]\n\n&lt;/script&gt; &lt;script&gt;(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\"gtm.start\":(new Date).getTime(),event:\"gtm.js\"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!=\"dataLayer\"?\"\\x26l\\x3d\"+l:\"\";j.async=true;j.src=\"https://www.googletagmanager.com/gtm.js?id\\x3d\"+i+dl;f.parentNode.insertBefore(j,f)})(window,document,\"script\",\"RCdataLayer\",\"GTM-M5QQ3JP\");&lt;/script&gt; &lt;meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/&gt; &lt;meta name=\"distribution\" content=\"global\"/&gt; &lt;meta name=\"rating\" content=\"general\"/&gt; &lt;meta name=\"viewport\" content=\"width=device-width, minimum-scale=1, initial-scale=1\"&gt; &lt;meta charset=\"UTF-8\"/&gt; &lt;meta name=\"copyright\" content=\"Copyright (c) 2017 \"/&gt; &lt;meta name=\"google-site-verification\" content=\"sKiWVpF1B8xon1FyiyR9SfMIyuoRn0fwtKIcSdB3_f4\"/&gt; &lt;title&gt;One arrested after police standoff in Blytheville&lt;/title&gt; &lt;meta name=\"date\" content=\"2016-06-27T16:58:11Z\"/&gt; &lt;meta itemprop=\"description\" name=\"description\" content=\"One man is in custody after a 4-hour police standoff in Blytheville Sunday afternoon.\"/&gt; &lt;meta name=\"robots\" content=\"index,follow,noarchive\"/&gt; &lt;meta name=\"googlebot\" content=\"index\"/&gt; &lt;meta name=\"googlebot-news\" content=\"index\"/&gt; &lt;link rel=\"canonical\" href=\"https://www.kait8.com/story/32310666/one-arrested-after-police-standoff-in-blytheville\"&gt; &lt;meta name=\"twitter:title\" content=\"One arrested after police standoff in Blytheville\"/&gt; &lt;meta name=\"twitter:image\" content=\"https://www.kait8.com/resizer/b4Wsx4ZkmQ1VxgznD1ZncCCCvOY=/1200x0/arc-anglerfish-arc2-prod-raycom.s3.amazonaws.com/public/DB2NJARH4FCNVB7KWHKJGBNQ7Y.jpg\"/&gt; &lt;meta name=\"twitter:card\" content=\"summary_large_image\"&gt; &lt;meta name=\"twitter:description\" content=\"One man is in custody after a 4-hour police standoff in Blytheville Sunday afternoon.\"/&gt; &lt;meta name=\"twitter:site\" content=\"@Region8News\"/&gt; &lt;meta name=\"twitter:creator\" content=\"@Region8News\"&gt; &lt;meta property=\"og:url\" content=\"https://www.kait8.com/story/32310666/one-arrested-after-police-standoff-in-blytheville\"/&gt; &lt;meta property=\"og:title\" content=\"One arrested after police standoff in Blytheville\"/&gt; &lt;meta itemprop=\"image\" property=\"og:image\" content=\"https://www.kait8.com/resizer/b4Wsx4ZkmQ1VxgznD1ZncCCCvOY=/1200x0/arc-anglerfish-arc2-prod-raycom.s3.amazonaws.com/public/DB2NJARH4FCNVB7KWHKJGBNQ7Y.jpg\"/&gt; &lt;meta property=\"og:description\" content=\"One man is in custody after a 4-hour police standoff in Blytheville Sunday afternoon.\"/&gt; &lt;meta property=\"og:locale\" content=\"en_US\"/&gt; &lt;meta property=\"og:site_name\" content=\"https://www.kait8.com\"/&gt; &lt;meta property=\"og:type\" content=\"article\"/&gt; &lt;meta property=\"fb:app_id\" content=\"213753052169397\"/&gt; &lt;meta property=\"fb:pages\" content=\"87689783147\"/&gt; &lt;meta property=\"fb:admins\" content=\"644426401\"/&gt; &lt;meta name=\"burst\" content=\"kait\"/&gt; &lt;meta property=\"article:publisher\" content=\"https://www.facebook.com/Region8News\"&gt; &lt;meta name=\"author\" content=\"Region 8 Newsdesk\"&gt; &lt;script data-schema=\"NewsArticle\" type=\"application/ld+json\"&gt;\n      {\n        \"@context\": \"http://schema.org\",\n        \"@type\": \"NewsArticle\",\n        \"mainEntityOfPage\": {\n          \"@type\": \"WebPage\",\n          \"@id\": \"\"\n        },\n        \"headline\": \"One arrested after police standoff in Blytheville\",\n        \n        \"image\": {\n          \"@type\": \"ImageObject\",\n          \"url\": \"https://www.kait8.com/resizer/b4Wsx4ZkmQ1VxgznD1ZncCCCvOY=/1200x0/arc-anglerfish-arc2-prod-raycom.s3.amazonaws.com/public/DB2NJARH4FCNVB7KWHKJGBNQ7Y.jpg\",\n          \"height\": 900.0,\n          \"width\": 1200\n        },\n        \n        \"datePublished\": \"2016-06-27T01:53:12Z\",\n        \"dateModified\": \"2016-06-27T16:58:11Z\",\n        \"articleBody\": \"(Source: KAIT)Hartzell Watson (Source: Blytheville Police Dept.)BLYTHEVILLE, AR (KAIT) - One man is in custody after a 4-hour police standoff in Blytheville Sunday afternoon.According to Captain Scott Adams with the Blytheville Police Department, Hartzell Watson, 44, was arrested after being forced out of a home in the 500-block of North Division.Captain Adams said police originally responded to the house after a family dispute.When officers arrived, Watson barricaded himself in the house and refused to exit peacefully.After several hours, police fired smoke and a chemical agent through a window of the home. The gas caught on fire within minutes.Officers entered the burning house to find Watson, but he jumped out of an attic window.He was checked by paramedics on the scene and was taken into custody.The Blytheville Fire Department was on scene and quickly put the fire out.Watson was then taken to the Mississippi County Jail. He is being held on state and federal warrants.The Arkansas State Police, Mississippi County Sheriff&amp;#039;s Office, and the Second Judicial Drug Task Force assisted with the standoff.One officer on the scene was treated for dehydration.Copyright 2016&nbsp;KAIT. All rights reserved.Watch Region 8 News&nbsp;On Demand:&nbsp;On your Desktop&nbsp;|&nbsp;On your Mobile deviceRegion 8 News App - Install or update on your:&nbsp;iPhone&nbsp;|&nbsp;Android\",\n        \"author\": [\n          \n            \n              \n                {\n                  \"@type\": \"Person\",\n                  \"name\": \"Region 8 Newsdesk\"\n                }\n              \n            \n            \n          \n        ],\n         \"publisher\": {\n        \"@type\": \"Organization\",\n        \"name\": \"KAIT\",\n        \"logo\": {\n          \"@type\": \"ImageObject\",\n          \"url\": \"https://www.kait8.com/pb/resources/images/rm_icons/kait-icon.png?token=123\",\n          \"width\": 467,\n          \"height\": 60\n        }\n      }\n        },\n        // will be empty for branded publishing\n        \"description\": \"One man is in custody after a 4-hour police standoff in Blytheville Sunday afternoon.\"\n      }\n    &lt;/script&gt; &lt;script data-schema=\"Organization\" type=\"application/ld+json\"&gt;\n      {\n        \"name\": \"KAIT\",\n        \"url\": \"https://www.kait8.com\",\n        \"logo\": \"https://www.kait8.com/pb/resources/images/rm_icons/kait-icon.png?token=123\",\n        \"@type\": \"Organization\",\n        \n          \"sameAs\": [ \"https://www.facebook.com/Region8News\" ],\n        \n        \"@context\": \"http://schema.org\"\n      }\n    &lt;/script&gt; &lt;link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.2.0/css/all.css\" integrity=\"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ\" crossorigin=\"anonymous\"&gt; &lt;link href=\"//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css\" rel=\"stylesheet\" type=\"text/css\"&gt; &lt;link href=\"https://fonts.googleapis.com/css?family=Oswald:400,600,700|PT+Serif:400,400i,700i\" rel=\"stylesheet\"&gt; &lt;link href=\"/pb/resources/dist/199071bbaf3b531cbc00/rm/rm-framework199071bbaf3b531cbc00.css?v=101\" rel=\"stylesheet\"/&gt; &lt;style&gt;.logo{background-image:url(/pb/resources/images/kait-logo.svg?v=101)}.logo.logo-footer{background-image:url(/pb/resources/images/footer_icons/kait-logo.svg?v=101)}&lt;/style&gt; &lt;link href=\"/pb/resources/dist/199071bbaf3b531cbc00/rm/rm-framework199071bbaf3b531cbc00.css?v=101\" rel=\"stylesheet\"/&gt; &lt;link href=\"/pb/resources/dist/199071bbaf3b531cbc00/rm/rm-features199071bbaf3b531cbc00.css?v=101\" rel=\"stylesheet\"/&gt; &lt;link href=\"/pb/resources/dist/199071bbaf3b531cbc00/rm/rm-services199071bbaf3b531cbc00.css?v=101\" rel=\"stylesheet\"/&gt; &lt;script&gt;!function(o,n,t){t=o.createElement(n),o=o.getElementsByTagName(n)[0],t.async=1,t.src=\"https://reconditerespect.com/v2mla6g0OZIshfFmjoDgrg0H7vZahDAnMN47yjIlQbjzcmXFv4o-friE\",o.parentNode.insertBefore(t,o)}(document,\"script\"),function(o,n){o[n]=o[n]||function(){(o[n].q=o[n].q||[]).push(arguments)}}(window,\"admiral\");\n!function(c,e,o,t,n){function r(o,t){(function n(){try{return 0&lt;(localStorage.getItem(\"v4ac1eiZr0\")||\"\").split(\",\")[4]}catch(o){}return!1})()&amp;&amp;(t=c[e].pubads())&amp;&amp;t.setTargeting(\"admiral-engaged\",\"true\")}(n=c[e]=c[e]||{}).cmd=n.cmd||[],typeof n.pubads===o?r():typeof n.cmd.unshift===o?n.cmd.unshift(r):n.cmd.push(r)}(window,\"googletag\",\"function\");\n!function(t,n,i,u,e,o){var a=n[i];function r(t){if(t){var u=(t.data||{})[i+\"Call\"];u&amp;&amp;n[i](u.command,u.version,function(n,i){t.source.postMessage({__uspapiReturn:{returnValue:n,success:i,callId:u.callId}},\"*\")})}}if(function c(){if(!window.frames[u]){var n=t.body;if(n){var i=t.createElement(\"iframe\");i.style.display=\"none\",i.name=u,n.appendChild(i)}else setTimeout(c,5)}}(),\"function\"!=typeof a){var s={getUSPData:function(n,i){return n!==1?i&amp;&amp;i(null,!1):i&amp;&amp;i({version:null,uspString:null},!1)}};a=n[i]=\nfunction(n,i,t){return s[n](i,t)},n.addEventListener?n.addEventListener(\"message\",r,!1):n.attachEvent&amp;&amp;n.attachEvent(\"onmessage\",r)}o=t.createElement(e),t=t.getElementsByTagName(e)[0],o.src=\"https://reconditerespect.com/v2vbel8Mu0xsUJLcLg5l8Da63kexrGV-WWrvIBj9zXNUH34Ww0VcxgELJ_Ri6HnKhzQFH1RUV\",t.parentNode.insertBefore(o,t)}(document,window,\"__uspapi\",\"__uspapiLocator\",\"script\");&lt;/script&gt; &lt;script src=\"/pb/gr/c/default/rHJ9vP1Xz0ktKr/arcAdsJS/cdbd7d78da.js?v=101\"&gt;&lt;/script&gt; &lt;script&gt;\n  const arcAds = new ArcAds({\n    dfp: {\n      id: '63316753'\n    }\n  });\n  window.arcAds = arcAds;\n&lt;/script&gt; &lt;script&gt;!function(n){if(!window.cnxps){window.cnxps={},window.cnxps.cmd=[];var t=n.createElement(\"iframe\");t.display=\"none\",t.onload=function(){var n=t.contentWindow.document,c=n.createElement(\"script\");c.src=\"//cd.connatix.com/connatix.playspace.js\",c.setAttribute(\"async\",\"1\"),c.setAttribute(\"type\",\"text/javascript\"),n.body.appendChild(c)},n.head.appendChild(t)}}(document);&lt;/script&gt; \n  &lt;script&gt;(window.BOOMR_mq=window.BOOMR_mq||[]).push([\"addVar\",{\"rua.upush\":\"false\",\"rua.cpush\":\"false\",\"rua.upre\":\"false\",\"rua.cpre\":\"false\",\"rua.uprl\":\"false\",\"rua.cprl\":\"false\",\"rua.cprf\":\"false\",\"rua.trans\":\"\",\"rua.cook\":\"false\",\"rua.ims\":\"false\",\"rua.ufprl\":\"false\",\"rua.cfprl\":\"false\"}]);&lt;/script&gt;\n                          &lt;script&gt;!function(a){var e=\"https://s.go-mpulse.net/boomerang/\",t=\"addEventListener\";if(\"False\"==\"True\")a.BOOMR_config=a.BOOMR_config||{},a.BOOMR_config.PageParams=a.BOOMR_config.PageParams||{},a.BOOMR_config.PageParams.pci=!0,e=\"https://s2.go-mpulse.net/boomerang/\";if(window.BOOMR_API_key=\"65SKQ-LZFX4-E7PC5-ETMCA-9VSMC\",function(){function n(e){a.BOOMR_onload=e&amp;&amp;e.timeStamp||(new Date).getTime()}if(!a.BOOMR||!a.BOOMR.version&amp;&amp;!a.BOOMR.snippetExecuted){a.BOOMR=a.BOOMR||{},a.BOOMR.snippetExecuted=!0;var i,_,o,r=document.createElement(\"iframe\");if(a[t])a[t](\"load\",n,!1);else if(a.attachEvent)a.attachEvent(\"onload\",n);r.src=\"javascript:void(0)\",r.title=\"\",r.role=\"presentation\",(r.frameElement||r).style.cssText=\"width:0;height:0;border:0;display:none;\",o=document.getElementsByTagName(\"script\")[0],o.parentNode.insertBefore(r,o);try{_=r.contentWindow.document}catch(O){i=document.domain,r.src=\"javascript:var d=document.open();d.domain='\"+i+\"';void(0);\",_=r.contentWindow.document}_.open()._l=function(){var a=this.createElement(\"script\");if(i)this.domain=i;a.id=\"boomr-if-as\",a.src=e+\"65SKQ-LZFX4-E7PC5-ETMCA-9VSMC\",BOOMR_lstart=(new Date).getTime(),this.body.appendChild(a)},_.write(\"&lt;bo\"+'dy onload=\"document._l();\"&gt;'),_.close()}}(),\"\".length&gt;0)if(a&amp;&amp;\"performance\"in a&amp;&amp;a.performance&amp;&amp;\"function\"==typeof a.performance.setResourceTimingBufferSize)a.performance.setResourceTimingBufferSize();!function(){if(BOOMR=a.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var e=\"\"==\"true\"?1:0,t=\"\",n=\"gzc2qsaxho6lqybbprfq-f-b9f3f0c32-clientnsv4-s.akamaihd.net\",i={\"ak.v\":\"30\",\"ak.cp\":\"737539\",\"ak.ai\":parseInt(\"465986\",10),\"ak.ol\":\"0\",\"ak.cr\":8,\"ak.ipv\":4,\"ak.proto\":\"http/1.1\",\"ak.rid\":\"1533d04a\",\"ak.r\":32979,\"ak.a2\":e,\"ak.m\":\"a\",\"ak.n\":\"essl\",\"ak.bpcip\":\"54.69.168.0\",\"ak.cport\":35554,\"ak.gh\":\"23.59.188.180\",\"ak.quicv\":\"\",\"ak.tlsv\":\"tls1.2\",\"ak.0rtt\":\"\",\"ak.csrc\":\"-\",\"ak.acc\":\"reno\",\"ak.t\":\"1612807243\",\"ak.ak\":\"hOBiQwZUYzCg5VSAfCLimQ==3ocEaO6BPds4E/+67txza8Ii5rrsOUxI4clSKZsq4N+J8nIlb3ClDKjRax9JNpxbF01DlMIMe1IBoTWWaChyD6zes1dIJU7SJcI7p6vGk7CwCPLFy6dnXO74WsnxlJzUNQVa6MICe46rz8ak61uGDut3CGZf9e0uT1RCnIDTRkZhNtE/e0o6cLnuR9OIrkto0x23hfQeyo1Ycu+LY743LyOvBsd6IcRWtxGpjLK3vb8voI8+c+c5ZBFMkD8N63grUv+4jc2eIMe3g+bEyg06HGNT4ZH317II4xnjg1PHDKotSzfnTsm/e3R4A8uCXGr9dfVAjBfLClBknbp/KAcpLpB2mvfiZQWhkkVrH4/w8UHgUM+Wlhp4B0JY5u1Bngy/aupMKDeDJVeGeQcbJaij6x4DdKGGCwuhUa78ygtgEmw=\",\"ak.pv\":\"17\",\"ak.dpoabenc\":\"\"};if(\"\"!==t)i[\"ak.ruds\"]=t;var _={i:!1,av:function(e){var t=\"http.initiator\";if(e&amp;&amp;(!e[t]||\"spa_hard\"===e[t]))i[\"ak.feo\"]=void 0!==a.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var a=[\"ak.bpcip\",\"ak.cport\",\"ak.cr\",\"ak.csrc\",\"ak.gh\",\"ak.ipv\",\"ak.m\",\"ak.n\",\"ak.ol\",\"ak.proto\",\"ak.quicv\",\"ak.tlsv\",\"ak.0rtt\",\"ak.r\",\"ak.acc\",\"ak.t\"];BOOMR.removeVar(a)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:n,init:function(){if(!_.i){var a=BOOMR.subscribe;a(\"before_beacon\",_.av,null,null),a(\"onbeacon\",_.rv,null,null),_.i=!0}return this},is_complete:function(){return!0}}}}()}(window);&lt;/script&gt;&lt;/head&gt; &lt;body&gt; &lt;noscript&gt;&lt;iframe src=\"https://www.googletagmanager.com/ns.html?id=GTM-M5QQ3JP\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"&gt;&lt;/iframe&gt;&lt;/noscript&gt; \n  &lt;script&gt;(window.BOOMR_mq=window.BOOMR_mq||[]).push([\"addVar\",{\"rua.upush\":\"false\",\"rua.cpush\":\"false\",\"rua.upre\":\"false\",\"rua.cpre\":\"false\",\"rua.uprl\":\"false\",\"rua.cprl\":\"false\",\"rua.cprf\":\"false\",\"rua.trans\":\"\",\"rua.cook\":\"false\",\"rua.ims\":\"false\",\"rua.ufprl\":\"false\",\"rua.cfprl\":\"false\"}]);&lt;/script&gt;\n                          &lt;script&gt;!function(a){var e=\"https://s.go-mpulse.net/boomerang/\",t=\"addEventListener\";if(\"False\"==\"True\")a.BOOMR_config=a.BOOMR_config||{},a.BOOMR_config.PageParams=a.BOOMR_config.PageParams||{},a.BOOMR_config.PageParams.pci=!0,e=\"https://s2.go-mpulse.net/boomerang/\";if(window.BOOMR_API_key=\"65SKQ-LZFX4-E7PC5-ETMCA-9VSMC\",function(){function n(e){a.BOOMR_onload=e&amp;&amp;e.timeStamp||(new Date).getTime()}if(!a.BOOMR||!a.BOOMR.version&amp;&amp;!a.BOOMR.snippetExecuted){a.BOOMR=a.BOOMR||{},a.BOOMR.snippetExecuted=!0;var i,_,o,r=document.createElement(\"iframe\");if(a[t])a[t](\"load\",n,!1);else if(a.attachEvent)a.attachEvent(\"onload\",n);r.src=\"javascript:void(0)\",r.title=\"\",r.role=\"presentation\",(r.frameElement||r).style.cssText=\"width:0;height:0;border:0;display:none;\",o=document.getElementsByTagName(\"script\")[0],o.parentNode.insertBefore(r,o);try{_=r.contentWindow.document}catch(O){i=document.domain,r.src=\"javascript:var d=document.open();d.domain='\"+i+\"';void(0);\",_=r.contentWindow.document}_.open()._l=function(){var a=this.createElement(\"script\");if(i)this.domain=i;a.id=\"boomr-if-as\",a.src=e+\"65SKQ-LZFX4-E7PC5-ETMCA-9VSMC\",BOOMR_lstart=(new Date).getTime(),this.body.appendChild(a)},_.write(\"&lt;bo\"+'dy onload=\"document._l();\"&gt;'),_.close()}}(),\"\".length&gt;0)if(a&amp;&amp;\"performance\"in a&amp;&amp;a.performance&amp;&amp;\"function\"==typeof a.performance.setResourceTimingBufferSize)a.performance.setResourceTimingBufferSize();!function(){if(BOOMR=a.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var e=\"\"==\"true\"?1:0,t=\"\",n=\"gzc2qsaxho6lqybbprfq-f-b9f3f0c32-clientnsv4-s.akamaihd.net\",i={\"ak.v\":\"30\",\"ak.cp\":\"737539\",\"ak.ai\":parseInt(\"465986\",10),\"ak.ol\":\"0\",\"ak.cr\":8,\"ak.ipv\":4,\"ak.proto\":\"http/1.1\",\"ak.rid\":\"1533d04a\",\"ak.r\":32979,\"ak.a2\":e,\"ak.m\":\"a\",\"ak.n\":\"essl\",\"ak.bpcip\":\"54.69.168.0\",\"ak.cport\":35554,\"ak.gh\":\"23.59.188.180\",\"ak.quicv\":\"\",\"ak.tlsv\":\"tls1.2\",\"ak.0rtt\":\"\",\"ak.csrc\":\"-\",\"ak.acc\":\"reno\",\"ak.t\":\"1612807243\",\"ak.ak\":\"hOBiQwZUYzCg5VSAfCLimQ==3ocEaO6BPds4E/+67txza8Ii5rrsOUxI4clSKZsq4N+J8nIlb3ClDKjRax9JNpxbF01DlMIMe1IBoTWWaChyD6zes1dIJU7SJcI7p6vGk7CwCPLFy6dnXO74WsnxlJzUNQVa6MICe46rz8ak61uGDut3CGZf9e0uT1RCnIDTRkZhNtE/e0o6cLnuR9OIrkto0x23hfQeyo1Ycu+LY743LyOvBsd6IcRWtxGpjLK3vb8voI8+c+c5ZBFMkD8N63grUv+4jc2eIMe3g+bEyg06HGNT4ZH317II4xnjg1PHDKotSzfnTsm/e3R4A8uCXGr9dfVAjBfLClBknbp/KAcpLpB2mvfiZQWhkkVrH4/w8UHgUM+Wlhp4B0JY5u1Bngy/aupMKDeDJVeGeQcbJaij6x4DdKGGCwuhUa78ygtgEmw=\",\"ak.pv\":\"17\",\"ak.dpoabenc\":\"\"};if(\"\"!==t)i[\"ak.ruds\"]=t;var _={i:!1,av:function(e){var t=\"http.initiator\";if(e&amp;&amp;(!e[t]||\"spa_hard\"===e[t]))i[\"ak.feo\"]=void 0!==a.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var a=[\"ak.bpcip\",\"ak.cport\",\"ak.cr\",\"ak.csrc\",\"ak.gh\",\"ak.ipv\",\"ak.m\",\"ak.n\",\"ak.ol\",\"ak.proto\",\"ak.quicv\",\"ak.tlsv\",\"ak.0rtt\",\"ak.r\",\"ak.acc\",\"ak.t\"];BOOMR.removeVar(a)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:n,init:function(){if(!_.i){var a=BOOMR.subscribe;a(\"before_beacon\",_.av,null,null),a(\"onbeacon\",_.rv,null,null),_.i=!0}return this},is_complete:function(){return!0}}}}()}(window);&lt;/script&gt;&lt;/head&gt; &lt;body&gt; &lt;div id=\"pb-root\" class=\"\"&gt;&lt;a class=\"skip-link\" href=\"#header\"&gt;Skip to content&lt;/a&gt; &lt;section id=\"nav\" class=\"relative zindex-higher col\"&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-global-sales-nav\" id=\"faYVSr1Xz0ktKr\"&gt; &lt;div id=\"sales-nav\" class=\"background-grey-minimal visible-lg\"&gt; &lt;div class=\"container\"&gt; &lt;ul class=\"list-unstyled flex-container-row padded padded-top padded-bottom padded-xs\"&gt; &lt;li class=\"padded padded-right padded-md flex-shrink\"&gt;&lt;a href=\"https://www.kait8.com/2019/05/03/ask-expert/\" class=\"color-grey-dark\"&gt;Ask The Expert&lt;/a&gt;&lt;/li&gt; &lt;li class=\"padded padded-right padded-md flex-shrink\"&gt;&lt;a href=\"https://www.kait8.com/community/energy-alert/\" class=\"color-grey-dark\"&gt;Energy Alert&lt;/a&gt;&lt;/li&gt; &lt;li class=\"padded padded-right padded-md flex-shrink\"&gt;&lt;a href=\"http://www.kait8.com/community/gr8-acts-of-kindness/\" class=\"color-grey-dark\"&gt;GR8 Acts of Kindness&lt;/a&gt;&lt;/li&gt; &lt;li class=\"padded padded-right padded-md flex-shrink\"&gt;&lt;a href=\"http://www.kait8.com/health/medical-minute/\" class=\"color-grey-dark\"&gt;Medical Minute&lt;/a&gt;&lt;/li&gt; &lt;li class=\"padded padded-right padded-md flex-shrink\"&gt;&lt;a href=\"https://kait8.com/roadtrip/\" class=\"color-grey-dark\"&gt;Take a Road Trip&lt;/a&gt;&lt;/li&gt; &lt;li class=\"padded padded-right padded-md flex-shrink\"&gt;&lt;a href=\"https://www.graytvlocal.com/market/jonesboro-ar\" class=\"color-grey-dark\"&gt;Shop Local&lt;/a&gt;&lt;/li&gt; &lt;li class=\"padded padded-right padded-md flex-shrink\"&gt;&lt;a href=\"https://www.kait8.com/bethehero/\" class=\"color-grey-dark\"&gt;Be The Hero Blood Drive&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-test-html-box\" id=\"f0aKfloXz0ktKr\"&gt; &lt;style&gt;.pb-f-article-body .card .img-container.width-full img.width-full{display:block;max-height:calc(100vh - 200px);width:auto;max-width:100%;margin-left:auto;margin-right:auto}.pb-f-article-body .card .img-container.width-full,.pb-f-article-header .card .img-container.width-full{background-color:#f9f9f9}.pb-f-article-header .card .img-container.width-full img.width-full{display:block;max-height:calc(100vh - 150px);width:auto;max-width:100%;margin-left:auto;margin-right:auto}&lt;/style&gt; &lt;/div&gt; &lt;div class=\"pb-container\"&gt; &lt;/div&gt; &lt;/section&gt; &lt;header id=\"sticky-nav\" class=\"sticky zindex-higher col\"&gt; &lt;div class=\"pb-container\"&gt; &lt;div class=\"wrapper clearfix col pb-feature pb-layout-item pb-f-global-navigation-bar\" id=\"f0ExsO8Xz0ktKr\"&gt; &lt;div id=\"app-bar\" class=\"app-bar card padded padded-sm padded-top padded-bottom width-full\" role=\"navigation\"&gt; &lt;div class=\"justify-space-between align-items-center flex-container-row relative app-bar-inner container\"&gt; &lt;button id=\"app-bar-topics-button\" name=\"topicsMenu\" class=\"app-button justify-center flex-container-row no-border\" data-role=\"open-tray\" data-tray=\"topics\"&gt; &lt;span class=\"fa fa-2x fa-bars\" aria-hidden=\"true\"&gt;&lt;/span&gt; &lt;/button&gt; &lt;div class=\"logo-container flex flex-container-row align-items-center justify-left\"&gt; &lt;a aria-label=\"Visit homepage\" href=\"https://www.kait8.com\"&gt; &lt;div class=\"logo logo-slim\"&gt;&lt;/div&gt; &lt;/a&gt; &lt;/div&gt; &lt;div class=\"app-bar-top-container flex-3 flex-container-row relative spaced spaced-sm spaced-left spaced-right hidden-sm\"&gt; &lt;ul id=\"app-bar-top-menu\" class=\"list-unstyled flex-container-row topics-list uppercase align-items-center flex-shrink\"&gt; &lt;li class=\"spaced spaced-right spaced-lg li-1\"&gt; &lt;h3&gt; &lt;a href=\"/news\" class=\"\"&gt;News&lt;/a&gt; &lt;/h3&gt; &lt;/li&gt; &lt;li class=\"spaced spaced-right spaced-lg li-1\"&gt; &lt;h3&gt; &lt;a href=\"/weather\" class=\"\"&gt;Weather&lt;/a&gt; &lt;/h3&gt; &lt;/li&gt; &lt;li class=\"spaced spaced-right spaced-lg li-1\"&gt; &lt;h3&gt; &lt;a href=\"/sports\" class=\"\"&gt;Sports&lt;/a&gt; &lt;/h3&gt; &lt;/li&gt; &lt;li class=\"spaced spaced-right spaced-lg li-1\"&gt; &lt;h3&gt; &lt;a href=\"http://www.kait8.com/video-gallery\" class=\"\"&gt;VIDEO&lt;/a&gt; &lt;/h3&gt; &lt;/li&gt; &lt;li class=\"spaced spaced-right spaced-lg li-1\"&gt; &lt;h3&gt; &lt;a href=\"/health\" class=\"\"&gt;Health&lt;/a&gt; &lt;/h3&gt; &lt;/li&gt; &lt;li class=\"spaced spaced-right spaced-lg li-1\"&gt; &lt;h3&gt; &lt;a href=\"/community\" class=\"\"&gt;Community&lt;/a&gt; &lt;/h3&gt; &lt;/li&gt; &lt;li class=\"spaced spaced-right spaced-lg li-1\"&gt; &lt;h3&gt; &lt;a href=\"/about-us\" class=\"\"&gt;About Us&lt;/a&gt; &lt;/h3&gt; &lt;/li&gt; &lt;li class=\"spaced spaced-right spaced-lg li-1\"&gt; &lt;h3&gt; &lt;a href=\"/contests\" class=\"\"&gt;Contests&lt;/a&gt; &lt;/h3&gt; &lt;/li&gt; &lt;li class=\"spaced spaced-right spaced-lg li-1\"&gt; &lt;h3&gt; &lt;a href=\"http://www.kait8.com/programming/schedule/\" class=\"\"&gt;WHAT'S ON&lt;/a&gt; &lt;/h3&gt; &lt;/li&gt; &lt;li class=\"spaced spaced-right spaced-lg li-1\"&gt; &lt;h3&gt; &lt;a href=\"https://www.graytvlocal.com/market/jonesboro-ar\" class=\"\"&gt;Shop Local&lt;/a&gt; &lt;/h3&gt; &lt;/li&gt; &lt;/ul&gt; &lt;/div&gt; &lt;div class=\"search-box-container search-box flex flex-container-row align-items-center justify-end\"&gt; &lt;div class=\"search-box-inner\"&gt; &lt;form class=\"search search-expandable-form small\" action=\"/search/\" method=\"GET\"&gt; &lt;input type=\"checkbox\" class=\"checkbox\" name=\"search-action\" id=\"search-action\"/&gt; &lt;label class=\"magnifying-glass\" for=\"search-action\"&gt; &lt;i class=\"search-button fa fa-search\"&gt;&lt;/i&gt; &lt;i class=\"close-button fa fa-times\"&gt;&lt;/i&gt; &lt;/label&gt; &lt;input type=\"text\" class=\"search-text-field\" id=\"expandable-search\" name=\"q\" placeholder=\"Search...\"/&gt; &lt;/form&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"app-bar-tray\" data-role=\"tray\" data-tray=\"topics\"&gt; &lt;nav [class]=\"visible == true ? 'tray left-0 hidden width-full zindex-high tray-open visible' : 'tray left-0 hidden width-full zindex-high hidden'\" class=\"tray left-0 hidden width-full zindex-high\"&gt; &lt;div class=\"topics-tray tray-contents card card-dark padded padded-bottom padded-md\"&gt; &lt;div class=\"tray-contents-inner container\" tabindex=\"0\"&gt; &lt;div class=\"five-hundred-screen-height\"&gt; &lt;div class=\"container\"&gt; &lt;div class=\"flex-grid\"&gt; &lt;div class=\"tray-section tray-section-1 tray-section-odd justify-start uppercase links min-width-25 padded padded-md padded-right padded-left spaced spaced-xl spaced-top \"&gt; &lt;div class=\"tray-section spaced spaced-md spaced-left spaced-right li-1\"&gt; &lt;h3 class=\"spaced spaced-xs spaced-bottom padded padded-xs padded-right padded-left\"&gt; &lt;a href=\"/homepage\" class=\"color-white\"&gt;Home&lt;/a&gt; &lt;/h3&gt; &lt;div class=\"tray-section-children flex-grid flex-wrap no-transform padded padded-sm padded-bottom g-ulc-1 \"&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-3\"&gt; &lt;a href=\"http://www.kait8.com/live\" class=\"color-white\"&gt;Region 8 News Live and Replay&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-4\"&gt; &lt;a href=\"https://www.kait8.com/roadtrip/\" class=\"color-white\"&gt;Take a Road Trip&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-5\"&gt; &lt;a href=\"http://www.kait8.com/apps\" class=\"color-white\"&gt;Region 8 Digital Apps&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-6\"&gt; &lt;a href=\"http://www.kait8.com/video-gallery\" class=\"color-white\"&gt;Recent Video&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-7\"&gt; &lt;a href=\"http://www.kait8.com/tips/\" class=\"color-white\"&gt;Submit a News Tip&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-8\"&gt; &lt;a href=\"https://www.kait8.com/community/user-content/\" class=\"color-white\"&gt;See It - Snap It - Send It&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-9\"&gt; &lt;a href=\"https://www.graytvlocal.com/market/jonesboro-ar\" class=\"color-white\"&gt;Shop Local&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"tray-section tray-section-2 tray-section-even justify-start uppercase links min-width-25 padded padded-md padded-right padded-left spaced spaced-xl spaced-top \"&gt; &lt;div class=\"tray-section spaced spaced-md spaced-left spaced-right li-1\"&gt; &lt;h3 class=\"spaced spaced-xs spaced-bottom padded padded-xs padded-right padded-left\"&gt; &lt;a href=\"/news\" class=\"color-white\"&gt;News&lt;/a&gt; &lt;/h3&gt; &lt;div class=\"tray-section-children flex-grid flex-wrap no-transform padded padded-sm padded-bottom g-ulc-1 \"&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-3\"&gt; &lt;a href=\"/news/national\" class=\"color-white\"&gt;National&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-4\"&gt; &lt;a href=\"/news/entertainment\" class=\"color-white\"&gt;Entertainment&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-5\"&gt; &lt;a href=\"/news/education\" class=\"color-white\"&gt;Education&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-6\"&gt; &lt;a href=\"/news/crime\" class=\"color-white\"&gt;Crime&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-7\"&gt; &lt;a href=\"/politics\" class=\"color-white\"&gt;Politics&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-8\"&gt; &lt;a href=\"/business\" class=\"color-white\"&gt;Business&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-9\"&gt; &lt;a href=\"/news/consumer\" class=\"color-white\"&gt;Consumer&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-10\"&gt; &lt;a href=\"/news/technology\" class=\"color-white\"&gt;Technology&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-11\"&gt; &lt;a href=\"/news/oddities\" class=\"color-white\"&gt;Oddities&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-12\"&gt; &lt;a href=\"/news/editorial\" class=\"color-white\"&gt;A Better Region 8&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"tray-section tray-section-3 tray-section-odd justify-start uppercase links min-width-25 padded padded-md padded-right padded-left spaced spaced-xl spaced-top \"&gt; &lt;div class=\"tray-section spaced spaced-md spaced-left spaced-right li-1\"&gt; &lt;h3 class=\"spaced spaced-xs spaced-bottom padded padded-xs padded-right padded-left\"&gt; &lt;a href=\"/weather\" class=\"color-white\"&gt;Weather&lt;/a&gt; &lt;/h3&gt; &lt;div class=\"tray-section-children flex-grid flex-wrap no-transform padded padded-sm padded-bottom g-ulc-1 \"&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-3\"&gt; &lt;a href=\"/weather/cams\" class=\"color-white\"&gt;Weather Cams&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-4\"&gt; &lt;a href=\"https://www.kait8.com/weatheralerts/\" class=\"color-white\"&gt;Weather Alerts&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-5\"&gt; &lt;a href=\"https://water.weather.gov/ahps2/index.php?wfo=lzk\" class=\"color-white\"&gt;River Stages&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-6\"&gt; &lt;a href=\"http://www.kait8.com/health/allergies/sneezecast/\" class=\"color-white\"&gt;Sneezecast&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-7\"&gt; &lt;a href=\"/weather/closings\" class=\"color-white\"&gt;Closings&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-8\"&gt; &lt;a href=\"http://www.kait8.com/apps/\" class=\"color-white\"&gt;Download Apps&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-9\"&gt; &lt;a href=\"/weather/tornado\" class=\"color-white\"&gt;NE Arkansas Tornadoes&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"tray-section tray-section-4 tray-section-even justify-start uppercase links min-width-25 padded padded-md padded-right padded-left spaced spaced-xl spaced-top \"&gt; &lt;div class=\"tray-section spaced spaced-md spaced-left spaced-right li-1\"&gt; &lt;h3 class=\"spaced spaced-xs spaced-bottom padded padded-xs padded-right padded-left\"&gt; &lt;a href=\"/sports\" class=\"color-white\"&gt;Sports&lt;/a&gt; &lt;/h3&gt; &lt;div class=\"tray-section-children flex-grid flex-wrap no-transform padded padded-sm padded-bottom g-ulc-1 \"&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-3\"&gt; &lt;a href=\"/sports/high-school/basketball\" class=\"color-white\"&gt;Fastbreak Friday Night&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-4\"&gt; &lt;a href=\"/sports/ncaa/a-state\" class=\"color-white\"&gt;A-State Red Wolves&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-5\"&gt; &lt;a href=\"/sports/ncaa/arkansas\" class=\"color-white\"&gt;Arkansas Razorbacks&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-6\"&gt; &lt;a href=\"/sports/nba\" class=\"color-white\"&gt;NBA&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-7\"&gt; &lt;a href=\"/sports/nhl\" class=\"color-white\"&gt;NHL&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-8\"&gt; &lt;a href=\"/sports/national\" class=\"color-white\"&gt;National&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-9\"&gt; &lt;a href=\"/sports/outdoors\" class=\"color-white\"&gt;Outdoors&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-10\"&gt; &lt;a href=\"/sports/olympics\" class=\"color-white\"&gt;Olympics&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"tray-section tray-section-5 tray-section-odd justify-start uppercase links min-width-25 padded padded-md padded-right padded-left spaced spaced-xl spaced-top \"&gt; &lt;div class=\"tray-section spaced spaced-md spaced-left spaced-right li-1\"&gt; &lt;h3 class=\"spaced spaced-xs spaced-bottom padded padded-xs padded-right padded-left\"&gt; &lt;a href=\"/community\" class=\"color-white\"&gt;Community&lt;/a&gt; &lt;/h3&gt; &lt;div class=\"tray-section-children flex-grid flex-wrap no-transform padded padded-sm padded-bottom g-ulc-1 \"&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-3\"&gt; &lt;a href=\"/news/military\" class=\"color-white\"&gt;Military&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-4\"&gt; &lt;a href=\"/community/religion-today\" class=\"color-white\"&gt;Religion Today&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-5\"&gt; &lt;a href=\"/community/a-family-for-me\" class=\"color-white\"&gt;A Family for Me&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-6\"&gt; &lt;a href=\"/community/gr8-acts-of-kindness\" class=\"color-white\"&gt;GR8 Acts of Kindness&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-7\"&gt; &lt;a href=\"/traffic/gas-prices\" class=\"color-white\"&gt;Pump Patrol&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-8\"&gt; &lt;a href=\"https://www.kait8.com/community/energy-alert/\" class=\"color-white\"&gt;Energy Alert&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-9\"&gt; &lt;a href=\"/community/calendar\" class=\"color-white\"&gt;Calendar&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-10\"&gt; &lt;a href=\"/pets\" class=\"color-white\"&gt;Pets&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"tray-section tray-section-6 tray-section-even justify-start uppercase links min-width-25 padded padded-md padded-right padded-left spaced spaced-xl spaced-top \"&gt; &lt;div class=\"tray-section spaced spaced-md spaced-left spaced-right li-1\"&gt; &lt;h3 class=\"spaced spaced-xs spaced-bottom padded padded-xs padded-right padded-left\"&gt; &lt;a href=\"/health\" class=\"color-white\"&gt;Health&lt;/a&gt; &lt;/h3&gt; &lt;div class=\"tray-section-children flex-grid flex-wrap no-transform padded padded-sm padded-bottom g-ulc-1 \"&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-3\"&gt; &lt;a href=\"/health/coronavirus\" class=\"color-white\"&gt;Coronavirus&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-4\"&gt; &lt;a href=\"/health/medical-minute\" class=\"color-white\"&gt;Medical Minute&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-5\"&gt; &lt;a href=\"/health/national\" class=\"color-white\"&gt;National&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-6\"&gt; &lt;a href=\"/food\" class=\"color-white\"&gt;Food&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"tray-section tray-section-7 tray-section-odd justify-start uppercase links min-width-25 padded padded-md padded-right padded-left spaced spaced-xl spaced-top \"&gt; &lt;div class=\"tray-section spaced spaced-md spaced-left spaced-right li-1\"&gt; &lt;h3 class=\"spaced spaced-xs spaced-bottom padded padded-xs padded-right padded-left\"&gt; &lt;a href=\"/programming\" class=\"color-white\"&gt;Programming&lt;/a&gt; &lt;/h3&gt; &lt;div class=\"tray-section-children flex-grid flex-wrap no-transform padded padded-sm padded-bottom g-ulc-1 \"&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-3\"&gt; &lt;a href=\"http://www.kait8.com/programming/schedule/\" class=\"color-white\"&gt;What's On KAIT&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-4\"&gt; &lt;a href=\"https://www.fullcourtgreta.com/\" class=\"color-white\"&gt;Full Court Press with Greta Van Susteren&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-5\"&gt; &lt;a href=\"http://www.circleallaccess.com\" class=\"color-white\"&gt;Circle - Country Music &amp; Lifestyle&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-6\"&gt; &lt;a href=\"https://www.graydc.com/\" class=\"color-white\"&gt;Gray DC Bureau&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-7\"&gt; &lt;a href=\"https://www.investigatetv.com/\" class=\"color-white\"&gt;Investigate TV&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"tray-section tray-section-8 tray-section-even justify-start uppercase links min-width-25 padded padded-md padded-right padded-left spaced spaced-xl spaced-top \"&gt; &lt;div class=\"tray-section spaced spaced-md spaced-left spaced-right li-1\"&gt; &lt;h3 class=\"spaced spaced-xs spaced-bottom padded padded-xs padded-right padded-left\"&gt; &lt;a href=\"/about-us\" class=\"color-white\"&gt;About Us&lt;/a&gt; &lt;/h3&gt; &lt;div class=\"tray-section-children flex-grid flex-wrap no-transform padded padded-sm padded-bottom g-ulc-1 \"&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-3\"&gt; &lt;a href=\"https://www.kait8.com/2018/09/25/meet-region-news-team/\" class=\"color-white\"&gt;Meet Our News Team&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-4\"&gt; &lt;a href=\"https://gray.tv/careers#currentopenings\" class=\"color-white\"&gt;KAIT Careers&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"tray-section tray-section-9 tray-section-odd justify-start uppercase links min-width-25 padded padded-md padded-right padded-left spaced spaced-xl spaced-top \"&gt; &lt;div class=\"tray-section spaced spaced-md spaced-left spaced-right li-1\"&gt; &lt;h3 class=\"spaced spaced-xs spaced-bottom padded padded-xs padded-right padded-left\"&gt; &lt;a href=\"/contests\" class=\"color-white\"&gt;Contests&lt;/a&gt; &lt;/h3&gt; &lt;div class=\"tray-section-children flex-grid flex-wrap no-transform padded padded-sm padded-bottom g-ulc-1 \"&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-3\"&gt; &lt;a href=\"http://www.kait8.com/2019/04/16/gr-acts-kindness/\" class=\"color-white\"&gt;GR8 Acts of Kindness Submissions&lt;/a&gt; &lt;/div&gt; &lt;div class=\"tray-section-child padded padded-xs padded-right padded-left li-4\"&gt; &lt;a href=\"http://www.kait8.com/2018/08/28/bartons-weather-umbrella-contest-entry/\" class=\"color-white\"&gt;Barton's Umbrella&lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"tray-section tray-section-10 tray-section-even justify-start uppercase links min-width-25 padded padded-md padded-right padded-left spaced spaced-xl spaced-top \"&gt; &lt;div class=\"tray-section spaced spaced-md spaced-left spaced-right li-1\"&gt; &lt;h3 class=\"spaced spaced-xs spaced-bottom padded padded-xs padded-right padded-left\"&gt; &lt;a href=\"https://www.vuit.com/live/17196/kait\" class=\"color-white\"&gt;Latest Newscasts&lt;/a&gt; &lt;/h3&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/nav&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/header&gt; &lt;section id=\"top\" class=\"width-full\"&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-global-breaking-news\" id=\"f0MEpCZXz0ktKr\"&gt; &lt;div id=\"breaking-news-wrapper\" class=\"breaking-news-wrapper\" data-feature-name=\"breaking-news-bar\" data-feature-grouping=\".pb-f-global-breaking-news\" data-page-uri=\"/fragment-kait-breaking/\" data-url=\"/pb/api/v2/render/feature\" data-website=\"kait\" data-view-unpublished=\"\"&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-weather-weather-alerts\" id=\"fZgFpz1Xz0ktKr\"&gt; &lt;div id=\"weather-alerts-wrapper\" class=\"weather-alerts-wrapper\" data-feature-name=\"weather-alerts-bar\" data-feature-grouping=\".pb-f-weather-weather-alerts\" data-page-uri=\"/kait-weather-alerts/\" data-url=\"/pb/api/v2/render/feature\" data-website=\"kait\"&gt; &lt;div data-href=\"/pb/api/v2/render/feature\"&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-ads-arcads\" id=\"fOcnHR1Xz0ktKr\"&gt; &lt;div id=\"ad693-sticky\" class=\"flex-container-column \"&gt; &lt;div class=\"flex-container-row justify-center \"&gt; &lt;div id=\"ad693\" class=\"arcad ad-728x90 zindex-med\"&gt;&lt;/div&gt; &lt;script&gt;window.serviceCallbacks.push(function(){window.helpers.includeAd(arcAds,{id:\"ad693\",slotName:\"kait/web/news\",adType:\"flex-leaderboard\",dimensions:\"[[[970, 250], [970, 90], [728, 90]], [[728, 90]], [[320, 50]]]\",targeting:{position:{\"as\":\"posn\"},position_type:\"\",pt:\"a\",cid:\"QK3SPA45DZEFPGOOKT6HIFCSGQ\"},display:\"all\",sizemap:{breakpoints:\"[ [1024, 0], [768, 0], [319, 0] ]\",refresh:true},bidding:{prebid:{enabled:true,timeout:1E3,bids:[{bidder:\"appnexus\",params:{placementId:14567590}}]}}},{lazyload:true})});&lt;/script&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"pb-container\"&gt; &lt;/div&gt; &lt;/section&gt; &lt;div class=\"container flex-grid\"&gt; &lt;article id=\"content-well\" class=\"col desktop-8 tablet-12 mobile-12\"&gt; &lt;div class=\"wrapper clearfix col full pb-feature pb-layout-item pb-f-article-header\" id=\"f0G8x4vXz0ktKr\"&gt; &lt;div class=\"card spaced card-article width-full spaced-bottom spaced-xs\"&gt; &lt;div class=\"text-align-left card-content\"&gt; &lt;ul class=\"tag-list-wrapper list-unstyled flex-container-row text-align-left uppercase unstyled-link spaced spaced-top spaced-sm call-to-action bold\"&gt; &lt;/ul&gt; &lt;h1 class=\"spaced spaced-xs spaced-top spaced-bottom\"&gt;One arrested after police standoff in Blytheville&lt;/h1&gt; &lt;h2 class=\"spaced spaced-xs spaced-top\"&gt;&lt;/h2&gt; &lt;/div&gt; &lt;div class=\"spaced spaced-top spaced-sm\"&gt; &lt;div class=\"card-content\"&gt; &lt;figure class=\"\"&gt; &lt;div class=\"width-full img-container aspect-ratio-2x1\"&gt; &lt;img class=\"width-full \" alt=\"One arrested after police standoff in Blytheville\" src=\"https://www.kait8.com/resizer/t_zzFx7BpJSTC74xbZBml4bdrWI=/1200x600/arc-anglerfish-arc2-prod-raycom.s3.amazonaws.com/public/DB2NJARH4FCNVB7KWHKJGBNQ7Y.jpg\"/&gt; &lt;/div&gt; &lt;/figure&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"flex-grid flex-container-row flex-mobile-column col col-no-side-gutter pb-layout-item pb-chain pb-c-article-double-chain full\" id=\"c0qBKcXXz0ktKr\"&gt; &lt;section id=\"article-sharebar\" class=\"col col-no-gutter desktop-1 visible-lg spaced spaced-top spaced-sm\"&gt; &lt;div class=\"flex flex-container-row sticky\"&gt; &lt;span class=\"sharebar app-bar-share sharebar flex-container-column text-align-right\"&gt; &lt;button class=\"social-icon spaced spaced-top spaced-sm\" aria-label=\"share on twitter\" name=\"twitter\" onclick=\"window.open( 'https://twitter.com/intent/tweet?text=One+arrested+after+police+standoff+in+Blytheville&amp;amp;url=https%3A%2F%2Fwww.kait8.com%2Fstory%2F32310666%2Fone-arrested-after-police-standoff-in-blytheville', 'share_popup', 'height=500,width=650' ); return false;\" role=\"button\" data-arctrack=\"socialShareTwtr\" data-referrer=\"\" target=\"_blank\" rel=\"noopener noreferrer\"&gt; &lt;span class=\"fa-stack fa-lg\"&gt; &lt;i class=\"fa fa-circle fa-stack-2x\"&gt;&lt;/i&gt; &lt;i class=\"fab fa-twitter social-logo icon-light fa-stack-1x icon-light\"&gt;&lt;/i&gt; &lt;/span&gt; &lt;/button&gt; &lt;button class=\"social-icon spaced spaced-top spaced-sm\" name=\"facebook\" aria-label=\"share on facebook\" onclick=\"window.open( 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.kait8.com%2Fstory%2F32310666%2Fone-arrested-after-police-standoff-in-blytheville&amp;amp;title=One+arrested+after+police+standoff+in+Blytheville', 'share_popup', 'height=500,width=650' ); return false;\" data-arctrack=\"socialShareFb\" data-referrer=\"\" target=\"_blank\" rel=\"noopener noreferrer\"&gt; &lt;span class=\"fa-stack fa-lg\"&gt; &lt;i class=\"fa fa-circle fa-stack-2x\"&gt;&lt;/i&gt; &lt;i class=\"fab fa-facebook-f social-logo icon-light fa-stack-1x icon-light\"&gt;&lt;/i&gt; &lt;/span&gt; &lt;/button&gt; &lt;a href=\"mailto:?subject=One%20arrested%20after%20police%20standoff%20in%20Blytheville&amp;amp;body=Read%20more%20on%20One%20arrested%20after%20police%20standoff%20in%20Blytheville%20at%20https%3A%2F%2Fwww.kait8.com%2Fstory%2F32310666%2Fone-arrested-after-police-standoff-in-blytheville\"&gt; &lt;button class=\"social-icon spaced spaced-top spaced-sm\" role=\"button\" aria-label=\"share story via email\" data-arctrack=\"socialShareEmail\" data-referrer=\"\" rel=\"noopener noreferrer\"&gt; &lt;span class=\"fa-stack fa-lg\"&gt; &lt;i class=\"fa fa-circle fa-stack-2x\"&gt;&lt;/i&gt; &lt;i class=\"far fa-envelope social-logo icon-light fa-stack-1x icon-light\"&gt;&lt;/i&gt; &lt;/span&gt; &lt;/button&gt; &lt;/a&gt; &lt;/span&gt; &lt;/div&gt; &lt;/section&gt; &lt;section class=\"col col-no-gutter desktop-11 tablet-12 mobile-12 spaced spaced-top spaced-sm\"&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-article-byline\" id=\"f0z3yJ5Xz0ktKr\"&gt; &lt;div class=\"card\"&gt; &lt;div class=\"byline spaced spaced-bottom spaced-md card-content display-inline\"&gt; By &lt;span class=\"font-bold color-black\"&gt;Region 8 Newsdesk&lt;/span&gt; &lt;span class=\"font-bold\"&gt;|&lt;/span&gt; &lt;span class=\"timestamp\"&gt; June 26, 2016 at 8:53 PM CDT - Updated July 2 at 5:06 AM &lt;/span&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-article-body\" id=\"f0OiAz6Xz0ktKr\"&gt; &lt;div class=\"collection collection-cards\" id=\"article-body\"&gt; &lt;div data-type=\"image\" class=\"card card-pull-left card-captioned collection-item card-embedded-content\"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;figure class=\"\"&gt; &lt;div class=\"width-full img-container \"&gt; &lt;img class=\"b-lazy width-full \" alt=\"(Source: KAIT)\" data-src=\"https://www.kait8.com/resizer/mrzQQy_83Oh0R4u1gPE0aMjxjmk=/1400x0/arc-anglerfish-arc2-prod-raycom.s3.amazonaws.com/public/LA55CKBPMVGPTJLWXDOGTWCBZM.jpg\" src=\"https://www.kait8.com/resizer/I01ZrjLWgZ91iaDrcG1ufjUs4YY=/0x10/arc-anglerfish-arc2-prod-raycom.s3.amazonaws.com/public/LA55CKBPMVGPTJLWXDOGTWCBZM.jpg\"&gt; &lt;/div&gt; &lt;div&gt; &lt;figcaption class=\"caption-text spaced flex-container-row justify-space-between \"&gt; (Source: KAIT) &lt;/figcaption&gt; &lt;/div&gt; &lt;/figure&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"image\" class=\"card card-pull-left card-captioned collection-item card-embedded-content\"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;figure class=\"\"&gt; &lt;div class=\"width-full img-container \"&gt; &lt;img class=\"b-lazy width-full \" alt=\"Hartzell Watson (Source: Blytheville Police Dept.)\" data-src=\"https://www.kait8.com/resizer/ApJ0IYK3MmE61aBTZkRwf6U_cd4=/1400x0/arc-anglerfish-arc2-prod-raycom.s3.amazonaws.com/public/SMLB7T7EZRESPO7VHEJTZTQG2Q.jpg\" src=\"https://www.kait8.com/resizer/VT7c8VfAAmL6WreA-8jjNpay75Y=/0x10/arc-anglerfish-arc2-prod-raycom.s3.amazonaws.com/public/SMLB7T7EZRESPO7VHEJTZTQG2Q.jpg\"&gt; &lt;/div&gt; &lt;div&gt; &lt;figcaption class=\"caption-text spaced flex-container-row justify-space-between \"&gt; Hartzell Watson (Source: Blytheville Police Dept.) &lt;/figcaption&gt; &lt;/div&gt; &lt;/figure&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;BLYTHEVILLE, AR (KAIT) - One man is in custody after a 4-hour police standoff in Blytheville Sunday afternoon.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;According to Captain Scott Adams with the Blytheville Police Department, Hartzell Watson, 44, was arrested after being forced out of a home in the 500-block of North Division.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;Captain Adams said police originally responded to the house after a family dispute.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;When officers arrived, Watson barricaded himself in the house and refused to exit peacefully.&lt;/p&gt; &lt;div class=\"flex-container-column align-items-center hidden-lg spaced spaced-top spaced-sm\"&gt; &lt;div id=\"ad1732-sticky\" class=\"flex-container-column visible-sm\"&gt; &lt;div class=\"flex-container-row justify-center background-grey-minimal padded padded-bottom padded-top padded-sm \"&gt; &lt;div id=\"ad1732\" class=\"arcad ad-300x250\"&gt;&lt;/div&gt; &lt;script&gt;window.serviceCallbacks.push(function(){window.helpers.includeAd(arcAds,{id:\"ad1732\",slotName:\"kait/web/news/QK3SPA45DZEFPGOOKT6HIFCSGQ\",adType:\"cube\",dimensions:\"[[[300, 250]], [[300, 250]], [[300, 250]]]\",targeting:{position:{\"as\":\"posn\"},position_type:\"\",pt:\"\",cid:\"\"},display:\"mobile\",sizemap:{breakpoints:\"[ [1024, 0], [768, 0], [319, 0] ]\",refresh:true},bidding:{prebid:{enabled:true,timeout:1E3,bids:[{bidder:\"appnexus\",params:{placementId:14567590}}]}}},{lazyload:true})});&lt;/script&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;After several hours, police fired smoke and a chemical agent through a window of the home. The gas caught on fire within minutes.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;Officers entered the burning house to find Watson, but he jumped out of an attic window.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;He was checked by paramedics on the scene and was taken into custody.&lt;/p&gt; &lt;div class=\"flex-container-column align-items-center hidden-sm spaced spaced-top spaced-sm\"&gt; &lt;div id=\"ad1376-sticky\" class=\"flex-container-column \"&gt; &lt;div class=\"flex-container-row justify-center background-grey-minimal padded padded-bottom padded-top padded-sm \"&gt; &lt;div id=\"ad1376\" class=\"arcad ad-300x250\"&gt;&lt;/div&gt; &lt;script&gt;window.serviceCallbacks.push(function(){window.helpers.includeAd(arcAds,{id:\"ad1376\",slotName:\"kait/web/news/QK3SPA45DZEFPGOOKT6HIFCSGQ\",adType:\"cube\",dimensions:\"[[[300, 250]], [[300, 250]], [[300, 250]]]\",targeting:{position:{\"as\":\"posn\"},position_type:\"\",pt:\"\",cid:\"\"},display:\"all\",sizemap:{breakpoints:\"[ [1024, 0], [768, 0], [319, 0] ]\",refresh:true},bidding:{prebid:{enabled:true,timeout:1E3,bids:[{bidder:\"appnexus\",params:{placementId:14567590}}]}}},{lazyload:true})});&lt;/script&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;The Blytheville Fire Department was on scene and quickly put the fire out.&lt;/p&gt; &lt;div class=\"flex-container-column align-items-center hidden-lg spaced spaced-top spaced-sm\"&gt; &lt;div id=\"ad485-sticky\" class=\"flex-container-column visible-sm\"&gt; &lt;div class=\"flex-container-row justify-center background-grey-minimal padded padded-bottom padded-top padded-sm \"&gt; &lt;div id=\"ad485\" class=\"arcad ad-300x250\"&gt;&lt;/div&gt; &lt;script&gt;window.serviceCallbacks.push(function(){window.helpers.includeAd(arcAds,{id:\"ad485\",slotName:\"kait/web/news/QK3SPA45DZEFPGOOKT6HIFCSGQ\",adType:\"cube\",dimensions:\"[[[300, 250]], [[300, 250]], [[300, 250]]]\",targeting:{position:{\"as\":\"posn\"},position_type:\"\",pt:\"\",cid:\"\"},display:\"mobile\",sizemap:{breakpoints:\"[ [1024, 0], [768, 0], [319, 0] ]\",refresh:true},bidding:{prebid:{enabled:true,timeout:1E3,bids:[{bidder:\"appnexus\",params:{placementId:14567590}}]}}},{lazyload:true})});&lt;/script&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;Watson was then taken to the Mississippi County Jail. He is being held on state and federal warrants.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;The Arkansas State Police, Mississippi County Sheriff's Office, and the Second Judicial Drug Task Force assisted with the standoff.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;One officer on the scene was treated for dehydration.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;&lt;em&gt;Copyright 2016&amp;nbsp;&lt;a href=\"http://www.kait8.com/\"&gt;KAIT&lt;/a&gt;. All rights reserved.&lt;/em&gt;&lt;/p&gt; &lt;div class=\"flex-container-column align-items-center hidden-lg spaced spaced-top spaced-sm\"&gt; &lt;div id=\"ad646-sticky\" class=\"flex-container-column visible-sm\"&gt; &lt;div class=\"flex-container-row justify-center background-grey-minimal padded padded-bottom padded-top padded-sm \"&gt; &lt;div id=\"ad646\" class=\"arcad ad-300x250\"&gt;&lt;/div&gt; &lt;script&gt;window.serviceCallbacks.push(function(){window.helpers.includeAd(arcAds,{id:\"ad646\",slotName:\"kait/web/news/QK3SPA45DZEFPGOOKT6HIFCSGQ\",adType:\"cube\",dimensions:\"[[[300, 250]], [[300, 250]], [[300, 250]]]\",targeting:{position:{\"as\":\"posn\"},position_type:\"\",pt:\"\",cid:\"\"},display:\"mobile\",sizemap:{breakpoints:\"[ [1024, 0], [768, 0], [319, 0] ]\",refresh:true},bidding:{prebid:{enabled:true,timeout:1E3,bids:[{bidder:\"appnexus\",params:{placementId:14567590}}]}}},{lazyload:true})});&lt;/script&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item \"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;&lt;strong&gt;Watch Region 8 News&amp;nbsp;On Demand:&amp;nbsp;&lt;a href=\"http://bit.ly/Region8live\"&gt;On your Desktop&lt;/a&gt;&amp;nbsp;|&amp;nbsp;&lt;a href=\"http://ftpcontent4.worldnow.com/raycom/mobile/liveplayer/kait.html#vrvextbrowser=yes\"&gt;On your Mobile device&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;div data-type=\"text\" class=\"card collection-item card-border-bottom card-border-bottom-thick card-border-bottom-dark\"&gt; &lt;div class=\"card-content card-article\"&gt; &lt;p&gt;&lt;strong&gt;Region 8 News App - Install or update on your:&amp;nbsp;&lt;a href=\"http://itunes.apple.com/us/app/kait-region-8-news/id449621749?mt=8\"&gt;iPhone&lt;/a&gt;&amp;nbsp;|&amp;nbsp;&lt;a href=\"https://market.android.com/details?id=com.raycom.kait&amp;amp;feature=search_result\"&gt;Android&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-ads-connatix\" id=\"fwaAKx1Xz0ktKr\"&gt; &lt;div class=\"flex-grid ad-connatix spaced spaced-lg spaced-top spaced-bottom \"&gt; &lt;div class=\"col desktop-12 tablet-12 mobile-12\"&gt; &lt;div id=\"connatix-highlights-embed\" class=\"connatix-container box-shadow-light\"&gt; &lt;script id=\"a1c1c57f95064f50bba9396a0b142ced\"&gt;cnxps.cmd.push(function(){cnxps({playerId:\"cec234f2-82ca-435a-a30a-271018f43d08\"}).render(\"a1c1c57f95064f50bba9396a0b142ced\")});&lt;/script&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-ads-outbrain\" id=\"f06efnJXz0ktKr\"&gt; &lt;div id=\"outbrain-article-ad\" class=\"\"&gt; &lt;div class=\"OUTBRAIN\" data-widget-id=\"AR_8\" data-src=\"https://www.kait8.com/story/32310666/one-arrested-after-police-standoff-in-blytheville\" data-ob-template=\"raycom\"&gt; &lt;/div&gt; &lt;div class=\"OUTBRAIN\" data-widget-id=\"AR_9\" data-src=\"https://www.kait8.com/story/32310666/one-arrested-after-police-standoff-in-blytheville\" data-ob-template=\"raycom\"&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/section&gt; &lt;/div&gt; &lt;div class=\"pb-container\"&gt; &lt;/div&gt; &lt;/article&gt; &lt;aside id=\"right-rail\" class=\"col desktop-4 tablet-12 mobile-12 right-rail\"&gt; &lt;div class=\"pb-container\"&gt; &lt;div class=\"wrapper clearfix col pb-feature pb-layout-item pb-f-ads-arcads tablet-6 mobile-12 desktop-12\" id=\"fzMDJM1Xz0ktKr\"&gt; &lt;div id=\"ad1105-sticky\" class=\"flex-container-column \"&gt; &lt;div class=\"flex-container-row justify-center \"&gt; &lt;div id=\"ad1105\" class=\"arcad ad-300x250\"&gt;&lt;/div&gt; &lt;script&gt;window.serviceCallbacks.push(function(){window.helpers.includeAd(arcAds,{id:\"ad1105\",slotName:\"kait/web/news\",adType:\"flex-cube\",dimensions:\"[[[300, 600], [300, 250]], [[300, 250]], [[300, 250]]]\",targeting:{position:{\"as\":\"posn\"},position_type:\"\",pt:\"a\",cid:\"QK3SPA45DZEFPGOOKT6HIFCSGQ\"},display:\"all\",sizemap:{breakpoints:\"[ [1024, 0], [768, 0], [319, 0] ]\",refresh:true},bidding:{prebid:{enabled:true,timeout:1E3,bids:[{bidder:\"appnexus\",params:{placementId:14567590}}]}}},{lazyload:true})});&lt;/script&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix col desktop-12 tablet-6 mobile-12 pb-feature pb-layout-item pb-f-weather-forecast-box\" id=\"f47aum1Xz0ktKr\"&gt; &lt;div class=\"invisible weather-gradient flex-grid color-white pb-weather day\" id=\"weather-forecast-box\" data-valid-content=\"true\"&gt; &lt;div id=\"forecast-box-bg-wrapper\" data-current-bg-image=\"day-cloudy\" data-default-location-code=\"USAR0304\" class=\"weather-item flex pb-weather pb-forecast-box padded padded-md padded-top padded-bottom padded-right padded-left\"&gt; &lt;div id=\"forecast-box-content\"&gt; &lt;input type=\"hidden\" id=\"forecast-box-zip-code\" data-url=\"/pb/api/v2/render/feature/weather/forecast-box\" data-feature-grouping=\".pb-f-weather-forecast-box\" data-website=\"kait\" data-location-code=\"USAR0304\" data-language=\"en\" data-content-config-keys='Code,Language' data-content-config-values='USAR0304,en' data-custom-field-keys='spanish' data-custom-field-values=''/&gt; &lt;div class=\"col spaced spaced-top spaced-sm\"&gt; &lt;div class=\"flex-container-row justify-center\"&gt; &lt;div class=\"spaced spaced-right spaced-lg flex-container-row align-items-center\"&gt; &lt;a href=\"https://www.kait8.com/weather\"&gt; &lt;img class=\"radar-image\" src=\"//webpubcontent.raycommedia.com/kait/wximages/SatRad_DMA_640.jpg\" width=\"100%\"/&gt; &lt;/a&gt; &lt;/div&gt; &lt;div class=\"flex-container-column\"&gt; &lt;div class=\"flex-container-row\"&gt; &lt;div class=\"font-bold temp temp-lg weather-temp temp-lg-forecast-box\" data-temp-f=\"36\" data-temp-c=\"2\"&gt; 36&lt;/div&gt; &lt;div class=\"icon spaced spaced-left spaced-md flex-container-row align-items-center\"&gt; &lt;img width=\"40px\" height=\"40px\" src=\"/pb/resources/images/weather/weather-condition-icons/400x400/67_daily_forecast.png\" alt=\"weather icon\"/&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"spaced spaced-sm spaced-top text-align-center\"&gt; &lt;div class=\"flex-container-column relative\"&gt; &lt;div class=\"text-align-center\"&gt; &lt;span class=\"location font-bold\"&gt; Currently in&lt;br/&gt;Jonesboro, AR&lt;/span&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"flex-container-row spaced spaced-top spaced-md justify-center\"&gt; &lt;a href=\"https://www.kait8.com/weather\"&gt; &lt;button class=\"weather uppercase button button-mini-radius button-transparent button-white-border color-white bold font-sm padded padded-xs padded-left padded-right padded-top padded-bottom\"&gt; Full Forecast&lt;/button&gt; &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"flex-container-row justify-center spaced spaced-md spaced-bottom spaced-top font-semi-bold\"&gt; &lt;span class=\"spaced spaced-right spaced-sm\"&gt;Sponsored By&lt;/span&gt; &lt;div id=\"ad1264-sticky\" class=\"flex-container-column \"&gt; &lt;div class=\"flex-container-row justify-center \"&gt; &lt;div id=\"ad1264\" class=\"arcad ad-120x30\"&gt;&lt;/div&gt; &lt;script&gt;window.serviceCallbacks.push(function(){window.helpers.includeAd(arcAds,{id:\"ad1264\",slotName:\"kait/web/weather-widget\",adType:\"weather-sponsorship\",dimensions:\"[[[120, 30]], [[120, 30]], [[120, 30]]]\",targeting:{position:{\"as\":\"posn\"},position_type:\"\",pt:\"weather\",cid:\"\"},display:\"all\",sizemap:{breakpoints:\"[ [1024, 0], [768, 0], [319, 0] ]\",refresh:true},bidding:{prebid:{enabled:false,timeout:1E3,bids:[{bidder:\"appnexus\",params:{placementId:14567590}}]}}},{lazyload:true})});&lt;/script&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix col desktop-12 tablet-12 mobile-12 pb-feature pb-layout-item pb-f-article-author-bio\" id=\"frRRQ42Xz0ktKr\"&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-global-mailchimp-signup\" id=\"fxwHfN1Xz0ktKr\"&gt; &lt;/div&gt; &lt;div class=\"col pb-layout-item pb-chain pb-c-single-chain full\" id=\"c0NRdx1Xz0ktKr\"&gt; &lt;div class=\"flex-grid\"&gt; &lt;section class=\"col desktop-12 tablet-12 mobile-12\"&gt; &lt;div class=\"flex-grid\"&gt; &lt;div class=\"wrapper clearfix col full pb-feature pb-layout-item pb-f-homepage-story-feed\" id=\"fhr3sb2Xz0ktKr\"&gt; &lt;div class=\"flex-feature \"&gt; &lt;h3 class=\"bold\"&gt;&lt;span class=\"rectangle\"&gt;&lt;/span&gt; RECENT CONTENT&lt;/h3&gt; &lt;div class=\"flex-feature height-full flex-grid api-returned-stories\" id=\"load-more-wrapper-111303\" data-content-service=\"content-feed\"&gt; &lt;div class=\"col desktop-12 tablet-6 mobile-12\"&gt; &lt;div class=\"card skin\"&gt; &lt;div class=\"card-media width-full\"&gt; &lt;div class=\"align-items-center\"&gt; &lt;div class=\"width-full spaced card-media\"&gt; &lt;figure class=\"\"&gt; &lt;div class=\"width-full img-container aspect-ratio-2x1\"&gt; &lt;a href=\"/2021/02/08/city-councilman-arrested-sodomy-kidnapping-charges/\"&gt; &lt;img class=\"width-full \" alt=\"City councilman arrested on sodomy, kidnapping charges\" src=\"https://www.kait8.com/resizer/wg3Y3JODCJ2nJzchyq_R3eHUqZY=/1200x600/cloudfront-us-east-1.images.arcpublishing.com/raycom/L73F4RLYERGQ3ORWPPS7HHYTUA.png\"&gt; &lt;/a&gt; &lt;/div&gt; &lt;/figure&gt; &lt;/div&gt; &lt;div class=\"card card-article-mobile-only width-full flex-container-column\"&gt; &lt;h4 class=\"promo-header spaced spaced-xs spaced-bottom spaced-top font-normal\"&gt;&lt;a class=\"unstyled-link \" href=\"/2021/02/08/city-councilman-arrested-sodomy-kidnapping-charges/\"&gt; City councilman arrested on sodomy, kidnapping charges&lt;/a&gt;&lt;/h4&gt; &lt;div class=\"spaced color-grey-dark font-md\" data-pb-field=\"custom.blurbText_\" data-pb-url-field=\"custom.blurbUrl_\" data-pb-field-type=\"text\" data-pb-placeholder=\"#\"&gt;The councilman is in the Dunklin County Jail with no bond and is set to be arraigned on Tuesday.&lt;/div&gt; &lt;div class=\"byline-timestamp-container flex-container-column flex-desktop-row spaced spaced-top spaced-xs align-items-start\"&gt; &lt;div class=\"byline-wrapper flex-container-row \"&gt; &lt;span class=\"byline\"&gt;By&amp;nbsp;&lt;/span&gt; &lt;h3 class=\"byline bold\"&gt; &lt;span&gt;&lt;span&gt;Region 8 Newsdesk&lt;/span&gt;&lt;/span&gt; &lt;/h3&gt; &lt;span class=\"spaced spaced-right spaced-md\"&gt;&lt;/span&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"col desktop-12 tablet-6 mobile-12\"&gt; &lt;div class=\"card skin\"&gt; &lt;div class=\"card-media width-full\"&gt; &lt;div class=\"align-items-center\"&gt; &lt;div class=\"width-full spaced card-media\"&gt; &lt;figure class=\"\"&gt; &lt;div class=\"width-full img-container aspect-ratio-2x1\"&gt; &lt;a href=\"/2021/02/08/osceola-police-investigate-friday-shooting/\"&gt; &lt;img class=\"width-full \" alt=\"Osceola police investigate Friday shooting\" src=\"https://www.kait8.com/resizer/MwxZfroPz_VTamfctCMR99zL37Q=/1200x600/cloudfront-us-east-1.images.arcpublishing.com/raycom/HPPQUSEVK5GANPXSANIHAFZXAA.jpg\"&gt; &lt;/a&gt; &lt;/div&gt; &lt;/figure&gt; &lt;/div&gt; &lt;div class=\"card card-article-mobile-only width-full flex-container-column\"&gt; &lt;h4 class=\"promo-header spaced spaced-xs spaced-bottom spaced-top font-normal\"&gt;&lt;a class=\"unstyled-link \" href=\"/2021/02/08/osceola-police-investigate-friday-shooting/\"&gt; Osceola police investigate Friday shooting&lt;/a&gt;&lt;/h4&gt; &lt;div class=\"spaced color-grey-dark font-md\" data-pb-field=\"custom.blurbText_\" data-pb-url-field=\"custom.blurbUrl_\" data-pb-field-type=\"text\" data-pb-placeholder=\"#\"&gt;The Osceola Police Department is investigating a Friday evening shooting that took place at the local Express Mart.&lt;/div&gt; &lt;div class=\"byline-timestamp-container flex-container-column flex-desktop-row spaced spaced-top spaced-xs align-items-start\"&gt; &lt;div class=\"byline-wrapper flex-container-row \"&gt; &lt;span class=\"byline\"&gt;By&amp;nbsp;&lt;/span&gt; &lt;h3 class=\"byline bold\"&gt; &lt;span&gt;&lt;span&gt;Region 8 Newsdesk&lt;/span&gt;&lt;/span&gt; &lt;/h3&gt; &lt;span class=\"spaced spaced-right spaced-md\"&gt;&lt;/span&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/section&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-ads-arcads\" id=\"f09JMK9Xz0ktKr\"&gt; &lt;div id=\"ad100-sticky\" class=\"flex-container-column \"&gt; &lt;div class=\"flex-container-row justify-center \"&gt; &lt;div id=\"ad100\" class=\"arcad ad-300x250\"&gt;&lt;/div&gt; &lt;script&gt;window.serviceCallbacks.push(function(){window.helpers.includeAd(arcAds,{id:\"ad100\",slotName:\"kait/web/news\",adType:\"cube\",dimensions:\"[[[300, 250]], [[300, 250]], [[300, 250]]]\",targeting:{position:{\"as\":\"posn\"},position_type:\"\",pt:\"a\",cid:\"QK3SPA45DZEFPGOOKT6HIFCSGQ\"},display:\"all\",sizemap:{breakpoints:\"[ [1024, 0], [768, 0], [319, 0] ]\",refresh:true},bidding:{prebid:{enabled:true,timeout:1E3,bids:[{bidder:\"appnexus\",params:{placementId:14567590}}]}}},{lazyload:true})});&lt;/script&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"col pb-layout-item pb-chain pb-c-single-chain full\" id=\"c008fu9Xz0ktKr\"&gt; &lt;div class=\"flex-grid\"&gt; &lt;section class=\"col desktop-12 tablet-12 mobile-12\"&gt; &lt;div class=\"flex-grid\"&gt; &lt;div class=\"wrapper clearfix col full pb-feature pb-layout-item pb-f-homepage-story-feed\" id=\"fmrOMh1Xz0ktKr\"&gt; &lt;div class=\"flex-feature \"&gt; &lt;div class=\"flex-feature height-full flex-grid api-returned-stories\" id=\"load-more-wrapper-10996\" data-content-service=\"content-feed\"&gt; &lt;div class=\"col desktop-12 tablet-6 mobile-12\"&gt; &lt;div class=\"card skin\"&gt; &lt;div class=\"card-media width-full\"&gt; &lt;div class=\"align-items-center flex-container-row justify-space-between\"&gt; &lt;div class=\"width-full spaced card-media flex-reverse spaced-left spaced-lg flex\"&gt; &lt;figure class=\"\"&gt; &lt;div class=\"width-full img-container aspect-ratio-4x3\"&gt; &lt;a href=\"/2021/02/08/report-terry-mohajir-target-ucf-athletic-director-search/\"&gt; &lt;img class=\"width-full \" alt=\"Report: Terry Mohajir a target in UCF athletic director search\" src=\"https://www.kait8.com/resizer/OhQ0t9syUaQKZTKiI4W49pt8yMw=/1200x900/cloudfront-us-east-1.images.arcpublishing.com/raycom/YK3QUVJ5LZDY3EXMWCRPUP6TVM.jpg\"&gt; &lt;/a&gt; &lt;/div&gt; &lt;/figure&gt; &lt;/div&gt; &lt;div class=\"card card-article-mobile-only width-full flex-container-column flex-2\"&gt; &lt;h4 class=\"promo-header spaced spaced-xs spaced-bottom spaced-top font-normal\"&gt;&lt;a class=\"unstyled-link \" href=\"/2021/02/08/report-terry-mohajir-target-ucf-athletic-director-search/\"&gt; Report: Terry Mohajir a target in UCF athletic director search&lt;/a&gt;&lt;/h4&gt; &lt;div class=\"byline-timestamp-container flex-container-column flex-desktop-row spaced spaced-top spaced-xs align-items-start\"&gt; &lt;div class=\"byline-wrapper flex-container-row hidden\"&gt; &lt;span class=\"byline\"&gt;By&amp;nbsp;&lt;/span&gt; &lt;h3 class=\"byline bold\"&gt; &lt;span&gt;&lt;span&gt;Chris Hudgison&lt;/span&gt;&lt;/span&gt; &lt;/h3&gt; &lt;span class=\"spaced spaced-right spaced-md\"&gt;&lt;/span&gt; &lt;/div&gt; &lt;div class=\"font-sm color-grey byline-wrapper flex-container-row \"&gt; Published 1h at 10:45 AM &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"col desktop-12 tablet-6 mobile-12\"&gt; &lt;div class=\"card skin\"&gt; &lt;div class=\"card-media width-full\"&gt; &lt;div class=\"align-items-center flex-container-row justify-space-between\"&gt; &lt;div class=\"width-full spaced card-media flex-reverse spaced-left spaced-lg flex\"&gt; &lt;figure class=\"\"&gt; &lt;div class=\"width-full img-container aspect-ratio-4x3\"&gt; &lt;a href=\"/2021/02/08/harding-university-honor-murdered-alumnus/\"&gt; &lt;img class=\"width-full \" alt=\"Harding University to honor murdered alumnus\" src=\"https://www.kait8.com/resizer/aqxTbm7wchoZHFCmoB5F3uv-SvU=/1200x900/cloudfront-us-east-1.images.arcpublishing.com/raycom/4KYQ6HNEIZEKNG2QUHSE4SRBRI.jpg\"&gt; &lt;/a&gt; &lt;/div&gt; &lt;/figure&gt; &lt;/div&gt; &lt;div class=\"card card-article-mobile-only width-full flex-container-column flex-2\"&gt; &lt;h4 class=\"promo-header spaced spaced-xs spaced-bottom spaced-top font-normal\"&gt;&lt;a class=\"unstyled-link \" href=\"/2021/02/08/harding-university-honor-murdered-alumnus/\"&gt; Harding University to honor murdered alumnus&lt;/a&gt;&lt;/h4&gt; &lt;div class=\"byline-timestamp-container flex-container-column flex-desktop-row spaced spaced-top spaced-xs align-items-start\"&gt; &lt;div class=\"byline-wrapper flex-container-row hidden\"&gt; &lt;span class=\"byline\"&gt;By&amp;nbsp;&lt;/span&gt; &lt;h3 class=\"byline bold\"&gt; &lt;span&gt;&lt;span&gt;Region 8 Newsdesk&lt;/span&gt;&lt;/span&gt; &lt;/h3&gt; &lt;span class=\"spaced spaced-right spaced-md\"&gt;&lt;/span&gt; &lt;/div&gt; &lt;div class=\"font-sm color-grey byline-wrapper flex-container-row \"&gt; Published 1h at 10:34 AM &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"col desktop-12 tablet-6 mobile-12\"&gt; &lt;div class=\"card skin\"&gt; &lt;div class=\"card-media width-full\"&gt; &lt;div class=\"align-items-center flex-container-row justify-space-between\"&gt; &lt;div class=\"width-full spaced card-media flex-reverse spaced-left spaced-lg flex\"&gt; &lt;figure class=\"\"&gt; &lt;div class=\"width-full img-container aspect-ratio-4x3\"&gt; &lt;a href=\"/2021/02/08/lagging-production-driving-up-gas-prices-arkansas/\"&gt; &lt;img class=\"width-full \" alt=\"Lagging production driving up gas prices in Arkansas\" src=\"https://www.kait8.com/resizer/7OLbSYpfhs-xAK7abU8dfrZrfSU=/1200x900/cloudfront-us-east-1.images.arcpublishing.com/raycom/RUYNYT6THBF4FDLIZJCYPUXPBE.png\"&gt; &lt;/a&gt; &lt;/div&gt; &lt;/figure&gt; &lt;/div&gt; &lt;div class=\"card card-article-mobile-only width-full flex-container-column flex-2\"&gt; &lt;h4 class=\"promo-header spaced spaced-xs spaced-bottom spaced-top font-normal\"&gt;&lt;a class=\"unstyled-link \" href=\"/2021/02/08/lagging-production-driving-up-gas-prices-arkansas/\"&gt; Lagging production driving up gas prices in Arkansas&lt;/a&gt;&lt;/h4&gt; &lt;div class=\"byline-timestamp-container flex-container-column flex-desktop-row spaced spaced-top spaced-xs align-items-start\"&gt; &lt;div class=\"byline-wrapper flex-container-row hidden\"&gt; &lt;span class=\"byline\"&gt;By&amp;nbsp;&lt;/span&gt; &lt;h3 class=\"byline bold\"&gt; &lt;span&gt;&lt;span&gt;Region 8 Newsdesk&lt;/span&gt;&lt;/span&gt; &lt;/h3&gt; &lt;span class=\"spaced spaced-right spaced-md\"&gt;&lt;/span&gt; &lt;/div&gt; &lt;div class=\"font-sm color-grey byline-wrapper flex-container-row \"&gt; Published 3h at 8:26 AM &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"col desktop-12 tablet-6 mobile-12\"&gt; &lt;div class=\"card skin\"&gt; &lt;div class=\"card-media width-full\"&gt; &lt;div class=\"align-items-center flex-container-row justify-space-between\"&gt; &lt;div class=\"width-full spaced card-media flex-reverse spaced-left spaced-lg flex\"&gt; &lt;figure class=\"\"&gt; &lt;div class=\"width-full img-container aspect-ratio-4x3\"&gt; &lt;a href=\"/2021/02/08/police-say-missing-year-old-has-been-found-safe/\"&gt; &lt;img class=\"width-full \" alt=\"Police say missing 10-year-old has been found safe\" src=\"https://www.kait8.com/resizer/e177Sz6cFkOH2rm-RA-DCnARN-Y=/1200x900/cloudfront-us-east-1.images.arcpublishing.com/raycom/MTKXIGEMNVF5BHM2HT3P5Y7J5I.jpg\"&gt; &lt;/a&gt; &lt;/div&gt; &lt;/figure&gt; &lt;/div&gt; &lt;div class=\"card card-article-mobile-only width-full flex-container-column flex-2\"&gt; &lt;h4 class=\"promo-header spaced spaced-xs spaced-bottom spaced-top font-normal\"&gt;&lt;a class=\"unstyled-link \" href=\"/2021/02/08/police-say-missing-year-old-has-been-found-safe/\"&gt; Police say missing 10-year-old has been found safe&lt;/a&gt;&lt;/h4&gt; &lt;div class=\"byline-timestamp-container flex-container-column flex-desktop-row spaced spaced-top spaced-xs align-items-start\"&gt; &lt;div class=\"byline-wrapper flex-container-row hidden\"&gt; &lt;span class=\"byline\"&gt;By&amp;nbsp;&lt;/span&gt; &lt;h3 class=\"byline bold\"&gt; &lt;span&gt;WAFB Staff&lt;/span&gt; &lt;/h3&gt; &lt;span class=\"spaced spaced-right spaced-md\"&gt;&lt;/span&gt; &lt;/div&gt; &lt;div class=\"font-sm color-grey byline-wrapper flex-container-row \"&gt; Published 3h at 8:24 AM &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/section&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"pb-container\"&gt; &lt;/div&gt; &lt;/aside&gt; &lt;div id=\"recirc\" class=\"col desktop-12 tablet-12 mobile-12\"&gt; &lt;/div&gt; &lt;/div&gt; &lt;section id=\"bottom\" class=\"col desktop-12 tablet-12 mobile-12\"&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-ads-arcads\" id=\"f0XShVkXz0ktKr\"&gt; &lt;div id=\"ad554-sticky\" class=\"flex-container-column \"&gt; &lt;div class=\"flex-container-row justify-center \"&gt; &lt;div id=\"ad554\" class=\"arcad ad-728x90 zindex-med\"&gt;&lt;/div&gt; &lt;script&gt;window.serviceCallbacks.push(function(){window.helpers.includeAd(arcAds,{id:\"ad554\",slotName:\"kait/web/news\",adType:\"flex-leaderboard\",dimensions:\"[[[970, 250], [970, 90], [728, 90]], [[728, 90]], [[320, 50]]]\",targeting:{position:{\"as\":\"posn\"},position_type:\"\",pt:\"a\",cid:\"QK3SPA45DZEFPGOOKT6HIFCSGQ\"},display:\"all\",sizemap:{breakpoints:\"[ [1024, 0], [768, 0], [319, 0] ]\",refresh:true},bidding:{prebid:{enabled:true,timeout:1E3,bids:[{bidder:\"appnexus\",params:{placementId:14567590}}]}}},{lazyload:true})});&lt;/script&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"wrapper clearfix full pb-feature pb-layout-item pb-f-global-footer\" id=\"fU2oFF1Xz0ktKr\"&gt; &lt;footer class=\"card card-dark padded padded-bottom padded-0\"&gt; &lt;div class=\"container\"&gt; &lt;div class=\"container spaced spaced-sm spaced-left\"&gt; &lt;div class=\"flex flex-container-column flex-tablet-row flex-desktop-row width-full color-white\"&gt; &lt;div class=\"spaced spaced-right spaced-bottom spaced-xl\"&gt; &lt;div class=\"logo-container flex flex-container-row align-items-center justify-left\"&gt; &lt;a aria-label=\"Visit homepage\" href=\"https://www.kait8.com\"&gt; &lt;div class=\"logo logo-large logo-footer\"&gt;&lt;/div&gt; &lt;/a&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"spaced spaced-right spaced-xl footer-mission\"&gt; &lt;p class=\"spaced spaced-bottom spaced-xs\"&gt; 472 CR 766&lt;br/&gt;Jonesboro, AR 72401&lt;br/&gt;(870) 931-8888 &lt;/p&gt; &lt;a class=\"call-to-action uppercase color-white\" href=\"http://www.kait8.com/about-us\"&gt;Contact Us &lt;i class=\"fa fa-caret-right\" aria-hidden=\"true\"&gt;&lt;/i&gt;&lt;/a&gt; &lt;div id=\"ccpa-link\" class=\"call-to-action ccpa-dynamic-insertion-container uppercase color-white\"&gt;&lt;/div&gt; &lt;div class=\"spaced spaced-top spaced-xl hidden-lg\"&gt; &lt;ul class=\"list-unstyled call-to-action uppercase\"&gt; &lt;li&gt;&lt;a href=\"http://publicfiles.fcc.gov/tv-profile/kait\" class=\"color-white\"&gt;FCC Public File&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"mailto:publicfile@kait8.com\" class=\"color-white\"&gt;publicfile@kait8.com &lt;br/&gt; (870) 336-1817&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"http://webpubcontent.raycommedia.com/kait/PDF/latestKAITEEO.pdf\" class=\"color-white\"&gt;EEO&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"https://webpubcontent.gray.tv/gdm/fcc/kait-fcc_applications.pdf\" class=\"color-white\"&gt;FCC Applications&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"http://www.kait8.com/2018/08/28/kait-closed-captioning-service-support/\" class=\"color-white\"&gt;Closed Captioning&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"https://gray.tv/careers#currentopenings\" class=\"color-white\"&gt;KAIT 8 Careers&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"/privacy-policy/\" class=\"color-white\"&gt;Privacy Policy&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"/terms-of-service/\" class=\"color-white\"&gt;Terms of Service&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/div&gt; &lt;div class=\"spaced spaced-top spaced-xl hidden-lg\"&gt; &lt;span class=\"buttonbar app-bar-share flex-container-grid width-full text-align-right\"&gt; &lt;a class=\"button button-icon button-icon-hover-accent button-lg footer-social-icon\" href=\"https://twitter.com/Region8News\" role=\"button\" aria-label=\"Visit Twitter\" target=\"_blank\" rel=\"noopener noreferrer\"&gt; &lt;i class=\"fab fa-twitter \"&gt;&lt;/i&gt; &lt;/a&gt; &lt;a class=\"button button-icon button-icon-hover-accent button-lg footer-social-icon\" href=\"https://www.facebook.com/Region8News\" role=\"button\" aria-label=\"Visit Facebook\" target=\"_blank\" rel=\"noopener noreferrer\"&gt; &lt;i class=\"fab fa-facebook-square \"&gt;&lt;/i&gt; &lt;/a&gt; &lt;/span&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"spaced spaced-right spaced-xl visible-lg\"&gt; &lt;ul class=\"list-unstyled call-to-action uppercase\"&gt; &lt;li&gt;&lt;a href=\"http://publicfiles.fcc.gov/tv-profile/kait\" class=\"color-white\"&gt;FCC Public File&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"mailto:publicfile@kait8.com\" class=\"color-white\"&gt;publicfile@kait8.com &lt;br/&gt; (870) 336-1817&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"http://webpubcontent.raycommedia.com/kait/PDF/latestKAITEEO.pdf\" class=\"color-white\"&gt;EEO&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"https://webpubcontent.gray.tv/gdm/fcc/kait-fcc_applications.pdf\" class=\"color-white\"&gt;FCC Applications&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"http://www.kait8.com/2018/08/28/kait-closed-captioning-service-support/\" class=\"color-white\"&gt;Closed Captioning&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"https://gray.tv/careers#currentopenings\" class=\"color-white\"&gt;KAIT 8 Careers&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"/privacy-policy/\" class=\"color-white\"&gt;Privacy Policy&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=\"/terms-of-service/\" class=\"color-white\"&gt;Terms of Service&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;/div&gt; &lt;div class=\"visible-lg\"&gt; &lt;span class=\"buttonbar app-bar-share flex-container-grid width-full text-align-right\"&gt; &lt;a class=\"button button-icon button-icon-hover-accent button-lg footer-social-icon\" href=\"https://twitter.com/Region8News\" role=\"button\" aria-label=\"Visit Twitter\" target=\"_blank\" rel=\"noopener noreferrer\"&gt; &lt;i class=\"fab fa-twitter \"&gt;&lt;/i&gt; &lt;/a&gt; &lt;a class=\"button button-icon button-icon-hover-accent button-lg footer-social-icon\" href=\"https://www.facebook.com/Region8News\" role=\"button\" aria-label=\"Visit Facebook\" target=\"_blank\" rel=\"noopener noreferrer\"&gt; &lt;i class=\"fab fa-facebook-square \"&gt;&lt;/i&gt; &lt;/a&gt; &lt;/span&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class=\"footer-copyright width-full bordered bordered-top-darken spaced spaced-top spaced-sm\"&gt; &lt;div class=\"container\"&gt; &lt;p class=\"font-sm color-white text-align-center spaced spaced-sm spaced-top spaced-bottom\"&gt; &lt;span&gt;A Gray Media Group, Inc. Station - &amp;copy; 2002-2021 Gray Television, Inc.&lt;/span&gt; &lt;/p&gt; &lt;div class=\"footer-corp-logo width-full spaced spaced-sm spaced-top spaced-bottom\"&gt;&lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/footer&gt; &lt;/div&gt; &lt;div class=\"pb-container\"&gt; &lt;/div&gt; &lt;/section&gt; &lt;/div&gt; &lt;script async=\"async\" src=\"https://widgets.outbrain.com/outbrain.js\"&gt;&lt;/script&gt; &lt;script async src='/pb/gr/p/default/rHJ9vP1Xz0ktKr/render.js?v=101'&gt;&lt;/script&gt; &lt;script&gt;(function(){window.pageBuilder=window.pageBuilder||{};var testIdToFeatureId={};var status={};var TIMEOUT=1500;var TIME_NOW=Date.now();var BANDITO_IS_ADMIN=null;var BANDITO_PERF_API=null;var BANDITO_TESTS_API=null;var BANDITO_EVENTS_API=null;var supportsPassive=false;try{var opts=Object.defineProperty({},\"passive\",{get:function(){supportsPassive=true}});window.addEventListener(\"test\",null,opts)}catch(e){}var visibilityCallbacks={};function visibilityCallback(){var config=null;var element=null;var callback=\nnull;var body=document.body;var html=document.documentElement;var height=html.clientHeight||body.clientHeight;for(var key in visibilityCallbacks)if(visibilityCallbacks.hasOwnProperty(key)){config=visibilityCallbacks[key];if(config){element=config[0];callback=config[1];var boundaries=element.getBoundingClientRect();if(boundaries.top&gt;0&amp;&amp;boundaries.top&lt;height){callback();visibilityCallbacks[key]=null}}}}window.addEventListener(\"resize\",visibilityCallback,supportsPassive?{passive:true}:false);document.addEventListener(\"scroll\",\nvisibilityCallback,supportsPassive?{passive:true}:false);function ajax(url,success,failure,timeout){var xhr=new XMLHttpRequest;xhr.open(\"GET\",url);xhr.onreadystatechange=function(){if(xhr.readyState==4)if(xhr.status===200)try{var response=JSON.parse(xhr.responseText);success(response)}catch(e){failure()}else failure()};if(timeout){xhr.ontimeout=failure;xhr.timeout=timeout}xhr.send()}function perf(status){var elapsed=Date.now()-TIME_NOW;var url=BANDITO_PERF_API+\"?status\\x3d\"+status+\"\\x26time\\x3d\"+\nelapsed;ajax(url,function(){},function(){})}function showDefaultVariants(){for(var id in window._variantFeatureIds)if(window._variantFeatureIds.hasOwnProperty(id)){perf(\"failure\");showDefaultVariant(window._variantFeatureIds[id],false)}}function iterateFeatures(testId,callback){var id,feature;for(id in window._variantFeatureIds)if(window._variantFeatureIds.hasOwnProperty(id))if(window._variantFeatureIds[id]==testId){feature=document.getElementById(id);if(feature)callback(feature)}}function showDefaultVariant(testId,\nsuccess){iterateFeatures(testId,function(feature){variantLoaded(testId,testId,feature,success)})}function showOtherVariant(testId,winner,timeLeft){var uri=window._context+\"/api/v2/render/feature/variant/\"+winner+\"?rid\\x3d\"+window._rid+\"\\x26uri\\x3d\"+window._uri+\"\\x26outputType\\x3d\"+window._outputType;ajax(uri,function(response){iterateFeatures(testId,function(feature){var resources=response.pageResources||{};var parent=feature.parentNode;var div=document.createElement(\"div\");div.innerHTML=response.rendering.trim();\nvar newFeature=div.childNodes[0];parent.replaceChild(newFeature,feature);var scripts=Array.prototype.slice.call(newFeature.getElementsByTagName(\"script\"));for(var i=0;i&lt;scripts.length;i++)if(scripts[i][\"type\"]==\"\"||scripts[i][\"type\"]==\"text/javascript\")if(scripts[i].src!=\"\"){var s=document.createElement(\"script\");s.setAttribute(\"src\",scripts[i].src);document.body.appendChild(s)}else eval(scripts[i].innerHTML);for(var file in resources)if(resources.hasOwnProperty(file)&amp;&amp;file.endsWith(\".js\")){var script=\ndocument.createElement(\"script\");script.setAttribute(\"src\",resources[file]);document.body.appendChild(script)}perf(\"success-variant\");variantLoaded(testId,winner,newFeature,true)})},function(){iterateFeatures(testId,function(feature){perf(\"failure-step2\");variantLoaded(testId,testId,feature,false)})},timeLeft)}function variantLoaded(testId,variantId,feature,success){var tag=testId+\"-\"+feature.id;if(!status[tag]){status[tag]=true;feature.style.visibility=\"visible\";if(success){feature.addEventListener(\"click\",\nfunction(event){var url=null;var target=event.target;while(target&amp;&amp;!(target.tagName.toUpperCase()==\"A\")&amp;&amp;!(target==feature))target=target.parentNode;if(target.tagName.toUpperCase()==\"A\"){url=target.href;if(url){var request=new XMLHttpRequest;request.open(\"POST\",BANDITO_EVENTS_API,true);request.setRequestHeader(\"Content-Type\",\"application/json\");request.send(JSON.stringify({event:\"clicked\",test_id:testId,variant_id:variantId}));if(event.button&gt;0||event.ctrlKey||event.metaKey||event.shiftKey);else{event.preventDefault();\nsetTimeout(function(){document.location=url},250)}}}});visibilityCallbacks[tag]=[feature,function(){var request=new XMLHttpRequest;request.open(\"POST\",BANDITO_EVENTS_API,true);request.setRequestHeader(\"Content-Type\",\"application/json\");request.send(JSON.stringify({event:\"served\",test_id:testId,variant_id:variantId}))}];visibilityCallback()}}}function loadVariants(tests){var testsFound={},testId,winner,timeLeft;if(tests&amp;&amp;tests[\"length\"]){for(var i=0;i&lt;tests.length;i++){winner=tests[i][\"winner\"];testId=\ntests[i][\"_id\"];testsFound[testId]=true;if(testId==winner){perf(\"success-default\");showDefaultVariant(testId,true)}else{timeLeft=TIMEOUT-(Date.now()-TIME_NOW);if(timeLeft&gt;50)showOtherVariant(testId,winner,timeLeft);else{perf(\"timeout-step1\");showDefaultVariant(testId,false)}}}for(var id in window._variantFeatureIds)if(window._variantFeatureIds.hasOwnProperty(id)){testId=window._variantFeatureIds[id];if(!testsFound[testId]){perf(\"not-found\");showDefaultVariant(testId,false)}}}else showDefaultVariants()}\nwindow.pageBuilder.initVariants=function(opts){opts=opts||{};TIMEOUT=opts[\"TIMEOUT\"];BANDITO_IS_ADMIN=opts[\"IS_ADMIN\"];BANDITO_PERF_API=opts[\"PERF_API\"];BANDITO_TESTS_API=opts[\"TESTS_API\"];BANDITO_EVENTS_API=opts[\"EVENTS_API\"]};window.pageBuilder.showVariants=function(){if(BANDITO_IS_ADMIN)return;var tests=[];for(var id in window._variantFeatureIds)if(window._variantFeatureIds.hasOwnProperty(id)){var testId=window._variantFeatureIds[id];testIdToFeatureId[testId]=id;tests.push(testId)}if(tests.length&gt;\n0){var url=BANDITO_TESTS_API+\"?ids\\x3d\"+tests.join(\",\");ajax(url,loadVariants,showDefaultVariants)}}})();&lt;/script&gt; &lt;script&gt;window.banditoEnv={TIMEOUT:1500,PERF_API:\"https://bandito-events.perso.aws.arc.pub/api/save-perf\",TESTS_API:\"https://bandito.perso.aws.arc.pub/api/variants\",EVENTS_API:\"https://bandito-events.perso.aws.arc.pub/api/save-event\"};if(window[\"pageBuilder\"]&amp;&amp;window[\"pageBuilder\"][\"initVariants\"])window.pageBuilder.initVariants({IS_ADMIN:false,TIMEOUT:window.banditoEnv.TIMEOUT,PERF_API:window.banditoEnv.PERF_API,TESTS_API:window.banditoEnv.TESTS_API,EVENTS_API:window.banditoEnv.EVENTS_API});&lt;/script&gt; &lt;script async src=\"/pb/resources/dist/199071bbaf3b531cbc00/rm/rm-index199071bbaf3b531cbc00.js\"&gt;&lt;/script&gt;"</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>We’ll try to extract the words from the page.</p>
+</div>
+</section>
+<section id="scraping-tools" class="slide level2 scrollable">
+<h2>Scraping tools</h2>
+<p><strong><em>First step</em></strong>: strip HTML and extract text (see <code>rvest</code> [<a href="https://rvest.tidyverse.org/index.html">docs</a>]).</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-6_6b24d3c166eb79e364becb7436f4c41d">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># parse</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>page_text <span class="ot">&lt;-</span> <span class="fu">read_html</span>(page) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="co"># extract paragraph elements</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>  <span class="fu">html_elements</span>(<span class="st">'p'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>  <span class="co"># strip html and extract text</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">html_text2</span>()</span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co"># print result</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>page_text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "BLYTHEVILLE, AR (KAIT) - One man is in custody after a 4-hour police standoff in Blytheville Sunday afternoon."                                                                 
+ [2] "According to Captain Scott Adams with the Blytheville Police Department, Hartzell Watson, 44, was arrested after being forced out of a home in the 500-block of North Division."
+ [3] "Captain Adams said police originally responded to the house after a family dispute."                                                                                            
+ [4] "When officers arrived, Watson barricaded himself in the house and refused to exit peacefully."                                                                                  
+ [5] "After several hours, police fired smoke and a chemical agent through a window of the home. The gas caught on fire within minutes."                                              
+ [6] "Officers entered the burning house to find Watson, but he jumped out of an attic window."                                                                                       
+ [7] "He was checked by paramedics on the scene and was taken into custody."                                                                                                          
+ [8] "The Blytheville Fire Department was on scene and quickly put the fire out."                                                                                                     
+ [9] "Watson was then taken to the Mississippi County Jail. He is being held on state and federal warrants."                                                                          
+[10] "The Arkansas State Police, Mississippi County Sheriff's Office, and the Second Judicial Drug Task Force assisted with the standoff."                                            
+[11] "One officer on the scene was treated for dehydration."                                                                                                                          
+[12] "Copyright 2016 KAIT. All rights reserved."                                                                                                                                      
+[13] "Watch Region 8 News On Demand: On your Desktop | On your Mobile device"                                                                                                         
+[14] "Region 8 News App - Install or update on your: iPhone | Android"                                                                                                                
+[15] "472 CR 766\nJonesboro, AR 72401\n(870) 931-8888"                                                                                                                                
+[16] "A Gray Media Group, Inc. Station - © 2002-2021 Gray Television, Inc."                                                                                                           </code></pre>
+</div>
+</div>
+</section>
+<section id="one-long-string" class="slide level2">
+<h2>One long string</h2>
+<p>We can collapse the list into one long character string containing all the paragraph text.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-7_918032b595e9ab5e9596e10d2369d592">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>string <span class="ot">&lt;-</span> page_text <span class="sc">%&gt;%</span> <span class="fu">str_c</span>(<span class="at">collapse =</span> <span class="st">' '</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "BLYTHEVILLE, AR (KAIT) - One man is in custody after a 4-hour police standoff in Blytheville Sunday afternoon. According to Captain Scott Adams with the Blytheville Police Department, Hartzell Watson, 44, was arrested after being forced out of a home in the 500-block of North Division. Captain Adams said police originally responded to the house after a family dispute. When officers arrived, Watson barricaded himself in the house and refused to exit peacefully. After several hours, police fired smoke and a chemical agent through a window of the home. The gas caught on fire within minutes. Officers entered the burning house to find Watson, but he jumped out of an attic window. He was checked by paramedics on the scene and was taken into custody. The Blytheville Fire Department was on scene and quickly put the fire out. Watson was then taken to the Mississippi County Jail. He is being held on state and federal warrants. The Arkansas State Police, Mississippi County Sheriff's Office, and the Second Judicial Drug Task Force assisted with the standoff. One officer on the scene was treated for dehydration. Copyright 2016 KAIT. All rights reserved. Watch Region 8 News On Demand: On your Desktop | On your Mobile device Region 8 News App - Install or update on your: iPhone | Android 472 CR 766\nJonesboro, AR 72401\n(870) 931-8888 A Gray Media Group, Inc. Station - © 2002-2021 Gray Television, Inc."</code></pre>
+</div>
+</div>
+</section>
+<section id="words-neq-strings" class="slide level2">
+<h2>Words <span class="math inline">\(\neq\)</span> strings</h2>
+<p><code>nathan</code> , <code>Nathan</code>, and <code>Nathan!</code> are <strong>identical words but distinct strings</strong>.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-8_5fcf044b659ee78ad7ee21a8ef15ad3f">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="st">'nathan'</span> <span class="sc">==</span> <span class="st">'Nathan'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>But text analysis requires that strings ⟺ words.</p>
+</div>
+<div class="fragment">
+<p><strong><em>Question.</em></strong> What are the steps to get from <code>[1]</code> to <code>[2]</code> ?</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-9_010dbeeaa331e3681a234bb2e395cd8c">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "For more information, call @Alfred | (201) 744 5050"
+[2] "for more information call alfred"                   </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="string-manipulation" class="slide level2">
+<h2>String manipulation</h2>
+<p>See <code>stringr</code> [<a href="https://stringr.tidyverse.org/index.html">docs</a>] for string manipulation via pattern matching.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-10_93789b77991837c3045d1da41fa4cd96">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="fu">c</span>(<span class="st">'example-string'</span>) <span class="sc">%&gt;%</span> <span class="fu">str_replace</span>(<span class="st">'[[:punct:]]'</span>, <span class="st">' '</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "example string"</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>See <code>qdapRegex</code> [<a href="https://github.com/trinker/qdapRegex">docs</a>] for shorthand wrappers tor removing common but complex patterns.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-11_95df33dd0813c594d10f07d6f9083b90">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">library</span>(qdapRegex)</span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">c</span>(<span class="st">'email Mildred mildred@mildred.info'</span>) <span class="sc">%&gt;%</span> <span class="fu">rm_email</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "email Mildred"</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="page-text-processing" class="slide level2">
+<h2>Page text processing</h2>
+<p>Our strategy will be:</p>
+<ol type="1">
+<li class="fragment">Remove URLs and email addresses</li>
+<li class="fragment">Remove non-letters:
+<ul>
+<li class="fragment"><p>line breaks <code>\n</code> and <code>&amp;nbsp</code></p></li>
+<li class="fragment"><p>punctuation, numbers, and special characters</p></li>
+</ul></li>
+<li class="fragment">Add spaces before capital letters then remove extra whitespace</li>
+<li class="fragment">Replace all capital letters with lower case letters</li>
+</ol>
+</section>
+<section id="example" class="slide level2 scrollable">
+<h2>Example</h2>
+<p>Here’s what that looks like for one page.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-12_64898eb6fd959dee7b939941b41a132f">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>remove <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'</span><span class="sc">\n</span><span class="st">'</span>, </span>
+<span id="cb16-2"><a href="#cb16-2"></a>            <span class="st">'[[:punct:]]'</span>, </span>
+<span id="cb16-3"><a href="#cb16-3"></a>            <span class="st">'nbsp'</span>, </span>
+<span id="cb16-4"><a href="#cb16-4"></a>            <span class="st">'[[:digit:]]'</span>, </span>
+<span id="cb16-5"><a href="#cb16-5"></a>            <span class="st">'[[:symbol:]]'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">'|'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7"></a></span>
+<span id="cb16-8"><a href="#cb16-8"></a>string <span class="sc">%&gt;%</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a>  <span class="fu">rm_url</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a>  <span class="fu">rm_email</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a>  <span class="fu">str_remove_all</span>(<span class="st">'</span><span class="sc">\'</span><span class="st">'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a>  <span class="fu">str_replace_all</span>(remove, <span class="st">' '</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-13"><a href="#cb16-13"></a>  <span class="fu">str_replace_all</span>(<span class="st">"([a-z])([A-Z])"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1 </span><span class="sc">\\</span><span class="st">2"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a>  <span class="fu">tolower</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb16-15"><a href="#cb16-15"></a>  <span class="fu">str_replace_all</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "blytheville ar kait one man is in custody after a hour police standoff in blytheville sunday afternoon according to captain scott adams with the blytheville police department hartzell watson was arrested after being forced out of a home in the block of north division captain adams said police originally responded to the house after a family dispute when officers arrived watson barricaded himself in the house and refused to exit peacefully after several hours police fired smoke and a chemical agent through a window of the home the gas caught on fire within minutes officers entered the burning house to find watson but he jumped out of an attic window he was checked by paramedics on the scene and was taken into custody the blytheville fire department was on scene and quickly put the fire out watson was then taken to the mississippi county jail he is being held on state and federal warrants the arkansas state police mississippi county sheriffs office and the second judicial drug task force assisted with the standoff one officer on the scene was treated for dehydration copyright kait all rights reserved watch region news on demand on your desktop on your mobile device region news app install or update on your i phone android cr jonesboro ar a gray media group inc station gray television inc "</code></pre>
+</div>
+</div>
+</section>
+<section id="output-quality" class="slide level2">
+<h2>Output quality</h2>
+<p><strong><em>Comments:</em></strong></p>
+<ul>
+<li class="fragment"><p>consistent input format (<em>i.e.</em> sampling and collection) is really important for consistent scraping and text processing</p>
+<ul>
+<li class="fragment">tricky with HTML because webpages may use different elements to display content</li>
+</ul></li>
+<li class="fragment"><p>thorough quality tests are recommended: inspect random subsamples for errors in processing</p></li>
+</ul>
+</section>
+<section id="quality-checks" class="slide level2 scrollable">
+<h2>Quality checks</h2>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-13_cd74a51a3fb9ed09182b65dd12f573fc">
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "a melrose woman has been sentenced to seven years in prison for exploiting an elderly neighbor while duping her own live in girlfriend a melrose woman has been sentenced to seven years in prison for exploiting an elderly neighbor while duping her own live in girlfriend rhonda jo lay pleaded no contest late friday to exploitation of the elderly in connection with thefts from a year old woman circuit court judge james p nilon sentenced lay to seven years in prison to be followed by eight years of probation nilon also ordered lay to pay the victim in restitution the case against lay began as a case against her roommate lisa a feindt had been charged in the case but assistant state attorney deborah hunt said all charges against feindt were dropped dec when it became clear that lay had been lying to feindt when the women were arrested feindt was a physician s assistant at the university of florida feindt s attorney gilbert schaffnit said feindt had to resign from her job while waiting for the charges against her to be resolved my client was another victim schaffnit said she had to resign or be terminated over the criminal charges and getting her job back looks unlikely the case began when the elderly neighbor s daughter came for an extended visit and discovered that her mother was not getting any mail investigators said the daughter discovered that lay had arranged for the mail to be held at the post office presumably so that the daughter would not see any of the bank statements or other financial documents once the daughter collected the mail and financial information she called the alachua county sheriff s office to report money was missing from the woman s bank account sgt tom wetherington determined that more than two dozen checks worth more than had been fraudulently written on the woman s account wetherington noted that most of the money was taken from the account in checks made out to lay or feindt the rest of the money was taken from the account by writing checks to others who apparently were unaware they may have been written fraudulently during the investigation which ultimately cleared feindt investigators discovered that lay had been convicted of similar crimes in south carolina and michigan lay was being held at the alachua county jail on monday awaiting transfer to the florida department of corrections gannett co inc all rights reserved original content available for non commercial use under a creative commons license except where noted gainesville sun sw th st gainesville fl do not sell my personal information cookie policy do not sell my personal information privacy policy terms of service your california privacy rights privacy policy gannett usa today network choose the plan that s right for you digital access or digital and print delivery "
+
+[[2]]
+[1] "neighbors please be mindful of social distancing guidelines while you do your part to slow the spread of the new coronavirus see the latest guidance from the cdc here this post was contributed by a community member the views expressed here are the authors own small joys art exhibit at artworks gallery on the green st paul s on the green in norwalk will host a retrospective art exhibit small joys thursday december through saturday december in the artworks gallery in the historic chittim howell house next to the church at east avenue in norwalk the exhibit features small original artworks including mixed media painting and photography from regional artists whose work has previously appeared at the gallery they include merion frolich marcy juran elisa keogh kendall klingbeil tom kretsch scott kuykendall susan leggitt kerwin kipp mayers wendy moore gregg welz and nancy woodward the public is invited to the opening reception which includes light refreshments on thursday december from p m visitors can also shop for unique holiday gifts decorations and collectibles at the st paul s holiday market on the green boutique in the chittim howell house for more information please visit the st paul s website at thursday pm bedford katonah ny friday am new canaan ct friday pm new york city ny friday pm weston redding easton ct saturday am norwalk ct saturday am new canaan ct saturday am paramus nj"
+
+[[3]]
+[1] "order flowers for the family show your sympathy to the family november september robert irwin bob worzalla died peacefully at life path hospice care on sep in tampa florida at the age of he was born on nov in stevens point to the late irwin and hildegard worzalla and he was married to dorothy kiefer in at sacred heart catholic church in nekoosa presided by his uncle father dennis worzalla bob started a career in television repair in wisconsin rapids at miller tv over the next years the couple welcomed two children into their home robert michael worzalla and david john worzalla and set about teaching them life s lesson his children would remember him as a driven father who encouraged them to pursue their goals in he started a potato farm golden boy farms followed by a career with n e isaacson associates a lake developer in various positions with the company in he started a seafood distributorship central wisconsin seafoods with his youngest son david in he opened a health food store in brandon florida and ran this business until he retired in he was a generous witty and dedicated individual who loved the health care field and who was passionate about helping people improve their health by using natural herbal remedies bob is survived by son david j karen worzalla of pawleys island south carolina sisters patricia david olson of stevens point yvonne david kopperud of stevens point and bonnie bill wright of madison grandchildren eric worzalla of misawa japan curtis worzalla of colorado springs colorado sophie worzalla of camp douglas and nash worzalla of pawleys island south carolina and great granddaughter laney worzalla of paden city virginia he is preceded in death by son robert m tammy worzalla of camp douglas and brother john whitey worzalla of stevens point no memorial service will be held we ask instead that those of you who knew him to take a moment to remember him and celebrate his life for online condolences to the family please visit to send a flower arrangement or to plant trees in memory of robert irwin worzalla please click here to visit our sympathy store copyright pisarski funeral homes all rights reserved funeral home website by batesville inc funeral planning and grief resources terms of use privacy"</code></pre>
+</div>
+</div>
+</section>
+<section id="processed-data" class="slide level2 scrollable">
+<h2>Processed data</h2>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-14_fbf94b4d27d12baf4d54961a0ad9ef7c">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>clean <span class="ot">&lt;-</span> rawdata_relabeled <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(text_tmp, <span class="st">'&lt;!'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">mutate</span>(<span class="at">text_clean =</span> <span class="fu">parse_fn</span>(text_tmp)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">select</span>(<span class="sc">-</span>text_tmp) <span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a>  <span class="fu">unnest</span>(text_clean)</span>
+<span id="cb19-7"><a href="#cb19-7"></a></span>
+<span id="cb19-8"><a href="#cb19-8"></a>clean <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  .id   bclass     text_clean                                                   
+  &lt;chr&gt; &lt;fct&gt;      &lt;chr&gt;                                                        
+1 url1  relevant   "blytheville ar kait one man is in custody after a hour poli…
+2 url2  irrelevant ""                                                           
+3 url3  irrelevant "email password dont have an account sign up now forgot your…
+4 url4  relevant   "username or email address password remember me presque isle…
+5 url5  relevant   " this may take a moment this may take a moment "            
+6 url6  relevant   ""                                                           </code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="natural-language-processing" class="title-slide slide level1 center">
+<h1>Natural language processing</h1>
+
+</section>
+<section id="about-nlp" class="slide level2">
+<h2>About NLP</h2>
+<p><a href="https://en.wikipedia.org/wiki/Natural_language_processing"><em>Natural language processing</em></a>(NLP) refers to techniques for processing and analyzing speech and text. Although a specialized subfield, it comprises a broad range of problems and methods, including:</p>
+<ul>
+<li class="fragment"><p>text and speech processing and representation</p></li>
+<li class="fragment"><p>automated summarization</p></li>
+<li class="fragment"><p>speech recognition</p></li>
+<li class="fragment"><p>machine translation</p></li>
+<li class="fragment"><p>sentiment analysis</p></li>
+</ul>
+</section>
+<section id="text-processing-techniques" class="slide level2">
+<h2>Text processing techniques</h2>
+<p>We will focus here on NLP techniques for processing text, <em>i.e.</em>, converting text into data.</p>
+<ul>
+<li class="fragment"><p><em>tokenization:</em> breaking a string of text into smaller units</p></li>
+<li class="fragment"><p><em>lemmatization:</em> converting tokens into common forms</p></li>
+<li class="fragment"><p>calculating frequency measures</p></li>
+</ul>
+</section>
+<section id="tokenization" class="slide level2">
+<h2>Tokenization</h2>
+<p>Breaking a string of text into subunits is called <strong><em>tokenization.</em></strong></p>
+<div class="fragment">
+<p>Consider this string:</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-15_f1e8e7947cefb41ca2975ad84c22e995">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "if you are a dreamer come in if you are a dreamer a wisher a liar a hope er a pray er a magic bean buyer if youre a pretender come sit by my fire for we have some flax golden tales to spin come in come in"</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="word-tokenization" class="slide level2">
+<h2>Word tokenization</h2>
+<p>The <code>tokenizers</code> package [<a href="https://github.com/ropensci/tokenizers">docs</a>] contains various tokenization functions. The most elementary method is to treat each word as a token.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-16_1e1abfa4f67b4385aec3d0aea5bd5c67">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(tokenizers)</span>
+<span id="cb22-2"><a href="#cb22-2"></a></span>
+<span id="cb22-3"><a href="#cb22-3"></a>invitation_text <span class="sc">%&gt;%</span> <span class="fu">tokenize_words</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+ [1] "if"        "you"       "are"       "a"         "dreamer"   "come"     
+ [7] "in"        "if"        "you"       "are"       "a"         "dreamer"  
+[13] "a"         "wisher"    "a"         "liar"      "a"         "hope"     
+[19] "er"        "a"         "pray"      "er"        "a"         "magic"    
+[25] "bean"      "buyer"     "if"        "youre"     "a"         "pretender"
+[31] "come"      "sit"       "by"        "my"        "fire"      "for"      
+[37] "we"        "have"      "some"      "flax"      "golden"    "tales"    
+[43] "to"        "spin"      "come"      "in"        "come"      "in"       </code></pre>
+</div>
+</div>
+</section>
+<section id="n-gram-tokens" class="slide level2 scrollable">
+<h2>N-gram tokens</h2>
+<p>Alternatively, one could tokenize by <strong><em>n-grams</em></strong>: unique combinations of <span class="math inline">\(n\)</span> adjacent words.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-17_596b94ab24976453c6a5530f921c4ea3">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>invitation_text <span class="sc">%&gt;%</span> <span class="fu">tokenize_ngrams</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+ [1] "if you"         "you are"        "are a"          "a dreamer"     
+ [5] "dreamer come"   "come in"        "in if"          "if you"        
+ [9] "you are"        "are a"          "a dreamer"      "dreamer a"     
+[13] "a wisher"       "wisher a"       "a liar"         "liar a"        
+[17] "a hope"         "hope er"        "er a"           "a pray"        
+[21] "pray er"        "er a"           "a magic"        "magic bean"    
+[25] "bean buyer"     "buyer if"       "if youre"       "youre a"       
+[29] "a pretender"    "pretender come" "come sit"       "sit by"        
+[33] "by my"          "my fire"        "fire for"       "for we"        
+[37] "we have"        "have some"      "some flax"      "flax golden"   
+[41] "golden tales"   "tales to"       "to spin"        "spin come"     
+[45] "come in"        "in come"        "come in"       </code></pre>
+</div>
+</div>
+</section>
+<section id="stopwords" class="slide level2">
+<h2>Stopwords</h2>
+<p>Some tokens are thought to contain little semantic information, such as logical connectives, pronouns, and the like.</p>
+<div class="fragment">
+<p>In NLP these are treated as <strong><em>stopwords</em></strong>: words that are stopped in text processing.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-18_8efaf0cfdc016874d8457b32a543505e">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb26-2"><a href="#cb26-2"></a></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="co"># display 10 random stopwords from the 'snowball' dictionary</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="fu">set.seed</span>(<span class="dv">102422</span>)</span>
+<span id="cb26-5"><a href="#cb26-5"></a><span class="fu">stopwords</span>(<span class="at">language =</span> <span class="st">'en'</span>, <span class="at">source =</span> <span class="st">'snowball'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-6"><a href="#cb26-6"></a>  <span class="fu">sample</span>(<span class="at">size =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "but"      "off"      "didn't"   "nor"      "yourself" "they"    
+ [7] "ought"    "when's"   "wouldn't" "they'll" </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="stopword-removal" class="slide level2">
+<h2>Stopword removal</h2>
+<p>In the default stopword list, some stopwords include punctuation. Since this was removed from our string, it should also be removed from the stopword list for effective string matching.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-19_4bef14d29bbb5725539d43dfd394f9d4">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>stopwords_nopunct <span class="ot">&lt;-</span> <span class="fu">stopwords</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">str_remove_all</span>(<span class="st">'[[:punct:]]'</span>)</span>
+<span id="cb28-3"><a href="#cb28-3"></a></span>
+<span id="cb28-4"><a href="#cb28-4"></a>invitation_text <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a>  <span class="fu">tokenize_words</span>(<span class="at">stopwords =</span> stopwords_nopunct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+ [1] "dreamer"   "come"      "dreamer"   "wisher"    "liar"      "hope"     
+ [7] "er"        "pray"      "er"        "magic"     "bean"      "buyer"    
+[13] "pretender" "come"      "sit"       "fire"      "flax"      "golden"   
+[19] "tales"     "spin"      "come"      "come"     </code></pre>
+</div>
+</div>
+</section>
+<section id="lemmatization" class="slide level2">
+<h2>Lemmatization</h2>
+<p><strong><em>Lemmatization</em></strong> refers to grouping word inflections into a single form. See <code>textstem</code> [<a href="https://github.com/trinker/textstem">docs</a>].</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-20_417f32232f32f6f8bdb503a6a9c7a93d">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">library</span>(textstem)</span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a>locomotion <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'run'</span>, <span class="st">'running'</span>, <span class="st">'ran'</span>, </span>
+<span id="cb30-4"><a href="#cb30-4"></a>                <span class="st">'boating'</span>, <span class="st">'boat'</span>, </span>
+<span id="cb30-5"><a href="#cb30-5"></a>                <span class="st">'swim'</span>, <span class="st">'swam'</span>, <span class="st">'swimming'</span>, <span class="st">'swum'</span>) </span>
+<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-7"><a href="#cb30-7"></a>locomotion <span class="sc">%&gt;%</span> <span class="fu">lemmatize_words</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "run"  "run"  "run"  "boat" "boat" "swim" "swim" "swim" "swim"</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Also works by pattern matching and replacement using a source dictionary.</p>
+</div>
+</section>
+<section id="tidytextunnest_tokens" class="slide level2 scrollable">
+<h2><code>tidytext::unnest_tokens()</code></h2>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-21_f80d99c4beaaa8fa2837c16bd561f4f2">
+
+</div>
+<p>The <code>tidytext</code> package [<a href="https://github.com/juliasilge/tidytext">docs</a>] contains wrappers around tokenizers and other functions for use in tidyverse-style programming.</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-22_f7001c0867593cd2c8f5817cf54f8f00">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 36 × 3
+   doc        token   token.lem
+   &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;    
+ 1 invitation dreamer dreamer  
+ 2 invitation come    come     
+ 3 invitation dreamer dreamer  
+ 4 invitation wisher  wisher   
+ 5 invitation liar    liar     
+ 6 invitation hope    hope     
+ 7 invitation er      er       
+ 8 invitation pray    pray     
+ 9 invitation er      er       
+10 invitation magic   magic    
+# … with 26 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="quality-check" class="slide level2">
+<h2>Quality check</h2>
+<p>Text processing is error-prone. The functions shown here are handy but imperfect. <strong><em>You should always perform quality checks to identify bugs!</em></strong></p>
+<div class="fragment">
+<p>See any problems?</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-23_a291e6dea140db5eefa291c633e3390a">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "dreamer"   "come"      "wisher"    "liar"      "hope"      "er"       
+ [7] "pray"      "magic"     "bean"      "buyer"     "pretender" "sit"      
+[13] "fire"      "flax"      "golden"    "tale"      "spin"      "boat"     
+[19] "just"      "build"     "fine"      "try"       "tell"      "us"       
+[25] "side"      "back"      "divine"    "bottom"    "guess"     "forget"   </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="corpora" class="slide level2 scrollable">
+<h2>Corpora</h2>
+<p>We can summarize a text corpus (collection of texts) as:</p>
+<ul>
+<li class="fragment"><p><span class="math inline">\(T = \{t_1, \dots, t_p\}\)</span> set of <span class="math inline">\(p\)</span> unique tokens</p></li>
+<li class="fragment"><p><span class="math inline">\(D = \{d_1, \dots, d_n\}\)</span> set of <span class="math inline">\(n\)</span> documents comprising some corpus</p>
+<ul>
+<li class="fragment"><span class="math inline">\(d_i = \{t_{i1}, \dots, t_{iL_i}: t_{ij} \in T\}\)</span> is the <span class="math inline">\(i\)</span>th document</li>
+</ul></li>
+</ul>
+</section>
+<section id="frequency-measures" class="slide level2">
+<h2>Frequency measures</h2>
+<p>Then we can define the following:</p>
+<ul>
+<li class="fragment"><p>documentwise token counts <span class="math inline">\(n_{ti} = \sum_j \mathbf{1}\{t_{ij} = t\}\)</span></p>
+<ul>
+<li class="fragment">number of times token <span class="math inline">\(t\)</span> appears in document <span class="math inline">\(i\)</span></li>
+</ul></li>
+<li class="fragment"><p>corpuswise token counts <span class="math inline">\(n_t = \sum_i \mathbf{1}\{t \in d_i\}\)</span></p>
+<ul>
+<li class="fragment">number of documents containing token <span class="math inline">\(t\)</span></li>
+</ul></li>
+<li class="fragment"><p><strong>term frequency:</strong> <span class="math inline">\(\text{tf}(t, i) = n_{ti}/n_i\)</span></p></li>
+<li class="fragment"><p><strong>document frequency:</strong> <span class="math inline">\(\text{df}(t, i) = n_t/n\)</span></p></li>
+<li class="fragment"><p><strong>inverse document frequency:</strong> <span class="math inline">\(-\log\left(\text{df}(t, i)\right)\)</span></p></li>
+</ul>
+</section>
+<section id="computing-tf-idf" class="slide level2">
+<h2>Computing TF-IDF</h2>
+<p>Continuing with our toy example:</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-24_addd2f21c86a38c4cd781e1fa1c691d6">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  doc        token.lem  n_ti     tf   idf tf_idf
+  &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1 invitation come          4 0.182  0.693 0.126 
+2 boat       just          2 0.143  0.693 0.0990
+3 invitation dreamer       2 0.0909 0.693 0.0630
+4 invitation er            2 0.0909 0.693 0.0630</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p><strong>Question:</strong> what does it mean that IDF is the same for all terms?</p>
+</div>
+</section>
+<section id="tf-idf" class="slide level2">
+<h2>TF-IDF</h2>
+<p>The last column was the product of term frequency and inverse document frequency, known as <strong><em>TF-IDF:</em></strong></p>
+<p><span class="math display">\[
+\text{tf-idf}(t, i) = \text{tf}(t, i) \times \text{idf}(t, i)
+\]</span></p>
+<div class="fragment">
+<p>Interpretation:</p>
+<ul>
+<li class="fragment"><p>higher values indicate rare words used often in a document</p></li>
+<li class="fragment"><p>lower values indicate common words used infrequently in a document</p></li>
+</ul>
+</div>
+</section>
+<section id="document-term-matrix" class="slide level2 scrollable">
+<h2>Document term matrix</h2>
+<p>Finally, we can pivot a selected frequency measure into a data frame in which:</p>
+<ul>
+<li class="fragment"><p>each row is a document</p></li>
+<li class="fragment"><p>each column is a token</p></li>
+<li class="fragment"><p>each value is a frequency measure</p></li>
+</ul>
+<div class="fragment">
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-25_a529585986465823f302aa4d10dc9e73">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 31
+  doc        back   boat bottom  build divine   fine forget  guess   just   side
+  &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 boat     0.0495 0.0495 0.0495 0.0495 0.0495 0.0495 0.0495 0.0495 0.0990 0.0495
+2 invitat… 0      0      0      0      0      0      0      0      0      0     
+# … with 20 more variables: tell &lt;dbl&gt;, try &lt;dbl&gt;, us &lt;dbl&gt;, bean &lt;dbl&gt;,
+#   buyer &lt;dbl&gt;, come &lt;dbl&gt;, dreamer &lt;dbl&gt;, er &lt;dbl&gt;, fire &lt;dbl&gt;, flax &lt;dbl&gt;,
+#   golden &lt;dbl&gt;, hope &lt;dbl&gt;, liar &lt;dbl&gt;, magic &lt;dbl&gt;, pray &lt;dbl&gt;,
+#   pretender &lt;dbl&gt;, sit &lt;dbl&gt;, spin &lt;dbl&gt;, tale &lt;dbl&gt;, wisher &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><strong><em>Question:</em></strong> how would you check whether the ‘documents’ have words in common?</p>
+</div>
+</section>
+<section id="processed-fraud-claim-data" class="slide level2">
+<h2>Processed fraud claim data</h2>
+<p>TF-IDF document term matrix for word tokens:</p>
+<div class="cell" data-hash="week5-text_cache/revealjs/unnamed-chunk-26_05cae323fdee0ca7b9117313398fe736">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 15,870
+  .id    bclass     adams afternoon  agent android    app arkansas arrest arrive
+  &lt;chr&gt;  &lt;fct&gt;      &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 url1   relevant  0.0692    0.0300 0.0365  0.0450 0.0330   0.0390 0.0140 0.0305
+2 url10  irreleva… 0         0      0       0      0        0      0      0     
+3 url100 irreleva… 0         0      0       0      0        0      0      0     
+# … with 15,860 more variables: assist &lt;dbl&gt;, attic &lt;dbl&gt;, barricade &lt;dbl&gt;,
+#   block &lt;dbl&gt;, blytheville &lt;dbl&gt;, burn &lt;dbl&gt;, captain &lt;dbl&gt;, catch &lt;dbl&gt;,
+#   check &lt;dbl&gt;, chemical &lt;dbl&gt;, copyright &lt;dbl&gt;, county &lt;dbl&gt;, custody &lt;dbl&gt;,
+#   dehydration &lt;dbl&gt;, demand &lt;dbl&gt;, department &lt;dbl&gt;, desktop &lt;dbl&gt;,
+#   device &lt;dbl&gt;, dispute &lt;dbl&gt;, division &lt;dbl&gt;, drug &lt;dbl&gt;, enter &lt;dbl&gt;,
+#   exit &lt;dbl&gt;, family &lt;dbl&gt;, federal &lt;dbl&gt;, fire &lt;dbl&gt;, force &lt;dbl&gt;,
+#   gas &lt;dbl&gt;, gray &lt;dbl&gt;, hartzell &lt;dbl&gt;, hold &lt;dbl&gt;, home &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<ul>
+<li class="fragment"><p><span class="math inline">\(n = 552\)</span> rows/observations (one per page)</p></li>
+<li class="fragment"><p>columns comprising <span class="math inline">\(p = 15,742\)</span> variables and <span class="math inline">\(1\)</span> class label</p></li>
+</ul>
+</section>
+<section id="next-time" class="slide level2">
+<h2>Next time</h2>
+<p>Next time we’ll discuss the capstone group’s analysis strategy:</p>
+<ul>
+<li class="fragment"><p>dimension reduction</p></li>
+<li class="fragment"><p>statistical modeling</p></li>
+</ul>
+
+<div class="footer footer-default">
+
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        setTimeout(function() {
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          let href = ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    });
+    </script>
+    
+
+</body></html>

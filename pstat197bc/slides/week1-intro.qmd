@@ -1,0 +1,147 @@
+---
+title: "Welcome to Data Science Capstone"
+subtitle: "PSTAT197B/CMPSC190DE Winter 2023"
+author: "Trevor Ruiz"
+institute: 'UCSB'
+format: 
+  revealjs:
+    incremental: true
+    # footer: 'PSTAT197A/CMPSC190DD Fall 2022'
+    # logo: 'img/ucsbds_hex.png'
+    slide-number: true
+    # smaller: true
+---
+
+# Overview
+
+## Capstone goals
+
+-   make **original contributions** on your research topic;
+
+-   develop **domain expertise** in your project area(s);
+
+-   develop and practice **communicating research outcomes** to diverse audiences;
+
+-   improve **collaboration and teamwork** skills;
+
+-   advance your **career development**;
+
+-   produce a strong **work sample** for your professional portfolio
+
+## Course structure
+
+-   1 weekly class meeting, usually Mondays, except Wednesday meetings weeks 2 and 7 (MLK and Prez days)
+
+-   1 weekly team meeting, scheduled at a time of your choice
+
+-   optional but highly recommended: second team meeting or working session without advisors
+
+-   few class assignments each term:
+
+    -   one short presentation
+
+    -   mid-term peer review
+
+    -   summative deliverable at end of term
+
+## Expectations
+
+-   weekly time commitment: 12h = 2h in meetings + 10h on projects
+
+-   engage fully in project work, with some accountability:
+
+    -   draft, sign, and adhere to a team contract
+
+    -   take on one pre-defined organizational role in your team
+
+    -   participate in peer reviews once per quarter
+
+## Roles
+
+You'll take on one of the following roles:
+
+-   *spokesperson*
+
+-   *meeting organizer*
+
+-   *note-taker*
+
+-   *repository and data manager*
+
+-   for five-person teams, *equity manager*
+
+## Peer review
+
+Each quarter you'll evaluate yourself/teammates on the extent to which you/they achieved the following:
+
+1.  Attended, participated in, and contributed to project meetings
+2.  Honored agreements specified in the team contract
+3.  Fulfilled assigned team role
+4.  Contributed fair share of work
+5.  Cooperated with teammates
+6.  Communicated clearly and respectfully with teammates
+7.  Helped teammates when asked
+
+## Class meetings
+
+Class meetings will be run like a seminar: we'll rotate through the project teams, with two teams presenting each meeting.
+
+-   \~30min available per team, but budget time for discussion
+
+-   currently in alphabetical order, but can swap by mutual agreement
+
+-   to prepare: 10-ish slides and 1-2 page handout
+
+-   further guidelines TBA
+
+## Assessments
+
+-   attendance record and class assignments;
+
+-   end-of-term advisor assessments of individual participation and contributions;
+
+-   instructor assessments of in-class presentations and poster;
+
+-   peer reviews and end-of-term individual reflections.
+
+# Getting started
+
+## Initial meetings {.smaller}
+
+Schedule an initial meeting for week 2. Can recommend: Slack channel + \[[when2meet](https://www.when2meet.com/)\].
+
+Suggested agenda:
+
+-   introductions (15m):
+
+    -   name, position/background, fun fact
+
+    -   something exciting about the project
+
+-   project intro (20m)
+
+    -   have sponsor tell you about the project in detail in their own words
+
+    -   focus on the big picture, ask questions
+
+-   data access and logistics (10m)
+
+    -   make arrangements to access/obtain data
+
+-   action items (10m)
+
+    -   determine what actions will be taken before the next meeting
+
+    -   assign responsibility for each action
+
+## Assignments
+
+-   ***Motivational statement*** due Friday 1/20 11:59pm PST. Take some time to write a paragraph or two in response to the following prompts:
+
+    -   Why are you participating in the capstone? What attracted you to the opportunity in the first place and how does it relate to your goals for your undergraduate education?
+
+    -   What do you hope to get out of the experience? Why is that important to you?
+
+    -   Submit via [Google form](https://forms.gle/6MeNMfhxetzxBB7A9)
+
+-   ***Team contracts*** due Friday 1/27 11:59pm PST. See [template](https://docs.google.com/document/d/1me0JBYSZ5HJrVfDvrjJZakm9wJEt4LUGNk6vBuji1b0/edit?usp=sharing).
