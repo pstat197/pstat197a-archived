@@ -3,10 +3,12 @@ title: "Data science capstone at UCSB"
 subtitle: "Sponsored research experiences for undergraduates in interdisciplinary data science, computational science, and statistics"
 ---
 
-Welcome to the homepage for UC Santa Barbara's year-long data science capstone sequence!
+Welcome to the homepage for UC Santa Barbara's data science capstone program.
 
-Our program aims to provide students with hands-on research training and career development opportunities related to data science. By design, the program is equally suitable for students interested in entering the job market as it is for those considering graduate school: we partner with both industry and academic project sponsors to offer research experiences spanning a breadth of application domains.
+The capstone program aims to provide students with hands-on research training and career development opportunities related to data science. By design, it is equally suitable for students interested in entering the job market as it is for those considering graduate school: we partner with both industry and academic project sponsors to offer research experiences spanning a breadth of application domains.
 
-The capstone sequence comprises two distinct portions: a preparatory course in data science topics and collaborative research skills (PSTAT197A, offered fall term) and two experiential learning courses in which students work in teams on interdisciplinary projects sponsored by an external partner (PSTAT197B-C, offered winter and spring terms).
+For participating students, the capstone is a year-long course sequence comprising two distinct portions: a preparatory course in data science topics and collaborative research skills (PSTAT197A, offered fall term) and two experiential learning courses in which students work in teams on interdisciplinary projects sponsored by an external partner and advised by a technical specialist (PSTAT197B-C, offered winter and spring terms). The capstone culminates with a public showcase of student work.
+
+For participating project sponsors, the UCSB's data science capstone offers opportunities to engage in mentorship, advance research agendas and carry out pilot work with relatively low overhead, recruit talent, and establish collaborative partnerships.
 
 Here you will find program information for prospective students and project sponsors along with course information for current students and summaries of past projects.

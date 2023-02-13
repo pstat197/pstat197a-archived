@@ -17,8 +17,10 @@ website:
       - icon: slack
         href: https://ucsbdscapstone.slack.com
     contents:
-      - section: "About"
+      - about/info-for-students.qmd
       - section: "Projects"
+        contents:
+          - projects/projects-22-23.qmd
       - section: "PSTAT197A"
         contents:
           - pstat197a/about-syllabus.qmd
