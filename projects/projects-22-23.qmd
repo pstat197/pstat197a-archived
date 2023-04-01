@@ -3,9 +3,13 @@ title: "2022-2023 Projects"
 ---
 
 <!-- skills required and skills learned  -->
+
 <!-- repo links if available -->
+
 <!-- one figure per item -->
+
 <!-- packages/languages used -->
+
 <!-- upcoming events (not for this page, but as separate page) -->
 
 Listed alphabetically by project sponsor.

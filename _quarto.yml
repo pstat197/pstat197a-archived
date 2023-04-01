@@ -9,6 +9,7 @@ website:
   sidebar:
     title: "Data Science Capstone"
     style: "docked"
+    collapse-level: 1
     search: true
     logo: "img/ucsbds_hex.png"
     tools: 
@@ -18,22 +19,25 @@ website:
         href: https://ucsbdscapstone.slack.com
     contents:
       - about/info-for-students.qmd
+      - about/info-for-sponsors.qmd
       - section: "Projects"
         contents:
           - projects/projects-22-23.qmd
-      - section: "PSTAT197A"
+      - section: "Class materials"
         contents:
-          - pstat197a/about-syllabus.qmd
-          - pstat197a/about-outcomes.qmd
-          - pstat197a/about-schedule.qmd
-          - pstat197a/about-technology.qmd
-          - pstat197a/about-links.qmd
-          - pstat197a/index-course-materials.qmd
-      - section: "PSTAT197B-C"
-        contents:
-          - pstat197bc/about-syllabus.qmd
-          - pstat197bc/about-schedule.qmd
-          - pstat197bc/index-class-meetings.qmd
+          - section: "PSTAT197A"
+            contents:
+              - pstat197a/about-syllabus.qmd
+              - pstat197a/about-outcomes.qmd
+              - pstat197a/about-schedule.qmd
+              - pstat197a/about-technology.qmd
+              - pstat197a/about-links.qmd
+              - pstat197a/index-course-materials.qmd
+          - section: "PSTAT197B-C"
+            contents:
+              - pstat197bc/about-syllabus.qmd
+              - pstat197bc/about-winter-meetings.qmd
+              - pstat197bc/about-spring-meetings.qmd
 
 format:
   html:

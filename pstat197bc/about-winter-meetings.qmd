@@ -1,0 +1,153 @@
+---
+title: "Winter class meetings"
+---
+
++--------------+--------------------------------------+--------------------------------------+
+| Week         | Class meeting                        | Assignments/comments                 |
++==============+======================================+======================================+
+| 1 (1/9/23)   | Introduction and class logistics     |                                      |
++--------------+--------------------------------------+--------------------------------------+
+| 2 (1/16/23)  | Panel: past project experiences      | Class meets WEDNESDAY                |
+|              |                                      |                                      |
+|              |                                      | Motivational statements due Friday   |
++--------------+--------------------------------------+--------------------------------------+
+| 3 (1/23/23)  | Getting started and tips for success | Team contracts due Friday            |
++--------------+--------------------------------------+--------------------------------------+
+| 4 (1/30/23)  | Amgen, Appfolio                      |                                      |
++--------------+--------------------------------------+--------------------------------------+
+| 5 (2/6/23)   | CCBER, Caves lab                     |                                      |
++--------------+--------------------------------------+--------------------------------------+
+| 6 (2/13/23)  | Carpe Data, CalCOFI                  | Peer evaluations due Friday          |
++--------------+--------------------------------------+--------------------------------------+
+| 7 (2/20/23)  | HPC workshop                         | ***No class meetings***              |
+|              |                                      |                                      |
+|              |                                      | Workshop on WEDNESDAY in Elings 1601 |
++--------------+--------------------------------------+--------------------------------------+
+| 8 (2/27/23)  | *Monday:* EEMB Patrick, MOVE lab     | Class meets MONDAY *AND* WEDNESDAY   |
+|              |                                      |                                      |
+|              | *Wednesday:* Evidation               |                                      |
++--------------+--------------------------------------+--------------------------------------+
+| 9 (3/6/23)   | Climate Hazards teams                |                                      |
++--------------+--------------------------------------+--------------------------------------+
+| 10 (3/13/23) | P3, SLAC                             | Interim report due Friday            |
++--------------+--------------------------------------+--------------------------------------+
+| 11 (finals)  | N/A                                  | Individual reflections due Thursday  |
++--------------+--------------------------------------+--------------------------------------+
+
+: Schedule is tentative and subject to change. Check back for updates.
+
+## Useful links
+
+\[[Attendance reporting form](https://forms.gle/3Qy98p8UHWiZ4BSGA)\] -- fill out once per class meeting.
+
+\[[Drive folder for winter presentations](https://drive.google.com/drive/folders/1yeuKF0rFvqbR_XvfSSN1KEdC2dgfnbeE?usp=share_link)\] -- upload your slides and handouts here.
+
+\[[Presentation review form](https://forms.gle/XG5Y2GG4AEhfwuiD7)\] -- fill out once per presentation.
+
+## Week 1
+
+-   *Comments:* teams should be scheduling their initial project meetings this week to take place during week 2.
+
+-   *Monday meeting*: course overview \[[slides](slides/week1-intro.qmd)\]
+
+-   *Class assignments:*
+
+    -   read syllabus
+
+    -   prepare a motivational statement and \[[submit](https://forms.gle/6MeNMfhxetzxBB7A9)\] by Friday 1/20 11:59pm PST
+
+    -   prepare a team contract and submit signed copy by Friday 1/27 11:59pm PST \[upload to [Google drive](https://drive.google.com/drive/folders/1iDUbNlSIq7NlwUWcWOZkNMdO6B-ji5KK?usp=sharing)\]
+
+## Week 2
+
+***Note WEDNESDAY MEETING this week due to MLK Jr. Day***
+
+-   *Comments:* re-read project abstract before your team meeting.
+
+-   *Wednesday meeting:* student panel on past project experiences
+
+## Week 3
+
+*Comments:* teams should have data in hand this week; presentation schedule updated; contracts due Friday 1/27; see [meeting notes template](https://docs.google.com/document/d/1Gcnq5osybY0mLhqpffguQoVf76MD4Xl0gPPWWv-7weI/edit?usp=sharing)
+
+-   *Monday meeting:* getting started and tips for success \[[slides](https://docs.google.com/presentation/d/1xAnI-zn-JYmTb5kPhq22oDuKcT4buvBbRFtpsyN2l_o/edit?usp=sharing)\]
+
+-   In-class presentations to begin next week; should focus on project background, data, goals, and current/planned work
+
+    -   format: 20min presentation + 10min discussion
+
+    -   to prepare: 10-15 slides and 1-2 page handout 24h in advance
+
+    -   \[[handout template](https://docs.google.com/document/d/1ra6-28dQKfS4HnsMP_j19qRGfrQngI_HpjZ6YxW9Chw/edit?usp=sharing)\] \[[evaluation rubric](https://docs.google.com/document/d/17xafDkkMzrOD2a9pFIVQainnRSCBvC-YMfaEYVzpses/edit?usp=sharing)\] \[[last year's presentations](https://drive.google.com/drive/folders/1Iw6PtIs_A6NUgItVcIqdHk4gvvN0_QVq?usp=share_link)\]
+
+    -   *note* last year's presentations were all given at the end of the quarter and ran 10m shorter
+
+## Week 4
+
+*Comments:* HPC workshop scheduled for 2/22, details TBA; presentation schedule adjusted to accommodate workshop.
+
+-   *Monday meeting:* Amgen \[[handout](https://docs.google.com/document/d/1ap15jalmGXZDL51xEbTPHqgcVxM121VS850zudl-StI/edit?usp=share_link)\] \[[slides](https://docs.google.com/presentation/d/1B4SibhPw-dhYM3pxkoVu_daT__lQOyVvmQ9huJp7WL4/edit?usp=share_link)\] Appfolio \[[handout](https://drive.google.com/file/d/18_21zxHMV1ZSd15UpL0SF31l9E_5-Pwi/view?usp=share_link)\] \[[slides](https://docs.google.com/presentation/d/1EwdRHRZtgp1GFiO_1A627ZHmwyUK7Nhk/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\]
+
+## Week 5
+
+*Comments:* add your (full) meetings to \[[this calendar](https://calendar.google.com/calendar/u/0?cid=Y184OWUyZDg3YTYzOWVhNWU5NjI5Mzk3NjJmODYyYzBmNDkzYWM5OGFmNmY5MTUyNWJmZjU3YTUzYTA0YTUzNDI2QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20)\] (current meeting organizers have permissions); add your roles to the \[[project assignments spreadsheet](https://docs.google.com/spreadsheets/d/15Phz5o8-04SkD_t2ifgboxFSrOHvSlU4wGrTWUAKYrE/edit?usp=sharing)\].
+
+-   *Monday meeting:* CCBER \[[slides](https://docs.google.com/presentation/d/1n3MOnrd65C8JbpVjSHxrvf5y1Fmqsjnz/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\] \[[handout](https://drive.google.com/file/d/1tNrXyHL6H9g66RRs08S7A_tY-ps95DMv/view?usp=share_link)\]; Caves lab \[[slides](https://docs.google.com/presentation/d/1KJfDzZUWqBDZMyRZvMcGiHBFR6mLQjOSFwL4tgajoAw/edit?usp=share_link)\] \[[handout](https://docs.google.com/document/d/19Z2tGX4A0vSRx7fVUb7ly6CgHcRUsqN_nEIwtlUn8dY/edit?usp=share_link)\]
+
+## Week 6
+
+*Comments:* complete pre-workshop instructions (see below) before next week; peer reviews due this week.
+
+-   *Monday meeting:* Carpe Data \[[slides](https://docs.google.com/presentation/d/1p2RKwK13vd95YezryFNYfIl8Uz0xuy8F/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\] \[[handout](https://drive.google.com/file/d/1_yfxp20m7Iv7E481g0dxBZpNIo4nPSvz/view?usp=share_link)\]; CalCOFI \[[slides](https://docs.google.com/presentation/d/1g1fxESBvksctYLyWdyMAZ6BHLQh31YHE/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\] \[[handout](https://drive.google.com/file/d/17_L1OB0UY3t_f7JX8xD09vJbBUq3ao1-/view?usp=share_link)\]
+
+-   Peer reviews ***due Friday 2/17 11:59pm PST*** \[[form](https://forms.gle/4VH4cpsH5XjcbqZd6)\]
+
+-   HPC workshop next week, Wednesday 2/22 2pm-3pm in Elings 1601. To prepare:
+
+    -   at least one student per team should attend, [RSVP here](https://forms.gle/ZQrUTCxE6R7XGdU28)
+
+    -   have one attending student per team [create a CSC account](https://csc.cnsi.ucsb.edu/forms/user-account) with the following details
+
+        -   identify Trevor as your academic advisor
+
+        -   provide "data science capstone project" as the project description
+
+        -   indicate that your project is ***not*** NSF-funded
+
+    -   have the same student verify that they can [connect to the Pod cluster](https://csc.cnsi.ucsb.edu/docs/connect-pod-cluster)
+
+        -   note windows users will need to [download the PuTTy SSH client](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) to connect
+
+        -   all users will need to be behind the campus VPN if connecting from off campus (see [instructions](https://www.ets.ucsb.edu/pulse-secure-campus-vpn/get-connected-campus-vpn) if you are connecting from off campus)
+
+    -   lastly, have the same student [install FileZilla](https://www.ets.ucsb.edu/pulse-secure-campus-vpn/get-connected-campus-vpn) and ensure they can open a session (see instructions above for connecting to the Pod cluster)
+
+## Week 7
+
+*Comments:* **no class meeting** (President's day)
+
+-   *Wednesday:* high-performance computing (HPC) workshop \[[slides](https://drive.google.com/file/d/1BjEFKutkiemqrzW6cO_lxXMVp3ArmRLP/view?usp=share_link)\]
+
+## Week 8
+
+*Comments:* class meetings will be held **both Monday and Wednesday**, with a shorter meeting on Wednesday; add codes distributed for (most of) 197C and should follow shortly for 190DF (and the rest), please enroll for 4 credits.
+
+-   *Monday meeting:* Patrick Green \[[slides](https://docs.google.com/presentation/d/1B4TxHtObUHgs1u-hPwt286DE-s_58pjtuIS3ieaqtM8/edit?usp=share_link)\] \[[handout](https://drive.google.com/file/d/1WbiPRVxogxRf1VzUOp1vTWLETMkNYpOC/view?usp=share_link)\]; MOVE lab \[[slides](https://docs.google.com/presentation/d/1RSKXuxKlEOe_SQjK63w2XGiOr5RLILXh/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\] \[[handout](https://docs.google.com/document/d/1XCVXm2oHCKSOTCuHFTdAw9-zAoS0VmB4/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\]
+
+-   *Wednesday meeting:* Evidation \[[slides](https://docs.google.com/presentation/d/1sSK0Uh9RCn0G0hab65srXizjk5T56amP/edit?usp=share_link&rtpof=true&sd=true)\] \[[handout](https://drive.google.com/file/d/1fiJgkdDNwOBT2DeH7wdNFCvL11f67DNV/view?usp=share_link)\]
+
+## Week 9
+
+-   *Monday meeting:* Climate Hazards Center, Greg's group \[[slides](https://docs.google.com/presentation/d/1B9AdWf4YQ6I1cPWh-lDAo_lka1oRdkIR/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\] \[[handout](https://docs.google.com/document/d/1nCaZk88_C_C_cMOxPA4ouA8HBNZDmFFo/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\] and Shrad's group \[[slides](https://docs.google.com/presentation/d/1fqGPlJWi3QtYUe-AQf9oBDXfL4R8m6D39uvBUCqTNLI/edit?usp=share_link)\] \[[handout](https://docs.google.com/document/d/16FKHsCq1yuVDy2ynBJ3TrfDT_e6K0TVbGs_3g2KRU1E/edit?usp=share_link)\]
+
+-   *Class assignments:*
+
+    -   interim reports are due Friday 3/17 11:59pm PST
+
+    -   see [guidelines for interim reports](interim-report-guidelines.qmd)
+
+## Week 10
+
+*Comments: **do*** meet with your teams this week, set aside some time in this last meeting to reflect and set goals for next quarter; take a break from meetings during finals week and spring break; no further class meetings planned for the quarter.
+
+-   *Monday meeting:* P3 \[[slides](https://docs.google.com/presentation/d/1Y6jM3Yy8zpEOmFy89Y7j3qBrbhCV-qMF/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\] \[[handout](https://docs.google.com/document/d/1TkqGz6ztlw_fcyNGOEwapD1TX5X2QAXg/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\]; SLAC \[[slides](https://docs.google.com/presentation/d/19Wvb3digQSI1GQKo6hB2qokOsjnyf5zt/edit?usp=share_link&ouid=109419302730749851192&rtpof=true&sd=true)\] \[[handout](https://drive.google.com/file/d/1JRtHd13F62BXkmjcQHnKaU7VGcMwZZCp/view?usp=share_link)\]

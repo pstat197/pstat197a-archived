@@ -1,5 +1,26 @@
 [
   {
+    "objectID": "about/info-for-sponsors.html",
+    "href": "about/info-for-sponsors.html",
+    "title": "Sponsor a project",
+    "section": "",
+    "text": "Our program is student-centered: data science capstone projects at UCSB are, above all, about creating educational and professional opportunities for students. We want to work with project sponsors who share this commitment and first and foremost wish to contribute to student learning. That said, projects also benefit sponsors by advancing pilot projects, generating new partnerships and collaborations, and providing a means of recruiting talent.\nThe most successful projects serve both ends by supporting students in making novel contributions to an ongoing research agenda. In our view, mutually beneficial success is most likely when sponsors:\n\nare invested in students’ intellectual and professional development and value their potential as future professionals, data science practitioners, and researchers;\nhave identified a well-defined problem of clear value to their agenda or organization and suitable for application of data science techniques, and can articulate specific means/approaches for students to attempt to resolve the problem;\ncan provide concrete starting points and prior work to students at the beginning of the project;\nare willing to dedicate time and effort to training students on relevant background and to advising students as they progress."
+  },
+  {
+    "objectID": "about/info-for-sponsors.html#logistics",
+    "href": "about/info-for-sponsors.html#logistics",
+    "title": "Sponsor a project",
+    "section": "Logistics",
+    "text": "Logistics\nWe work with sponsors to develop a project plan during the Fall quarter (late September) each year. Once the project plan is confirmed, we assign students and a faculty or graduate student advisor to the project. Project work begins in Winter quarter (early January) and continues through the end of Spring quarter (early June), and culminates with a poster showcase on UCSB’s campus.\nSponsors provide:\n\nproject objectives and datasets;\nan advisor available to meet for one hour weekly or biweekly with the project team (virtual meetings ok) during the working period (January – June);\n(non-UCSB sponsors only) a participation fee to support the poster showcase and other program expenses.\n\nUCSB provides:\n\nadvising on project plan development;\nat least one faculty or graduate student co-advisor to join project meetings and assist students in meeting project goals;\nstudent research team matched to the project based on interests and skills;\nmeeting space and research computing resources."
+  },
+  {
+    "objectID": "about/info-for-sponsors.html#how-to-sponsor-a-project",
+    "href": "about/info-for-sponsors.html#how-to-sponsor-a-project",
+    "title": "Sponsor a project",
+    "section": "How to sponsor a project",
+    "text": "How to sponsor a project\nWe are considering projects for the 2023-2024 academic year on a rolling basis through November 1, 2023. The process for proposing a project is as follows:\n\nProvide a short project pitch by filling out our interest form.\nIf your project seems like a good fit for the program, the faculty coordinator for the capstone will contact you to request a project abstract. At this stage you can elect to meet with the coordinator for input on the project idea, if desired.\nThe faculty coordinator will review your abstract and either accept the project, propose revisions, or decline the project.\nProject abstracts must be finalized by November 15, 2023 for distribution to students to solicit student preferences regarding team assignments.\n\nFor accepted projects, the general expectation is that datasets will be available to students no later than the first day of Winter quarter."
+  },
+  {
     "objectID": "about/info-for-students.html",
     "href": "about/info-for-students.html",
     "title": "Information for students",
@@ -7,32 +28,32 @@
     "text": "The goal of the capstone program is to provide training in collaborative data science, hands-on research experience, and career development opportunities to students entering the job market or considering graduate school.\nThe capstone is designed primarily for senior students of any discipline having an intermediate level of experience with applied quantitative methods of any kind and some exposure to programming. It is not expected that students will have obtained any specialized background or completed advanced coursework prior to participating, and students from non-PSTAT major programs are especially encouraged to apply. Here you can find information on eligibility, how to apply, and program outcomes."
   },
   {
-    "objectID": "about/info-for-students.html#how-to-apply-and-timeline",
-    "href": "about/info-for-students.html#how-to-apply-and-timeline",
+    "objectID": "about/info-for-students.html#how-to-apply",
+    "href": "about/info-for-students.html#how-to-apply",
     "title": "Information for students",
-    "section": "How to apply and timeline",
-    "text": "How to apply and timeline\nApplications open in Spring quarter. To apply, simply fill out the application form linked below (the link will be live while applications are open).\nApplications will be reviewed starting in week 5 and on a rolling basis thereafter. An initial cohort will be accepted by the end of spring quarter and provided add codes for enrollment. Other applicants meeting eligibility requirements will be waitlisted, and any remaining seats will be allocated by September 1 prior to the start of the program year. After this date applications will be closed.\n[Application form]"
+    "section": "How to apply",
+    "text": "How to apply\nApplications open in Spring quarter. To apply, simply fill out the application form linked below (the form will be live while applications are open).\n[Application form]\nApplications will be reviewed starting in week 5 and on a rolling basis thereafter. An initial cohort will be admitted by the end of spring quarter and provided add codes for enrollment. Other applicants meeting eligibility requirements will be waitlisted, and any remaining seats will be allocated by September 1 prior to the start of the program year. After this date applications will be closed."
   },
   {
-    "objectID": "about/info-for-students.html#program-outcomes",
-    "href": "about/info-for-students.html#program-outcomes",
+    "objectID": "about/info-for-students.html#what-to-expect",
+    "href": "about/info-for-students.html#what-to-expect",
     "title": "Information for students",
-    "section": "Program outcomes",
-    "text": "Program outcomes\nStudents can expect to gain training and skills in collaborative data science and produce a strong work sample by the end of the program. All students will prepare a poster presentation for a public showcase of student work toward the end of the year. Posters will also be published online. Depending on the project, students may also contribute to other outputs such as public repositories, software products, conference presentations, or publications. Aside from project outputs, students receive mentorship from their project advisors throughout the course of the experiential learning component of the capstone and gain access to the program network of past participants and project sponsors for career development purposes."
+    "section": "What to expect",
+    "text": "What to expect\nStudents can expect to gain training and skills in collaborative data science and produce a strong work sample by the end of the program. All students will prepare a poster presentation for a public showcase of student work toward the end of the year. Posters will also be published online.\nDepending on the project, students may also contribute during or after the project work period to other outputs such as public repositories, software products, conference presentations, or publications.\nBesides project outputs, students receive mentorship from their project advisors throughout the course of the experiential learning component of the capstone. Students also gain access to the network of current and past participants and project sponsors for career development purposes."
   },
   {
     "objectID": "about/info-for-students.html#prerequisites-and-eligibility",
     "href": "about/info-for-students.html#prerequisites-and-eligibility",
     "title": "Information for students",
     "section": "Prerequisites and eligibility",
-    "text": "Prerequisites and eligibility\nThe prerequisites for the capstone are exposure to computing, statistics and probability, and regression.\nSince the program is interdisciplinary and intended to be accessible to non-PSTAT majors, these requirements are not strictly tied to any specific courses. For the PSTAT student, completion of regression analysis (PSTAT126) should suffice. For the non-PSTAT student, any prior experience with statistical concepts, quantitative models, and computing will be considered.\nStudents should be of junior or senior standing by the term they would begin the capstone (i.e., fall of the year of application). A full-year commitment is expected to participate, so seniors expecting to graduate early may not be eligible. Younger students, even if otherwise eligible, will be encouraged to reapply in a later year.\nStudents should have a strong academic record and be motivated to learn independently and work on a research problem."
+    "text": "Prerequisites and eligibility\nThe prerequisites for the capstone are exposure to (1) computing, (2) statistics and probability, and (3) regression. Since the program is interdisciplinary and intended to be accessible to non-PSTAT majors, these requirements are not strictly tied to any specific courses.\nFor the PSTAT student, completion of regression analysis (PSTAT126) should suffice. For the non-PSTAT student, any prior experience with statistical concepts, quantitative models, and computing will be considered.\nStudents should be of junior or senior standing by the term they would begin the capstone (i.e., fall of the year of application). A full-year commitment is expected to participate, so seniors expecting to graduate early may not be eligible. Younger students, even if otherwise eligible, will be encouraged to reapply in a later year.\nStudents should have a strong academic record and be motivated to learn independently and work on a research problem."
   },
   {
     "objectID": "about/info-for-students.html#faq",
     "href": "about/info-for-students.html#faq",
     "title": "Information for students",
     "section": "FAQ",
-    "text": "FAQ\nAre there any specific languages/packages I need to know?\nNo. Most students will have had some experience with R or python, and some with similar languages such as Matlab or Mathematica. However, what constitutes experience is pretty broad and can range from having used an environment a few times to having taken 6+ courses using a particular language. Regardless, almost everyone will learn an extensive set of new programming skills ‘on-the-job’ in the course of their projects. Though less common, many of our students even learn a new language from the ground up.\nAre there any recommended classes that would prepare me for the capstone?\nCMPSC5A-B and PSTAT100 are widely-accessible data science courses that can be taken in sequence over the course of a year and provide excellent preparation for the capstone and exposure to programming in python. PSTAT students may elect to take the statistical learning course (PSTAT131) for additional preparation. Non-PSTAT majors would benefit from any quantitative methods courses offered in their home department.\nHow are students assigned to capstone projects in the program?\nStudents have the opportunity to review project abstracts and specify a set of preferred assignments. However, preferences must be balanced with one another as well as technical skills, special backgrounds, and factors affecting group dynamics in forming project teams, so we cannot guarantee students will receive their top choices. Ultimately, project assignments are made at the discretion of instructors.\nWill I get a job or internship through the program if my project is successful?\nProbably not – project sponsors’ commitments conclude at the end of the academic year. In some instances, sponsors have the resources and interest to support summer interns or entry-level hires, but this is entirely at their discretion. We have had students recruited in the past this way, but they comprise a minority of all program participants."
+    "text": "FAQ\nAre there any specific languages/packages I need to know?\nNo. The requirement is that you have intermediate proficiency (use in 2+ courses or equivalent) in some language so that you are familiar with programming concepts and able to learn further skills semi-independently (i.e., with the help of a book or tutorial). Most students will have had some experience with R or python, and some with similar languages such as Matlab, Mathematica, or Julia. However, what constitutes ‘experience’ is pretty broad and can range from a few courses to a few years. Regardless of experience, almost everyone will develop new programming skills ‘on-the-job’ in the course of their projects. Students do not need a specific background to succeed.\nAre there any recommended classes that would prepare me for the capstone?\nCMPSC5A-B and PSTAT100 are widely-accessible data science courses that can be taken in sequence over the course of a year and provide good preparation for the capstone and exposure to programming in python. PSTAT students may elect to take the statistical learning course (PSTAT131) for additional preparation. Non-PSTAT majors would benefit from any quantitative methods courses offered in their home department. More broadly, any course(s) that reinforce programming skills and data analysis will be beneficial.\nHow are students assigned to capstone projects in the program?\nStudents have the opportunity to review project abstracts and specify a set of preferred assignments. However, preferences are considered together with technical skills, domain backgrounds, and factors affecting group dynamics in forming project teams, so we cannot guarantee students will receive their top choices. Ultimately, project assignments are made at the discretion of instructors.\nWill I get a job or internship through the program if my project is successful?\nThis is not guaranteed. Project sponsors’ commitments conclude at the end of the academic year. In some instances, sponsors have the resources and interest to support summer interns or entry-level hires, but this is entirely at their discretion. We have had students recruited in the past this way, but they comprise a minority of all program participants."
   },
   {
     "objectID": "index.html",
@@ -3150,18 +3171,32 @@
     "text": "Deadlines\nThere are two deadlines associated with this project, a draft deadline and a final deadline.\n\ndraft deadline Thursday, December 1, 2pm PST (in class) – be prepared to share a draft of your primary vignette document and explain it to a small group of other students\nfinal deadline Thursday, December 8, 11:59pm PST – the repository and all contained files should be in final form ready for evaluation by course staff"
   },
   {
-    "objectID": "pstat197bc/about-schedule.html",
-    "href": "pstat197bc/about-schedule.html",
-    "title": "Schedule",
+    "objectID": "pstat197bc/about-spring-meetings.html",
+    "href": "pstat197bc/about-spring-meetings.html",
+    "title": "Spring class meetings",
     "section": "",
-    "text": "Schedule is tentative and subject to change. Check back for updates.\n\n\n\n\n\n\n\nWeek\nClass meeting\nAssignments/comments\n\n\n\n\n1 (1/9/23)\nIntroduction and class logistics\n\n\n\n2 (1/16/23)\nPanel: past project experiences\nClass meets WEDNESDAY\nMotivational statements due Friday\n\n\n3 (1/23/23)\nGetting started and tips for success\nTeam contracts due Friday\n\n\n4 (1/30/23)\nAmgen, Appfolio\n\n\n\n5 (2/6/23)\nCCBER, Caves lab\n\n\n\n6 (2/13/23)\nCarpe Data, CalCOFI\nPeer evaluations due Friday\n\n\n7 (2/20/23)\nHPC workshop\nNo class meetings\nWorkshop on WEDNESDAY, location TBA\n\n\n8 (2/27/23)\nMonday: Climate Hazards teams\nWednesday: Evidation, Inogen\nClass meets MONDAY AND WEDNESDAY\n\n\n9 (3/6/23)\nEEMB Patrick, MOVE lab\n\n\n\n10 (3/13/23)\nP3, SLAC\nInterim report due Friday\n\n\n11 (finals)\nN/A\nIndividual reflections due Thursday"
+    "text": "Schedule is tentative and subject to change. Check back for updates.\n\n\n\n\n\n\n\nWeek\nClass meeting\nAssignments/comments\n\n\n\n\n1 (4/3/23)\nIntroduction and spring quarter overview\n\n\n\n2 (4/10/23)\nPair 1 presents\nRevisions to interim reports due Friday 11:59pm PST\n\n\n3 (4/17/23)\nPair 2 presents\n\n\n\n4 (4/24/23)\nPair 3 presents\n\n\n\n5 (5/1/23)\nPair 4 presents\n\n\n\n6 (5/8/23)\nPair 5 presents\nPeer review due Friday 11:59pm PST\n\n\n7 (5/15/23)\nWorkshopping: figure drafts\n\n\n\n8 (5/22/23)\nWorkshopping: presenting figures\n\n\n\n9 (5/29/23)\nWorkshopping: poster drafts\nNo class Monday;WEDNESDAY meeting instead\n\n\n10 (6/5/23)\nPublic showcase\nLoma Pelona center 12pm – 4pm\n\n\n11 (finals)\n\nIndividual project summaries due Monday 6/12"
+  },
+  {
+    "objectID": "pstat197bc/about-spring-meetings.html#useful-links",
+    "href": "pstat197bc/about-spring-meetings.html#useful-links",
+    "title": "Spring class meetings",
+    "section": "Useful links",
+    "text": "Useful links\n\nAttendance form (please fill out once per meeting)\nDrive folder for presentation filesharing (be aware, contents visible with a UCSB account and the link)"
+  },
+  {
+    "objectID": "pstat197bc/about-spring-meetings.html#week-1",
+    "href": "pstat197bc/about-spring-meetings.html#week-1",
+    "title": "Spring class meetings",
+    "section": "Week 1",
+    "text": "Week 1\n\nMonday meeting: welcome back and spring term overview [slides]\nClass assignments:\n\nrevisions to interim reports due Friday 4/14 11:59pm PST"
   },
   {
     "objectID": "pstat197bc/about-syllabus.html",
     "href": "pstat197bc/about-syllabus.html",
     "title": "Course syllabus",
     "section": "",
-    "text": "Students will devote the vast majority of their time and effort in this course to project work and are expected to engage fully with their projects. Class meetings will be conducted as seminars with rotating presentations by project teams. Students will meet weekly with their project teams and regular progress is expected. Each team will prepare one written project summary at the end of winter quarter and one poster presentation at the end of spring quarter.\nConcurrent course listing: PSTAT197B-C and CMPSC190DE-DF are held concurrently; enrollment is by instructor consent and admitted students may enroll under either listing. The course content, expectations, assessments, and course policies are identical for students enrolled in either course.\nCatalog description: Research opportunities for undergraduate students. Students practice their data science and applied statistics skills by completing a hands-on team project on a practical problem proposed by a project sponsor. Students are expected to give regular oral presentations and prepare at least one written report on their research. Prerequisite: PSTAT197A."
+    "text": "Students will devote the vast majority of their time and effort in this course to project work and are expected to engage fully with their projects. Class meetings will be conducted as seminars with rotating presentations by project teams. Students will meet weekly with their project teams and regular progress is expected. Each team will prepare one written project summary at the end of winter quarter and one poster presentation at the end of spring quarter.\nConcurrent course listing: PSTAT197B-C and CMPSC190DE-DF are held concurrently; enrollment is by instructor consent and admitted students may enroll under either listing. The course content, expectations, assessments, and course policies are identical for students enrolled in either course.\nCatalog description: Research opportunities for undergraduate students. Students practice their data science and applied statistics skills by completing a hands-on team project on a practical problem proposed by a project sponsor. Students are expected to give regular oral presentations and prepare at least one written report on their research. Prerequisite: PSTAT197A/CMPSC190DD."
   },
   {
     "objectID": "pstat197bc/about-syllabus.html#learning-outcomes",
@@ -3175,7 +3210,7 @@
     "href": "pstat197bc/about-syllabus.html#meetings",
     "title": "Course syllabus",
     "section": "Meetings",
-    "text": "Meetings\n\nWinter 2023\nClass meetings are held once weekly 2pm – 3:15pm Mondays in Phelps 3505.\nProject meetings are held once weekly in teams at a time of their choosing either via Zoom, on campus, or on site with the project sponsor.\nWe will not meet regularly at other officially scheduled times but we will use the Wednesday slot as an alternate class meeting time. Please note that we will meet on Wednesdays twice during winter term due to the following Monday holidays:\n\nWeek 2 (MLK Jr. day)\nWeek 7 (President’s day)\n\nStudents are encouraged to block off section times in their schedule to facilitate convenient scheduling of project work. Section rooms are available during those times as workspaces."
+    "text": "Meetings\n\nWinter 2023\nClass meetings are held once weekly 2pm – 3:15pm Mondays in Phelps 3505.\nProject meetings are held once weekly in teams at a time of their choosing either via Zoom, on campus, or on site with the project sponsor.\nWe will not meet regularly at other officially scheduled times but we will use the Wednesday slot as an alternate class meeting time. Please note that we will meet on Wednesdays twice during winter term due to the following Monday holidays:\n\nWeek 2 (MLK Jr. day)\nWeek 7 (President’s day)\n\nStudents are encouraged to block off section times in their schedule to facilitate convenient scheduling of project work. Section rooms are available during those times as workspaces.\n\n\nSpring 2023\nClass meetings are held once weekly 2pm – 3:15pm Mondays in the (brand new!) Interactive Learning Pavillion project-based learning room 2207.\nStudent teams are expected to meet twice weekly: once with their advisors, and once separately. These meetings can be scheduled at any time according to preference and availability; access will be arranged to PSTAT’s departmental meeting/tutoring spaces for groups who wish to meet on campus.\nAs in Winter, we will reserve the scheduled Wednesday meeting time as a back-up option. Please note that we will meet on Wednesday, May 31. In the absence of a scheduled class meeting, students are welcome to use ILP2207 during the scheduled time as a working space.\nIn place of our final meeting on Monday, June 5, we will host a public showcase of capstone projects in the Loma Pelona center. Poster presentations will be given during the scheduled class time (2pm – 3pm); all students are expected to participate. Additional events will be scheduled before and after the poster presentation, and students are encouraged to attend."
   },
   {
     "objectID": "pstat197bc/about-syllabus.html#people",
@@ -3189,7 +3224,7 @@
     "href": "pstat197bc/about-syllabus.html#expectations",
     "title": "Course syllabus",
     "section": "Expectations",
-    "text": "Expectations\nTime commitment. The course carries a time commitment of 12 hours per week (3 hours per credit unit). Class and project meetings account for roughly 2 hours per week, and class assignments are kept to a minimum to facilitate project work; thus, students should anticipate dedicating 8-10 hours outside of the classroom to project work each week. Students are strongly encouraged to establish a secondary meeting without their advisors each week to help ensure effective time and task management among the group.\nTeam contracts. Each team will develop a contract articulating their goals as a group, basic agreements about communication and collaboration, and steps that will be taken in the event of failure to uphold those agreements.\nTeam roles. Each student will take on one of the following roles per term by mutual agreement with their team:\n\na spokesperson who is responsible for communicating with advisors and course staff on behalf of the team;\na meeting organizer who is responsible for arranging project meetings and keeping time during meetings;\na note-taker who is responsible for maintaining a written record of each meeting;\na repository/data/document manager who is responsible for coordinating access to project files and keeping them organized;\nfor five-person teams, an equity manager who is responsible for ensuring a fair distribution of work among the team members.\n\nPeer review. Teams will conduct an anonymized peer review each quarter in which each student rates their teammates on:\n\ncooperation with the group;\ncommunication;\nadherence to with agreements established by the group contract;\nfulfillment of their assigned role;\nthe extent to which they contributed their fair share to project work.\n\nAggregated results will be used to provide individual feedback and identify any necessary interventions to improve quality of collaboration.\nClass presentations. Each team is expected to present some of their work once per term to the class. In-class presentations should be informal and allow time for intermittent discussion and questions. Teams should prepare about 10 slides and a 1-2 page handout. It is strongly recommended that just one team member give each presentation.\nPoster presentation. A public showcase of project work will be held on campus at the end of the Spring quarter. Each team is expected to prepare a poster to present at the showcase.\nNon-disclosure agreements. Some projects are subject to non-disclosure agreements (NDAs) between the university and the sponsoring organization. If so, project advisors will notify students of the terms and share copies of the NDA; students are expected to uphold any such NDAs but should not directly sign any agreements."
+    "text": "Expectations\nTime commitment. The course carries a time commitment of 12 hours per week (3 hours per credit unit). Class and project meetings account for roughly 2 hours per week, and class assignments are kept to a minimum to facilitate project work; thus, students should anticipate dedicating 8-10 hours outside of the classroom to project work each week. Students are strongly encouraged to establish a secondary meeting without their advisors each week to help ensure effective time and task management among the group.\nTeam contracts. Each team will develop a contract articulating their goals as a group, basic agreements about communication and collaboration, and steps that will be taken in the event of failure to uphold those agreements.\nTeam roles. Each student will take on one of the following roles per term by mutual agreement with their team:\n\na spokesperson who is responsible for communicating with advisors and course staff on behalf of the team;\na meeting organizer who is responsible for arranging project meetings and keeping time during meetings;\na note-taker who is responsible for maintaining a written record of each meeting;\na repository/data/document manager who is responsible for coordinating access to project files and keeping them organized;\nfor five-person teams, an equity manager who is responsible for ensuring a fair distribution of work among the team members.\n\nPeer review. Teams will conduct an anonymized peer review each quarter in which each student rates their teammates on:\n\ncooperation with the group;\ncommunication;\nadherence to with agreements established by the group contract;\nfulfillment of their assigned role;\nthe extent to which they contributed their fair share to project work.\n\nAggregated results will be used to provide individual feedback and identify any necessary interventions to improve quality of collaboration.\nClass presentations. Each team is expected to present some of their work once per term to the class. In-class presentations should be informal and allow time for intermittent discussion and questions. In Winter, teams will give group presentations and should prepare about 10 slides and a 1-2 page handout. It is strongly recommended that just one team member give each presentation. In Spring, each team member will take a turn presenting individually to a smaller audience consisting of their teammates and one other project group.\nPoster presentation. A public showcase of project work will be held on campus at the end of the Spring quarter. Each team is expected to prepare a poster to present at the showcase.\nNon-disclosure agreements. Some projects are subject to non-disclosure agreements (NDAs) between the university and the sponsoring organization. If so, project advisors will notify students of the terms and share copies of the NDA; students are expected to uphold any such NDAs but should not directly sign any agreements."
   },
   {
     "objectID": "pstat197bc/about-syllabus.html#assessments",
@@ -3206,39 +3241,109 @@
     "text": "Policies\nAttendance. Regular attendance at class meetings is expected. Each student can miss one class meeting without notice; further absences may impact course grades. Students are responsible for material discussed in their absence and should review notes and consult a classmate.\nDeadlines. Students are expected to meet assignment deadlines in a timely manner. All deadlines have a 24-hour grace period. Late or amended work may or may not be accepted at the instructor’s discretion.\nEmail. Course staff will make their best effort to reply to email within 48 weekday hours. However, due to high volume, staff cannot guarantee that all messages will receive replies.\nIllness. Students who are ill are required to stay home. Students ill with COVID-19 must comply with university policy regarding reporting and isolation. Accommodations will be made to ensure that students absent due to illness do not fall behind.\nAccommodations. Reasonable accommodations will be made for any student with a qualifying disability. Such requests should be made through the Disabled Students Program (DSP). More information, instructions on how to access accommodations, and information on related resources can be found on the DSP website. Note: in this class there are no timed assessments.\nLetter grades. Letter grades are assigned based only on the assessments identified above and according to university guidelines, with the relative weighting of assessments determined at the discretion of the instructor. While grade calculations will not be disclosed, students are entitled to an explanation of the criteria used to determine their grades if desired. Grades will not be changed except in the case of clerical errors. If students feel their grade has been unfairly assigned, they are entitled to contest it following UCSB procedure for contesting grades.\nConduct. All course participants are expected to maintain respectful and honorable conduct consistent with UCSB ethical standards. Students uncomfortable with the behavior of another course participant for any reason should notify the instructor, course staff, or, if the complaint relates to course staff conduct, an administrative or departmental officer. Evidence of academic dishonesty will be reported to the Office of Student Conduct (OSC); evidence of problematic behavior will be addressed on a case-by-case basis in accord with university policies."
   },
   {
-    "objectID": "pstat197bc/index-class-meetings.html",
-    "href": "pstat197bc/index-class-meetings.html",
-    "title": "Class meetings",
+    "objectID": "pstat197bc/about-winter-meetings.html",
+    "href": "pstat197bc/about-winter-meetings.html",
+    "title": "Winter class meetings",
     "section": "",
-    "text": "[Attendance reporting form] – fill out once per class meeting.\n[Drive folder for winter presentations] – upload your slides and handouts here.\n[Presentation review form] – fill out once per presentation."
+    "text": "Schedule is tentative and subject to change. Check back for updates.\n\n\n\n\n\n\n\nWeek\nClass meeting\nAssignments/comments\n\n\n\n\n1 (1/9/23)\nIntroduction and class logistics\n\n\n\n2 (1/16/23)\nPanel: past project experiences\nClass meets WEDNESDAY\nMotivational statements due Friday\n\n\n3 (1/23/23)\nGetting started and tips for success\nTeam contracts due Friday\n\n\n4 (1/30/23)\nAmgen, Appfolio\n\n\n\n5 (2/6/23)\nCCBER, Caves lab\n\n\n\n6 (2/13/23)\nCarpe Data, CalCOFI\nPeer evaluations due Friday\n\n\n7 (2/20/23)\nHPC workshop\nNo class meetings\nWorkshop on WEDNESDAY in Elings 1601\n\n\n8 (2/27/23)\nMonday: EEMB Patrick, MOVE lab\nWednesday: Evidation\nClass meets MONDAY AND WEDNESDAY\n\n\n9 (3/6/23)\nClimate Hazards teams\n\n\n\n10 (3/13/23)\nP3, SLAC\nInterim report due Friday\n\n\n11 (finals)\nN/A\nIndividual reflections due Thursday"
   },
   {
-    "objectID": "pstat197bc/index-class-meetings.html#week-1",
-    "href": "pstat197bc/index-class-meetings.html#week-1",
-    "title": "Class meetings",
+    "objectID": "pstat197bc/about-winter-meetings.html#useful-links",
+    "href": "pstat197bc/about-winter-meetings.html#useful-links",
+    "title": "Winter class meetings",
+    "section": "Useful links",
+    "text": "Useful links\n[Attendance reporting form] – fill out once per class meeting.\n[Drive folder for winter presentations] – upload your slides and handouts here.\n[Presentation review form] – fill out once per presentation."
+  },
+  {
+    "objectID": "pstat197bc/about-winter-meetings.html#week-1",
+    "href": "pstat197bc/about-winter-meetings.html#week-1",
+    "title": "Winter class meetings",
     "section": "Week 1",
     "text": "Week 1\n\nComments: teams should be scheduling their initial project meetings this week to take place during week 2.\nMonday meeting: course overview [slides]\nClass assignments:\n\nread syllabus\nprepare a motivational statement and [submit] by Friday 1/20 11:59pm PST\nprepare a team contract and submit signed copy by Friday 1/27 11:59pm PST [upload to Google drive]"
   },
   {
-    "objectID": "pstat197bc/index-class-meetings.html#week-2",
-    "href": "pstat197bc/index-class-meetings.html#week-2",
-    "title": "Class meetings",
+    "objectID": "pstat197bc/about-winter-meetings.html#week-2",
+    "href": "pstat197bc/about-winter-meetings.html#week-2",
+    "title": "Winter class meetings",
     "section": "Week 2",
     "text": "Week 2\nNote WEDNESDAY MEETING this week due to MLK Jr. Day\n\nComments: re-read project abstract before your team meeting.\nWednesday meeting: student panel on past project experiences"
   },
   {
-    "objectID": "pstat197bc/index-class-meetings.html#week-3",
-    "href": "pstat197bc/index-class-meetings.html#week-3",
-    "title": "Class meetings",
+    "objectID": "pstat197bc/about-winter-meetings.html#week-3",
+    "href": "pstat197bc/about-winter-meetings.html#week-3",
+    "title": "Winter class meetings",
     "section": "Week 3",
     "text": "Week 3\nComments: teams should have data in hand this week; presentation schedule updated; contracts due Friday 1/27; see meeting notes template\n\nMonday meeting: getting started and tips for success [slides]\nIn-class presentations to begin next week; should focus on project background, data, goals, and current/planned work\n\nformat: 20min presentation + 10min discussion\nto prepare: 10-15 slides and 1-2 page handout 24h in advance\n[handout template] [evaluation rubric] [last year’s presentations]\nnote last year’s presentations were all given at the end of the quarter and ran 10m shorter"
   },
   {
-    "objectID": "pstat197bc/index-class-meetings.html#week-4",
-    "href": "pstat197bc/index-class-meetings.html#week-4",
-    "title": "Class meetings",
+    "objectID": "pstat197bc/about-winter-meetings.html#week-4",
+    "href": "pstat197bc/about-winter-meetings.html#week-4",
+    "title": "Winter class meetings",
     "section": "Week 4",
-    "text": "Week 4\n\nMonday meeting: Amgen [handout] [slides] Appfolio [handout] [slides]"
+    "text": "Week 4\nComments: HPC workshop scheduled for 2/22, details TBA; presentation schedule adjusted to accommodate workshop.\n\nMonday meeting: Amgen [handout] [slides] Appfolio [handout] [slides]"
+  },
+  {
+    "objectID": "pstat197bc/about-winter-meetings.html#week-5",
+    "href": "pstat197bc/about-winter-meetings.html#week-5",
+    "title": "Winter class meetings",
+    "section": "Week 5",
+    "text": "Week 5\nComments: add your (full) meetings to [this calendar] (current meeting organizers have permissions); add your roles to the [project assignments spreadsheet].\n\nMonday meeting: CCBER [slides] [handout]; Caves lab [slides] [handout]"
+  },
+  {
+    "objectID": "pstat197bc/about-winter-meetings.html#week-6",
+    "href": "pstat197bc/about-winter-meetings.html#week-6",
+    "title": "Winter class meetings",
+    "section": "Week 6",
+    "text": "Week 6\nComments: complete pre-workshop instructions (see below) before next week; peer reviews due this week.\n\nMonday meeting: Carpe Data [slides] [handout]; CalCOFI [slides] [handout]\nPeer reviews due Friday 2/17 11:59pm PST [form]\nHPC workshop next week, Wednesday 2/22 2pm-3pm in Elings 1601. To prepare:\n\nat least one student per team should attend, RSVP here\nhave one attending student per team create a CSC account with the following details\n\nidentify Trevor as your academic advisor\nprovide “data science capstone project” as the project description\nindicate that your project is not NSF-funded\n\nhave the same student verify that they can connect to the Pod cluster\n\nnote windows users will need to download the PuTTy SSH client to connect\nall users will need to be behind the campus VPN if connecting from off campus (see instructions if you are connecting from off campus)\n\nlastly, have the same student install FileZilla and ensure they can open a session (see instructions above for connecting to the Pod cluster)"
+  },
+  {
+    "objectID": "pstat197bc/about-winter-meetings.html#week-7",
+    "href": "pstat197bc/about-winter-meetings.html#week-7",
+    "title": "Winter class meetings",
+    "section": "Week 7",
+    "text": "Week 7\nComments: no class meeting (President’s day)\n\nWednesday: high-performance computing (HPC) workshop [slides]"
+  },
+  {
+    "objectID": "pstat197bc/about-winter-meetings.html#week-8",
+    "href": "pstat197bc/about-winter-meetings.html#week-8",
+    "title": "Winter class meetings",
+    "section": "Week 8",
+    "text": "Week 8\nComments: class meetings will be held both Monday and Wednesday, with a shorter meeting on Wednesday; add codes distributed for (most of) 197C and should follow shortly for 190DF (and the rest), please enroll for 4 credits.\n\nMonday meeting: Patrick Green [slides] [handout]; MOVE lab [slides] [handout]\nWednesday meeting: Evidation [slides] [handout]"
+  },
+  {
+    "objectID": "pstat197bc/about-winter-meetings.html#week-9",
+    "href": "pstat197bc/about-winter-meetings.html#week-9",
+    "title": "Winter class meetings",
+    "section": "Week 9",
+    "text": "Week 9\n\nMonday meeting: Climate Hazards Center, Greg’s group [slides] [handout] and Shrad’s group [slides] [handout]\nClass assignments:\n\ninterim reports are due Friday 3/17 11:59pm PST\nsee guidelines for interim reports"
+  },
+  {
+    "objectID": "pstat197bc/about-winter-meetings.html#week-10",
+    "href": "pstat197bc/about-winter-meetings.html#week-10",
+    "title": "Winter class meetings",
+    "section": "Week 10",
+    "text": "Week 10\nComments: do meet with your teams this week, set aside some time in this last meeting to reflect and set goals for next quarter; take a break from meetings during finals week and spring break; no further class meetings planned for the quarter.\n\nMonday meeting: P3 [slides] [handout]; SLAC [slides] [handout]"
+  },
+  {
+    "objectID": "pstat197bc/interim-report-guidelines.html",
+    "href": "pstat197bc/interim-report-guidelines.html",
+    "title": "Interim report guidelines",
+    "section": "",
+    "text": "This assignment takes the place of a final exam or project in a typical class, and is an opportunity for your team to reflect on their progress and plan for the term ahead. It is also an opportunity to practice writing a technical report. You will get more out of the assignment if you take the time to do that reflection together.\nBroadly, the interim report should summarize your work to date in a presentable manner."
+  },
+  {
+    "objectID": "pstat197bc/interim-report-guidelines.html#expectations",
+    "href": "pstat197bc/interim-report-guidelines.html#expectations",
+    "title": "Interim report guidelines",
+    "section": "Expectations",
+    "text": "Expectations\n\nAudience\nYou are writing for a broad audience. You can assume the reader is familiar with statistics and data science at about the same level as your peers, but should not assume they have any expertise in your area or with the data or methods you are using.\nAvoid jargon, define key terms or acronyms when they first appear, and dedicate space to explaining data and methodology carefully, but avoid over-explaining or providing excessive detail – you are describing research, not teaching a class.\n\n\nLength\nThe report should be no less than 5 pages and no more than 10 pages. If necessary, you can include supplementary material or appendices following the main body of the report or as separate files/documents.\n\n\nContent\nOrganize your report into the sections outlined below. Use subheadings as appropriate to your project to further differentiate report contents within sections. Whenever possible, please make subheadings specific (e.g., “Biological species surveys” is better than “Data”). In general, the headings and subheadings should provide an outline of the contents of a report that is easy for the reader to skim and informative.\n\nIntroduction\nIntroduce the topic of your project and provide any background needed to understand your work. Above all, your introduction should convey the primary motivation and potential value of your work. You are not expected to do a literature review, but if there is closely related prior work or your sponsor has provided you with a collection of relevant papers, you should summarize these and provide citations in the introduction. Close the introduction with a statement of your project objective(s) and a summary of the organization of the report.\nProblem(s) of interest\nConcisely state the problems you’re working on. These should be the high-level problems corresponding to the project objectives that you hope to solve by the end of the capstone – not practical/technical problems encountered along the way like data representation or wrangling, issues with model training or algorithm implementations, computational constraints, etc.\nIf your project has multiple arms, dedicate one short paragraph to each arm. Aim to sum up the problems of interest for each arm in just 1-3 sentences (not required, but a good aspiration).\nTip: If you find yourself struggling to summarize the problems of interest concisely or providing a lot of context or explanation, that’s probably a sign that you need to go back and revise your introduction.\nMaterials and methods\nDescribe your datasets and the statistical/computational techniques you are using to address the problems of interest. Provide high-level summaries of any key methods: if you are fitting a model, write the model clearly and explain how you estimate parameters; if you are designing an algorithm, write it up in pseudo-code; if you are performing hypothesis tests, state the hypotheses and indicate the test. This should be detailed but not long; if it begins to sprawl over many pages, that’s a sign that you need to edit it down.\nPreliminary findings\nPresent key findings from this quarter. Resist the temptation to describe everything you’ve done – focus just on the results that capture the most significant advances. Prepare a table or figure that helps to communicate each key finding with an appropriate caption. If you include a table or figure, you should also describe it in words and explain its significance. No tables or figures should appear that you do not also discuss in the text of the report.\nTip: start by preparing the tables and figures, determine the order to present them in, and then write this section around those elements.\nDiscussion\nThis is your opportunity to describe any particular challenges, interpretations of findings, and the like. Try to stick to the facts in the findings section, and use this section to explain how they relate to your problems of interest and project objectives.\nFuture work\nDescribe how you anticipate extending your project into spring quarter. Be specific. You do not need to present a detailed plan or timeline, but should convey what you expect to work on during Spring quarter. Use this as an opportunity to set goals and expectations for your group.\n\n\n\nFormat\nYour report should be in PDF (.pdf) or Word (.docx) format.\nAll figures and tables should be labeled and captioned, e.g., “Fig. 1: map of sampling locations in 2018”.\nCopies of any figures should be provided as separate images in JPEG, TIFF, or PNG format; images should have a resolution of at least 300 dots per inch (dpi).\nSupplementary material can be submitted in any format."
+  },
+  {
+    "objectID": "pstat197bc/interim-report-guidelines.html#how-to-submit",
+    "href": "pstat197bc/interim-report-guidelines.html#how-to-submit",
+    "title": "Interim report guidelines",
+    "section": "How to submit",
+    "text": "How to submit\nUpload your PDF report and any supplementary files to this Drive folder. Use the naming conventions:\n\nreport document: TEAM-interim-report-w23.pdf\n\n\n\ncopies of figures from the report: img/TEAM-fig1.png (filename should match figure label in document)\nsupplementary material: TEAM-[description].[extention]"
   },
   {
     "objectID": "pstat197bc/slides/week1-intro.html#capstone-goals",

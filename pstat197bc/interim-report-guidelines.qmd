@@ -1,0 +1,79 @@
+---
+title: 'Interim report guidelines'
+editor: visual
+---
+
+## Purpose
+
+This assignment takes the place of a final exam or project in a typical class, and is an opportunity for your team to reflect on their progress and plan for the term ahead. It is also an opportunity to practice writing a technical report. You will get more out of the assignment if you take the time to do that reflection together.
+
+Broadly, the interim report should summarize your work to date in a presentable manner.
+
+## Expectations
+
+### Audience
+
+You are writing for a broad audience. You can assume the reader is familiar with statistics and data science at about the same level as your peers, but should not assume they have any expertise in your area or with the data or methods you are using.
+
+Avoid jargon, define key terms or acronyms when they first appear, and dedicate space to explaining data and methodology carefully, but avoid over-explaining or providing excessive detail -- you are describing research, not teaching a class.
+
+### Length
+
+The report should be no less than 5 pages and no more than 10 pages. If necessary, you can include supplementary material or appendices following the main body of the report or as separate files/documents.
+
+### Content
+
+Organize your report into the sections outlined below. Use subheadings as appropriate to your project to further differentiate report contents within sections. Whenever possible, please make subheadings specific (*e.g.,* "Biological species surveys" is better than "Data"). In general, the headings and subheadings should provide an outline of the contents of a report that is easy for the reader to skim and informative.
+
+1.  **Introduction**
+
+    Introduce the topic of your project and provide any background needed to understand your work. Above all, your introduction should convey the primary motivation and potential value of your work. You are not expected to do a literature review, but if there is closely related prior work or your sponsor has provided you with a collection of relevant papers, you should summarize these and provide citations in the introduction. Close the introduction with a statement of your project objective(s) and a summary of the organization of the report.
+
+2.  **Problem(s) of interest**
+
+    Concisely state the problems you're working on. These should be the high-level problems corresponding to the project objectives that you hope to *solve* by the end of the capstone -- not practical/technical problems encountered along the way like data representation or wrangling, issues with model training or algorithm implementations, computational constraints, etc.
+
+    If your project has multiple arms, dedicate one short paragraph to each arm. Aim to sum up the problems of interest for each arm in just 1-3 sentences (not required, but a good aspiration).
+
+    *Tip:* If you find yourself struggling to summarize the problems of interest concisely or providing a lot of context or explanation, that's probably a sign that you need to go back and revise your introduction.
+
+3.  **Materials and methods**
+
+    Describe your datasets and the statistical/computational techniques you are using to address the problems of interest. Provide high-level summaries of any key methods: if you are fitting a model, write the model clearly and explain how you estimate parameters; if you are designing an algorithm, write it up in pseudo-code; if you are performing hypothesis tests, state the hypotheses and indicate the test. This should be detailed but not long; if it begins to sprawl over many pages, that's a sign that you need to edit it down.
+
+4.  **Preliminary findings**
+
+    Present key findings from this quarter. Resist the temptation to describe everything you've done -- focus just on the results that capture the most significant advances. Prepare a table or figure that helps to communicate each key finding with an appropriate caption. If you include a table or figure, you should also describe it in words and explain its significance. No tables or figures should appear that you do not also discuss in the text of the report.
+
+    *Tip:* start by preparing the tables and figures, determine the order to present them in, and then write this section around those elements.
+
+5.  **Discussion**
+
+    This is your opportunity to describe any particular challenges, interpretations of findings, and the like. Try to stick to the facts in the findings section, and use this section to explain how they relate to your problems of interest and project objectives.
+
+6.  **Future work**
+
+    Describe how you anticipate extending your project into spring quarter. Be specific. You do not need to present a detailed plan or timeline, but should convey what you expect to work on during Spring quarter. Use this as an opportunity to set goals and expectations for your group.
+
+### Format
+
+Your report should be in PDF (.pdf) or Word (.docx) format.
+
+All figures and tables should be labeled and captioned, *e.g.*, "**Fig. 1:** map of sampling locations in 2018".
+
+Copies of any figures should be provided as separate images in JPEG, TIFF, or PNG format; images should have a resolution of at least 300 dots per inch (dpi).
+
+Supplementary material can be submitted in any format.
+
+## How to submit
+
+Upload your PDF report and any supplementary files to this [Drive folder](https://drive.google.com/drive/folders/1w4Cp0AoUHY8O_6VSg_XOi2ftgJ4GycpN?usp=share_link). Use the naming conventions:
+
+-   report document: `TEAM-interim-report-w23.pdf`
+
+```{=html}
+<!-- -->
+```
+-   copies of figures from the report: `img/TEAM-fig1.png` (filename should match figure label in document)
+
+-   supplementary material: `TEAM-[description].[extention]`

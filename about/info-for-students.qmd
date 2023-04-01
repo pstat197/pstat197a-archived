@@ -31,23 +31,27 @@ The capstone is designed primarily for senior students of any discipline having 
 -   Non-PSTAT students are especially encouraged to apply
 :::
 
-## How to apply and timeline
+## How to apply
 
-Applications open in Spring quarter. To apply, simply fill out the application form linked below (the link will be live while applications are open).
+Applications open in Spring quarter. To apply, simply fill out the application form linked below (the form will be live while applications are open).
 
-Applications will be reviewed starting in week 5 and on a rolling basis thereafter. An initial cohort will be accepted by the end of spring quarter and provided add codes for enrollment. Other applicants meeting eligibility requirements will be waitlisted, and any remaining seats will be allocated by September 1 prior to the start of the program year. After this date applications will be closed.
+\[[Application form](https://forms.gle/YJoxpf4JjjdGN3Cw7)\]
 
-\[Application form\]
+Applications will be reviewed starting in week 5 and on a rolling basis thereafter. An initial cohort will be admitted by the end of spring quarter and provided add codes for enrollment. Other applicants meeting eligibility requirements will be waitlisted, and any remaining seats will be allocated by September 1 prior to the start of the program year. After this date applications will be closed.
 
-## Program outcomes
+## What to expect
 
-Students can expect to gain training and skills in collaborative data science and produce a strong work sample by the end of the program. All students will prepare a poster presentation for a public showcase of student work toward the end of the year. Posters will also be published online. Depending on the project, students may also contribute to other outputs such as public repositories, software products, conference presentations, or publications. Aside from project outputs, students receive mentorship from their project advisors throughout the course of the experiential learning component of the capstone and gain access to the program network of past participants and project sponsors for career development purposes.
+Students can expect to gain training and skills in collaborative data science and produce a strong work sample by the end of the program. All students will prepare a poster presentation for a public showcase of student work toward the end of the year. Posters will also be published online.
+
+Depending on the project, students may also contribute during or after the project work period to other outputs such as public repositories, software products, conference presentations, or publications.
+
+Besides project outputs, students receive mentorship from their project advisors throughout the course of the experiential learning component of the capstone. Students also gain access to the network of current and past participants and project sponsors for career development purposes.
 
 ## Prerequisites and eligibility
 
-The prerequisites for the capstone are exposure to computing, statistics and probability, and regression.
+The prerequisites for the capstone are exposure to (1) computing, (2) statistics and probability, and (3) regression. Since the program is interdisciplinary and intended to be accessible to non-PSTAT majors, these requirements are not strictly tied to any specific courses.
 
-Since the program is interdisciplinary and intended to be accessible to non-PSTAT majors, these requirements are not strictly tied to any specific courses. For the PSTAT student, completion of regression analysis (PSTAT126) should suffice. For the non-PSTAT student, any prior experience with statistical concepts, quantitative models, and computing will be considered.
+For the PSTAT student, completion of regression analysis (PSTAT126) should suffice. For the non-PSTAT student, any prior experience with statistical concepts, quantitative models, and computing will be considered.
 
 Students should be of junior or senior standing by the term they would begin the capstone (*i.e.,* fall of the year of application). A full-year commitment is expected to participate, so seniors expecting to graduate early may not be eligible. Younger students, even if otherwise eligible, will be encouraged to reapply in a later year.
 
@@ -57,16 +61,16 @@ Students should have a strong academic record and be motivated to learn independ
 
 *Are there any specific languages/packages I need to know?*
 
-No. Most students will have had some experience with R or python, and some with similar languages such as Matlab or Mathematica. However, what constitutes experience is pretty broad and can range from having used an environment a few times to having taken 6+ courses using a particular language. Regardless, almost everyone will learn an extensive set of new programming skills 'on-the-job' in the course of their projects. Though less common, many of our students even learn a new language from the ground up.
+No. The requirement is that you have intermediate proficiency (use in 2+ courses or equivalent) in *some* language so that you are familiar with programming concepts and able to learn further skills semi-independently (*i.e.,* with the help of a book or tutorial). Most students will have had some experience with R or python, and some with similar languages such as Matlab, Mathematica, or Julia. However, what constitutes 'experience' is pretty broad and can range from a few courses to a few years. Regardless of experience, almost everyone will develop new programming skills 'on-the-job' in the course of their projects. Students do not need a specific background to succeed.
 
 *Are there any recommended classes that would prepare me for the capstone?*
 
-CMPSC5A-B and PSTAT100 are widely-accessible data science courses that can be taken in sequence over the course of a year and provide excellent preparation for the capstone and exposure to programming in python. PSTAT students may elect to take the statistical learning course (PSTAT131) for additional preparation. Non-PSTAT majors would benefit from any quantitative methods courses offered in their home department.
+CMPSC5A-B and PSTAT100 are widely-accessible data science courses that can be taken in sequence over the course of a year and provide good preparation for the capstone and exposure to programming in python. PSTAT students may elect to take the statistical learning course (PSTAT131) for additional preparation. Non-PSTAT majors would benefit from any quantitative methods courses offered in their home department. More broadly, any course(s) that reinforce programming skills and data analysis will be beneficial.
 
 *How are students assigned to capstone projects in the program?*
 
-Students have the opportunity to review project abstracts and specify a set of preferred assignments. However, preferences must be balanced with one another as well as technical skills, special backgrounds, and factors affecting group dynamics in forming project teams, so we cannot guarantee students will receive their top choices. Ultimately, project assignments are made at the discretion of instructors.
+Students have the opportunity to review project abstracts and specify a set of preferred assignments. However, preferences are considered together with technical skills, domain backgrounds, and factors affecting group dynamics in forming project teams, so we cannot guarantee students will receive their top choices. Ultimately, project assignments are made at the discretion of instructors.
 
 *Will I get a job or internship through the program if my project is successful?*
 
-Probably not -- project sponsors' commitments conclude at the end of the academic year. In some instances, sponsors have the resources and interest to support summer interns or entry-level hires, but this is entirely at their discretion. We have had students recruited in the past this way, but they comprise a minority of all program participants.
+This is not guaranteed. Project sponsors' commitments conclude at the end of the academic year. In some instances, sponsors have the resources and interest to support summer interns or entry-level hires, but this is entirely at their discretion. We have had students recruited in the past this way, but they comprise a minority of all program participants.

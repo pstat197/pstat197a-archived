@@ -3,7 +3,7 @@ title: "Course syllabus"
 subtitle: "Data science capstone"
 author: "PSTAT197B-C/CMPSC190DE-DF"
 author-title: "Course listing"
-date: "01/06/2023"
+date: "01/06/2022"
 date-format: "MMMM YYYY"
 published-title: "Updated"
 editor: visual
@@ -13,7 +13,7 @@ Students will devote the vast majority of their time and effort in this course t
 
 ***Concurrent course listing:*** PSTAT197B-C and CMPSC190DE-DF are held concurrently; enrollment is by instructor consent and admitted students may enroll under either listing. The course content, expectations, assessments, and course policies are identical for students enrolled in either course.
 
-***Catalog description:*** Research opportunities for undergraduate students. Students practice their data science and applied statistics skills by completing a hands-on team project on a practical problem proposed by a project sponsor. Students are expected to give regular oral presentations and prepare at least one written report on their research. *Prerequisite: PSTAT197A.*
+***Catalog description:*** Research opportunities for undergraduate students. Students practice their data science and applied statistics skills by completing a hands-on team project on a practical problem proposed by a project sponsor. Students are expected to give regular oral presentations and prepare at least one written report on their research. *Prerequisite: PSTAT197A/CMPSC190DD.*
 
 ## Learning outcomes
 
@@ -46,6 +46,16 @@ We will not meet regularly at other officially scheduled times but we will use t
 -   Week 7 (President's day)
 
 Students are encouraged to block off section times in their schedule to facilitate convenient scheduling of project work. Section rooms are available during those times as workspaces.
+
+### Spring 2023
+
+Class meetings are held ***once weekly*** 2pm -- 3:15pm Mondays in the (brand new!) Interactive Learning Pavillion project-based learning room 2207.
+
+Student teams are expected to meet ***twice weekly***: once with their advisors, and once separately. These meetings can be scheduled at any time according to preference and availability; access will be arranged to PSTAT's departmental meeting/tutoring spaces for groups who wish to meet on campus.
+
+As in Winter, we will reserve the scheduled Wednesday meeting time as a back-up option. Please note that we *will* meet on Wednesday, May 31. In the absence of a scheduled class meeting, students are welcome to use ILP2207 during the scheduled time as a working space.
+
+In place of our final meeting on Monday, June 5, we will host a public showcase of capstone projects in the Loma Pelona center. Poster presentations will be given during the scheduled class time (2pm -- 3pm); all students are expected to participate. Additional events will be scheduled before and after the poster presentation, and students are encouraged to attend.
 
 ## People
 
@@ -145,7 +155,7 @@ Students are encouraged to block off section times in their schedule to facilita
 
 Aggregated results will be used to provide individual feedback and identify any necessary interventions to improve quality of collaboration.
 
-***Class presentations.*** Each team is expected to present some of their work once per term to the class. In-class presentations should be informal and allow time for intermittent discussion and questions. Teams should prepare about 10 slides and a 1-2 page handout. It is strongly recommended that just one team member give each presentation.
+***Class presentations.*** Each team is expected to present some of their work once per term to the class. In-class presentations should be informal and allow time for intermittent discussion and questions. In Winter, teams will give group presentations and should prepare about 10 slides and a 1-2 page handout. It is strongly recommended that just one team member give each presentation. In Spring, each team member will take a turn presenting individually to a smaller audience consisting of their teammates and one other project group.
 
 ***Poster presentation.*** A public showcase of project work will be held on campus at the end of the Spring quarter. Each team is expected to prepare a poster to present at the showcase.
 

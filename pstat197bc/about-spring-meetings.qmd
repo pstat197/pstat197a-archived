@@ -1,0 +1,33 @@
+---
+title: "Spring class meetings"
+---
+
+| Week        | Class meeting                            | Assignments/comments                                |
+|-------------|------------------------------|------------------------------|
+| 1 (4/3/23)  | Introduction and spring quarter overview |                                                     |
+| 2 (4/10/23) | Pair 1 presents                          | Revisions to interim reports due Friday 11:59pm PST |
+| 3 (4/17/23) | Pair 2 presents                          |                                                     |
+| 4 (4/24/23) | Pair 3 presents                          |                                                     |
+| 5 (5/1/23)  | Pair 4 presents                          |                                                     |
+| 6 (5/8/23)  | Pair 5 presents                          | Peer review due Friday 11:59pm PST                  |
+| 7 (5/15/23) | Workshopping: figure drafts              |                                                     |
+| 8 (5/22/23) | Workshopping: presenting figures         |                                                     |
+| 9 (5/29/23) | Workshopping: poster drafts              | No class Monday;*WEDNESDAY* meeting instead         |
+| 10 (6/5/23) | Public showcase                          | Loma Pelona center 12pm -- 4pm                      |
+| 11 (finals) |                                          | Individual project summaries due Monday 6/12        |
+
+: Schedule is tentative and subject to change. Check back for updates.
+
+## Useful links
+
+-   [Attendance form](https://forms.gle/LPuK5qiTg1JuhvP5A) (please fill out once per meeting)
+
+-   [Drive folder](https://drive.google.com/drive/folders/1Ht-9v3veUMulAS3_gaZgKQCTYteUyUW-?usp=sharing) for presentation filesharing (be aware, contents visible with a UCSB account and the link)
+
+## Week 1
+
+-   *Monday meeting:* welcome back and spring term overview \[slides\]
+
+-   *Class assignments:*
+
+    -   revisions to interim reports due Friday 4/14 11:59pm PST
