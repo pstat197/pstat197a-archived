@@ -1,0 +1,48 @@
+---
+title: "Work-in-progress presentations"
+---
+
+These work-in-progress presentations are intended to provide:
+
+1.  individual practice presenting research to a small (5-10 person) audience
+2.  actionable feedback and input to help advance your work
+
+Work-in-progress presentations should **not** aim to provide a broad overview of the project, but **instead** focus on the leading edge of *your* (not your teammates') efforts. So, your goal as presenter should be to identify the most pressing problem you're currently working on resolving, bring your audience up to speed on that problem, and pose a few specific questions you'd like the group to discuss with you.
+
+## Content
+
+You will have 15 minutes to present the problem you're currently working on. In this time, you should cover the following points with roughly the suggested time allocations:
+
+-   (1min) remind the group which project you're working on and what the overarching goal is
+
+-   (2min) identify the specific problem you're working on addressing right now
+
+-   (10min) explain the problem in detail, filling in background information, data attributes, relevant aspects of software design, prior results, etc., as needed as you go
+
+-   (2min) pose a few specific questions you'd like to discuss or want advice on
+
+Following your presentation, your group will have 15 minutes for discussion (see agenda below).
+
+> *Think of the presentation less in terms of performing ... and more in terms of getting the help you need from others to make further progress. In that spirit, make sure you allow time to present the leading edge of your work. That means you need to be economical in how you get listeners up to steam about the aspects of your project that you already have firmly in place.*
+
+You should aim to cover exactly the material the audience needs to be in an informed position relative to the questions you pose at the end. For some general tips on presenting research, see \[[this page](https://students.unimelb.edu.au/academic-skills/resources/graduate-research/presenting-your-research)\].
+
+## Agenda
+
+For each presentation, the group should follow this agenda:
+
+1.  (15min) Work-in-progress presentation
+2.  (5-10min) As a group, do the following:
+    -   Make sure the audience is all on the same page: are there any aspects of the presentation that need to be clarified? Details that someone at the table wasn't able to follow? Technical terms that need definition?
+    -   Select 2 audience members to reflect the presenter's problem back -- have them restate the problem in their own words. Ask the presenter: did they understand the problem correctly?
+3.  (5-10min) Return to the presenter's questions and discuss as a group.
+
+We will take a 5 minute break between presentations each class meeting.
+
+## Practicalities
+
+Use the monitor at your table to show slides. Note that these monitors cannot be used to extend your laptop display, so you'll need to upload the materials you need in advance \[[here](https://drive.google.com/drive/folders/1Ht-9v3veUMulAS3_gaZgKQCTYteUyUW-?usp=share_link)\] and then open them in the browser on your table's monitor.
+
+Position yourself near the monitor and ensure that everyone can hear you before you begin. Since groups will be presenting in parallel in a confined space and there will be some background noise, this check is important. You may need to rearrange the audience slightly and/or speak up.
+
+Try to maintain a connection with your table over the course of these presentations by participating in discussion when others present, and when you are presenting, by speaking to the others at the table (rather than to the screen, the ceiling, the tabletop, etc.) and checking to make sure they're following along.

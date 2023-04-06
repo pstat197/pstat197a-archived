@@ -3,7 +3,7 @@ title: "Spring class meetings"
 ---
 
 | Week        | Class meeting                            | Assignments/comments                                |
-|-----------------|----------------------------|----------------------------|
+|------------------|---------------------------|---------------------------|
 | 1 (4/3/23)  | Introduction and spring quarter overview |                                                     |
 | 2 (4/10/23) | Pair 1 presents                          | Revisions to interim reports due Friday 11:59pm PST |
 | 3 (4/17/23) | Pair 2 presents                          |                                                     |
@@ -23,6 +23,8 @@ title: "Spring class meetings"
 -   [Attendance form](https://forms.gle/LPuK5qiTg1JuhvP5A) (please fill out once per meeting)
 
 -   [Drive folder](https://drive.google.com/drive/folders/1Ht-9v3veUMulAS3_gaZgKQCTYteUyUW-?usp=sharing) for presentation filesharing (be aware, contents visible with a UCSB account and the link)
+
+-   [Presentation guidelines](work-in-progress-presentation-guidelines.qmd) -- requirements and suggestions for work-in-progress presentations and agenda
 
 ## Week 1
 
