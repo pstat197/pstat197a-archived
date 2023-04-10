@@ -34,3 +34,7 @@ title: "Spring class meetings"
 
     -   revisions to interim reports due Friday 4/14 11:59pm PST (upload to same folder as before with suffix `-revised`)
     -   figure for website due Friday 4/14 11:59pm PST \[[upload here](https://drive.google.com/drive/folders/1f_PdR7l3pm-OTebE5dqiwq4p2lQa_jDN?usp=share_link)\]
+
+## Week 2
+
+*Monday meeting*: first pair of work-in-progress presentations \[[slides](https://docs.google.com/presentation/d/1cIvonxqJQg7svLAkVT_AVcjiIZ8PoaFdPPt8Lh2A3CA/edit?usp=sharing)\]
