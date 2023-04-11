@@ -3,7 +3,7 @@ title: "Spring class meetings"
 ---
 
 | Week        | Class meeting                            | Assignments/comments                                |
-|------------------|---------------------------|---------------------------|
+|-------------|------------------------------------------|-----------------------------------------------------|
 | 1 (4/3/23)  | Introduction and spring quarter overview |                                                     |
 | 2 (4/10/23) | Pair 1 presents                          | Revisions to interim reports due Friday 11:59pm PST |
 | 3 (4/17/23) | Pair 2 presents                          |                                                     |
@@ -32,7 +32,7 @@ title: "Spring class meetings"
 
 -   *Class assignments:*
 
-    -   revisions to interim reports due Friday 4/14 11:59pm PST (upload to same folder as before with suffix `-revised`)
+    -   revisions to interim reports due Friday 4/14 11:59pm PST (upload to [same folder as before](https://drive.google.com/drive/folders/1w4Cp0AoUHY8O_6VSg_XOi2ftgJ4GycpN?usp=share_link) with suffix `-revised`)
     -   figure for website due Friday 4/14 11:59pm PST \[[upload here](https://drive.google.com/drive/folders/1f_PdR7l3pm-OTebE5dqiwq4p2lQa_jDN?usp=share_link)\]
 
 ## Week 2
