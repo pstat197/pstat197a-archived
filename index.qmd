@@ -3,6 +3,12 @@ title: "Data science capstone at UCSB"
 subtitle: "Sponsored research experiences for undergraduates in interdisciplinary data science, computational science, and statistics"
 ---
 
+::: callout-note
+## Announcements
+
+-   Applications for 2023-2024 now open! Read more [here](about/info-for-students.qmd); apply by May 15 for priority consideration.
+:::
+
 Welcome to the homepage for UC Santa Barbara's data science capstone program.
 
 The capstone program aims to provide students with hands-on research training and career development opportunities related to data science. By design, it is equally suitable for students interested in entering the job market as it is for those considering graduate school: we partner with both industry and academic project sponsors to offer research experiences spanning a breadth of application domains.
