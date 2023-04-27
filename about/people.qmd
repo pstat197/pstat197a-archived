@@ -2,13 +2,13 @@
 title: 'People'
 ---
 
-# Program contacts
+**Program contacts**:
 
 [Tim Robinson](mailto:trobinson@ucsb.edu), Academic program coordinator
 
 [Trevor Ruiz](mailto:tdr@ucsb.edu), Lead instructor
 
-# Program participants
+# Program participants by year
 
 ## 2022-2023
 
