@@ -6,7 +6,7 @@ title: 'People'
 
 [Tim Robinson](mailto:trobinson@ucsb.edu), Academic program coordinator
 
-[Trevor Ruiz](mailto:tdr@ucsb.edu), Lead instructor
+[Trevor Ruiz](mailto:tdr@ucsb.edu), Instructor
 
 # Program participants by year
 
@@ -415,3 +415,109 @@ Joshua Bang, Statistics and Applied Probability
 Jiajing Zheng, Statistics and Applied Probability
 
 Chau Tran, Statistics and Applied Probability
+
+### Students
+
+Nick Bachelder, STSDS
+
+Angel Chen, STSDS
+
+Amy Cho, ECON/STSDS
+
+Robin Hollingsworth, STSDS/ECACC
+
+Zoe Holzer, STSDS
+
+Joanna Kim, STSDS
+
+Karsyn Lee, STSDS
+
+Adhitya Logan, STSDS
+
+Andrew Nguyen, STSDS
+
+Nicholas Nunes, STSDS
+
+Vikram Pasupathy, CMPSC/STSDS
+
+Lia Ran, STSDS
+
+Mitchell Rapaport, AMATH/STSDS
+
+Cristian Razo, STSDS/PRMTH
+
+Jake Simon, STSDS
+
+Samantha Solomon, FINMS
+
+Sophia Sternberg, COMM/STSDS
+
+Shuyun Tang, STSDS
+
+Gavin Tieng, STSDS
+
+Romtin Toranji, STSDS
+
+Meng Vong, STSDS
+
+Jason Yu, STSDS
+
+Karen Zhao, STSDS/ECACC
+
+Andrea Anez, CMPEN
+
+Priyanka Banerjee, CMPSC/STSDS
+
+Peter Bayerle, AMATH
+
+Karanveer Benipal, CMPSC
+
+Matthew Coleman, STSDS
+
+Cibran De La Fuente, PHIL/LING
+
+Shuyi Fang, LING/GERM
+
+Sam Guo, FINMS/CMPSC
+
+Helen Huang, CMPSC/PHRMA
+
+Shaka Kanenobu, CMPSC
+
+Saiprem Kathika, CMPEN
+
+Lawrence Lin, STSDS
+
+Manny Medrano, EE/PRMTH
+
+Shivam Misra, PHYS
+
+Sairisheek Muttukuru, CMPEN
+
+Priya Padmanabhan, CMPSC
+
+Jay Patwardhan, AMATH
+
+Ari Polakof, CMPSC/STSDS
+
+Surya Pugal, CMPSC
+
+Austin Quinn, CMPSC
+
+Leron Reznikov, CMPSC
+
+Andie Rupprecht, GEOGP
+
+Neil Sadhukhan, CMPEN
+
+Vanessa Salgado Zavaleta, CMPSC
+
+Emily San Juan, PRMTH
+
+Samuel Sheridan, AMATH/STSDS
+
+Matthew Xu, STSDS
+
+Rey Yue, CMPSC
+
+Bill Zhang, CMPSC
