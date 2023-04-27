@@ -1,0 +1,417 @@
+---
+title: 'People'
+---
+
+# Program contacts
+
+[Tim Robinson](mailto:trobinson@ucsb.edu), Academic program coordinator
+
+[Trevor Ruiz](mailto:tdr@ucsb.edu), Lead instructor
+
+# Past participants
+
+## 2022-2023
+
+### Instructor
+
+Trevor Ruiz, Statistics and Applied Probability (PSTAT197A-B-C/CMPSC190DD-DE-DF)
+
+### Project sponsors
+
+Maxim Ivanov and Bonnie Jin, Amgen
+
+Ari Polakof, Appfolio
+
+Erin Satterthwaite, California Cooperative Oceanic Fisheries Investigations
+
+Andy Chen and Amy Huynh, Carpe Data
+
+Eleanor Caves and Todd Oakley, Caves Visual Ecology Lab
+
+Katja Seltmann, Cheadle Center for Biodiversity and Ecological Restoration
+
+Greg Husak and Shrad Shukla, Climate Hazards Center
+
+Patrick Green, Evolutionary Ecology and Marine Biology
+
+Norbert Leinfellner and Paula Sarmiento, Inogen
+
+Arinbjörn Kolbeinsson and Eric Daza, Evidation Health
+
+Somayeh Dodge and Evgeny Noi, MOVE Lab
+
+Eric Leidersdorf, Peak Performance Project
+
+Derek Mendez, Stanford National Accelerator Lab
+
+### Project advisors
+
+Trevor Ruiz, Statistics and Applied Probability
+
+Alex Franks, Statistics and Applied Probability
+
+Laura Baracaldo, Statistics and Applied Probability
+
+Adam Waterbury, Statistics and Applied Probability
+
+Enbo Zhou, Geography
+
+Erika McPhillips, Statistics and Applied Probability
+
+Joshua Bang, Statistics and Applied Probability
+
+Megan Elcheikhali, Statistics and Applied Probability
+
+Robin Liu, Statistics and Applied Probability
+
+Gia Ahn, Statistics and Applied Probability
+
+Yan Lashchev, Statistics and Applied Probability
+
+### Students
+
+Safiya Alavi, STSDS
+
+Daniel Badilla, STSDS
+
+Ellie Burrell, STSDS
+
+Brian Che, STSDS
+
+Aleksander Cichosz, ECON/STSDS
+
+Fei Du, AMATH/STSDS
+
+Brian Fan, AMATH/STSDS
+
+Kunxiao Gao, STSDS
+
+Bernie Graves, STSDS
+
+Yuer Hao, FINMS
+
+Disha Hauzaree, STSDS
+
+Edward Ho, STSDS
+
+Evan Ji, STSDS
+
+Dingan Jiang, ECON/STSDS
+
+Aria Kajeh, STSDS
+
+Raymond Lee, PBS/STSDS
+
+Hannah Li, STSDS
+
+Lily Li, STSDS
+
+Yujie Li, STSDS/LING
+
+Alex Lim, STSDS
+
+Justin Liu, STSDS
+
+Tianhong Liu, FINMS
+
+William Long, STSDS
+
+Anya Macomber, STSDS
+
+Ankur Malik, STSDS
+
+Vardan Martirosyan, MATCS
+
+Lex Navarra, STSDS
+
+Jennifer Park, ECACC/STSDS
+
+Mira Patel, STSDS
+
+Ryan Quon, STSDS
+
+Allester Ramayrat, STSDS
+
+Giselle Ramirez, ENVST/POLS
+
+Noa Rapoport, STSDS
+
+Eitan Rashkovan, STSDS
+
+Kaylin Roberts, STSDS
+
+Shannon Rumsey, STSDS
+
+Nealson Setiawan, STSDS
+
+Thomas Shi, ACTSC
+
+Kabir Snell, STSDS
+
+Ashley Son, STSDS
+
+Sofia Spasibenko, STSDS
+
+Ryan Stofer, AMATH/STSDS
+
+Sammy Suliman, AMATH/STSDS
+
+Kassandra Trejo-Zamora, STSDS
+
+Piero Trujillo, STSDS
+
+Lyndsey Umsted, STSDS
+
+Jai Uparkar, STSDS/CPTCS
+
+Justin Vo, ECACC/STSDS
+
+Ruoxin Wang, STSDS
+
+Yuqing Xia, STSDS
+
+Changhee Yoon, STSDS
+
+Teo Zeng, PBS/AMATH
+
+Chunting Zheng, AMATH/STSDS
+
+Haoming Deng, STSDS
+
+Caroline He, BIOCS
+
+Dan Le, CMPSC
+
+Allen Wang, STSDS
+
+## 2021-2022
+
+### Instructors
+
+Ambuj Singh, Computer Science (PSTAT197A/CMPSC190DD)
+
+Alex Franks, Statistics and Applied Probability (PSTAT197B-C/CMPSC190DE-DF)
+
+Trevor Ruiz, Statistics and Applied Probability (PSTAT197B-C/CMPSC190DE-DF)
+
+### Project sponsors
+
+Chad Spensky and Rita Mounir, Allthenticate
+
+Shyr-Shea Chang and Soeren Thust, Appfolio
+
+Erin Satterthwaite, California Cooperative Oceanic Fisheries Investigations
+
+Crystal Zhang and Kevin Neal, Carpe Data
+
+Qing Huang, Center for Information Technology Research
+
+Katja Seltmann, Cheadle Center for Biodiversity and Ecological Restoration
+
+Kelly Caylor, Anna Boser, and Ryan Avery, Earth Research Institute
+
+Matto Mildenberger, Energy and Environment Transitions Lab
+
+Eric Daza, Evidation Health
+
+Rob Fox and Lauren Wong, HG Insights
+
+Stella Glasauer, Neuroscience Research Institute
+
+Rebert Bernard, Pricewaterhouse Coopers
+
+Tommy Sprague, Sprague Lab
+
+### Project advisors
+
+Trevor Ruiz, Statistics and Applied Probability
+
+Alex Franks, Statistics and Applied Probability
+
+Adam Waterbury, Statistics and Applied Probability
+
+Leron Reznikov, Computer Science
+
+Sikun Lin, Computer Science
+
+Erika McPhillips, Statistics and Applied Probability
+
+Joshua Bang, Statistics and Applied Probability
+
+Megan Elcheikhali, Statistics and Applied Probability
+
+### Students
+
+Annie Adams, STSDS
+
+Nicholas Alexander, STSDS
+
+Joshua Alvarado, STSDS
+
+Akshat Ataliwala, STSDS
+
+Andrew Bissell, STSDS
+
+Evan Bui, STSDS
+
+Philip Carey, STSDS
+
+Eric Cha, STSDS
+
+Tristan Chen, STSDS
+
+Tyler Chia, STSDS/ECON
+
+Dante Coletta, STSDS
+
+Anum Damani, STSDS
+
+James Du, PHYS/STSDS
+
+Romina Fareghbal, STSDS
+
+Emma Franzblau, POLS
+
+Ian Gascon, FINMS/ECON
+
+Atherv Gole, STSDS
+
+Mallika Gupta, FINMS
+
+Joshua Harasaki, STSDS
+
+Eoin Hayes, STSDS
+
+Annie Huang, LING/STSDS
+
+Harleen Kaur, ECON/STSDS
+
+Alyssa Keehan, STSDS
+
+Joanne Kim, STSDS
+
+Harper Klauke, STSDS
+
+Mac Kul, STSDS
+
+Jasmine Kwok, COMM/STSDS
+
+Michael La, STSDS/ECON
+
+Yan Lashchev, AMATH
+
+Natasha Leodjaja, STSDS
+
+Connor Levenson, STSDS
+
+Jorge Murillo, MATCS
+
+Jessica Nguyen, STSDS
+
+Nathan Roll, ECON/LING
+
+Alex Rudolph, STSDS
+
+Sarah Schlund, STSDS/GEOG
+
+Priscilla Siow, STSDS
+
+Xavier Speropoulos, STSDS
+
+Jordan Tran, STSDS
+
+Ali Vakilimafakheri, STSDS
+
+Rithvik Vobbilisetty, STSDS
+
+Eric Wang, STSDS
+
+Jonathan Wong-Lau, ACTSC
+
+Yuki Yamazaki, STSDS
+
+Johnny Yu, STSDS
+
+Nancy Zha, STSDS
+
+Yangyi Zhang, MTHSC/STSDS
+
+Bosco De Enrique Romeu, UNDE
+
+Teresa Gonzalez, GEOGP
+
+Ashley Grinstead, ENVST/GEOGP
+
+Tiffany Hsu, ENVST
+
+Qiru Hu, CMPSC
+
+Calvin Jenkins, CMPEN
+
+Pk Kottapalli, PHYS
+
+Sara Mandic, CMPSC
+
+Elise Nguyen, COMM/ECACC
+
+Lucas Nguyen, CMPSC/CMPSC
+
+Jake Stenger, CPTCS
+
+Lawrence Su, EE
+
+Timi Tao, STSDS
+
+## 2020-2021
+
+### Instructors
+
+Ambuj Singh, Computer Science (PSTAT197A/CMPSC190DD)
+
+Alex Franks, Statistics and Applied Probability (PSTAT197B-C/CMPSC190DE-DF)
+
+Sang-Yun Oh, Statistics and Applied Probability (PSTAT197B-C/CMPSC190DE-DF)
+
+### Project sponsors
+
+Peng-Yuan Lai and Soeren Thust, Appfolio
+
+Erin Satterthwaite, California Cooperative Oceanic Fisheries Investigations
+
+Crystal Zhang, Carpe Data
+
+Lubi Lenaburg, Center for Science and Engineering Partnerships
+
+Katja Seltmann and Michelle Lee, Cheadle Center for Biodiversity and Ecological Restoration
+
+Eric Daza, Evidation Health
+
+Louis Tremblay, FLIR
+
+Mike Lawrence, Invoca
+
+Julien Brun and Allison Horst, National Center for Ecological Analysis and Synthesis
+
+Juliana Acosta Uribe and Ken Kosik, Neuroscience Research Institute
+
+Namino Glantz and David Kerr, Sansum Diabetes Research Institute
+
+### Project advisors
+
+Ambuj Singh, Computer Science
+
+Mike Ludkovski, Statistics and Applied Probability
+
+Sang-Yun Oh, Statistics and Applied Probability
+
+Alex Franks, Statistics and Applied Probability
+
+Kate Kharitonova, Computer Science
+
+Sikun Lin, Computer Science
+
+Joshua Bang, Statistics and Applied Probability
+
+Jiajing Zheng, Statistics and Applied Probability
+
+Chau Tran, Statistics and Applied Probability

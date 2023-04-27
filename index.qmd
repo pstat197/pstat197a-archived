@@ -6,6 +6,7 @@ subtitle: "Sponsored research experiences for undergraduates in interdisciplinar
 ::: callout-note
 ## Announcements
 
+-   Project showcase June 5, 2023 12pm-4pm Loma Pelona Center, UCSB
 -   Applications for 2023-2024 now open! Read more [here](about/info-for-students.qmd); apply by May 15 for priority consideration.
 :::
 

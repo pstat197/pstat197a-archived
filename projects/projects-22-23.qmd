@@ -2,16 +2,6 @@
 title: "2022-2023 Projects"
 ---
 
-<!-- skills required and skills learned  -->
-
-<!-- repo links if available -->
-
-<!-- one figure per item -->
-
-<!-- packages/languages used -->
-
-<!-- upcoming events (not for this page, but as separate page) -->
-
 Listed alphabetically by project sponsor.
 
 ## Amgen
@@ -22,11 +12,13 @@ Listed alphabetically by project sponsor.
 
 **Advisors:** Maxim Ivanov, Bonnie Jin, Erika McPhilliips, Yan Lashchev
 
-A Knowledge Graph (KG) represents knowledge as a network that relates entities such as physical objects and concepts. In a KG, the objects and concepts are represented as nodes, while their relations are represented as edges of the graph. Due to the graph structure of this knowledge representation, a KG can be a potent mechanism for searching entities and their relations, discovering new information and enabling complex decision making. 
+A Knowledge Graph (KG) represents knowledge as a network that relates entities such as physical objects and concepts. In a KG, the objects and concepts are represented as nodes, while their relations are represented as edges of the graph. Due to the graph structure of this knowledge representation, a KG can be a potent mechanism for searching entities and their relations, discovering new information and enabling complex decision making.
+
+![Figure: Left, example knowledge graph with three entity types and two relations. Right, summary of example relations for possible entity type pairs.](img/Amgen_figure.jpg){width="444"}
 
 The process of updating and expanding a KG can be manual and laborious and require ongoing collaboration with subject matter experts. Natural language processing (NLP) and text-mining algorithms could streamline this process by automatically extracting essential information about objects, concepts, and their relations. Once deployed, these algorithms could populate nodes and edges of a KG in an automated fashion based on incoming data.
 
-Two crucial processes in generating nodes and edges of the KG are Named Entity Recognition and Linking (NER/NEL) and Relation Extraction (RE). NER/NEL automatically analyzes free text to recognize character substrings that identify entities of interest, while RE identifies entity pairs with certain relations. 
+Two crucial processes in generating nodes and edges of the KG are Named Entity Recognition and Linking (NER/NEL) and Relation Extraction (RE). NER/NEL automatically analyzes free text to recognize character substrings that identify entities of interest, while RE identifies entity pairs with certain relations.
 
 As NER/NEL and RE are necessary steps in generating nodes and edges of the KG, it is critically important that these algorithms accurately extract entities and their relations from free text. To quantify performance of NER/NEL and RE, benchmarking datasets are often used. The entity and relation labels in these datasets are either annotated manually by subject matter experts or algorithmically using semi-supervised and/or rule-based approaches.
 
@@ -40,9 +32,9 @@ The focus of this project lies in identifying open-source NER/NEL and RE algorit
 
 **Project advisors:** Ari Polakof, Erika McPhillips
 
-At Appfolio we have been solving multiple problems in the Property Management Accounting domain with Machine Learning technologies. Many customers do accounting with our AppFolio Property Management (APM) solution, which means that they need to input all their records (invoices, bills, checks, etc.)  in Appfolio. If the customer has integrated their bank account with Plaid (third-party provider) in APM, we also have data coming directly from their bank transactions. 
+At Appfolio we have been solving multiple problems in the Property Management Accounting domain with Machine Learning technologies. Many customers do accounting with our AppFolio Property Management (APM) solution, which means that they need to input all their records (invoices, bills, checks, etc.) in Appfolio. If the customer has integrated their bank account with Plaid (third-party provider) in APM, we also have data coming directly from their bank transactions.
 
-Customers have been telling us that they would appreciate it if they could detect anomalies in their records and transaction history. For example, they would like to know if the water bill is much more expensive than the previous months for one property, since that would likely indicate a problem. They would also appreciate knowing if there's a bill that usually comes but it doesn't. This is a general problem with applications in multiple areas inside our software, and so we would like to have a way of detecting anomalies automatically so that property managers don't have to worry about every single detail for each property. 
+Customers have been telling us that they would appreciate it if they could detect anomalies in their records and transaction history. For example, they would like to know if the water bill is much more expensive than the previous months for one property, since that would likely indicate a problem. They would also appreciate knowing if there's a bill that usually comes but it doesn't. This is a general problem with applications in multiple areas inside our software, and so we would like to have a way of detecting anomalies automatically so that property managers don't have to worry about every single detail for each property.
 
 For this project, students will analyze outlier detection methods, performance evaluation metrics for empirical comparisons between methods, and assess the methods from an explainability perspective. Students will develop comprehensive method comparisons and integrate them in a dashboard to present them with the correct data visualization techniques.
 
@@ -54,19 +46,29 @@ For this project, students will analyze outlier detection methods, performance e
 
 **Project advisors:** Erin Satterthwaite, Trevor Ruiz
 
-Most marine fishes and invertebrates produce high abundances of tiny larvae that, depending on the species, reside in the open ocean for weeks to months.  Mortality is incredibly high (often upwards of 99%) for most fishes during the larval stage but because larvae are so abundant small changes in rates of survival result in orders of magnitude difference in survival to adult stages (i.e., recruitment). For this reason, elucidating the actual mechanisms in the ocean that affect larval survival is an integral component of fisheries management. Yet, despite over a century of recruitment research, accurately estimating these parameters has been difficult and predicting conditions that facilitate larval survival and drive recruitment remains the fundamental challenge in fisheries science and management.
+Most marine fishes and invertebrates produce high abundances of tiny larvae that, depending on the species, reside in the open ocean for weeks to months. Mortality is incredibly high (often upwards of 99%) for most fishes during the larval stage but because larvae are so abundant small changes in rates of survival result in orders of magnitude difference in survival to adult stages (i.e., recruitment). For this reason, elucidating the actual mechanisms in the ocean that affect larval survival is an integral component of fisheries management. Yet, despite over a century of recruitment research, accurately estimating these parameters has been difficult and predicting conditions that facilitate larval survival and drive recruitment remains the fundamental challenge in fisheries science and management.
 
-CalCOFI data include physical, environmental, and biological measurements collected from water samples and tows from ship cruises conducted quarterly since \~1950. Measurements are: (i) georeferenced -- taken at recorded spatial coordinates;  (ii) longitudinal -- taken repeatedly over time; (iii) profiled -- recorded across depth in the water column; and (iv) multivariate. The complexity of the datasets due to these attributes presents both promise for discovery and challenges for data analysis and display. 
+CalCOFI data include physical, environmental, and biological measurements collected from water samples and tows from ship cruises conducted quarterly since \~1950. Measurements are: (i) georeferenced -- taken at recorded spatial coordinates; (ii) longitudinal -- taken repeatedly over time; (iii) profiled -- recorded across depth in the water column; and (iv) multivariate. The complexity of the datasets due to these attributes presents both promise for discovery and challenges for data analysis and display.
 
 This project will aim to ascertain predictive relationships between environmental and biological systems. Focus on the relationship between environmental DNA and fish larvae is anticipated, but students will have some latitude to shape the direction of their work and may utilize secondary datasets as appropriate to the overall project aim. The primary objectives for this project will be: (i) developing interactive data displays effective for exploratory analysis and communication; and (ii) applying statistical methodology for prediction of variables of interest. Students will work primarily in R with version control.
+
+![Figure: potential ecological interactions between anchovy and other organisms.](img/calcofi-fig.png){width="412"}
 
 ## Carpe Data
 
 ***Business characteristics classification models***
 
+::: columns
+::: {.column width="75%"}
 **Student team:** Noa Rapoport, Haoming Deng, Lex Navarra, Dan Le, Yutong Wang
 
 **Project advisors:** Andy Chen, Amy Huynh, Joshua Bang
+:::
+
+::: {.column width="25%"}
+![](img/CarpeCapstoneLogo.png){width="128"}
+:::
+:::
 
 A business owner usually needs to buy insurance to protect their business against property loss and general liability. And insurance carriers would adjust the premium based on how much risk a business has. Risk can refer to the likelihood of a loss, and the severity of a potential loss. 
 
@@ -88,13 +90,29 @@ Visual acuity, the ability to perceive detail, is ecologically important, as it 
 
 For this project, students will begin with a set of images from approximately 50 species of bees. For each species, several photographs are available that view the bee from different angles. Students will use this dataset to develop algorithms for estimating the diameter of ommatidia and radius of curvature from a photograph. Students will use estimates to calculate acuity. If time permits, the project will explore potential correlates of acuity among aspects of bee ecology, for example nocturnality/diurnality, living socially or solitarily, and sex differentiation.
 
+::: {#fig-caves layout-ncol="2"}
+![](img/caves-bee.jpg){width="450"}
+
+![](img/caves-oda.png){width="281"}
+
+Estimation of ommatidial diameters from high-resolution frontal image.
+:::
+
 ## Cheadle Center for Biodiversity and Ecological Restoration (CCBER)
 
 ***Constructing three-dimensional bee models from high-resolution images***
 
+::: columns
+::: {.column width="75%"}
 **Student team:** Daniel Badilla, Allester Ramayrat, Sofia Spasibenko, William Long
 
 **Project advisors:** Katja Seltmann and Joshua Bang
+:::
+
+::: {.column width="25%"}
+![](img/CCBER-emblem.png){width="100"}
+:::
+:::
 
 While bees are critical to sustaining a large proportion of global food production, as well as pollinating both wild and cultivated plants, they are decreasing in both numbers and diversity. Our understanding of the factors driving these declines is limited, partly because we need more data on the behavioral and anatomical traits that may make bees vulnerable or resilient to human-induced environmental changes, such as habitat loss and climate change.
 
@@ -108,9 +126,9 @@ As part of the Big-Bee project (<http://big-bee.net>), we are creating 2D & 3D h
 
 **Project advisors:** Greg Husak, Shrad Shukla, Enbo Zhou
 
-Throughout much of the developing world, human livelihoods are dependent on the success of rainfed agriculture and pastoral biomass for food.  In these regions, precipitation (PPT), or rainfall, is a critical indicator of vegetative health and success, and so a number of methods have been developed for expressing the quantity and quality of rainfall.  In addition to the amount of PPT coming into the system, there has also been increasing attention on the atmospheric demand for water.  One way of capturing this is the use of potential evapotranspiration (PET), which combines temperature, humidity, solar radiation, and wind speed to estimate the amount of water which would be soaked up by the atmosphere over a given surface.  Many indicators have sought to combine these factors in a meaningful way to identify deficits in available water for vegetation, and anticipate food shortages in the developing world.  
+Throughout much of the developing world, human livelihoods are dependent on the success of rainfed agriculture and pastoral biomass for food. In these regions, precipitation (PPT), or rainfall, is a critical indicator of vegetative health and success, and so a number of methods have been developed for expressing the quantity and quality of rainfall. In addition to the amount of PPT coming into the system, there has also been increasing attention on the atmospheric demand for water. One way of capturing this is the use of potential evapotranspiration (PET), which combines temperature, humidity, solar radiation, and wind speed to estimate the amount of water which would be soaked up by the atmosphere over a given surface. Many indicators have sought to combine these factors in a meaningful way to identify deficits in available water for vegetation, and anticipate food shortages in the developing world.
 
-However, PPT and PET are inversely related.  The factors associated with rainfall (cloud cover, high humidity, latent cooling) also lead to low PET.  This capstone project seeks to explore the relationship between PPT and PET in space and time.  Where these factors are tightly coupled, drought events would be accompanied by increased PET, and lead to larger water deficits than might be indicated by precipitation alone.  Where the relationship is less coupled, there may be independent factors driving the PET, and we will seek to understand the drivers of that independent component.  
+However, PPT and PET are inversely related. The factors associated with rainfall (cloud cover, high humidity, latent cooling) also lead to low PET. This capstone project seeks to explore the relationship between PPT and PET in space and time. Where these factors are tightly coupled, drought events would be accompanied by increased PET, and lead to larger water deficits than might be indicated by precipitation alone. Where the relationship is less coupled, there may be independent factors driving the PET, and we will seek to understand the drivers of that independent component.
 
 This project will work with quasi-global grids of PPT and PET from the last 40 years to explore these relationships, potentially identify drivers of both PPT and the independent component of PET, and maybe even explore developing statistical forecasts of these factors based on sea surface temperatures.
 
@@ -123,6 +141,8 @@ This project will work with quasi-global grids of PPT and PET from the last 40 y
 Daily precipitation is critical for monitoring climate hazards such as floods and droughts, and for running hydrologic and crop water balance models that provide estimates of available water to better manage and utilize water resources. The Climate Hazards Center (CHC) is a global leader in generating precipitation dataset based on satellites and on ground stations. The dataset is called CHIRPS, which stands for Climate Hazards Center InfraRed Precipitation with Stations (CHIRPS) and is a gridded dataset that covers the entire globe, at a spatial resolution of 5km X 5km. CHIRPS version 2.0 has been widely used globally, for monitoring climate hazards and for understanding long-term changes in precipitation.
 
 CHC currently is in the process of developing the latest version of this dataset which is CHIRPS 3.0. The goal of this project is to evaluate the daily precipitation values from this dataset. The evaluation process will involve downloading and processing several independent precipitation datasets that come from diverse sources, to compare them with CHIRPS 3.0, and advanced statistical methods to quantify the performance of the daily CHIRPS 3.0 dataset relative to other datasets. The results of this analysis will be documented and submitted for a peer-reviewed publication.
+
+![](img/chc-shrad-figure.png)
 
 ## Patrick Green
 
@@ -156,9 +176,17 @@ Our team is collaborating with faculty and students from Purdue University and T
 
 ***Impact of case definition on early detection systems for COVID-19***
 
+::: columns
+::: {.column width="30%"}
+![](img/Evidation-image.jpg){width="200"}
+:::
+
+::: {.column width="70%"}
 **Student team:** Shannon Rumsey, Edward Ho, Nealson Setiawan, Jen Park, Chunting Zheng
 
 **Project advisors:** Arinbjörn Kolbeinsson, Eric Daza, Megan Elcheikhali
+:::
+:::
 
 Detecting infectious diseases, such as COVID-19, early can accelerate case isolation and break chains of infection. We can train a model to do this but there is no clear definition of when a case starts, meaning the ground-truth labels (used for training and evaluation) are often inconsistent between studies. A hypothesis is that case definition, i.e., the time-point at which an individual changes labels from healthy to infected, has a significant effect on systems designed to identify individuals.
 
@@ -174,6 +202,8 @@ This project will use home testing kit study data to analyse and compare the eff
 
 The goal of this project is to use movement as a marker to study behavioral responses of people to environmental changes, in particular during natural disasters. As a case study, this project utilizes large and multi-sourced mobility data sets to investigate changes in movement patterns in associations with wildfire events in California. First, the goal is to investigate available data sets and their suitability for representing movement patterns in wildfire-impacted areas. Second, the project focuses on applying machine learning techniques to identify and trace changes in mobility time series and to associate them to the timelines of different wildfire events between 2019-2022 (before, during, and after the fire) compared with a baseline (e.g. a year without wildfire). The outcomes of this project will inform simulation models to assess and estimate wildfire risk on movement flows in Californian communities.
 
+![Figure: counts of visits to points of interest near the Lake Fire (shaded region in center) over time. At left, map of points of interest, with circle size proportional to visit count; at right, total visits across region over time.](img/move-animation.gif)
+
 ## Peak Performance Project (P3)
 
 ***Understanding links between biomechanical data and on-court NBA production***
@@ -186,7 +216,15 @@ Over the past decade, resources poured into analytics efforts and performance st
 
 Beginning in 2013, P3 (Peak Performance Project) began collecting biomechanical data on professional and collegiate basketball players performing ballistic movements in their laboratories. As it currently stands, P3 owns the largest biomechanics database on NBA athletes in the world. This dataset comprises 3D Motion Capture and Force Plate data -- allowing P3 to create skeletal models of their athletes for in-depth movement analysis. While many of P3's efforts to date have involved studying injury-risk and training adaptations within this cohort, the extent to which this data can help inform which physical tools are important in today's NBA landscape remains largely unknown.
 
+::: columns
+::: {.column width="60%"}
 P3's in-house dataset consists of 3D Motion Capture and Force Plate data conducted on professional and collegiate basketball players -- approximately 1300 assessments in total. This data has been collected on a series of vertical plane (jumps) and lateral plane (lateral acceleration drills) actions in P3 labs in Atlanta, GA and Santa Barbara, CA. In addition to P3's in-house data, scraping publicly available basketball data web will be integral to project success.
+:::
+
+::: {.column width="40%"}
+![](img/P3-figure.jpg){width="300"}
+:::
+:::
 
 For this project, students will build a web-scraping tool for the purposes of comparing P3's in-house data with on-court production at the professional and collegiate levels, build ML models to understand links between biomechanics data and on-court production, and develop an R Shiny application to visualize relationships between P3 data and on-court performance.
 
@@ -198,6 +236,14 @@ For this project, students will build a web-scraping tool for the purposes of co
 
 **Project advisors:** Derek Mendez and Robin Liu
 
+::: columns
+::: {.column width="60%"}
 The quality of images used during serial crystallography data processing often weighs heavily on the accuracy of results. It is routine for experimenters to visually inspect and tune parameters to select the best images to process. By using state-of-the-art machine learning technologies, coupled with realistic forward modeling of crystallographic data, one can build a regression model which accepts images as inputs, and outputs experimentally interesting properties. This paves the way towards a machine intelligence capable of auto-selecting the highest quality images during diffraction collection.
 
 For this project, students will use resmos2 data comprising about 10000 simulated diffraction images with corresponding labels, as well as additional simulated datasets, to build a regression model that will work in real-time to label images during data collection at SSRL beamlines. This will greatly enhance the user experience at the SSRL/SMB beamlines.
+:::
+
+::: {.column width="40%"}
+![Figure: Stanford synchrotron radiation lightsource facility.](img/SLAC-figure.jpg){width="300"}
+:::
+:::

@@ -20,6 +20,7 @@ website:
     contents:
       - about/info-for-students.qmd
       - about/info-for-sponsors.qmd
+      - about/people.qmd
       - section: "Projects"
         contents:
           - projects/projects-22-23.qmd
